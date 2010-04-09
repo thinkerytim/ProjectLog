@@ -22,15 +22,15 @@ class ProjectlogViewProject extends JView
 	
 		$settings      = &JComponentHelper::getParams( 'com_projectlog' );
         $document 	= & JFactory::getDocument();
-		$this->baseurl = JURI::base();
-		$document->addStyleSheet($this->baseurl.'components'.DS.'com_projectlog'.DS.'assets'.DS.'css'.DS.'projectlog.css');
+		$this->baseurl = JURI::root(true);
+		$document->addStyleSheet($this->baseurl.'/components/com_projectlog/assets/css/projectlog.css');
 	
 		$model = &$this->getModel();
 		$project = &$this->get('data');
 		$logs = &$this->get('logs');
 		$docs = &$this->get('docs');
 		$document->setTitle( $project->title );	
-		$doc_path = 'media/com_projectlog/docs/';
+		$doc_path = $this->baseurl.'/media/com_projectlog/docs/';
 		
 		$this->assignRef('user', $user);
         $this->assignRef('project', $project);

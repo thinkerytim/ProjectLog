@@ -174,7 +174,7 @@ $contract_to = JFactory::getDate( $this->project->contract_to );
                     $img = 'publish_x.png';
                     $yesno = JText::_('NO');
                 }
-                echo '<img src="components/com_projectlog/assets/images/' . $img . '" border="0" alt="' . $yesno . '" align="absmiddle" /> ' . $yesno;
+                echo '<img src="'.$this->baseurl.'/components/com_projectlog/assets/images/' . $img . '" border="0" alt="' . $yesno . '" align="absmiddle" /> ' . $yesno;
             ?>
             </div>            
             <?php
