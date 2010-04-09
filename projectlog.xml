@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
+<install type="component" version="1.5.0">
+    <name>Project Log</name>
+    <creationDate>October 12, 2009</creationDate>
+    <author>The Thinkery</author>
+    <authorEmail>info@thethinkery.net</authorEmail>
+    <authorUrl>http://www.thethinkery.net</authorUrl>
+    <copyright>Copyright 2009 The Thinkery LLC. All rights reserved.</copyright>
+    <license>GNU/GPL</license>
+    <version>1.5.3</version>
+    <description>A projects component to keep track of projects, related documents, and tasks.</description>
+    <installfile>install.projectlog.php</installfile>
+    <uninstallfile>uninstall.projectlog.php</uninstallfile>
+
+    <files folder="site">
+        <filename>controller.php</filename>        
+        <filename>index.html</filename>
+        <filename>projectlog.php</filename>
+        <folder>assets</folder>
+        <folder>helpers</folder>
+        <folder>models</folder>
+        <folder>views</folder>
+    </files>
+
+    <media folder="media/com_projectlog" destination="com_projectlog">
+		<filename>index.html</filename>
+        <folder>docs</folder>
+	</media>
+
+    <params>
+    </params>
+
+    <languages>
+        <language tag="en-GB">language/site/en-GB/en-GB.com_projectlog.ini</language>
+    </languages>
+
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">install.projectlog.sql</file>
+        </sql>
+    </install>
+
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">uninstall.projectlog.sql</file>
+        </sql>
+    </uninstall>
+
+    <administration>
+        <menu img="components/com_projectlog/assets/images/icon-16-projectlog.png">Project Log</menu>
+        <submenu>
+			<menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="projects">Projects</menu>
+            <menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="categories">Categories</menu>
+            <menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="logs">Project Logs</menu>
+            <menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="docs">Documents</menu>
+            <menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="groups">Groups</menu>
+		</submenu>
+        <files folder="admin">
+            <filename>admin.projectlog.php</filename>
+            <filename>config.xml</filename>
+            <filename>controller.php</filename>
+            <filename>index.html</filename>
+            <filename>install.projectlog.sql</filename>
+            <filename>uninstall.projectlog.sql</filename>
+            <folder>assets</folder>
+            <folder>classes</folder>
+            <folder>controllers</folder>
+            <folder>elements</folder>
+            <folder>models</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+        </files> 
+        <languages>
+            <language tag="en-GB">language/admin/en-GB/en-GB.com_projectlog.ini</language>
+        </languages>
+    </administration> 
+</install>

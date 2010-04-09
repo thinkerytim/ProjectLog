@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <params>
+	<param name="offline" type="list" default="0" label="OFFLINE" description="OFFLINE DESC">
+        <option value="0">NO</option>
+		<option value="1">YES</option>
+    </param>
+    <param name="offmessage" type="textarea" cols="50" rows="3" label="OFF MESSAGE" description="OFF MESSAGE DESC" />
+    <param name="perpage" type="list" default="20" label="PER PAGE" description="PER PAGE DESC">
+        <option value="5">5</option>
+        <option value="10">10</option>
+		<option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+    </param>
+    <param name="basic_access" type="list" default="0" label="BASIC ACCESS" description="BASIC ACCESS DESC">
+        <option value="0">PUBLIC</option>
+        <option value="18">REGISTERED</option>
+        <option value="19">AUTHOR</option>
+        <option value="20">EDITOR</option>
+        <option value="23">MANAGER</option>
+        <option value="24">ADMINISTRATOR</option>
+        <option value="25">SUPER ADMIN</option>
+    </param>
+    <param name="log_access" type="list" default="18" label="LOG ACCESS" description="LOG ACCESS DESC">
+        <option value="0">PUBLIC</option>
+        <option value="18">REGISTERED</option>
+        <option value="19">AUTHOR</option>
+        <option value="20">EDITOR</option>
+        <option value="23">MANAGER</option>
+        <option value="24">ADMINISTRATOR</option>
+        <option value="25">SUPER ADMIN</option>
+    </param>
+	<param name="doc_access" type="list" default="18" label="DOC ACCESS" description="DOC ACCESS DESC">
+        <option value="0">PUBLIC</option>
+        <option value="18">REGISTERED</option>
+        <option value="19">AUTHOR</option>
+        <option value="20">EDITOR</option>
+        <option value="23">MANAGER</option>
+        <option value="24">ADMINISTRATOR</option>
+        <option value="25">SUPER ADMIN</option>
+    </param>
+	<param name="pedit_access" type="list" default="19" label="EDIT PROJECTS ACCESS" description="EDIT PROJECTS ACCESS DESC">
+        <option value="0">PUBLIC</option>
+        <option value="18">REGISTERED</option>
+        <option value="19">AUTHOR</option>
+        <option value="20">EDITOR</option>
+        <option value="23">MANAGER</option>
+        <option value="24">ADMINISTRATOR</option>
+        <option value="25">SUPER ADMIN</option>
+    </param>
+    <param name="ledit_access" type="list" default="19" label="EDIT LOGS ACCESS" description="EDIT LOGS ACCESS DESC">
+        <option value="0">PUBLIC</option>
+        <option value="18">REGISTERED</option>
+        <option value="19">AUTHOR</option>
+        <option value="20">EDITOR</option>
+        <option value="23">MANAGER</option>
+        <option value="24">ADMINISTRATOR</option>
+        <option value="25">SUPER ADMIN</option>
+    </param>
+    <param name="dedit_access" type="list" default="19" label="EDIT DOCS ACCESS" description="EDIT DOCS ACCESS DESC">
+        <option value="0">PUBLIC</option>
+        <option value="18">REGISTERED</option>
+        <option value="19">AUTHOR</option>
+        <option value="20">EDITOR</option>
+        <option value="23">MANAGER</option>
+        <option value="24">ADMINISTRATOR</option>
+        <option value="25">SUPER ADMIN</option>
+    </param>
+    <param name="doc_types" type="text" label="ALLOWED DOCS" description="ALLOWED DOCS DESC" />
+    <param name="approval" type="list" default="0" label="REQUIRE APPROVAL" description="REQUIRE APPROVAL DESC">
+        <option value="0">NO</option>
+		<option value="1">YES</option>
+    </param>
+    <param name="plogeditor" type="list" default="0" label="FRONT END EDITOR" description="FRONT END EDITOR DESC">
+        <option value="0">NO</option>
+		<option value="1">YES</option>
+    </param>
+    <param name="notify_admin_project" type="list" default="0" label="NOTIFY ADMIN PROJECT" description="NOTIFY ADMIN PROJECT DESC">
+        <option value="0">NO</option>
+		<option value="1">YES</option>
+    </param>
+    <param name="notify_admin_log" type="list" default="0" label="NOTIFY ADMIN LOG" description="NOTIFY ADMIN LOG DESC">
+        <option value="0">NO</option>
+		<option value="1">YES</option>
+    </param>
+    <param name="notify_admin_doc" type="list" default="0" label="NOTIFY ADMIN DOC" description="NOTIFY ADMIN DOC DESC">
+        <option value="0">NO</option>
+		<option value="1">YES</option>
+    </param>
+    <param name="footer" type="list" default="1" label="FOOTER" description="FOOTER DESC">
+        <option value="0">NO</option>
+		<option value="1">YES</option>
+    </param>
+  </params>
+</config>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Project Layout">
+		<message>
+			<![CDATA[Layout showing details of a single project.]]>
+		</message>
+	</layout>
+	<state>
+		<name>Project Layout</name>
+		<description>Layout showing a single project. Select a project from the dropdown to the right.</description>
+		<url addpath="/administrator/components/com_projectlog/elements">
+			<param name="id" type="project" default="0" label="Project" description="Select project" />
+		</url>
+	</state>
+</metadata>
