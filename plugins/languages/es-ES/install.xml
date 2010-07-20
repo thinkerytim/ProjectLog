@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="language" client="both" method="upgrade">
+	<name>Project Log</name>
+	<tag>es-ES</tag>
+	<version>1.5.3</version>
+	<creationDate>2009-10-15</creationDate>
+	<author>The Thinkery LLC</author>
+	<authorEmail>info@thethinkery.net</authorEmail>
+	<authorUrl>http://www.fusionsistemas.com</authorUrl>
+	<copyright>Copyright (C) 2009 All rights reserved.</copyright>
+	<license>GNU/GPL See License</license>
+	<description>Spanish language files for Project Log V1.5.3. Thanks to Marcos Diep - Fusion Sistemas for translation. http://www.fusionsistemas.com</description>
+	<administration>
+		<files folder="admin">
+			<filename>es-ES.com_projectlog.ini</filename>
+		</files>
+	</administration>
+	<site>
+		<files folder="site">
+			<filename>es-ES.com_projectlog.ini</filename>
+		</files>
+	</site>
+</install>

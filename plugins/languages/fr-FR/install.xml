@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="language" client="both" method="upgrade">
+	<name>Project Log</name>
+	<tag>fr-FR</tag>
+	<version>1.5.3</version>
+	<creationDate>2009-12-03</creationDate>
+	<author>The Thinkery LLC</author>
+	<authorEmail>info@thethinkery.net</authorEmail>
+	<authorUrl>http://www.thethinkery.net</authorUrl>
+	<copyright>Copyright (C) 2009 All rights reserved.</copyright>
+	<license>GNU/GPL See License</license>
+	<description>French language files for Project Log V1.5.3. Thanks to Thinkery Extensions user Marc for translation.</description>
+	<administration>
+		<files folder="admin">
+			<filename>fr-FR.com_projectlog.ini</filename>
+		</files>
+	</administration>
+	<site>
+		<files folder="site">
+			<filename>fr-FR.com_projectlog.ini</filename>
+		</files>
+	</site>
+</install>
