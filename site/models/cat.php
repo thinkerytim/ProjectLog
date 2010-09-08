@@ -137,16 +137,21 @@ class projectlogModelCat extends JModel
 	function _buildContentWhere()
 	{
 		global $mainframe, $option;
+        $db = &JFactory::getDBO();
+        
         $where = array();
         $where = ' AND p.category = ' . $this->_id;
 
         $filter 			= $mainframe->getUserStateFromRequest( $option.'.cat.filter', 'filter', '', 'int' );
         $search 			= $mainframe->getUserStateFromRequest( $option.'.cat.search', 'search', '', 'string' );
 
+        $search	= urldecode($search);
+        $search	= JString::strtolower($search);
+
 		if ($search && $filter == 1) {
-			$where .= ' AND LOWER(p.title) LIKE \'%'.htmlentities($search, ENT_NOQUOTES).'%\' ';
+			$where .= ' AND LOWER(p.title) LIKE '.$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false );
 		}elseif( $search && $filter == 2 ){
-            $where .= ' AND LOWER(p.release_id) LIKE \'%'.htmlentities($search, ENT_NOQUOTES).'%\' ';
+            $where .= ' AND LOWER(p.release_id) LIKE '.$db->Quote( '%'.$db->getEscaped( $search, true ).'%', false );
         }
 
 		return $where;
