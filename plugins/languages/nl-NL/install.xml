@@ -9,7 +9,7 @@
 	<authorUrl>http://www.thethinkery.net</authorUrl>
 	<copyright>Copyright (C) 2011 All rights reserved.</copyright>
 	<license>GNU/GPL See License</license>
-	<description>Dutch language files for Project Log V1.5.3. Thanks to Thinkery Extensions user Marjon for translation.</description>
+	<description>Dutch language files for Project Log V1.5.3. Thanks to W-Bizz for the translation.</description>
 	<administration>
 		<files folder="admin">
 			<filename>nl-NL.com_projectlog.ini</filename>
