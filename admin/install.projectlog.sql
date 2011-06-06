@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS `#__projectlog_docs` (
   `path` varchar(255) NOT NULL default '',
   `date` date NOT NULL default '0000-00-00',
   `submittedby` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  INDEX (  `project_id` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
 
 CREATE TABLE IF NOT EXISTS `#__projectlog_groups` (
@@ -24,7 +25,9 @@ CREATE TABLE IF NOT EXISTS `#__projectlog_groups_mid` (
   `id` int(11) NOT NULL auto_increment,
   `group_id` int(11) NOT NULL default '0',
   `user_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  INDEX (  `group_id` ),
+  INDEX ( `user_id` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=66 ;
 
 CREATE TABLE IF NOT EXISTS `#__projectlog_logs` (
@@ -37,7 +40,9 @@ CREATE TABLE IF NOT EXISTS `#__projectlog_logs` (
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified_by` int(11) NOT NULL default '0',
   `published` tinyint(1) NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  INDEX (  `project_id` ),
+  INDEX ( `loggedby` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
 
 CREATE TABLE IF NOT EXISTS `#__projectlog_projects` (
@@ -67,5 +72,12 @@ CREATE TABLE IF NOT EXISTS `#__projectlog_projects` (
   `approved` tinyint(1) NOT NULL default '0',
   `created_by` int(11) NOT NULL default '0',
   `published` tinyint(1) NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  INDEX (  `category` ),
+  INDEX ( `group_access`),
+  INDEX ( `release_id` ),
+  INDEX ( `job_id` ),
+  INDEX ( `task_id` ),
+  INDEX ( `manager` ),
+  INDEX ( `chief` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
