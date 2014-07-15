@@ -10,33 +10,19 @@
 
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'classes'.DS.'admin.class.php');
-require_once (JPATH_COMPONENT_SITE .DS.'helpers'.DS.'html.helper.php');
-require_once (JPATH_ADMINISTRATOR.DS.'components'.DS.'com_menus'.DS.'helpers'.DS.'helper.php' );
-
-$debug = true;
-// Require the base controller
-
-require_once( JPATH_COMPONENT.DS.'controller.php' );
-
-// Require specific controller if requested
-if($controller = JRequest::getWord('controller')) {
-    $path = JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php';
-    if (file_exists($path)) {
-        require_once $path;
-    } else {
-        $controller = '';
-    }
+// Access check.
+if (!JFactory::getUser()->authorise('core.manage', 'com_property')) {
+	return JError::raise(E_WARNING, 404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
-// Create the controller
-$classname    = 'projectlogController'.$controller;
-$controller   = new $classname( );
+require_once (JPATH_COMPONENT.'/controller.php');
+require_once (JPATH_COMPONENT.'/classes/admin.class.php');
+require_once (JPATH_COMPONENT_SITE.'/helpers/html.helper.php');
 
-// Perform the Request task
-$controller->execute( JRequest::getVar( 'task' ) );
+// Include dependancies
+jimport('joomla.application.component.controller');
 
-// Redirect if set by the controller
+// Execute the task.
+$controller	= JControllerLegacy::getInstance('Projectlog');
+$controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();
-
-?>

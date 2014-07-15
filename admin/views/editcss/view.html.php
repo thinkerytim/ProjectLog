@@ -21,7 +21,7 @@ class projectlogViewEditcss extends JView {
         $settings   = & JComponentHelper::getParams( 'com_projectlog' );
 		$option		= JRequest::getCmd('option');
 		$fname	    = JRequest::getVar('css_file');
-		$filename   = JPATH_COMPONENT_SITE.DS.'assets'.DS.'css'.DS.$fname;
+		$filename   = JPATH_COMPONENT_SITE.'/assets/css/'.$fname;
 		
 		jimport('joomla.filesystem.file');
 

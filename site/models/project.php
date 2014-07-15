@@ -238,7 +238,7 @@ class ProjectlogModelProject extends JModel
 
         //Set up the source and destination of the file
         $src = $file['tmp_name'];
-        $dest = JPATH_SITE.DS.'media'.DS.'com_projectlog'.DS.'docs'.DS.$filename;
+        $dest = JPATH_SITE.'/media/com_projectlog/docs/'.$filename;
         $ext = strtolower(JFile::getExt($filename) );
 
         if(file_exists($dest)){
@@ -259,7 +259,7 @@ class ProjectlogModelProject extends JModel
 
     function deleteFile($file){
         jimport('joomla.filesystem.file');
-        $path = JPATH_SITE.DS.'media'.DS.'com_projectlog'.DS.'docs'.DS;
+        $path = JPATH_SITE.'/media/com_projectlog/docs'.DS;
         JFile::delete($path.$file);
     }
 }

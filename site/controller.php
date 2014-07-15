@@ -12,9 +12,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.controller');
-require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'classes'.DS.'admin.class.php');
-require_once(JPATH_COMPONENT.DS.'helpers'.DS.'html.helper.php');
-require_once(JPATH_COMPONENT.DS.'helpers'.DS.'query.php');
+require_once(JPATH_COMPONENT_ADMINISTRATOR.'/classes/admin.class.php');
+require_once(JPATH_COMPONENT.'/helpers/html.helper.php');
+require_once(JPATH_COMPONENT.'/helpers/query.php');
 
 class projectlogController extends JController
 {

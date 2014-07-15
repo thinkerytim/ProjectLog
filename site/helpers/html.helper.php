@@ -18,7 +18,7 @@ class projectlogHTML {
 		$html .= '<tr>
 					 <td colspan="2" align="center">
 						<div class="rc_noresults" style="border-color: ' . $accent_color . ';">
-							<img src="administrator'.DS.'components'.DS.'com_projectlog'.DS.'assets'.DS.'images'.DS.'projectlog1.jpg" alt="' . JText::_('NO RECORDS') . '" /><br />
+							<img src="administrator/components/com_projectlog/assets/images/projectlog1.jpg" alt="' . JText::_('NO RECORDS') . '" /><br />
 							' . JText::_('NO RECORDS TEXT') . '
 						</div>
 				    </td>

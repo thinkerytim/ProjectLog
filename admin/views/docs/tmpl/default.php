@@ -57,7 +57,7 @@ defined('_JEXEC') or die('Restricted access');
                 $k = 0;
                 for ($i=0, $n=count( $this->rows ); $i < $n; $i++) {
                     $row = &$this->rows[$i];
-                    $filelink = '../media'.DS.'com_projectlog'.DS.'docs'.DS.$row->path;
+                    $filelink = '../media/com_projectlog/docs/'.$row->path;
                     $link 		= 'index.php?option=com_projectlog&amp;controller=docs&amp;task=edit&amp;cid[]='. $row->id;
                     $project_link = 'index.php?option=com_projectlog&amp;controller=projects&amp;task=edit&amp;cid[]='. $row->project_id;
                     $checked 	= JHTML::_('grid.id', $i, $row->id );

@@ -9,25 +9,38 @@
  */
 
 defined( '_JEXEC' ) or die( 'Restricted access' );
-jimport( 'joomla.application.component.controller' );
+jimport( 'joomla.application.component.controller');
 
-class projectlogController extends JController
+class IpropertyController extends JControllerLegacy
 {
-	var $debug = true;
-	function __construct()
-	{
-		parent::__construct();
-	}
+	public function display($cachable = false, $urlparams = false)
+	{        
+        $view   = $this->input->get('view', 'projects');
+		$layout = $this->input->get('layout', 'default');
+		$id     = $this->input->getInt('id');
 
-	function display()
-	{
-        $user 		= & JFactory::getUser();
-        $document	= & JFactory::getDocument();
-        if( !JRequest::getVar('view')):
-            JRequest::setVar( 'view', 'projects' );
-        endif;
+		// Check for edit form.
+        $views = array( 'category'=>'categories',
+                        'project'=>'projects',
+                        'log'=>'logs',
+                        'doc'=>'docs');
 
-        parent::display();
+        foreach( $views as $key => $value )
+        {
+            if ($view == $key && $layout == 'edit' && !$this->checkEditId('com_projectlog.edit.'.$key, $id)) 
+            {
+                // Somehow the person just went to the form - we don't allow that.
+                $this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+                $this->setMessage($this->getError(), 'error');
+                $this->setRedirect(JRoute::_('index.php?option=com_projectlog&view='.$value, false));
+
+                return false;
+            }
+        }
+        
+		parent::display($cachable);
+        return $this;
 	}
 }
+
 

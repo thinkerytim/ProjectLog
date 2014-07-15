@@ -14,7 +14,7 @@ class projectlogAdmin {
 
 	function _getversion()
 	{
-		$xmlfile = JPATH_COMPONENT_ADMINISTRATOR.DS.'projectlog.xml';
+		$xmlfile = JPATH_COMPONENT_ADMINISTRATOR.'/projectlog.xml';
 		if (file_exists($xmlfile)) {
 			$xmlDoc = new JSimpleXML();
 			$xmlDoc->loadFile($xmlfile);

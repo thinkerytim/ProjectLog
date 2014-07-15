@@ -141,7 +141,7 @@ class projectlogModeldocs extends JModel
 
     function deleteFile($file){
         jimport('joomla.filesystem.file');
-        $path = JPATH_SITE.DS.'media'.DS.'com_projectlog'.DS.'docs'.DS;
+        $path = JPATH_SITE.'/media/com_projectlog/docs'.DS;
         JFile::delete($path.$file);
     }
 }//Class end

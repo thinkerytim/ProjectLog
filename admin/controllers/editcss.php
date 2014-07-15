@@ -25,7 +25,7 @@ class projectlogControllerEditcss extends projectlogController
         $task=JRequest::getvar('task');
         $filecontent=JRequest::getvar('filecontent');
         $css_file=JRequest::getvar('css_file');
-        $file = JPATH_COMPONENT_SITE.DS.'assets'.DS.'css'.DS.$css_file;
+        $file = JPATH_COMPONENT_SITE.'/assets/css/'.$css_file;
         //saving
         jimport('joomla.filesystem.file');
         $returnid = JFile::write($file, $filecontent);
