@@ -1,9 +1,9 @@
 <?php
 /**
- * @version 1.5.3 2009-10-12
+ * @version 3.3.1 2014-07-15
  * @package Joomla
  * @subpackage Project Log
- * @copyright (C) 2009 the Thinkery
+ * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
  * @link http://thethinkery.net
  * @license GNU/GPL see LICENSE.php
  */
@@ -24,9 +24,10 @@ class projectlogAdmin {
 	
 	function footer( )
 	{		
-		echo '<div align="center"><a href="http://www.thethinkery.net" target="_blank">Project Log v.';
-		echo projectlogAdmin::_getversion();		
-		echo ' by The Thinkery LLC</a></div>';
+		$version = projectlogAdmin::_getversion();
+        $footer_display = '<p class="center small"><a href="http://www.thethinkery.net" target="_blank">Project Log v.'.$version.' by The Thinkery LLC</a></p>';
+
+        echo $footer_display;
 	}
 }
 

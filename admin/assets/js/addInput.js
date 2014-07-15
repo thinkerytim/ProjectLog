@@ -1,3 +1,11 @@
+/**
+ * @version 3.3.1 2014-07-15
+ * @package Joomla
+ * @subpackage Project Log
+ * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
+ * @link http://thethinkery.net
+ * @license GNU/GPL see LICENSE.php
+ */
 
 var arrInput = new Array(0);
 var arrInputValue = new Array(0);

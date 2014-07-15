@@ -1,10 +1,10 @@
-
 /**
- * @version 1.5.1 2009-08-14
+ * @version 3.3.1 2014-07-15
  * @package Joomla
- * @subpackage Intellectual Property
- * @copyright (C)  2008 the Thinkery
- * @license see LICENSE.php
+ * @subpackage Project Log
+ * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
+ * @link http://thethinkery.net
+ * @license GNU/GPL see LICENSE.php
  */
 
 function Image(i,fn,t,p)
