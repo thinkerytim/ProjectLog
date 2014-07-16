@@ -12,7 +12,8 @@ defined('_JEXEC') or die('Restricted access');
 
 class projectlogHTML {
 	
-	function buildNoResults($accent_color, $wrapper = null){
+	public static function buildNoResults($accent_color, $wrapper = null)
+    {
 		$html = '';
         if( $wrapper ) $html .= '<table class="rctable">';
 		$html .= '<tr>
@@ -28,7 +29,7 @@ class projectlogHTML {
 		return $html;
 	}
 	
-	function buildThinkeryFooter($accent_color){
+	public static function buildThinkeryFooter($accent_color){
 		$html = '';
 		$html .= '<div class="rc_project_footer">
 						'. JText::_('PROJECT LOG FOOTER'). ' ' . projectlogAdmin::_getversion(). ' ' . JText::_('BY') . ' <a href="http://www.thethinkery.net" target="_blank" style="color: ' . $accent_color . ';">theThinkery.net</a>
@@ -36,7 +37,7 @@ class projectlogHTML {
 		return $html;
 	}
 	
-	function sentence_case($string) {
+	public static function sentence_case($string) {
 		$sentences = preg_split('/([.?!]+)/', $string, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
 		$new_string = '';
 		foreach ($sentences as $key => $sentence) {
@@ -47,7 +48,7 @@ class projectlogHTML {
 		return trim($new_string);
 	}
 	
-	function getItemid( $view ){
+	public static function getItemid( $view ){
 		//get item id for agent listings page
 		$database = JFactory::getDBO();
 		$query = "SELECT id FROM #__menu WHERE link LIKE '%index.php?option=com_projectlog&view=" . $view . "' AND published = 1";
@@ -56,7 +57,7 @@ class projectlogHTML {
 		return $Itemidresult;
 	}
     
-    function statusSelect($tag,$attrib,$sel=null){
+    public static function statusSelect($tag,$attrib,$sel=null){
         $stats = array();
         $stats[] = JHTML::_('select.option', '', JText::_( 'SELECT' ));
         $stats[] = JHTML::_('select.option', JText::_( 'IN PROGRESS' ), JText::_( 'IN PROGRESS' ) );
@@ -66,7 +67,7 @@ class projectlogHTML {
     }
 
 
-    function groupSelect($tag,$attrib,$sel=null){
+    public static function groupSelect($tag,$attrib,$sel=null){
 		$database = JFactory::getDBO();
 		$groups = array();
 		$groups[] = JHTML::_('select.option', '', JText::_('GROUP'));
@@ -77,7 +78,7 @@ class projectlogHTML {
 		return  JHTML::_('select.genericlist',$groups,$tag,$attrib,'value','text',$sel);
 	}
 
-    function catSelect($tag,$attrib,$sel=null){
+    public static function catSelect($tag,$attrib,$sel=null){
 		$database = JFactory::getDBO();
 		$cats = array();
 		$cats[] = JHTML::_('select.option', '', JText::_('CATEGORY'));
@@ -88,7 +89,7 @@ class projectlogHTML {
 		return  JHTML::_('select.genericlist',$cats,$tag,$attrib,'value','text',$sel);
 	}
 
-    function projectSelect($tag,$attrib,$sel=null){
+    public static function projectSelect($tag,$attrib,$sel=null){
 		$database = JFactory::getDBO();
 		$projects = array();
 		$projects[] = JHTML::_('select.option', '', JText::_('PROJECT'));
@@ -99,50 +100,50 @@ class projectlogHTML {
 		return  JHTML::_('select.genericlist',$projects,$tag,$attrib,'value','text',$sel);
 	}
 
-    function getGroupName($group_id){
+    public static function getGroupName($group_id){
         $database = JFactory::getDBO();
         $database->setQuery( "SELECT name FROM #__projectlog_groups WHERE id = ".(int)$group_id );
         return $database->loadResult();
     }
 
-    function getGroupCount($group_id){
+    public static function getGroupCount($group_id){
         $database = JFactory::getDBO();
         $database->setQuery( "SELECT COUNT(id) FROM #__projectlog_groups_mid WHERE group_id = ".(int)$group_id );
         return $database->loadResult();
     }
 
-    function getCatName($cat_id){
+    public static function getCatName($cat_id){
         $database = JFactory::getDBO();
         $database->setQuery( "SELECT title FROM #__projectlog_categories WHERE id = ".(int)$cat_id );
         return $database->loadResult();
     }
 
-    function getCatCount($group_id){
+    public static function getCatCount($group_id){
         $database = JFactory::getDBO();
         $database->setQuery( "SELECT COUNT(id) FROM #__projectlog_projects WHERE group_access = ".(int)$group_id );
         return $database->loadResult();
     }
 
-    function getProjectName($project_id){
+    public static function getProjectName($project_id){
         $database = JFactory::getDBO();
         $database->setQuery( "SELECT title FROM #__projectlog_projects WHERE id = ".(int)$project_id );
         return $database->loadResult();
     }
 
-    function getUserName($user_id){
+    public static function getUserName($user_id){
         $database = JFactory::getDBO();
         $database->setQuery( "SELECT username FROM #__users WHERE id = ".(int)$user_id );
         return $database->loadResult();
     }
 
-	function userDetails( $user_id )
+	public static function userDetails( $user_id )
     {
         $database = JFactory::getDBO();
         $database->setQuery( "SELECT * FROM #__contact_details WHERE user_id = " . (int)$user_id );
         return $database->loadObject();
     }
     
-    function notifyAdmin($type, $user, $project){
+    public static function notifyAdmin($type, $user, $project){
 		global $mainframe;
         jimport( 'joomla.mail.helper' );
         $mode         = 1;

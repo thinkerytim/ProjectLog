@@ -10,9 +10,9 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
-jimport('joomla.application.component.model');
+jimport('joomla.application.component.modellist');
 
-class projectlogModelprojects extends JModel
+class ProjectlogModelProjects extends JModelList
 {
 	var $_data = null;
 	var $_total = null;
@@ -20,18 +20,130 @@ class projectlogModelprojects extends JModel
 	
 	function __construct()
 	{
-		parent::__construct();
+		if (empty($config['filter_fields'])) {
+			$config['filter_fields'] = array(
+				'id', 'p.id',
+				'category', 'p.category',
+                'group_access', 'p.group_access',
+                'release_id', 'p.release_id',
+                'job_id', 'p.job_id',
+                'title', 'p.title',
+				'published', 'p.published'
+			);
+		}
 
-		global $mainframe, $option;
+		parent::__construct($config);
+	}
+    
+    protected function getStoreId($id = '')
+	{
+		// Compile the store id.
+		$id	.= ':'.$this->getState('filter.search');
+		$id	.= ':'.$this->getState('filter.state');
 
-		$limit		= $mainframe->getUserStateFromRequest( $option.'.projects.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
-		$limitstart = $mainframe->getUserStateFromRequest( $option.'.projects.limitstart', 'limitstart', 0, 'int' );
+		return parent::getStoreId($id);
+	}
 
-		$this->setState('limit', $limit);
-		$this->setState('limitstart', $limitstart);
+	public function getTable($type = 'Project', $prefix = 'ProjectlogTable', $config = array())
+	{
+		return JTable::getInstance($type, $prefix, $config);
+	}
+
+	protected function populateState($ordering = null, $direction = null)
+	{
+		// Initialise variables.
+		$app = JFactory::getApplication('administrator');
+
+		// Load the filter state.
+		$search = $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+		$this->setState('filter.search', $search);
+
+		$state = $app->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
+		$this->setState('filter.state', $state);
+
+		// List state information.
+		parent::populateState();
+	}
+
+    protected function getListQuery()
+	{
+		// Initialise variables.
+		$db         = $this->getDbo();
+		$query      = $db->getQuery(true);
+
+		// Select the required fields from the table.
+		$query->select(
+			$this->getState(
+				'list.select',
+                'p.*,'.
+				'p.id as id,'.
+                'p.title as title'   
+			)
+		);
+		$query->from('`#__projectlog_projects` AS p');
+
+        // Join over the users for the checked out user.
+		$query->select('uc.name AS editor');
+		$query->join('LEFT', '#__users AS uc ON uc.id = p.checked_out');
+
+        // Join over the company
+		//$query->select('c.name as company_title');
+		//$query->join('LEFT', '`#__iproperty_companies` AS c ON c.id = a.company');
+        
+        // Join over the agent mid to get property count
+		//$query->join('LEFT', '`#__iproperty_agentmid` AS am ON am.agent_id = a.id');
+
+        // Join over user
+        //$query->select('u.username as user_username, u.id as user_id, u.name as user_name');
+		//$query->join('LEFT', '`#__users` AS u ON u.id = a.user_id');
+
+		// Filter by published state
+		$published = $this->getState('filter.state');
+		if (is_numeric($published)) {
+			$query->where('p.published = '.(int) $published);
+		} else if ($published === '') {
+			$query->where('(p.published IN (0, 1))');
+		}
+
+        // Filter by company.
+		/*$companyId = $this->getState('filter.company_id');
+		if ($companyId && is_numeric($companyId)) {
+			$query->where('a.company = '.(int) $companyId);
+		}*/
+
+		// Filter by search in title
+		$search = $this->getState('filter.search');
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where('p.id = '.(int) substr($search, 3));
+			}
+			else {
+				$search     = JString::strtolower($search);
+                $search     = explode(' ', $search);
+                $searchwhere   = array();
+                if (is_array($search)){ //more than one search word
+                    foreach ($search as $word){
+                        $searchwhere[] = 'LOWER(p.title) LIKE '.$db->Quote( '%'.$db->escape( $word, true ).'%', false );
+                        $searchwhere[] = 'LOWER(p.description) LIKE '.$db->Quote( '%'.$db->escape( $word, true ).'%', false );
+                    }
+                } else {
+                    $searchwhere[] = 'LOWER(p.title) LIKE '.$db->Quote( '%'.$db->escape( $search, true ).'%', false );
+                    $searchwhere[] = 'LOWER(p.description) LIKE '.$db->Quote( '%'.$db->escape( $search, true ).'%', false );
+                }
+                $query->where('('.implode( ' OR ', $searchwhere ).')');
+			}
+		}
+
+		// Add the list ordering clause.
+		$orderCol	= $this->state->get('list.ordering', 'release_date');
+		$orderDirn	= $this->state->get('list.direction', 'DESC');
+        $query->group('p.id');
+		$query->order($db->escape($orderCol.' '.$orderDirn));
+
+		return $query;
 	}
 	 
-	function getData()
+	/*function getData()
 	{
 		// Lets load the content if it doesn't already exist
 		if (empty($this->_data))
@@ -71,7 +183,7 @@ class projectlogModelprojects extends JModel
 		$where		= $this->_buildContentWhere();
 		$orderby	= $this->_buildContentOrderBy();
 
-		$query = 'SELECT  * FROM #__projectlog_projects'
+		$query = 'SELECT * FROM #__projectlog_projects'
 				 . $where
 				 . $orderby;
 
@@ -260,6 +372,6 @@ class projectlogModelprojects extends JModel
 			}
 		}
         return true;
-	}
+	}*/
 }//Class end
 ?>

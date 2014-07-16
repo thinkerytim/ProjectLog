@@ -9,9 +9,9 @@
  */
 
 defined( '_JEXEC' ) or die( 'Restricted access' );
-jimport( 'joomla.application.component.controller');
+jimport( 'joomla.application.component.controller' );
 
-class IpropertyController extends JControllerLegacy
+class ProjectlogController extends JControllerLegacy
 {
 	public function display($cachable = false, $urlparams = false)
 	{        
@@ -23,7 +23,8 @@ class IpropertyController extends JControllerLegacy
         $views = array( 'category'=>'categories',
                         'project'=>'projects',
                         'log'=>'logs',
-                        'doc'=>'docs');
+                        'doc'=>'docs',
+                        'group'=>'groups');
 
         foreach( $views as $key => $value )
         {

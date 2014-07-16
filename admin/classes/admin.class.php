@@ -10,25 +10,37 @@
  
 defined('_JEXEC') or die('Restricted access');
 
-class projectlogAdmin {
+class projectlogAdmin 
+{
 
-	function _getversion()
+	public static function _getversion()
 	{
-		$xmlfile = JPATH_COMPONENT_ADMINISTRATOR.'/projectlog.xml';
-		if (file_exists($xmlfile)) {
-			$xmlDoc = new JSimpleXML();
-			$xmlDoc->loadFile($xmlfile);
-			return $xmlDoc->document->version[0]->_data;
-		}
+		return self::getParam();
 	}
 	
-	function footer( )
+	public static function footer( )
 	{		
 		$version = projectlogAdmin::_getversion();
         $footer_display = '<p class="center small"><a href="http://www.thethinkery.net" target="_blank">Project Log v.'.$version.' by The Thinkery LLC</a></p>';
 
         echo $footer_display;
 	}
+    
+    public static function getParam( $ext_name = 'com_projectlog', $ext_type = 'component', $field_name = 'version' ) 
+    {
+        $db = JFactory::getDbo();
+        
+        $query = $db->getQuery(true);        
+        $query->select('manifest_cache')
+                ->from('#__extensions')
+                ->where('name = '.$db->Quote($ext_name))
+                ->where('type='.$db->Quote($ext_type));
+        
+        $db->setQuery($query);
+        $manifest = json_decode( $db->loadResult(), true );
+        
+        return $manifest[$field_name];
+    }
 }
 
 ?>

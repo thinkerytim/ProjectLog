@@ -11,13 +11,14 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.manage', 'com_property')) {
+if (!JFactory::getUser()->authorise('core.manage', 'com_projectlog')) {
 	return JError::raise(E_WARNING, 404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
 require_once (JPATH_COMPONENT.'/controller.php');
 require_once (JPATH_COMPONENT.'/classes/admin.class.php');
 require_once (JPATH_COMPONENT_SITE.'/helpers/html.helper.php');
+require_once (JPATH_COMPONENT.'/helpers/projectlog.php');
 
 // Include dependancies
 jimport('joomla.application.component.controller');

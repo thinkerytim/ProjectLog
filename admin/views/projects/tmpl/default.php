@@ -8,122 +8,178 @@
  * @license GNU/GPL see LICENSE.php
  */
 
-defined('_JEXEC') or die('Restricted access');
+// no direct access
+defined('_JEXEC') or die;
+
+JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+JHtml::_('behavior.modal');
+JHtml::_('behavior.tooltip');
+JHtml::_('dropdown.init');
+JHtml::_('formbehavior.chosen', 'select');
+
+$user       = JFactory::getUser();
+$userId     = $user->get('id');
+
+$listOrder  = $this->state->get('list.ordering');
+$listDirn   = $this->state->get('list.direction');
+$colspan    = 11;
+$sortFields = $this->getSortFields();
 ?>
 
 <script type="text/javascript">
-    function resetForm(){
-        document.adminForm.search.value='';
-        document.adminForm.filter.selectedIndex='';
-        document.adminForm.category.selectedIndex='';
-        document.adminForm.group_access.selectedIndex='';
-    }
+    Joomla.orderTable = function() {
+		table = document.getElementById("sortTable");
+		direction = document.getElementById("directionTable");
+		order = table.options[table.selectedIndex].value;
+		if (order != '<?php echo $listOrder; ?>') {
+			dirn = 'asc';
+		} else {
+			dirn = direction.options[direction.selectedIndex].value;
+		}
+		Joomla.tableOrdering(order, dirn, '');
+	}
 </script>
 
-<form action="index.php" method="post" name="adminForm">
-    <table class="adminform">
-        <tr>
-            <td width="100%">
-                <?php echo JText::_( 'SEARCH' ).' '.$this->lists['filter']; ?>
-                <?php echo JText::_( 'KEYWORD' ); ?> <input type="text" name="search" id="search" value="<?php echo $this->lists['search']; ?>" class="text_area" onChange="document.adminForm.submit();" />
-                <?php echo $this->lists['categories']; ?>&nbsp;
-                <?php echo $this->lists['groups']; ?>
-                <button onclick="document.adminForm.submit();"><?php echo JText::_( 'GO' ); ?></button>
-                <button onclick="resetForm();document.adminForm.submit();"><?php echo JText::_( 'RESET' ); ?></button>
-            </td>
-            <td nowrap="nowrap"><?php echo $this->lists['state']; ?></td>
-        </tr>
-    </table>
-    <table class="adminlist" cellspacing="1">
-        <thead>
-            <tr>
-                <th width="1%">#</th>
-                <th width="1%"><input type="checkbox" name="toggle" value="" onClick="checkAll(<?php echo count( $this->rows ); ?>);" /></th>
-                <th width="10%"><?php echo JHTML::_('grid.sort', JText::_('TITLE'), 'title', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-                <th width="10%"><?php echo JHTML::_('grid.sort', JText::_('CATEGORY'), 'category', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-                <th width="10%"><?php echo JHTML::_('grid.sort', JText::_('GROUP ACCESS'), 'group_access', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-                <th width="8%"><?php echo JHTML::_('grid.sort', JText::_('RELEASE #'), 'release_id', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-                <th width="5%"><?php echo JHTML::_('grid.sort', JText::_('JOB #'), 'job_id', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-                <th width="5%"><?php echo JHTML::_('grid.sort', JText::_('TASK #'), 'task_id', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-                <th width="10%"><?php echo JHTML::_('grid.sort', JText::_('WORKORDER #'), 'workorder_id', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-                <th width="10%"><?php echo JHTML::_('grid.sort', JText::_('RELEASE DATE'), 'release_date', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-                <th width="5%"><?php echo JText::_('LOGS'); ?></th>
-                <th width="5%"><?php echo JText::_('DOCS'); ?></th>
-                <th width="8%" nowrap="nowrap"><?php echo JHTML::_('grid.sort', JText::_('STATUS'), 'status', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-                <th width="4%" nowrap="nowrap"><?php echo JHTML::_('grid.sort', JText::_('APPROVED'), 'approved', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-                <th width="4%" nowrap="nowrap"><?php echo JHTML::_('grid.sort', JText::_('PUBLISHED'), 'published', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <td colspan="15">
-                    <?php echo $this->pageNav->getListFooter(); ?>
-                </td>
-            </tr>
-        </tfoot>
-        <tbody>
-            <?php
-            if(count($this->rows)){
-                $k = 0;
-                for ($i=0, $n=count( $this->rows ); $i < $n; $i++) {
-                    $row = &$this->rows[$i];
-                    $link 		= 'index.php?option=com_projectlog&amp;controller=projects&amp;task=edit&amp;cid[]='. $row->id;
-                    $log_link   = 'index.php?option=com_projectlog&amp;view=logs&amp;project_id='. $row->id;
-                    $doc_link   = 'index.php?option=com_projectlog&amp;view=docs&amp;project_id='. $row->id;
-                    $cat_link   = 'index.php?option=com_projectlog&controller=categories&task=edit&cid[]='. $row->category;
-                    $group_link = 'index.php?option=com_projectlog&controller=groups&task=edit&cid[]='. $row->group_access;
-                    $checked 	= JHTML::_('grid.id', $i, $row->id );
-                    $published 	= JHTML::_('grid.published', $row, $i );
-                    $approveimg = ($row->approved == 1) ? 'tick.png' : 'publish_x.png';
-                    $approvetask = ($row->approved == 1) ? 'disapprove' : 'approve';
-                    switch( $row->status ){
-                        case JText::_('IN PROGRESS'):
-                            $statusclass = 'green';
-                        break;
-                        case JText::_('ON HOLD'):
-                            $statusclass = 'orange';
-                        break;
-                        case JText::_('COMPLETE'):
-                            $statusclass = 'red';
-                        break;
-                    }
-                ?>
-                <tr class="<?php echo "row$k"; ?>">
-                    <td><?php echo $this->pageNav->getRowOffset( $i ); ?></td>
-                    <td><?php echo $checked;?></td>
-                    <td align="left"><a href="<?php echo $link;?>" ><?php echo $row->title; ?></a></td>
-                    <td align="center"><?php echo ($row->category) ? '<a href="'.$cat_link.'">'.projectlogHTML::getCatName($row->category).'</a>' : '--'; ?>&nbsp;</td>
-                    <td align="center"><?php echo ($row->group_access) ? '<a href="'.$group_link.'">'.projectlogHTML::getGroupName($row->group_access).'</a>' : '--'; ?>&nbsp;</td>
-                    <td align="center"><?php echo ($row->release_id) ? $row->release_id : '--'; ?>&nbsp;</td>
-                    <td align="center"><?php echo ($row->job_id) ? $row->job_id : '--'; ?>&nbsp;</td>
-                    <td align="center"><?php echo ($row->task_id) ? $row->task_id : '--'; ?>&nbsp;</td>
-                    <td align="center"><?php echo ($row->workorder_id) ? $row->workorder_id : '--'; ?>&nbsp;</td>
-                    <td align="center"><?php echo ($row->release_date) ? $row->release_date : '--'; ?></td>
-                    <td align="center"><a href="<?php echo $log_link; ?>"><?php echo JText::_('VIEW'); ?></a></td>
-                    <td align="center"><a href="<?php echo $doc_link; ?>"><?php echo JText::_('VIEW'); ?></a></td>
-                    <td align="center"><a href="javascript:void(0);" onClick="return listItemTask('cb<?php echo $i; ?>','changeStatus')" class="<?php echo $statusclass; ?>"><?php echo $row->status; ?></a></td>
-                    <td align="center">
-                        <a href="javascript:void(0);" onClick="return listItemTask('cb<?php echo $i; ?>','<?php echo $approvetask; ?>')">
-                            <img src="images/<?php echo $approveimg; ?>" border="0" alt="<?php echo $approvetask; ?>" />
-                        </a>
-                    </td>
-                    <td align="center"><?php echo $published; ?></td>
-                </tr>
-                <?php $k = 1 - $k; } ?>
-            <?php }else{ ?>
+<form action="<?php echo JRoute::_('index.php?option=com_projectlog&view=projects'); ?>" method="post" name="adminForm" id="adminForm">
+<?php if (!empty( $this->sidebar)): ?>
+    <div id="j-sidebar-container" class="span2">
+        <?php echo $this->sidebar; ?>
+    </div>
+    <div id="j-main-container" class="span10">
+<?php else : ?>
+    <div id="j-main-container">
+<?php endif;?>
+        <div id="filter-bar" class="btn-toolbar">
+            <div class="filter-search btn-group pull-left">
+                <label class="element-invisible" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
+                <input type="text" name="filter_search" class="inputbox" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>" />
+            </div>
+            <div class="btn-group pull-left hidden-phone">
+                <button class="btn tip" type="submit" rel="tooltip" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
+                <button class="btn tip" type="button" onclick="document.id('filter_search').value='';this.form.submit();" rel="tooltip" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>"><i class="icon-remove"></i></button>
+            </div>
+            <div class="btn-group pull-right hidden-phone">
+                <label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+                <?php echo $this->pagination->getLimitBox(); ?>
+            </div>
+            <div class="btn-group pull-right hidden-phone">
+                <label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
+                <select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+                    <option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
+                    <option value="asc" <?php if ($listDirn == 'asc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_ASCENDING');?></option>
+                    <option value="desc" <?php if ($listDirn == 'desc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_DESCENDING');?></option>
+                </select>
+            </div>
+            <div class="btn-group pull-right">
+                <label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+                <select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+                    <option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+                    <?php echo JHtml::_('select.options', $sortFields, 'value', 'text', $listOrder);?>
+                </select>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+
+        <table class="table table-striped" id="employeeList">
+            <thead>
                 <tr>
-                    <td colspan="15" align="center"><?php echo JText::_('NO PROJECTS'); ?></td>
+                    <th width="1%" class="hidden-phone">
+                        <input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+                    </th>
+                    <th width="12%"><?php echo JHtml::_('grid.sort',  'COM_PROJECTLOG_TITLE', 'title', $listDirn, $listOrder); ?></th>
+                    <th width="12%"><?php echo JHtml::_('grid.sort',  'COM_PROJECTLOG_CATEGORY', 'category', $listDirn, $listOrder); ?></th>
+                    <th width="12%"><?php echo JHTML::_('grid.sort',  'COM_PROJECTLOG_GROUP_ACCESS', 'group_access', $listDirn, $listOrder ); ?></th>
+                    <th width="15%"><?php echo JHtml::_('grid.sort',  'COM_PROJECTLOG_RELEASE_NUM', 'release_id', $listDirn, $listOrder); ?></th>
+                    <th width="10%"><?php echo JHtml::_('grid.sort',  'COM_PROJECTLOG_JOB_NUM', 'job_id', $listDirn, $listOrder); ?></th>
+                    <th width="10%"><?php echo JHtml::_('grid.sort',  'COM_PROJECTLOG_TASK_NUM', 'task_id', $listDirn, $listOrder); ?></th>
+                    <th width="10%"><?php echo JHtml::_('grid.sort',  'COM_PROJECTLOG_WORKORDER_NUM', 'workorder_id', $listDirn, $listOrder); ?></th>
+                    <th width="10%"><?php echo JHtml::_('grid.sort',  'COM_PROJECTLOG_RELEASE_DATE', 'release_date', $listDirn, $listOrder); ?></th>
+                    <th width="5%"><?php echo JText::_('COM_PROJECTLOG_LOGS'); ?></th>
+                    <th width="5%"><?php echo JText::_('COM_PROJECTLOG_DOCS'); ?></th>
+                    <th width="4%"><?php echo JHtml::_('grid.sort', JText::_('COM_PROJECTLOG_PUBLISHED'), 'published', $listDirn, $listOrder ); ?></th>                
+                    <th width="4%"><?php echo JHtml::_('grid.sort', JText::_('COM_PROJECTLOG_APPROVED'), 'approved', $listDirn, $listOrder ); ?></th>
+                    <th width="8%"><?php echo JHtml::_('grid.sort', JText::_('COM_PROJECTLOG_STATUS'), 'status', $listDirn, $listOrder ); ?></th>                
+                    <th width="1%" class="nowrap"><?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?></th>
                 </tr>
-            <?php } ?>
-        </tbody>
-    </table>
-    <?php echo JHTML::_( 'form.token' ); ?>
-	<input type="hidden" name="boxchecked" value="0" />
-	<input type="hidden" name="option" value="com_projectlog" />
-	<input type="hidden" name="view" value="projects" />
-	<input type="hidden" name="task" value="" />
-	<input type="hidden" name="controller" value="projects" />
-	<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />
-	<input type="hidden" name="filter_order_Dir" value="" />
+            </thead>
+            
+            <tfoot>
+                <tr>
+                    <td colspan="12"><?php echo $this->pagination->getListFooter(); ?>
+                </tr>
+            </tfoot>
+            
+            <tbody>
+                <?php 
+                if(count($this->items) > 0):
+                    foreach ($this->items as $i => $item) :
+                        $link 		= 'index.php?option=com_projectlog&task=projects.edit&id='.$item->id;
+                        $log_link   = 'index.php?option=com_projectlog&view=logs&project_id='.$item->id;
+                        $doc_link   = 'index.php?option=com_projectlog&view=docs&project_id='.$item->id;
+                        $cat_link   = 'index.php?option=com_projectlog&task=categories.edit&id='.$item->category;
+                        $group_link = 'index.php?option=com_projectlog&task=groups.edit&id='.$item->group_access;
+
+                        // joomla stuff
+                        $ordering       = ($listOrder == 'ordering');
+                        $canCreate      = $user->authorise('core.create',		'com_projectlog.project.'.$item->id);
+                        $canEdit        = $user->authorise('core.edit',			'com_projectlog.project.'.$item->id);
+                        $canChange      = $user->authorise('core.edit.state',	'com_projectlog.project.'.$item->id);
+                        ?>                
+                        <tr class="row<?php echo $i % 2; ?>">
+                            <td class="center">
+                                <?php echo JHtml::_('grid.id', $i, $item->id); ?>
+                            </td>
+                            <td>
+                                <?php if ($canEdit) : ?>
+                                    <a href="<?php echo JRoute::_('index.php?option=com_projectlog&task=project.edit&id='.(int) $item->id); ?>">
+                                        <?php echo $this->escape($item->title); ?></a>
+                                <?php else : ?>
+                                    <?php echo $this->escape($item->title); ?>
+                                <?php endif; ?>
+                            </td>
+                            <td><?php echo ($item->category) ? '<a href="'.$cat_link.'">'.projectlogHTML::getCatName($item->category).'</a>' : '--'; ?></td>
+                            <td class="center"><?php echo ($item->group_access) ? '<a href="'.$group_link.'">'.projectlogHTML::getGroupName($item->group_access).'</a>' : '--'; ?></td>
+                            <td class="center"><?php echo ($item->release_id) ? $item->release_id : '--'; ?></td>
+                            <td class="center"><?php echo ($item->job_id) ? $item->job_id : '--'; ?></td>
+                            <td class="center"><?php echo ($item->task_id) ? $item->task_id : '--'; ?></td>
+                            <td class="center"><?php echo ($item->workorder_id) ? $item->workorder_id : '--'; ?>&nbsp;</td>
+                            <td class="center"><?php echo ($item->release_date) ? $item->release_date : '--'; ?></td>
+                            <td align="center"><a href="<?php echo $log_link; ?>"><?php echo JText::_('COM_PROJECTLOG_VIEW'); ?></a></td>
+                            <td align="center"><a href="<?php echo $doc_link; ?>"><?php echo JText::_('COM_PROJECTLOG_VIEW'); ?></a></td>
+                            <td class="center">
+                                <?php echo JHtml::_('jgrid.published', $item->published, $i, 'employees.', $canChange, 'cb'); ?>
+                            </td>
+                            <td class="center">
+                                <?php echo JHtml::_('pladministrator.approve', $item->approved, $i, $canChange); ?>
+                            </td>
+                            <td class="center">
+                                <?php echo JHtml::_('pladministrator.status', $item->status, $i, $canChange); ?>
+                            </td>
+                            <td class="center">
+                                <?php echo $item->id; ?>
+                            </td>
+                        </tr>
+                        <?php 
+                    endforeach;
+                else:
+                ?>
+                    <tr>
+                        <td colspan="15" class="center">
+                            <?php echo JText::_('COM_PROJECTLOG_NO_RESULTS'); ?>
+                        </td>
+                    </tr>
+                <?php
+                endif;
+                ?>
+            </tbody>
+        </table>
+		<?php //Load the batch processing form. ?>
+		<?php //echo $this->loadTemplate('batch'); ?>
+    </div>
+    <input type="hidden" name="task" value="" />
+    <input type="hidden" name="boxchecked" value="0" />
+    <input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
+    <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
+    <?php echo JHtml::_('form.token'); ?>
 </form>
-<p class="copyright"><?php echo projectlogAdmin::footer(); ?></p>
+<?php echo projectlogAdmin::footer( ); ?>
