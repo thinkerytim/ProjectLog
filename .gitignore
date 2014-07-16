@@ -1,0 +1,6 @@
+nbproject/
+!.gitignore
+*.zip
+Thumb.db
+*~
+.DS_Store
