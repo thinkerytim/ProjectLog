@@ -285,14 +285,14 @@
 		/>
         
         <field name="chief" type="user"
-			label="COM_PROJECTLOG_FIELD_INFORMATION_CHIEF_LABEL"
-			description="COM_PROJECTLOG_FIELD_INFORMATION_CHIEF_DESC"
+			label="COM_PROJECTLOG_FIELD_CHIEF_LABEL"
+			description="COM_PROJECTLOG_FIELD_CHIEF_DESC"
             required="true"
 		/>
         
         <field name="technicians" type="text"
-			label="COM_PROJECTLOG_FIELD_INFORMATION_TECHNICIANS_LABEL"
-			description="COM_PROJECTLOG_FIELD_INFORMATION_TECHNICIANS_DESC"
+			label="COM_PROJECTLOG_FIELD_TECHNICIANS_LABEL"
+			description="COM_PROJECTLOG_FIELD_TECHNICIANS_DESC"
 			size="30"
 		/>
         
@@ -335,15 +335,15 @@
 		/>
         
         <field name="general_loc" type="textarea"
-			label="COM_PROJECTLOG_FIELD_INFORMATION_GENERAL_LOC_LABEL"
-			description="COM_PROJECTLOG_FIELD_INFORMATION_GENERAL_LOC_DESC"
+			label="COM_PROJECTLOG_FIELD_GENERAL_LOC_LABEL"
+			description="COM_PROJECTLOG_FIELD_GENERAL_LOC_DESC"
 			rows="3"
 			cols="30"
 		/>
         
         <field name="specific_loc" type="textarea"
-			label="COM_PROJECTLOG_FIELD_INFORMATION_SPECIFIC_LOC_LABEL"
-			description="COM_PROJECTLOG_FIELD_INFORMATION_SPECIFIC_LOC_DESC"
+			label="COM_PROJECTLOG_FIELD_SPECIFIC_LOC_LABEL"
+			description="COM_PROJECTLOG_FIELD_SPECIFIC_LOC_DESC"
 			rows="3"
 			cols="30"
 		/>

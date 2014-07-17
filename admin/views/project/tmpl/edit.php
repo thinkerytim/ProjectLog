@@ -41,34 +41,42 @@ $assoc = JLanguageAssociations::isEnabled();
 			<div class="span9">
 				<div class="row-fluid form-horizontal-desktop">
 					<div class="span6">
+                        <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_DETAILS'); ?></h4>
                         <?php echo $this->form->renderField('client'); ?>
                         <?php echo $this->form->renderField('project_type'); ?>
                         <?php echo $this->form->renderField('release_date'); ?>
 						<?php echo $this->form->renderField('image'); ?>
-                        <div class="alert alert-info">
+                    
+                        <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_CREW'); ?></h4>
 						<?php echo $this->form->renderField('manager'); ?>
                         <?php echo $this->form->renderField('chief'); ?>
                         <?php echo $this->form->renderField('technicians'); ?>
+                        <?php echo $this->form->renderField('onsite'); ?>
+                    
+                        <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_DATES'); ?></h4>
                         <?php echo $this->form->renderField('deployment_from'); ?>
                         <?php echo $this->form->renderField('deployment_to'); ?>
                         <?php echo $this->form->renderField('contract_from'); ?>
-                        <?php echo $this->form->renderField('contract_to'); ?>                            
-                        </div>
-                        <?php echo $this->form->renderField('onsite'); ?>					
+                        <?php echo $this->form->renderField('contract_to'); ?>                        					
 					</div>
 					<div class="span6">
-                        <?php echo $this->form->renderField('email_to'); ?>
+                        <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_LOC'); ?></h4>                        
                         <?php echo $this->form->renderField('general_loc'); ?>
                         <?php echo $this->form->renderField('specific_loc'); ?>
-						<?php echo $this->form->renderField('release_id'); ?>
+						
+                        <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_IDENTIFIERS'); ?></h4>       
+                        <?php echo $this->form->renderField('release_id'); ?>
                         <?php echo $this->form->renderField('job_id'); ?>
                         <?php echo $this->form->renderField('workorder_id'); ?>
                         <?php echo $this->form->renderField('task_id'); ?>
                         
-						<?php echo $this->form->renderField('mobile'); ?>						
+						<h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_CONTACT'); ?></h4>   
+                        <?php echo $this->form->renderField('email_to'); ?>
+                        <?php echo $this->form->renderField('mobile'); ?>						
 						<?php echo $this->form->renderField('webpage'); ?>
                         
-						<?php echo $this->form->renderField('sortname1'); ?>
+						<h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_FILTERS'); ?></h4>   
+                        <?php echo $this->form->renderField('sortname1'); ?>
 						<?php echo $this->form->renderField('sortname2'); ?>
 						<?php echo $this->form->renderField('sortname3'); ?>
 					</div>
