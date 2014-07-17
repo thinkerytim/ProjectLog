@@ -150,10 +150,7 @@ class com_projectlogInstallerScript
         $drop_results   = array();
         $pl_uninstall_error = 0;
 
-        $drop_array = array('plcategories'  => 'projectlog_categories',
-                            'pldocs'        => 'projectlog_docs',
-                            'plgroups'      => 'projectlog_groups',
-                            'plgroupsmid'   => 'projectlog_groups_mid',
+        $drop_array = array('pldocs'        => 'projectlog_docs',
                             'pllogs'        => 'projectlog_logs',
                             'plprojects'    => 'projectlog_projects');
 
@@ -184,10 +181,7 @@ class com_projectlogInstallerScript
                         </tr>
                     </tfoot>
                     <tbody>
-                        <tr><td class="key">Categories Table</td><td style="text-align: center !important;">'.$drop_results['plcategories'].'</td></tr>
                         <tr><td class="key">Docs Table</td><td style="text-align: center !important;">'.$drop_results['pldocs'].'</td></tr>
-                        <tr><td class="key">Groups Table</td><td style="text-align: center !important;">'.$drop_results['plgroups'].'</td></tr>
-                        <tr><td class="key">Groups Mid Table</td><td style="text-align: center !important;">'.$drop_results['plgroupsmid'].'</td></tr>
                         <tr><td class="key">Logs Table</td><td style="text-align: center !important;">'.$drop_results['pllogs'].'</td></tr>
                         <tr><td class="key">Projects Table</td><td style="text-align: center !important;">'.$drop_results['plprojects'].'</td></tr>                        
                     </tbody>

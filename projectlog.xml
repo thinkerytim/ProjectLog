@@ -6,7 +6,8 @@
     <authorEmail>info@thethinkery.net</authorEmail>
     <authorUrl>http://www.thethinkery.net</authorUrl>
     <copyright>Copyright (C) 2009 - 2014 The Thinkery LLC. All rights reserved.</copyright>
-    <license>GNU/GPL</license>
+    <license>GNU General Public License version 2 or later; see
+		LICENSE.txt</license>
     <version>3.3.1</version>
     <description></description>
     <scriptfile>installfile.php</scriptfile>
@@ -14,7 +15,9 @@
     <files folder="site">
         <filename>controller.php</filename>        
         <filename>index.html</filename>
+        <filename>metadata.xml</filename>
         <filename>projectlog.php</filename>
+        <filename>router.php</filename>
         <folder>assets</folder>
         <folder>controllers</folder>
         <folder>helpers</folder>
@@ -31,17 +34,17 @@
         <language tag="en-GB">languages/site/en-GB/en-GB.com_projectlog.ini</language>
     </languages>
 
-    <install>
-        <sql>
-            <file driver="mysql" charset="utf8">sql/install.projectlog.sql</file>
-        </sql>
-    </install>
-
-    <uninstall>
-        <sql>
-            <file driver="mysql" charset="utf8">sql/uninstall.projectlog.sql</file>
-        </sql>
-    </uninstall>
+    <install> <!-- Runs on install -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+    
+	<uninstall> <!-- Runs on uninstall -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
     
     <update>
         <schemas>
@@ -50,13 +53,16 @@
     </update>
     
     <administration>
-        <menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="projects" link="option=com_projectlog">COM_PROJECTLOG</menu>
+        <menu img="class:project">com_projectlog</menu>
 		<submenu>
-			<menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="projects">COM_PROJECTLOG_PROJECTS</menu>
-            <menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="categories">COM_PROJECTLOG_CATEGORIES</menu>
-            <menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="logs">COM_PROJECTLOG_LOGS</menu>
-            <menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="docs">COM_PROJECTLOG_DOCS</menu>
-            <menu img="components/com_projectlog/assets/images/icon-16-projectlog.png" view="groups">COM_PROJECTLOG_GROUPS</menu>
+			<!--
+				Note that all & must be escaped to &amp; for the file to be valid
+				XML and be parsed by the installer
+			-->
+			<menu link="option=com_projectlog" img="class:project"
+				alt="Projectlog/Projects">com_projectlog_projects</menu>
+			<menu link="option=com_categories&amp;extension=com_projectlog"
+				view="categories" img="class:project-cat" alt="Projectlog/Categories">com_projectlog_categories</menu>
 		</submenu>
         <files folder="admin">
             <filename>access.xml</filename>            

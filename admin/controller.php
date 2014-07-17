@@ -1,47 +1,58 @@
 <?php
 /**
- * @version 3.3.1 2014-07-15
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
-jimport( 'joomla.application.component.controller' );
+defined('_JEXEC') or die;
 
+/**
+ * Component Controller
+ *
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ */
 class ProjectlogController extends JControllerLegacy
 {
+	/**
+	 * @var		string	The default view.
+	 * @since   1.6
+	 */
+	protected $default_view = 'projects';
+
+	/**
+	 * Method to display a view.
+	 *
+	 * @param   boolean			If true, the view output will be cached
+	 * @param   array  An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 *
+	 * @return  JController		This object to support chaining.
+	 * @since   1.5
+	 */
 	public function display($cachable = false, $urlparams = false)
-	{        
-        $view   = $this->input->get('view', 'projects');
+	{
+		require_once JPATH_COMPONENT.'/helpers/project.php';
+
+		$view   = $this->input->get('view', 'projects');
 		$layout = $this->input->get('layout', 'default');
 		$id     = $this->input->getInt('id');
 
 		// Check for edit form.
-        $views = array( 'category'=>'categories',
-                        'project'=>'projects',
-                        'log'=>'logs',
-                        'doc'=>'docs',
-                        'group'=>'groups');
+		if ($view == 'project' && $layout == 'edit' && !$this->checkEditId('com_projectlog.edit.project', $id)) {
 
-        foreach( $views as $key => $value )
-        {
-            if ($view == $key && $layout == 'edit' && !$this->checkEditId('com_projectlog.edit.'.$key, $id)) 
-            {
-                // Somehow the person just went to the form - we don't allow that.
-                $this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
-                $this->setMessage($this->getError(), 'error');
-                $this->setRedirect(JRoute::_('index.php?option=com_projectlog&view='.$value, false));
+			// Somehow the person just went to the form - we don't allow that.
+			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setMessage($this->getError(), 'error');
+			$this->setRedirect(JRoute::_('index.php?option=com_projectlog&view=projects', false));
 
-                return false;
-            }
-        }
-        
-		parent::display($cachable);
-        return $this;
+			return false;
+		}
+
+		parent::display();
+
+		return $this;
 	}
 }
-
-

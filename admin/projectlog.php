@@ -1,29 +1,20 @@
 <?php
 /**
- * @version 3.3.1 2014-07-15
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die;
+JHtml::_('behavior.tabstate');
 
-// Access check.
-if (!JFactory::getUser()->authorise('core.manage', 'com_projectlog')) {
-	return JError::raise(E_WARNING, 404, JText::_('JERROR_ALERTNOAUTHOR'));
+if (!JFactory::getUser()->authorise('core.manage', 'com_projectlog'))
+{
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
-require_once (JPATH_COMPONENT.'/controller.php');
-require_once (JPATH_COMPONENT.'/classes/admin.class.php');
-require_once (JPATH_COMPONENT_SITE.'/helpers/html.helper.php');
-require_once (JPATH_COMPONENT.'/helpers/projectlog.php');
-
-// Include dependancies
-jimport('joomla.application.component.controller');
-
-// Execute the task.
-$controller	= JControllerLegacy::getInstance('Projectlog');
+$controller = JControllerLegacy::getInstance('projectlog');
 $controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();

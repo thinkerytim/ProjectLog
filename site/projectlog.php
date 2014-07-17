@@ -1,22 +1,16 @@
 <?php
 /**
- * @version 3.3.1 2014-07-15
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Site
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
-require_once( JPATH_COMPONENT.'/controller.php' );
+require_once JPATH_COMPONENT . '/helpers/route.php';
 
-$controller = new projectlogController();
-$controller->execute(JRequest::getVar('view'));
-
+$controller = JControllerLegacy::getInstance('Projectlog');
+$controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();
-
-?>
-

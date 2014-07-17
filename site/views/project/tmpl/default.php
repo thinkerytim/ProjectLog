@@ -1,207 +1,218 @@
 <?php
 /**
- * @version 1.5.3 2009-10-12
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 the Thinkery
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Site
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('No access');
+defined('_JEXEC') or die;
 
-if($this->project->group_access && !PLOG_ADMIN){
-    //if user is in group add project to list
-    if(!projectlogHelperQuery::isGroupMember($this->project->group_access, $this->user->get('id'))){
-        JError::raiseWarning( 403, JText::_('PLOG NOT AUTHORIZED'));
-        return;
-    }
-}
+$cparams = JComponentHelper::getParams('com_media');
 
-$plog_home_link = JRoute::_('index.php?option=com_projectlog&view=cat&id='.$this->project->category);
-$add_log_link = JRoute::_('index.php?option=com_projectlog&view=project&layout=form&id='. $this->project->id);
-$add_doc_link = JRoute::_('index.php?option=com_projectlog&view=project&layout=docform&id='. $this->project->id);
-
-$deploy_from = JFactory::getDate( $this->project->deployment_from );
-$deploy_to = JFactory::getDate( $this->project->deployment_to );
-$release_date = JFactory::getDate( $this->project->release_date );
-$contract_from = JFactory::getDate( $this->project->contract_from );
-$contract_to = JFactory::getDate( $this->project->contract_to );
-
+jimport('joomla.html.html.bootstrap');
 ?>
+<div class="project<?php echo $this->pageclass_sfx?>" itemscope itemtype="http://schema.org/Person">
+	<?php if ($this->params->get('show_page_heading')) : ?>
+		<h1>
+			<?php echo $this->escape($this->params->get('page_heading')); ?>
+		</h1>
+	<?php endif; ?>
+	<?php if ($this->project->name && $this->params->get('show_name')) : ?>
+		<div class="page-header">
+			<h2>
+				<?php if ($this->item->published == 0) : ?>
+					<span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span>
+				<?php endif; ?>
+				<span class="project-name" itemprop="name"><?php echo $this->project->name; ?></span>
+			</h2>
+		</div>
+	<?php endif;  ?>
+	<?php if ($this->params->get('show_project_category') == 'show_no_link') : ?>
+		<h3>
+			<span class="project-category"><?php echo $this->project->category_title; ?></span>
+		</h3>
+	<?php endif; ?>
+	<?php if ($this->params->get('show_project_category') == 'show_with_link') : ?>
+		<?php $projectLink = ProjectlogHelperRoute::getCategoryRoute($this->project->catid); ?>
+		<h3>
+			<span class="project-category"><a href="<?php echo $projectLink; ?>">
+				<?php echo $this->escape($this->project->category_title); ?></a>
+			</span>
+		</h3>
+	<?php endif; ?>
+	<?php if ($this->params->get('show_project_list') && count($this->projects) > 1) : ?>
+		<form action="#" method="get" name="selectForm" id="selectForm">
+			<?php echo JText::_('COM_PROJECTLOG_SELECT_PROJECT'); ?>
+			<?php echo JHtml::_('select.genericlist', $this->projects, 'id', 'class="inputbox" onchange="document.location.href = this.value"', 'link', 'name', $this->project->link);?>
+		</form>
+	<?php endif; ?>
 
-<div align="right">
-	<a href="<?php echo $plog_home_link; ?>" class="red">[<?php echo JText::_('PROJECTS HOME'); ?>]</a>&nbsp;
-    <?php if( LEDIT_ACCESS ): ?>
-        <a href="<?php echo $add_log_link; ?>" class="red">[<?php echo JText::_('ADD LOG'); ?>]</a>&nbsp;
-    <?php endif; ?>
-    <?php if( DEDIT_ACCESS ): ?>
-        <a href="<?php echo $add_doc_link; ?>" class="red">[<?php echo JText::_('ADD DOC'); ?>]</a>
-    <?php endif; ?>
+	<?php if ($this->params->get('show_tags', 1) && !empty($this->item->tags)) : ?>
+		<?php $this->item->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
+		<?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
+	<?php endif; ?>
+
+ 	<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+		<?php echo JHtml::_('bootstrap.startAccordion', 'slide-project', array('active' => 'basic-details')); ?>
+	<?php endif; ?>
+	<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+		<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'basic-details')); ?>
+	<?php endif; ?>
+
+	<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+		<?php echo JHtml::_('bootstrap.addSlide', 'slide-project', JText::_('COM_PROJECTLOG_DETAILS'), 'basic-details'); ?>
+	<?php endif; ?>
+	<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'basic-details', JText::_('COM_PROJECTLOG_DETAILS', true)); ?>
+	<?php endif; ?>
+	<?php if ($this->params->get('presentation_style') == 'plain'):?>
+		<?php  echo '<h3>'. JText::_('COM_PROJECTLOG_DETAILS').'</h3>';  ?>
+	<?php endif; ?>
+
+	<?php if ($this->project->image && $this->params->get('show_image')) : ?>
+		<div class="thumbnail pull-right">
+			<?php echo JHtml::_('image', $this->project->image, JText::_('COM_PROJECTLOG_IMAGE_DETAILS'), array('align' => 'middle', 'itemprop' => 'image')); ?>
+		</div>
+	<?php endif; ?>
+
+	<?php if ($this->project->manager && $this->params->get('show_manager')) : ?>
+		<dl class="project-position dl-horizontal">
+			<dd itemprop="jobTitle">
+				<?php echo $this->project->manager; ?>
+			</dd>
+		</dl>
+	<?php endif; ?>
+
+	<?php echo $this->loadTemplate('address'); ?>
+
+	<?php if ($this->params->get('allow_vcard')) :	?>
+		<?php echo JText::_('COM_PROJECTLOG_DOWNLOAD_INFORMATION_AS');?>
+		<a href="<?php echo JRoute::_('index.php?option=com_projectlog&amp;view=project&amp;id='.$this->project->id . '&amp;format=vcf'); ?>">
+		<?php echo JText::_('COM_PROJECTLOG_VCARD');?></a>
+	<?php endif; ?>
+
+	<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+		<?php echo JHtml::_('bootstrap.endSlide'); ?>
+	<?php endif; ?>
+	<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
+	<?php endif; ?>
+
+	<?php if ($this->params->get('show_email_form') && ($this->project->email_to || $this->project->user_id)) : ?>
+
+		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+			<?php echo JHtml::_('bootstrap.addSlide', 'slide-project', JText::_('COM_PROJECTLOG_EMAIL_FORM'), 'display-form'); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'display-form', JText::_('COM_PROJECTLOG_EMAIL_FORM', true)); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'plain'):?>
+			<?php echo '<h3>'. JText::_('COM_PROJECTLOG_EMAIL_FORM').'</h3>';  ?>
+		<?php endif; ?>
+
+		<?php  echo $this->loadTemplate('form');  ?>
+
+		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+			<?php echo JHtml::_('bootstrap.endSlide'); ?>
+		<?php endif; ?>
+			<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
+			<?php endif; ?>
+
+	<?php endif; ?>
+
+	<?php if ($this->params->get('show_links')) : ?>
+		<?php echo $this->loadTemplate('links'); ?>
+	<?php endif; ?>
+
+	<?php if ($this->params->get('show_articles') && $this->project->user_id && $this->project->articles) : ?>
+
+		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+			<?php echo JHtml::_('bootstrap.addSlide', 'slide-project', JText::_('JGLOBAL_ARTICLES'), 'display-articles'); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'display-articles', JText::_('JGLOBAL_ARTICLES', true)); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'plain'):?>
+			<?php echo '<h3>'. JText::_('JGLOBAL_ARTICLES').'</h3>';  ?>
+		<?php endif; ?>
+
+		<?php echo $this->loadTemplate('articles'); ?>
+
+		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+			<?php echo JHtml::_('bootstrap.endSlide'); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php endif; ?>
+
+	<?php endif; ?>
+
+	<?php if ($this->params->get('show_profile') && $this->project->user_id && JPluginHelper::isEnabled('user', 'profile')) : ?>
+
+		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+			<?php echo JHtml::_('bootstrap.addSlide', 'slide-project', JText::_('COM_PROJECTLOG_PROFILE'), 'display-profile'); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'display-profile', JText::_('COM_PROJECTLOG_PROFILE', true)); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'plain'):?>
+			<?php echo '<h3>'. JText::_('COM_PROJECTLOG_PROFILE').'</h3>';  ?>
+		<?php endif; ?>
+
+		<?php echo $this->loadTemplate('profile'); ?>
+
+		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+			<?php echo JHtml::_('bootstrap.endSlide'); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php endif; ?>
+
+	<?php endif; ?>
+
+	<?php if ($this->project->misc && $this->params->get('show_misc')) : ?>
+
+		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+			<?php echo JHtml::_('bootstrap.addSlide', 'slide-project', JText::_('COM_PROJECTLOG_OTHER_INFORMATION'), 'display-misc'); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'display-misc', JText::_('COM_PROJECTLOG_OTHER_INFORMATION', true)); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'plain'):?>
+			<?php echo '<h3>'. JText::_('COM_PROJECTLOG_OTHER_INFORMATION').'</h3>';  ?>
+		<?php endif; ?>
+
+		<div class="project-miscinfo">
+			<dl class="dl-horizontal">
+				<dt>
+					<span class="<?php echo $this->params->get('marker_class'); ?>">
+					<?php echo $this->params->get('marker_misc'); ?>
+					</span>
+				</dt>
+				<dd>
+					<span class="project-misc">
+						<?php echo $this->project->misc; ?>
+					</span>
+				</dd>
+			</dl>
+		</div>
+
+		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+			<?php echo JHtml::_('bootstrap.endSlide'); ?>
+		<?php endif; ?>
+		<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php endif; ?>
+
+	<?php endif; ?>
+
+	<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
+		<?php echo JHtml::_('bootstrap.endAccordion'); ?>
+	<?php endif; ?>
+	<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
+		<?php echo JHtml::_('bootstrap.endTabSet'); ?>
+	<?php endif; ?>
 </div>
-
-<div class="main-article-title">
-    <h2 class="contentheading"><?php echo $this->project->title; ?></h2>
-</div>
-<div class="main-article-block">
-<table width="100%" cellpadding="6">
-   <tr>
-		<td colspan="2" valign="top" style="border-bottom: solid 1px #ccc;">
-            <strong><?php echo JText::_('RELEASE NUM'); ?>:</strong> <span class="red"><?php echo ( $this->project->release_id ) ? $this->project->release_id : '--N/A--'; ?></span> |
-            <strong><?php echo JText::_('JOB NUM'); ?>:</strong> <span class="red"><?php echo ( $this->project->job_id ) ? $this->project->job_id : '--N/A--'; ?></span> |
-            <strong><?php echo JText::_('TASK NUM'); ?>:</strong> <span class="red"><?php echo ( $this->project->task_id ) ? $this->project->task_id : '--N/A--'; ?></span> |
-            <strong><?php echo JText::_('WORKORDER NUM'); ?>:</strong> <span class="red"><?php echo ( $this->project->workorder_id ) ? $this->project->workorder_id : '--N/A--'; ?></span>
-		</td>
-   </tr>   
-	<tr>
-		<td width="75%" valign="top">
-            <?php if( $this->project->description ) : ?>
-			<span class="content_header"><?php echo JText::_('DESCRIPTION'); ?>:</span><br />
-            <?php echo $this->project->description;
-                  endif;
-                  if( $this->project->location_gen ) : ?><br /><br />
-            <span class="content_header"><?php echo JText::_('GEN LOC'); ?>:</span><br />
-            <?php echo $this->project->location_gen;
-                  endif;
-                  if( $this->project->location_spec ) : ?><br /><br />
-            <span class="content_header"><?php echo JText::_('SPEC LOC'); ?>:</span><br />
-            <?php echo $this->project->location_spec;
-                  endif;
-                  
-            if( LOG_ACCESS ):
-                //display results for logs
-                if( $this->logs) :
-                         echo '<br /><br />';
-                         jimport('joomla.html.pane');
-                         $pane		= & JPane::getInstance('sliders');
-                         echo $pane->startPane("log-pane");
-                         $i = 0;
-                         foreach($this->logs as $l) :
-                            $ldate = JFactory::getDate( $l->date );
-                            $lmod = JFactory::getDate( $l->modified );
-                            $delete_log_link = JRoute::_('index.php?option=com_projectlog&view=project&project_id='. $this->project->id . '&task=deleteLog&id=' . $l->id);
-                            $edit_log_link = JRoute::_('index.php?option=com_projectlog&view=project&layout=form&id='. $this->project->id . '&edit='. $l->id);
-
-                            echo $pane->startPanel( $l->title, $l->id.$i );
-                            if(($this->user->id == $l->loggedby && LEDIT_ACCESS) || PLOG_ADMIN ):
-                                echo '<div align="right" style="padding-right: 5px;"><a href="' . $edit_log_link . '">'.JText::_('EDIT').'</a> | <a href="' . $delete_log_link . '" onclick="if(confirm(\''.JText::_('CONFIRM DELETE').'\')){return true;}else{return false;};">'.JText::_('DELETE').'</a></div>';
-                            endif;
-                            echo '<div style="padding: 10px 25px;">
-                                  <div>'.JText::_('CREATED').' <strong>' . $ldate->toFormat('%b %d, %Y at %H:%M' ) . '</strong> by <strong>' . projectlogHTML::getusername( $l->loggedby ) . '</strong></div>';
-
-                                  if( $l->modified_by ):
-                                    echo '<div>'.JText::_('MODIFIED').' <strong>' . $lmod->toFormat('%b %d, %Y at %H:%M' ) . '</strong> by <strong>' . projectlogHTML::getusername( $l->modified_by ) . '</strong></div>';
-                                  endif;
-                            echo '<div style="margin-top: 10px;">' . $l->description . '</div>
-                                  </div>';
-                            echo $pane->endPanel();
-                            $i++;
-
-                        endforeach;
-                        echo $pane->endPane();
-                else :
-
-                    echo
-                        '<br /><br />
-                         <div align="center" style="border-top: solid 1px #ff0000;">
-                            ' . JText::_('NO PROJECT LOGS') . '
-                         </div>';
-
-                endif;
-            endif;
-            ?>
-		</td>
-        <td width="25%" rowspan="3" style="border-left: solid 1px #ccc;" valign="top">
-            <div class="right_details">
-            <span class="content_header"><?php echo JText::_('RELEASE DATE'); ?>:</span><br />
-            <?php echo ($this->project->release_date != '0000-00-00') ? $release_date->toFormat('%b %d, %Y' ) : '--N/A--'; ?>
-            </div>
-            <div class="right_details">
-            <span class="content_header"><?php echo JText::_('CONTRACT FROM TO'); ?>:</span><br />
-            <?php echo ($this->project->contract_from != '0000-00-00') ? $contract_from->toFormat('%b %d, %Y' ) : '--N/A--'; ?>
-            &nbsp;-&nbsp;
-            <?php echo ($this->project->contract_to != '0000-00-00') ? $contract_to->toFormat('%b %d, %Y' ) : '--N/A--'; ?>
-            </div>
-            <div class="right_details">
-            <span class="content_header"><?php echo JText::_('DEPLOYMENT FROM TO'); ?>:</span><br />
-            <?php echo $deploy_from->toFormat('%b %d, %Y' ) . ' - ' . $deploy_to->toFormat('%b %d, %Y' ); ?>
-            </div>
-            <div class="right_details">
-            <span class="content_header"><?php echo JText::_('PROJECT TYPE'); ?>:</span><br />
-            <?php echo ($this->project->projecttype) ? $this->project->projecttype : '--N/A--'; ?>
-            </div>
-            <div class="right_details">
-            <span class="content_header"><?php echo JText::_('PROJECT MANAGER'); ?>:</span><br />
-            <?php 
-				if($this->project->manager){
-					echo projectlogHTML::getusername( $this->project->manager );
-					$managerdetails = projectlogHTML::userDetails($this->project->manager);
-					if($managerdetails){
-						echo ($managerdetails->email_to) ? '<br /><a href="mailto:'.$managerdetails->email_to.'">'. $managerdetails->email_to . '</a>' : '';
-						echo ($managerdetails->telephone) ? '<br />' . $managerdetails->telephone : '';
-					} 
-				}else{
-					echo '--N/A--';
-				}			
-			?>
-            </div>
-            <div class="right_details">
-            <span class="content_header"><?php echo JText::_('PROJECT LEAD'); ?>:</span><br />
-            <?php echo ($this->project->chief) ? projectlogHTML::getusername( $this->project->chief ) : '--N/A--'; ?>
-            </div>
-            <div class="right_details">
-            <span class="content_header"><?php echo JText::_('TECHNICIAN'); ?>:</span><br />
-            <?php
-                if( $this->project->technicians ) :
-                $cad_techs = explode(',', $this->project->technicians );
-                foreach( $cad_techs as $c ):
-                    echo projectlogHTML::getusername( $c ) . '<br />';
-                endforeach;
-                else:
-                    echo '--N/A--';
-                endif;
-            ?>
-            </div>
-            
-            <div class="right_details">
-            <span class="content_header"><?php echo JText::_('CREW ON SITE'); ?>:</span><br />
-            <?php
-                if( $this->project->onsite == 1 ){
-                    $img = 'tick.png';
-                    $yesno = JText::_('YES');
-                }else{
-                    $img = 'publish_x.png';
-                    $yesno = JText::_('NO');
-                }
-                echo '<img src="'.$this->baseurl.'/components/com_projectlog/assets/images/' . $img . '" border="0" alt="' . $yesno . '" align="absmiddle" /> ' . $yesno;
-            ?>
-            </div>            
-            <?php
-            if( DOC_ACCESS ):
-                if( $this->docs ) :				
-                echo '<div class="right_details">';
-                echo '<div class="content_header2">' . JText::_('RELATED DOCS') . ':</div>';
-                foreach( $this->docs as $d ):
-                    $delete_doc_link = JRoute::_('index.php?option=com_projectlog&view=project&project_id='. $this->project->id . '&task=deleteDoc&id=' . $d->id);
-					echo '<div class="doc_item">
-							<a href="' . $this->doc_path . $d->path . '" target="_blank" class="hasTip" title="'.JText::_('DOCUMENT').' :: '.JText::_('SUBMITTED BY').': ' . projectlogHTML::getusername($d->submittedby) . '<br />'.JText::_('FILE').': ' . $d->path . '<br />'.JText::_('SUBMITTED DATE').': ' . $d->date . '">
-								' . $d->name . '
-							</a>';
-							if(($this->user->id == $d->submittedby && DEDIT_ACCESS) || PLOG_ADMIN ):
-								echo '<br /><a href="' . $delete_doc_link . '" onclick="if(confirm(\''.JText::_('CONFIRM DELETE').'\')){return true;}else{return false;};" class="red">['.JText::_('DELETE').']</a>';
-							endif;
-					echo '</div>';
-                endforeach;
-                echo '</div>';
-                endif;
-            endif;
-            ?>            
-        </td>
-	</tr>
-    <tr>
-		<td colspan="2" valign="top">&nbsp;</td>
-	</tr>
-</table>
-</div>
-<?php if($this->settings->get('footer')) echo '<p class="copyright">'. projectlogAdmin::footer().'</p>'; ?>

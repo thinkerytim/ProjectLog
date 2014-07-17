@@ -1,265 +1,415 @@
 <?php
 /**
- * @version 3.3.1 2014-07-15
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Site
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('No access');
-jimport('joomla.application.component.model');
+defined('_JEXEC') or die;
 
-class ProjectlogModelProject extends JModel
+/**
+ * @package     Joomla.Site
+ * @subpackage  com_projectlog
+ * @since       1.5
+ */
+class ProjectlogModelProject extends JModelForm
 {
-	var $_id      = null;
-	var $_project = null;
-	var $_data    = null;
-    var $_logs    = null;
-    var $_docs    = null;
+	/**
+	 * @since   1.6
+	 */
+	protected $view_item = 'project';
 
-	function __construct()
+	protected $_item = null;
+
+	/**
+	 * Model context string.
+	 *
+	 * @var		string
+	 */
+	protected $_context = 'com_projectlog.project';
+
+	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 *
+	 * @since   1.6
+	 */
+	protected function populateState()
 	{
-		parent::__construct();
-        global $option;
+		$app = JFactory::getApplication('site');
 
-        $mainframe =& JFactory::getApplication() ;
-		$this->setId( JRequest::getInt('id', '0' ));
-	}
+		// Load state from the request.
+		$pk = $app->input->getInt('id');
+		$this->setState('project.id', $pk);
 
-	function setId($id)
-	{
-		$this->_id = $id;
-	}
+		// Load the parameters.
+		$params = $app->getParams();
+		$this->setState('params', $params);
 
-	function &getData()
-	{
-		if ($this->loadData())
+		$user = JFactory::getUser();
+
+		if ((!$user->authorise('core.edit.state', 'com_projectlog')) &&  (!$user->authorise('core.edit', 'com_projectlog')))
 		{
-
+			$this->setState('filter.published', 1);
+			$this->setState('filter.archived', 2);
 		}
-		else  $this->_initData();
-        return $this->_data ;
 	}
 
-	function loadData()
+	/**
+	 * Method to get the project form.
+	 * The base form is loaded from XML and then an event is fired
+	 *
+	 * @param   array    $data      An optional array of data for the form to interrogate.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 * 
+	 * @return  JForm  A JForm object on success, false on failure
+	 * @since   1.6
+	 */
+	public function getForm($data = array(), $loadData = true)
 	{
-		if (empty($this->_data))
+		// Get the form.
+		$form = $this->loadForm('com_projectlog.project', 'project', array('control' => 'jform', 'load_data' => true));
+
+		if (empty($form))
 		{
-            $query = 'SELECT *'
-				   . ' FROM #__projectlog_projects'
-				   . ' WHERE id = '.(int)$this->_id;
-
-			$this->_db->setQuery($query);
-			$this->_data = $this->_db->loadObject();
-
-			return (boolean) $this->_data;
+			return false;
 		}
-		return true;
+
+		$id = $this->getState('project.id');
+		$params = $this->getState('params');
+		$project = $this->_item[$id];
+		$params->merge($project->params);
+
+		if (!$params->get('show_email_copy', 0)){
+			$form->removeField('project_email_copy');
+		}
+
+		return $form;
 	}
 
-    function _initData()
+	protected function loadFormData()
 	{
-		// Lets load the content if it doesn't already exist
-		if (empty($this->_data))
+		$data = (array) JFactory::getApplication()->getUserState('com_projectlog.project.data', array());
+
+		$this->preprocessData('com_projectlog.project', $data);
+
+		return $data;
+	}
+
+	/**
+	 * Gets a project
+	 *
+	 * @param   integer  $pk  Id for the project
+	 *
+	 * @return mixed Object or null
+	 */
+	public function &getItem($pk = null)
+	{
+		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
+
+		if ($this->_item === null)
 		{
-			$project = new stdClass();
-			$project->id			= 0;
-            $project->category      = null;
-            $project->group_access  = null;
-			$project->release_id    = null;
-            $project->job_id        = null;
-            $project->task_id       = null;
-            $project->workorder_id  = null;
-            $project->title         = null;
-            $project->description   = null;
-            $project->release_date  = null;
-            $project->contract_from = null;
-            $project->contract_to   = null;
-            $project->location_gen  = null;
-            $project->location_spec = null;
-            $project->manager       = null;
-            $project->chief         = null;
-            $project->technicians   = null;
-            $project->deployment_from = null;
-            $project->deployment_to = null;
-            $project->onsite        = null;
-            $project->projecttype    = null;
-            $project->client        = null;
-            $project->status        = null;
-            $project->approved      = null;
-            $project->published     = 1;
-
-            $this->_data			           = $project;
-			return (boolean) $this->_data;
-        }
-    }    
-	
-	function getLogs(){
-		$query = 'SELECT * FROM #__projectlog_logs WHERE project_id = ' . (int)$this->_id . ' AND published = 1 ORDER BY date DESC';
-        $this->_db->setQuery($query);
-        $this->_logs = $this->_db->loadObjectlist();
-        return $this->_logs;
-	}
-
-    function getLog($id){
-		$db = JFactory::getDBO();
-        $query = 'SELECT * FROM #__projectlog_logs WHERE id = ' . (int)$id;
-        $db->setQuery($query);
-        $logitem = $db->loadObject();
-        return $logitem;
-	}
-	
-	function getDocs(){
-		$query = 'SELECT * FROM #__projectlog_docs WHERE project_id = ' . (int)$this->_id . ' ORDER BY date DESC';
-        $this->_db->setQuery($query);
-        $this->_docs = $this->_db->loadObjectlist();
-        return $this->_docs;
-	}
-
-    function saveLog($data)
-	{
-        $settings   = & JComponentHelper::getParams( 'com_projectlog' );
-		$user		= & JFactory::getUser();
-
-		$row  =& $this->getTable('projectlog_logs', '');
-
-		if (!$row->bind($data)) {
-			$this->setError($row->getError());
-			return false;
+			$this->_item = array();
 		}
 
-		$row->id = (int) $row->id;        
-        if(!$data['id']){
-            $row->loggedby = $data['userid'];
-            $row->date = date('Y-m-d H:i:s');
-        }else{
-            $row->modified = date('Y-m-d H:i:s');
-            $row->modified_by = $data['userid'];
-        }
-
-		$nullDate	= $this->_db->getNullDate();
-
-		// Make sure the data is valid
-		if (!$row->check($settings)) {
-			$this->setError($row->getError());
-			return false;
-		}
-
-		// Store it in the db
-		if (!$row->store()) {
-			$this->setError($row->getError());
-			return false;
-		}
-
-        if( ($settings->get('notify_admin_log') == 1) && !$data['id'] ){
-            projectlogHTML::notifyAdmin('log', $user, projectlogHTML::getProjectName($row->project_id));
-        }
-
-		return $row->id;
-	}
-
-    function deleteLog($id)
-    {
-        $query = 'DELETE FROM #__projectlog_logs WHERE id = '.(int) $id.' LIMIT 1';
-        $this->_db->setQuery($query);
-        if (!$this->_db->query()) {
-            $this->setError($row->getError());
-			return false;
-        }
-        return true;
-    }
-	
-	function saveDoc($data) {
-        $settings   = & JComponentHelper::getParams( 'com_projectlog' );
-		$user		= & JFactory::getUser();
-		$row  =& $this->getTable('projectlog_docs', '');
-
-		if (!$row->bind($data)) {
-			$this->setError($row->getError());
-			return false;
-		}
-		$row->id = (int) $row->id;
-        $row->date = date('Y-m-d');
-        $row->submittedby = $user->get('id');
-
-		// Make sure the data is valid
-		if (!$row->check($settings)) {
-			$this->setError($row->getError());
-			return false;
-		}
-
-		// Store it in the db
-		if (!$row->store()) {
-			$this->setError($row->getError());
-			return false;
-		}
-
-        if( $settings->get('notify_admin_doc') == 1 ){
-            projectlogHTML::notifyAdmin('doc', $user, projectlogHTML::getProjectName($row->project_id));
-        }
-
-		return $row->id;
-	}
-	
-	function deleteDoc($id)
-	{
-		if ($id)
+		if (!isset($this->_item[$pk]))
 		{
-            $query = 'SELECT path FROM #__projectlog_docs WHERE id = ' . (int)$id;
-            $this->_db->setQuery($query);
-            $file = $this->_db->loadResult();
-            $this->deleteFile($file);
+			try
+			{
+				$db = $this->getDbo();
+				$query = $db->getQuery(true);
 
-			$query = 'DELETE FROM #__projectlog_docs WHERE id ='. (int)$id;
-			$this->_db->setQuery( $query );
+				// Sqlsrv changes
+				$case_when = ' CASE WHEN ';
+				$case_when .= $query->charLength('a.alias', '!=', '0');
+				$case_when .= ' THEN ';
+				$a_id = $query->castAsChar('a.id');
+				$case_when .= $query->concatenate(array($a_id, 'a.alias'), ':');
+				$case_when .= ' ELSE ';
+				$case_when .= $a_id . ' END as slug';
 
-			if(!$this->_db->query()) {
-				$this->setError($this->_db->getErrorMsg());
+				$case_when1 = ' CASE WHEN ';
+				$case_when1 .= $query->charLength('c.alias', '!=', '0');
+				$case_when1 .= ' THEN ';
+				$c_id = $query->castAsChar('c.id');
+				$case_when1 .= $query->concatenate(array($c_id, 'c.alias'), ':');
+				$case_when1 .= ' ELSE ';
+				$case_when1 .= $c_id . ' END as catslug';
+
+				$query->select($this->getState('item.select', 'a.*') . ',' . $case_when . ',' . $case_when1)
+					->from('#__projectlog_projects AS a')
+
+				// Join on category table.
+					->select('c.title AS category_title, c.alias AS category_alias, c.access AS category_access')
+					->join('LEFT', '#__categories AS c on c.id = a.catid')
+
+				// Join over the categories to get parent category titles
+					->select('parent.title as parent_title, parent.id as parent_id, parent.path as parent_route, parent.alias as parent_alias')
+					->join('LEFT', '#__categories as parent ON parent.id = c.parent_id')
+
+					->where('a.id = ' . (int) $pk);
+
+				// Filter by start and end dates.
+				$nullDate = $db->quote($db->getNullDate());
+				$nowDate = $db->quote(JFactory::getDate()->toSql());
+
+				// Filter by published state.
+				$published = $this->getState('filter.published');
+				$archived = $this->getState('filter.archived');
+				if (is_numeric($published))
+				{
+					$query->where('(a.published = ' . (int) $published . ' OR a.published =' . (int) $archived . ')')
+						->where('(a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ')')
+						->where('(a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
+				}
+
+				$db->setQuery($query);
+
+				$data = $db->loadObject();
+
+				if (empty($data))
+				{
+					JError::raiseError(404, JText::_('COM_PROJECTLOG_ERROR_PROJECT_NOT_FOUND'));
+				}
+
+				// Check for published state if filter set.
+				if (((is_numeric($published)) || (is_numeric($archived))) && (($data->published != $published) && ($data->published != $archived)))
+				{
+					JError::raiseError(404, JText::_('COM_PROJECTLOG_ERROR_PROJECT_NOT_FOUND'));
+				}
+
+				// Convert parameter fields to objects.
+				$registry = new JRegistry;
+				$registry->loadString($data->params);
+				$data->params = clone $this->getState('params');
+				$data->params->merge($registry);
+
+				$registry = new JRegistry;
+				$registry->loadString($data->metadata);
+				$data->metadata = $registry;
+
+				$data->tags = new JHelperTags;
+				$data->tags->getItemTags('com_projectlog.project', $data->id);
+
+				// Compute access permissions.
+				if ($access = $this->getState('filter.access')) {
+
+					// If the access filter has been set, we already know this user can view.
+					$data->params->set('access-view', true);
+				}
+				else
+				{
+					// If no access filter is set, the layout takes some responsibility for display of limited information.
+					$user = JFactory::getUser();
+					$groups = $user->getAuthorisedViewLevels();
+
+					if ($data->catid == 0 || $data->category_access === null)
+					{
+						$data->params->set('access-view', in_array($data->access, $groups));
+					}
+					else
+					{
+						$data->params->set('access-view', in_array($data->access, $groups) && in_array($data->category_access, $groups));
+					}
+				}
+
+				$this->_item[$pk] = $data;
+			}
+			catch (Exception $e)
+			{
+				$this->setError($e);
+				$this->_item[$pk] = false;
+			}
+		}
+
+		if ($this->_item[$pk])
+		{
+			if ($extendedData = $this->getProjectQuery($pk))
+			{
+				$this->_item[$pk]->articles = $extendedData->articles;
+				$this->_item[$pk]->profile = $extendedData->profile;
+			}
+		}
+
+		return $this->_item[$pk];
+	}
+
+	protected function getProjectQuery($pk = null)
+	{
+		// @todo Cache on the fingerprint of the arguments
+		$db		= $this->getDbo();
+		$nullDate = $db->quote($db->getNullDate());
+		$nowDate = $db->quote(JFactory::getDate()->toSql());
+		$user	= JFactory::getUser();
+		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
+		$query	= $db->getQuery(true);
+
+		if ($pk)
+		{
+			// Sqlsrv changes
+			$case_when = ' CASE WHEN ';
+			$case_when .= $query->charLength('a.alias', '!=', '0');
+			$case_when .= ' THEN ';
+			$a_id = $query->castAsChar('a.id');
+			$case_when .= $query->concatenate(array($a_id, 'a.alias'), ':');
+			$case_when .= ' ELSE ';
+			$case_when .= $a_id . ' END as slug';
+
+			$case_when1 = ' CASE WHEN ';
+			$case_when1 .= $query->charLength('cc.alias', '!=', '0');
+			$case_when1 .= ' THEN ';
+			$c_id = $query->castAsChar('cc.id');
+			$case_when1 .= $query->concatenate(array($c_id, 'cc.alias'), ':');
+			$case_when1 .= ' ELSE ';
+			$case_when1 .= $c_id . ' END as catslug';
+			$query->select(
+				'a.*, cc.access as category_access, cc.title as category_name, '
+				. $case_when . ',' . $case_when1
+			)
+
+				->from('#__projectlog_projects AS a')
+
+				->join('INNER', '#__categories AS cc on cc.id = a.catid')
+
+				->where('a.id = ' . (int) $pk);
+			$published = $this->getState('filter.published');
+
+			if (is_numeric($published))
+			{
+				$query->where('a.published IN (1,2)')
+					->where('cc.published IN (1,2)');
+			}
+
+			$groups = implode(',', $user->getAuthorisedViewLevels());
+			$query->where('a.access IN (' . $groups . ')');
+
+			try
+			{
+				$db->setQuery($query);
+				$result = $db->loadObject();
+
+				if (empty($result))
+				{
+					throw new Exception(JText::_('COM_PROJECTLOG_ERROR_PROJECT_NOT_FOUND'), 404);
+				}
+
+				// If we are showing a project list, then the project parameters take priority
+				// So merge the project parameters with the merged parameters
+				if ($this->getState('params')->get('show_project_list'))
+				{
+					$registry = new JRegistry;
+					$registry->loadString($result->params);
+					$this->getState('params')->merge($registry);
+				}
+			}
+			catch (Exception $e)
+			{
+				$this->setError($e);
 				return false;
 			}
-		}else{
-            $this->setError(JText::_('NO DOCS SELECTED'));
-            return false;
-        }
-		return true;
+
+			if ($result)
+			{
+				$user	= JFactory::getUser();
+				$groups	= implode(',', $user->getAuthorisedViewLevels());
+
+				//get the content by the linked user
+				$query	= $db->getQuery(true)
+					->select('a.id')
+					->select('a.title')
+					->select('a.state')
+					->select('a.access')
+					->select('a.created');
+
+				// SQL Server changes
+				$case_when = ' CASE WHEN ';
+				$case_when .= $query->charLength('a.alias', '!=', '0');
+				$case_when .= ' THEN ';
+				$a_id = $query->castAsChar('a.id');
+				$case_when .= $query->concatenate(array($a_id, 'a.alias'), ':');
+				$case_when .= ' ELSE ';
+				$case_when .= $a_id . ' END as slug';
+				$case_when1 = ' CASE WHEN ';
+				$case_when1 .= $query->charLength('c.alias', '!=', '0');
+				$case_when1 .= ' THEN ';
+				$c_id = $query->castAsChar('c.id');
+				$case_when1 .= $query->concatenate(array($c_id, 'c.alias'), ':');
+				$case_when1 .= ' ELSE ';
+				$case_when1 .= $c_id.' END as catslug';
+				$query->select($case_when1 . ',' . $case_when)
+					->from('#__content as a')
+					->join('LEFT', '#__categories as c on a.catid=c.id')
+					->where('a.created_by = ' . (int) $result->user_id)
+					->where('a.access IN (' . $groups . ')')
+					->order('a.state DESC, a.created DESC');
+				// filter per language if plugin published
+				if (JLanguageMultilang::isEnabled())
+				{
+					$query->where(('a.created_by = ' . (int) $result->user_id) . ' AND ' . ('a.language=' . $db->quote(JFactory::getLanguage()->getTag()) . ' OR a.language=' . $db->quote('*')));
+				}
+				if (is_numeric($published))
+				{
+					$query->where('a.state IN (1,2)')
+						->where('(a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ')')
+						->where('(a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
+				}
+				$db->setQuery($query, 0, 10);
+				$articles = $db->loadObjectList();
+				$result->articles = $articles;
+
+				//get the profile information for the linked user
+				require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
+				$userModel = JModelLegacy::getInstance('User', 'UsersModel', array('ignore_request' => true));
+				$data = $userModel->getItem((int) $result->user_id);
+
+				JPluginHelper::importPlugin('user');
+				$form = new JForm('com_users.profile');
+
+				// Get the dispatcher.
+				$dispatcher	= JEventDispatcher::getInstance();
+
+				// Trigger the form preparation event.
+				$dispatcher->trigger('onContentPrepareForm', array($form, $data));
+
+				// Trigger the data preparation event.
+				$dispatcher->trigger('onContentPrepareData', array('com_users.profile', $data));
+
+				// Load the data into the form after the plugins have operated.
+				$form->bind($data);
+				$result->profile = $form;
+				$this->project = $result;
+
+				return $result;
+			}
+		}
 	}
 
-    function saveFile($file){
-        //Import filesystem libraries. Perhaps not necessary, but does not hurt
-        jimport('joomla.filesystem.file');
-        $settings   = & JComponentHelper::getParams( 'com_projectlog' );
-        $allowed = explode(',',trim($settings->get('doc_types')));
+	/**
+	 * Increment the hit counter for the project.
+	 *
+	 * @param   integer  $pk  Optional primary key of the project to increment.
+	 *
+	 * @return  boolean  True if successful; false otherwise and internal error set.
+	 *
+	 * @since   3.0
+	 */
+	public function hit($pk = 0)
+	{
+		$input = JFactory::getApplication()->input;
+		$hitcount = $input->getInt('hitcount', 1);
 
-        //Clean up filename to get rid of strange characters like spaces etc
-        $filename = JFile::makeSafe($file['name']);
+		if ($hitcount)
+		{
+			$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
 
-        //Set up the source and destination of the file
-        $src = $file['tmp_name'];
-        $dest = JPATH_SITE.'/media/com_projectlog/docs/'.$filename;
-        $ext = strtolower(JFile::getExt($filename) );
+			$table = JTable::getInstance('Project', 'ProjectlogTable');
+			$table->load($pk);
+			$table->hit($pk);
+		}
 
-        if(file_exists($dest)){
-            return JText::_('FILE EXISTS').' - '. $filename;
-        }
-
-        //Verify this is an acceptable doc file
-        if (in_array($ext,$allowed)) {
-           if ( JFile::upload($src, $dest) ) {
-              //continue
-           } else {
-              return JText::_('FILE NOT UPLOADED');
-           }
-        } else {
-           return sprintf(JText::_('WRONG FILE TYPE'),$ext);
-        }
-    }
-
-    function deleteFile($file){
-        jimport('joomla.filesystem.file');
-        $path = JPATH_SITE.'/media/com_projectlog/docs'.DS;
-        JFile::delete($path.$file);
-    }
+		return true;
+	}
 }

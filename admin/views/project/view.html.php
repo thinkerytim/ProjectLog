@@ -1,71 +1,122 @@
 <?php
 /**
- * @version 3.3.1 2014-07-15
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
-jimport( 'joomla.application.component.view');
+defined('_JEXEC') or die;
 
-class projectlogViewproject extends JView {
+/**
+ * View to edit a project.
+ *
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ * @since       1.6
+ */
+class ProjectlogViewProject extends JViewLegacy
+{
+	protected $form;
 
-	function display($tpl = null)
+	protected $item;
+
+	protected $state;
+
+	/**
+	 * Display the view
+	 */
+	public function display($tpl = null)
 	{
-		global $mainframe;
+		// Initialise variables.
+		$this->form		= $this->get('Form');
+		$this->item		= $this->get('Item');
+		$this->state	= $this->get('State');
 
-		// Load pane behavior
-		jimport('joomla.html.pane');
-		JHTML::_('behavior.tooltip');
-        JHTML::_('behavior.modal', 'a.modal');
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
+		{
+			JError::raiseError(500, implode("\n", $errors));
+			return false;
+		}
 
-		//initialise variables
-		$editor 	= & JFactory::getEditor();
-		$document	= & JFactory::getDocument();
-		$settings	= & JComponentHelper::getParams( 'com_projectlog' );
+		if ($this->getLayout() == 'modal')
+		{
+			$this->form->setFieldAttribute('language', 'readonly', 'true');
+			$this->form->setFieldAttribute('catid', 'readonly', 'true');
+		}
 
-		//get vars
-		$cid 		= JRequest::getVar( 'cid' );
-		$model		= & $this->getModel();
-		$project  	= & $this->get( 'Data');
-		
-		$lists = array();
-        $lists['status'] = projectlogHTML::statusSelect('status', 'size="1" class="inputbox required"', $project->status);
-        $lists['categories'] = projectlogHTML::catSelect('category', 'size="1" class="inputbox" style="width: 200px;"', $project->category);
-        $lists['groups'] = projectlogHTML::groupSelect('group_access', 'size="1" class="inputbox" style="width: 200px;"', $project->group_access);
-		$lists['published'] = JHTML::_('select.booleanlist',  'published', 'class="inputbox"', $project->published );
-        $lists['onsite'] = JHTML::_('select.booleanlist',  'onsite', 'class="inputbox"', $project->onsite );
-        $lists['approved'] = JHTML::_('select.booleanlist',  'approved', 'class="inputbox"', $project->approved );		
-		
-        if ( $cid ) {
-			JToolBarHelper::title( '<span style="color: #fea100;">'.JText::_( 'PROJECT LOG' ) . '</span> <span style="font-size: 14px;">[' . JText::_( 'EDIT PROJECT' ) . ']</span>', 'projectlog' );
-		}else{
-            JToolBarHelper::title( '<span style="color: #fea100;">'.JText::_( 'PROJECT LOG' ) . '</span> <span style="font-size: 14px;">[' . JText::_( 'ADD PROJECT' ) . ']</span>', 'projectlog' );
-        }
-		JToolBarHelper::apply();
-		JToolBarHelper::spacer();
-		JToolBarHelper::save();
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
-		JToolBarHelper::spacer();		
-
-		//assign data to template
-		$this->assignRef('project'      , $project);
-		$this->assignRef('lists'      	, $lists);
-		$this->assignRef('pane'      	, $pane);
-		$this->assignRef('editor'      	, $editor);
-		$this->assignRef('settings'     , $settings);
-
-        $iconstyle = '<style type="text/css">
-                        .invalid{background: #ffacac !important; border: solid 1px #ff0000;}
-                        .icon-48-projectlog{ background-image: url(components/com_projectlog/assets/images/icon-48-projectlog.png);}
-                      </style>';
-        $mainframe->addCustomHeadTag($iconstyle);
-
+		$this->addToolbar();
 		parent::display($tpl);
 	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @since   1.6
+	 */
+	protected function addToolbar()
+	{
+		JFactory::getApplication()->input->set('hidemainmenu', true);
+
+		$user		= JFactory::getUser();
+		$userId		= $user->get('id');
+		$isNew		= ($this->item->id == 0);
+		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
+
+		// Since we don't track these assets at the item level, use the category id.
+		$canDo		= JHelperContent::getActions('com_projectlog', 'category', $this->item->catid);
+
+		JToolbarHelper::title(JText::_('COM_PROJECTLOG_MANAGER_PROJECT'), 'address project');
+
+		// Build the actions for new and existing records.
+		if ($isNew)
+		{
+			// For new records, check the create permission.
+			if ($isNew && (count($user->getAuthorisedCategories('com_projectlog', 'core.create')) > 0))
+			{
+				JToolbarHelper::apply('project.apply');
+				JToolbarHelper::save('project.save');
+				JToolbarHelper::save2new('project.save2new');
+			}
+
+			JToolbarHelper::cancel('project.cancel');
+		}
+		else
+		{
+			// Can't save the record if it's checked out.
+			if (!$checkedOut)
+			{
+				// Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
+				if ($canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_by == $userId))
+				{
+					JToolbarHelper::apply('project.apply');
+					JToolbarHelper::save('project.save');
+
+					// We can save this record, but check the create permission to see if we can return to make a new one.
+					if ($canDo->get('core.create'))
+					{
+						JToolbarHelper::save2new('project.save2new');
+					}
+				}
+			}
+
+			// If checked out, we can still save
+			if ($canDo->get('core.create'))
+			{
+				JToolbarHelper::save2copy('project.save2copy');
+			}
+
+			if ($this->state->params->get('save_history', 0) && $user->authorise('core.edit'))
+			{
+				JToolbarHelper::versions('com_projectlog.project', $this->item->id);
+			}
+
+			JToolbarHelper::cancel('project.cancel', 'JTOOLBAR_CLOSE');
+		}
+
+		JToolbarHelper::divider();
+		JToolbarHelper::help('JHELP_COMPONENTS_PROJECTS_PROJECTS_EDIT');
+	}
 }
-?>

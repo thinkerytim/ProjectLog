@@ -1,216 +1,116 @@
 <?php
 /**
- * @version 3.3.1 2014-07-15
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
-jimport('joomla.application.component.controller');
+defined('_JEXEC') or die;
 
-class projectlogControllerprojects extends projectlogController {
+/**
+ * Articles list controller class.
+ *
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ * @since       1.6
+ */
+class ProjectlogControllerProjects extends JControllerAdmin
+{
+	/**
+	 * Constructor.
+	 *
+	 * @param   array  $config	An optional associative array of configuration settings.
+	 *
+	 * @return  ProjectlogControllerProjects
+	 * @see     JController
+	 * @since   1.6
+	 */
+	public function __construct($config = array())
+	{
+		parent::__construct($config);
 
-	function __construct()
-	{		
-		parent::__construct();
-		
-		$this->registerTask( 'add', 'edit' );
-		$this->registerTask( 'apply', 'save' );
+		$this->registerTask('unfeatured',	'featured');
 	}
-		
-	function publish()
+
+	/**
+	 * Method to toggle the featured setting of a list of projects.
+	 *
+	 * @return  void
+	 * @since   1.6
+	 */
+	public function featured()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or die( 'Invalid Token' );
-        $cid 	= JRequest::getVar( 'cid', array(0), 'post', 'array' );
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		if (!is_array( $cid ) || count( $cid ) < 1) {
-			JError::raiseError(500, JText::_( 'SELECT ITEM TO PUBLISH' ) );
-		}
+		$user   = JFactory::getUser();
+		$ids    = $this->input->get('cid', array(), 'array');
+		$values = array('featured' => 1, 'unfeatured' => 0);
+		$task   = $this->getTask();
+		$value  = JArrayHelper::getValue($values, $task, 0, 'int');
 
-		$model = $this->getModel('projects');
-		if(!$model->publish($cid, 1)) {
-			echo "<script> alert('".$model->getError()."'); window.history.go(-1); </script>\n";
-		}
+		// Get the model.
+		$model  = $this->getModel();
 
-		$total = count( $cid );
-		$msg 	= $total.' '.JText::_('ITEM PUBLISHED');
-
-		$this->setRedirect( 'index.php?option=com_projectlog&view=projects', $msg );
-	}
-    
-	function unpublish()
-	{
-		// Check for request forgeries
-		JRequest::checkToken() or die( 'Invalid Token' );
-        $cid 	= JRequest::getVar( 'cid', array(0), 'post', 'array' );
-
-		if (!is_array( $cid ) || count( $cid ) < 1) {
-			JError::raiseError(500, JText::_( 'SELECT ITEM TO UNPUBLISH' ) );
-		}
-
-		$model = $this->getModel('projects');
-		if(!$model->publish($cid, 0)) {
-			echo "<script> alert('".$model->getError()."'); window.history.go(-1); </script>\n";
-		}
-
-		$total = count( $cid );
-		$msg 	= $total.' '.JText::_('ITEM UNPUBLISHED');
-
-		$this->setRedirect( 'index.php?option=com_projectlog&view=projects', $msg );
-	}
-
-	function cancel()
-	{
-		// Check for request forgeries
-		JRequest::checkToken() or die( 'Invalid Token' );
-		$this->setRedirect( 'index.php?option=com_projectlog&view=projects' );
-	}
-
-	function remove()
-	{
-		// Check for request forgeries
-		JRequest::checkToken() or die( 'Invalid Token' );
-        $cid = JRequest::getVar( 'cid', array(0), 'post', 'array' );
-
-		if (!is_array( $cid ) || count( $cid ) < 1) {
-			JError::raiseError(500, JText::_( 'SELECT ITEM TO DELETE' ) );
-		}
-
-		$model = $this->getModel('projects');
-        $model->delete($cid);
-
-		$total = count( $cid );
-        $msg = $total . ' '.JText::_('ITEM DELETED');;
-
-		$cache = &JFactory::getCache('com_projectlog');
-		$cache->clean();
-
-		$this->setRedirect( 'index.php?option=com_projectlog&view=projects', $msg );
-	}
-
-	function edit( )
-	{
-        JRequest::setVar( 'view', 'project' );
-		JRequest::setVar( 'hidemainmenu', 1 );
-		parent::display();
-	}
-    
-	function save()
-	{
-		// Check for request forgeries
-		JRequest::checkToken() or die( 'Invalid Token' );
-		$task		= JRequest::getVar('task');
-		$post = JRequest::get( 'post', JREQUEST_ALLOWRAW);
-		$model = $this->getModel('project');
-        
-		if ($returnid = $model->store($post)) {
-
-			switch ($task)
+		// Access checks.
+		foreach ($ids as $i => $id)
+		{
+			$item = $model->getItem($id);
+			if (!$user->authorise('core.edit.state', 'com_projectlog.category.'.(int) $item->catid))
 			{
-				case 'apply' :
-					$link = 'index.php?option=com_projectlog&controller=projects&view=project&hidemainmenu=1&cid[]='.$returnid;
-					break;
-
-				default :
-					$link = 'index.php?option=com_projectlog&view=projects';
-					break;
+				// Prune items that you can't change.
+				unset($ids[$i]);
+				JError::raiseNotice(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 			}
-			$msg	= JText::_( 'ITEM SAVED');
-            $type   = 'message';
-
-			$cache = &JFactory::getCache('com_projectlog');
-			$cache->clean();
-
-		} else {
-
-			$msg 	= JText::_( 'ITEM NOT SAVED');
-			$link = 'index.php?option=com_projectlog&view=projects';
-            $type = 'notice';
-
 		}
-		$this->setRedirect( $link, $msg, $type );
- 	}
 
-    function edit_css( )
-	{
-        JRequest::setVar( 'css_file', 'projectlog.css' );
-        JRequest::setVar( 'view', 'editcss' );
-		JRequest::setVar( 'hidemainmenu', 1 );
-		parent::display();
+		if (empty($ids))
+		{
+			JError::raiseWarning(500, JText::_('COM_PROJECTLOG_NO_ITEM_SELECTED'));
+		}
+		else
+		{
+			// Publish the items.
+			if (!$model->featured($ids, $value))
+			{
+				JError::raiseWarning(500, $model->getError());
+			}
+		}
+
+		$this->setRedirect('index.php?option=com_projectlog&view=projects');
 	}
 
-    function approve()
+	/**
+	 * Proxy for getModel.
+	 *
+	 * @param   string	$name	The name of the model.
+	 * @param   string	$prefix	The prefix for the PHP class name.
+	 *
+	 * @return  JModel
+	 * @since   1.6
+	 */
+	public function getModel($name = 'Project', $prefix = 'ProjectlogModel', $config = array('ignore_request' => true))
 	{
-		// Check for request forgeries
-        JRequest::checkToken() or die( 'Invalid Token' );
-        $cid 	= JRequest::getVar( 'cid', array(0), 'post', 'array' );
+		$model = parent::getModel($name, $prefix, $config);
 
-		if (!is_array( $cid ) || count( $cid ) < 1) {
-			JError::raiseError(500, JText::_( 'SELECT ITEM TO APPROVE' ) );
-		}
-
-		$model = $this->getModel('projects');
-		if(!$model->approveProject($cid, 1)) {
-			echo "<script> alert('".$model->getError()."'); window.history.go(-1); </script>\n";
-		}
-
-		$total = count( $cid );
-		$msg 	= $total.' '.JText::_('ITEM APPROVED');
-        $link   = 'index.php?option=com_projectlog&view=projects';
-
-		$cache = &JFactory::getCache('com_projectlog');
-		$cache->clean();
-        $this->setRedirect( $link, $msg );
+		return $model;
 	}
 
-    function disapprove()
+	/**
+	 * Function that allows child controller access to model data
+	 * after the item has been deleted.
+	 *
+	 * @param   JModelLegacy  $model  The data model object.
+	 * @param   integer       $ids    The array of ids for items being deleted.
+	 *
+	 * @return  void
+	 *
+	 * @since   12.2
+	 */
+	protected function postDeleteHook(JModelLegacy $model, $ids = null)
 	{
-		// Check for request forgeries
-        JRequest::checkToken() or die( 'Invalid Token' );
-        $cid 	= JRequest::getVar( 'cid', array(0), 'post', 'array' );
-
-		if (!is_array( $cid ) || count( $cid ) < 1) {
-			JError::raiseError(500, JText::_( 'SELECT ITEM TO DISAPPROVE' ) );
-		}
-
-		$model = $this->getModel('projects');
-		if(!$model->approveProject($cid, 0)) {
-			echo "<script> alert('".$model->getError()."'); window.history.go(-1); </script>\n";
-		}
-
-		$total = count( $cid );
-		$msg 	= $total.' '.JText::_('ITEM DISAPPROVED');
-        $link   = 'index.php?option=com_projectlog&view=projects';
-
-		$cache = &JFactory::getCache('com_projectlog');
-		$cache->clean();
-        $this->setRedirect( $link, $msg );
 	}
 
-    function changeStatus(){
-        // Check for request forgeries
-        JRequest::checkToken() or die( 'Invalid Token' );
-        $cid 	= JRequest::getVar( 'cid', array(0), 'post', 'array' );
-
-		if (!is_array( $cid ) || count( $cid ) < 1) {
-			JError::raiseError(500, JText::_( 'SELECT ITEM TO CHANGE' ) );
-		}
-
-		$model = $this->getModel('projects');
-		if(!$model->changeStatus($cid[0])) {
-			echo "<script> alert('".$model->getError()."'); window.history.go(-1); </script>\n";
-		}
-
-		$msg 	= JText::_('STATUS CHANGED SUCCESS');
-        $link   = 'index.php?option=com_projectlog&view=projects';
-
-		$cache = &JFactory::getCache('com_projectlog');
-		$cache->clean();
-        $this->setRedirect( $link, $msg );
-    }
 }
-?>
