@@ -248,24 +248,29 @@
 			label="COM_PROJECTLOG_FIELD_INFORMATION_CLIENT_LABEL"
 			description="COM_PROJECTLOG_FIELD_INFORMATION_CLIENT_DESC"
 			size="30"
+            required="true"
 		/>
         
         <field name="project_type" type="text"
 			label="COM_PROJECTLOG_FIELD_INFORMATION_PROJECTTYPE_LABEL"
 			description="COM_PROJECTLOG_FIELD_INFORMATION_PROJECTTYPE_DESC"
 			size="30"
+            required="true"
 		/>
         
         <field name="release_date" type="calendar"
 			label="COM_PROJECTLOG_FIELD_RELEASE_DATE_LABEL" description="COM_PROJECTLOG_FIELD_RELEASE_DATE_DESC"
 			format="%Y-%m-%d %H:%M:%S" size="22"
 			filter="user_utc"
+            required="true"
 		/>
         
         <field name="status" type="list"
             class="chzn-color"
-            label="COM_PROJECTLOG_FIELD_ONSITE_LABEL"
-            description="COM_PROJECTLOG_FIELD_ONSITE_DESC">
+            label="COM_PROJECTLOG_FIELD_PROJECT_STATUS_LABEL"
+            description="COM_PROJECTLOG_FIELD_PROJECT_STATUS_DESC"
+            default="inprogress"
+            required="true">
             <option value="inprogress">COM_PROJECTLOG_INPROGRESS</option>
             <option value="onhold">COM_PROJECTLOG_ONHOLD</option>
             <option value="complete">COM_PROJECTLOG_COMPLETE</option>
@@ -287,7 +292,6 @@
         <field name="chief" type="user"
 			label="COM_PROJECTLOG_FIELD_CHIEF_LABEL"
 			description="COM_PROJECTLOG_FIELD_CHIEF_DESC"
-            required="true"
 		/>
         
         <field name="technicians" type="text"
@@ -369,7 +373,6 @@
 		<field name="task_id" type="text"
 			label="COM_PROJECTLOG_FIELD_INFORMATION_TASK_ID_LABEL"
 			description="COM_PROJECTLOG_FIELD_INFORMATION_TASK_ID_DESC"
-
 			size="30"
 		/>
 

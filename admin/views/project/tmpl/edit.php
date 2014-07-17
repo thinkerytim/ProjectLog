@@ -45,6 +45,7 @@ $assoc = JLanguageAssociations::isEnabled();
                         <?php echo $this->form->renderField('client'); ?>
                         <?php echo $this->form->renderField('project_type'); ?>
                         <?php echo $this->form->renderField('release_date'); ?>
+                        <?php echo $this->form->renderField('status'); ?>
 						<?php echo $this->form->renderField('image'); ?>
                     
                         <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_CREW'); ?></h4>

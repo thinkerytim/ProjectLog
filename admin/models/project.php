@@ -145,16 +145,6 @@ class ProjectlogModelProject extends JModelAdmin
 
 			$done = true;
 		}
-        
-        if (strlen($commands['chief']) > 0)
-		{
-			if (!$this->batchUser($commands['chief'], $pks, $contexts))
-			{
-				return false;
-			}
-
-			$done = true;
-		}
 
 		if (!$done)
 		{
