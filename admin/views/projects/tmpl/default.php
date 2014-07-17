@@ -105,7 +105,7 @@ $assoc		= JLanguageAssociations::isEnabled();
 						<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.name', $listDirn, $listOrder); ?>
 					</th>
 					<th class="nowrap hidden-phone">
-						<?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_FIELD_LINKED_USER_LABEL', 'ul.name', $listDirn, $listOrder); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_FIELD_PROJECT_MANAGER_LABEL', 'ul.name', $listDirn, $listOrder); ?>
 					</th>
 					<th width="5%" class="nowrap hidden-phone">
 						<?php echo JHtml::_('grid.sort', 'JFEATURED', 'a.featured', $listDirn, $listOrder); ?>
@@ -199,8 +199,8 @@ $assoc		= JLanguageAssociations::isEnabled();
 						</div>
 					</td>
 					<td align="small hidden-phone">
-						<?php if (!empty($item->linked_user)) : ?>
-							<a href="<?php echo JRoute::_('index.php?option=com_users&task=user.edit&id='.$item->user_id);?>"><?php echo $item->linked_user;?></a>
+						<?php if (!empty($item->manager)) : ?>
+							<a href="<?php echo JRoute::_('index.php?option=com_users&task=user.edit&id='.$item->manager);?>"><?php echo $item->project_manager;?></a>
 						<?php endif; ?>
 					</td>
 					<td class="center hidden-phone">

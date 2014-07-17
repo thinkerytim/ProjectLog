@@ -136,9 +136,19 @@ class ProjectlogModelProject extends JModelAdmin
 			$done = true;
 		}
 
-		if (strlen($commands['user_id']) > 0)
+		if (strlen($commands['manager']) > 0)
 		{
-			if (!$this->batchUser($commands['user_id'], $pks, $contexts))
+			if (!$this->batchUser($commands['manager'], $pks, $contexts))
+			{
+				return false;
+			}
+
+			$done = true;
+		}
+        
+        if (strlen($commands['chief']) > 0)
+		{
+			if (!$this->batchUser($commands['chief'], $pks, $contexts))
 			{
 				return false;
 			}
@@ -271,7 +281,7 @@ class ProjectlogModelProject extends JModelAdmin
 			{
 				$this->table->reset();
 				$this->table->load($pk);
-				$this->table->user_id = (int) $value;
+				$this->table->manager = (int) $value;
 
 				static::createTagsHelper($this->tagsObserver, $this->type, $pk, $this->typeAlias, $this->table);
 

@@ -150,9 +150,9 @@ class ProjectlogControllerProject extends JControllerForm
 	{
 			$app		= JFactory::getApplication();
 
-			if ($project->email_to == '' && $project->user_id != 0)
+			if ($project->email_to == '' && $project->manager != 0)
 			{
-				$project_user = JUser::getInstance($project->user_id);
+				$project_user = JUser::getInstance($project->manager);
 				$project->email_to = $project_user->get('email');
 			}
 

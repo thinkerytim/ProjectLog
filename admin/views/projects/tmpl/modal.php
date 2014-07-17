@@ -78,7 +78,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.name', $listDirn, $listOrder); ?>
 				</th>
 				<th class="center nowrap">
-					<?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_FIELD_LINKED_USER_LABEL', 'ul.name', $listDirn, $listOrder); ?>
+					<?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_FIELD_PROJECT_MANAGER_LABEL', 'ul.name', $listDirn, $listOrder); ?>
 				</th>
 				<th width="15%" class="center nowrap">
 					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access_level', $listDirn, $listOrder); ?>
@@ -129,8 +129,8 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 					<?php echo $this->escape($item->name); ?></a>
 				</td>
 				<td align="center">
-					<?php if (!empty($item->linked_user)) : ?>
-						<?php echo $item->linked_user;?>
+					<?php if (!empty($item->project_manager)) : ?>
+						<?php echo $item->project_manager;?>
 					<?php endif; ?>
 				</td>
 				<td class="center">

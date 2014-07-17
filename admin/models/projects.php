@@ -36,7 +36,7 @@ class ProjectlogModelProjects extends JModelList
 				'checked_out', 'a.checked_out',
 				'checked_out_time', 'a.checked_out_time',
 				'catid', 'a.catid', 'category_title',
-				'user_id', 'a.user_id',
+				'manager', 'a.manager',
 				'published', 'a.published',
 				'access', 'a.access', 'access_level',
 				'created', 'a.created',
@@ -46,7 +46,7 @@ class ProjectlogModelProjects extends JModelList
 				'language', 'a.language',
 				'publish_up', 'a.publish_up',
 				'publish_down', 'a.publish_down',
-				'ul.name', 'linked_user',
+				'ul.name', 'project_manager',
 			);
 
 			$app = JFactory::getApplication();
@@ -154,7 +154,7 @@ class ProjectlogModelProjects extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.id, a.name, a.alias, a.checked_out, a.checked_out_time, a.catid, a.user_id' .
+				'a.id, a.name, a.alias, a.checked_out, a.checked_out_time, a.catid, a.manager' .
 					', a.published, a.access, a.created, a.created_by, a.ordering, a.featured, a.language' .
 					', a.publish_up, a.publish_down'
 			)
@@ -162,8 +162,8 @@ class ProjectlogModelProjects extends JModelList
 		$query->from('#__projectlog_projects AS a');
 
 		// Join over the users for the linked user.
-		$query->select('ul.name AS linked_user')
-			->join('LEFT', '#__users AS ul ON ul.id=a.user_id');
+		$query->select('ul.name AS project_manager')
+			->join('LEFT', '#__users AS ul ON ul.id=a.manager');
 
 		// Join over the language
 		$query->select('l.title AS language_title')

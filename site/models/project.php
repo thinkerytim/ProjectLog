@@ -342,13 +342,13 @@ class ProjectlogModelProject extends JModelForm
 				$query->select($case_when1 . ',' . $case_when)
 					->from('#__content as a')
 					->join('LEFT', '#__categories as c on a.catid=c.id')
-					->where('a.created_by = ' . (int) $result->user_id)
+					->where('a.created_by = ' . (int) $result->manager)
 					->where('a.access IN (' . $groups . ')')
 					->order('a.state DESC, a.created DESC');
 				// filter per language if plugin published
 				if (JLanguageMultilang::isEnabled())
 				{
-					$query->where(('a.created_by = ' . (int) $result->user_id) . ' AND ' . ('a.language=' . $db->quote(JFactory::getLanguage()->getTag()) . ' OR a.language=' . $db->quote('*')));
+					$query->where(('a.created_by = ' . (int) $result->manager) . ' AND ' . ('a.language=' . $db->quote(JFactory::getLanguage()->getTag()) . ' OR a.language=' . $db->quote('*')));
 				}
 				if (is_numeric($published))
 				{
@@ -363,7 +363,7 @@ class ProjectlogModelProject extends JModelForm
 				//get the profile information for the linked user
 				require_once JPATH_ADMINISTRATOR . '/components/com_users/models/user.php';
 				$userModel = JModelLegacy::getInstance('User', 'UsersModel', array('ignore_request' => true));
-				$data = $userModel->getItem((int) $result->user_id);
+				$data = $userModel->getItem((int) $result->manager);
 
 				JPluginHelper::importPlugin('user');
 				$form = new JForm('com_users.profile');

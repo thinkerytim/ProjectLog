@@ -100,7 +100,7 @@ jimport('joomla.html.html.bootstrap');
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 	<?php endif; ?>
 
-	<?php if ($this->params->get('show_email_form') && ($this->project->email_to || $this->project->user_id)) : ?>
+	<?php if ($this->params->get('show_email_form') && ($this->project->email_to || $this->project->manager)) : ?>
 
 		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
 			<?php echo JHtml::_('bootstrap.addSlide', 'slide-project', JText::_('COM_PROJECTLOG_EMAIL_FORM'), 'display-form'); ?>
@@ -127,7 +127,7 @@ jimport('joomla.html.html.bootstrap');
 		<?php echo $this->loadTemplate('links'); ?>
 	<?php endif; ?>
 
-	<?php if ($this->params->get('show_articles') && $this->project->user_id && $this->project->articles) : ?>
+	<?php if ($this->params->get('show_articles') && $this->project->manager && $this->project->articles) : ?>
 
 		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
 			<?php echo JHtml::_('bootstrap.addSlide', 'slide-project', JText::_('JGLOBAL_ARTICLES'), 'display-articles'); ?>
@@ -150,7 +150,7 @@ jimport('joomla.html.html.bootstrap');
 
 	<?php endif; ?>
 
-	<?php if ($this->params->get('show_profile') && $this->project->user_id && JPluginHelper::isEnabled('user', 'profile')) : ?>
+	<?php if ($this->params->get('show_profile') && $this->project->manager && JPluginHelper::isEnabled('user', 'profile')) : ?>
 
 		<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
 			<?php echo JHtml::_('bootstrap.addSlide', 'slide-project', JText::_('COM_PROJECTLOG_PROFILE'), 'display-profile'); ?>

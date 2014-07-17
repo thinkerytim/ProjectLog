@@ -35,12 +35,21 @@
 			class="span12" size="45"
 			labelclass="control-label"
 		/>
-
-		<field name="user_id"
-			type="user"
-			label="COM_PROJECTLOG_FIELD_LINKED_USER_LABEL"
-			description="COM_PROJECTLOG_FIELD_LINKED_USER_DESC"
-		/>
+        
+        <field id="approved"
+			name="approved"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			label="COM_PROJECTLOG_APPROVED_LABEL"
+			description="COM_PROJECTLOG_APPROVED_DESC"
+			size="1"
+			default="1"
+		>
+			<option value="1">
+				COM_PROJECTLOG_APPROVED</option>
+			<option value="0">
+				COM_PROJECTLOG_UNAPPROVED</option>
+		</field>
 
 		<field id="published"
 			name="published"
@@ -234,6 +243,33 @@
 			type="note"
 			label=""
 			description="COM_PROJECTLOG_EDIT_DETAILS" />
+        
+        <field name="client" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_CLIENT_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_CLIENT_DESC"
+			size="30"
+		/>
+        
+        <field name="project_type" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_PROJECTTYPE_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_PROJECTTYPE_DESC"
+			size="30"
+		/>
+        
+        <field name="release_date" type="calendar"
+			label="COM_PROJECTLOG_FIELD_RELEASE_DATE_LABEL" description="COM_PROJECTLOG_FIELD_RELEASE_DATE_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="status" type="list"
+            class="chzn-color"
+            label="COM_PROJECTLOG_FIELD_ONSITE_LABEL"
+            description="COM_PROJECTLOG_FIELD_ONSITE_DESC">
+            <option value="inprogress">COM_PROJECTLOG_INPROGRESS</option>
+            <option value="onhold">COM_PROJECTLOG_ONHOLD</option>
+            <option value="complete">COM_PROJECTLOG_COMPLETE</option>
+        </field> 
 
 		<field name="image"
 			type="media"
@@ -245,42 +281,88 @@
 		<field name="manager" type="user"
 			label="COM_PROJECTLOG_FIELD_INFORMATION_MANAGER_LABEL"
 			description="COM_PROJECTLOG_FIELD_INFORMATION_MANAGER_DESC"
+            required="true"
 		/>
+        
+        <field name="chief" type="user"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_CHIEF_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_CHIEF_DESC"
+            required="true"
+		/>
+        
+        <field name="technicians" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_TECHNICIANS_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_TECHNICIANS_DESC"
+			size="30"
+		/>
+        
+        <field name="deployment_from" type="calendar"
+			label="COM_PROJECTLOG_FIELD_DEPLOYMENT_FROM_LABEL" description="COM_PROJECTLOG_FIELD_DEPLOYMENT_FROM_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="deployment_to" type="calendar"
+			label="COM_PROJECTLOG_FIELD_DEPLOYMENT_TO_LABEL" description="COM_PROJECTLOG_FIELD_DEPLOYMENT_TO_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="contract_from" type="calendar"
+			label="COM_PROJECTLOG_FIELD_CONTRACT_FROM_LABEL" description="COM_PROJECTLOG_FIELD_CONTRACT_FROM_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="contract_to" type="calendar"
+			label="COM_PROJECTLOG_FIELD_CONTRACT_TO_LABEL" description="COM_PROJECTLOG_FIELD_CONTRACT_TO_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="onsite" type="list"
+            class="chzn-color"
+            label="COM_PROJECTLOG_FIELD_ONSITE_LABEL"
+            description="COM_PROJECTLOG_FIELD_ONSITE_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>       
 
 		<field name="email_to" type="email"
 			label="JGLOBAL_EMAIL"
 			description="COM_PROJECTLOG_FIELD_INFORMATION_EMAIL_DESC"
 			size="30"
 		/>
-
-		<field name="address" type="textarea"
-			label="COM_PROJECTLOG_FIELD_INFORMATION_ADDRESS_LABEL"
-			description="COM_PROJECTLOG_FIELD_INFORMATION_ADDRESS_DESC"
+        
+        <field name="general_loc" type="textarea"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_GENERAL_LOC_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_GENERAL_LOC_DESC"
 			rows="3"
 			cols="30"
 		/>
-
-		<field name="project_type" type="text"
-			label="COM_PROJECTLOG_FIELD_INFORMATION_PROJECTTYPE_LABEL"
-			description="COM_PROJECTLOG_FIELD_INFORMATION_PROJECTTYPE_DESC"
+        
+        <field name="specific_loc" type="textarea"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_SPECIFIC_LOC_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_SPECIFIC_LOC_DESC"
+			rows="3"
+			cols="30"
+		/>
+        
+        <field name="release_id" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_RELEASE_ID_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_RELEASE_ID_DESC"
 			size="30"
 		/>
-
-		<field name="client" type="text"
-			label="COM_PROJECTLOG_FIELD_INFORMATION_CLIENT_LABEL"
-			description="COM_PROJECTLOG_FIELD_INFORMATION_CLIENT_DESC"
-			size="30"
-		/>
-
-		<field name="job_id" type="text"
+        
+        <field name="job_id" type="text"
 			label="COM_PROJECTLOG_FIELD_INFORMATION_JOB_ID_LABEL"
 			description="COM_PROJECTLOG_FIELD_INFORMATION_JOB_ID_DESC"
 			size="30"
-		/>
-
-		<field name="release_id" type="text"
-			label="COM_PROJECTLOG_FIELD_INFORMATION_RELEASE_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_INFORMATION_RELEASE_ID_DESC"
+		/>        
+        
+        <field name="workorder_id" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_WORKORDER_ID_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_WORKORDER_ID_DESC"
 			size="30"
 		/>
 
@@ -295,13 +377,7 @@
 			label="COM_PROJECTLOG_FIELD_INFORMATION_MOBILE_LABEL"
 			description="COM_PROJECTLOG_FIELD_INFORMATION_MOBILE_DESC"
 			size="30"
-		/>
-
-		<field name="workorder_id" type="text"
-			label="COM_PROJECTLOG_FIELD_INFORMATION_WORKORDER_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_INFORMATION_WORKORDER_ID_DESC"
-			size="30"
-		/>
+		/>	
 
 		<field name="webpage"
 			type="url"

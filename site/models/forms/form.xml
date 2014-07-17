@@ -23,11 +23,6 @@
 			size="30"
 		/>
 
-		<field name="user_id" type="user"
-			description="PROJECT_LINKED_USER_DESC"
-			label="PROJECT_LINKED_USER_LABEL"
-		/>
-
 		<field name="published" type="list"
 			default="1"
 			description="JFIELD_PUBLISHED_DESC"
@@ -82,6 +77,18 @@
 			description="PROJECT_INFORMATION_MANAGER_DESC"
 			label="PROJECT_INFORMATION_MANAGER_LABEL"
 			size="30"
+		/>
+        
+        <field name="manager" type="user"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_MANAGER_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_MANAGER_DESC"
+            required="true"
+		/>
+        
+        <field name="chief" type="user"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_CHIEF_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_CHIEF_DESC"
+            required="true"
 		/>
 
 		<field name="email_to" type="email"
