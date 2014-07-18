@@ -23,6 +23,8 @@ class ProjectlogViewProject extends JViewLegacy
 	protected $item;
 
 	protected $state;
+    
+    protected $logs;
 
 	/**
 	 * Display the view
@@ -33,6 +35,9 @@ class ProjectlogViewProject extends JViewLegacy
 		$this->form		= $this->get('Form');
 		$this->item		= $this->get('Item');
 		$this->state	= $this->get('State');
+        $this->logs     = $this->get('Logs');
+        
+        $this->canDo	= ProjectlogHelper::getActions('', 'project', $this->item->id);
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -63,10 +68,7 @@ class ProjectlogViewProject extends JViewLegacy
 		$user		= JFactory::getUser();
 		$userId		= $user->get('id');
 		$isNew		= ($this->item->id == 0);
-		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
-
-		// Since we don't track these assets at the item level, use the category id.
-		$canDo		= JHelperContent::getActions('com_projectlog', 'category', $this->item->catid);
+		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);		
 
 		JToolbarHelper::title(JText::_('COM_PROJECTLOG_MANAGER_PROJECT'), 'address project');
 
@@ -89,13 +91,13 @@ class ProjectlogViewProject extends JViewLegacy
 			if (!$checkedOut)
 			{
 				// Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
-				if ($canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_by == $userId))
+				if ($this->canDo->get('core.edit') || ($this->canDo->get('core.edit.own') && $this->item->created_by == $userId))
 				{
 					JToolbarHelper::apply('project.apply');
 					JToolbarHelper::save('project.save');
 
 					// We can save this record, but check the create permission to see if we can return to make a new one.
-					if ($canDo->get('core.create'))
+					if ($this->canDo->get('core.create'))
 					{
 						JToolbarHelper::save2new('project.save2new');
 					}
@@ -103,7 +105,7 @@ class ProjectlogViewProject extends JViewLegacy
 			}
 
 			// If checked out, we can still save
-			if ($canDo->get('core.create'))
+			if ($this->canDo->get('core.create'))
 			{
 				JToolbarHelper::save2copy('project.save2copy');
 			}

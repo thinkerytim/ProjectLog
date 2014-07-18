@@ -50,6 +50,8 @@ class ProjectlogController extends JControllerLegacy
 
 			return false;
 		}
+        
+        JFactory::getDocument()->addStyleSheet(JURI::root(true).'/components/com_projectlog/assets/css/projectlog.css');
 
 		parent::display();
 

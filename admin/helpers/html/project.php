@@ -30,7 +30,7 @@ abstract class JHtmlProject
 		$html = '';
 
 		// Get the associations
-		if ($associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_projects', 'com_projectlog.item', $projectid))
+		if ($associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_projects', 'com_projectlog.project', $projectid))
 		{
 			foreach ($associations as $tag => $associated)
 			{

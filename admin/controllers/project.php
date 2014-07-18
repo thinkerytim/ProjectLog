@@ -115,5 +115,5 @@ class ProjectlogControllerProject extends JControllerForm
 	 */
 	protected function postSaveHook(JModelLegacy $model, $validData = array())
 	{
-	}
+	}   
 }

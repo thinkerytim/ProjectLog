@@ -41,5 +41,23 @@ class ProjectlogHelper extends JHelperContent
 			$vName == 'categories'
 		);
 	}
+    
+    public static function getActions($component = 'com_projectlog', $section = '', $id = 0)
+	{
+		$user	= JFactory::getUser();
+		$result	= new JObject;
+
+		$actions = array(
+			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete',
+            'projectlog.createlog', 'projectlog.deletelog', 'projectlog.editlog', 'projectlog.editlog.state',
+            'projectlog.editlog.own'
+		);
+
+		foreach ($actions as $action) {
+			$result->set($action,	$user->authorise($action, 'com_projectlog.'.$section, $id));
+		}
+
+		return $result;
+	}
 
 }

@@ -16,4 +16,11 @@
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CATEGORIES_ACCESS_EDITSTATE_DESC" />
 		<action name="core.edit.own" title="JACTION_EDITOWN" description="COM_CATEGORIES_ACCESS_EDITOWN_DESC" />
 	</section>
+    <section name="project">
+		<action name="projectlog.createlog" title="Create Logs" description="" />
+		<action name="projectlog.deletelog" title="Delete Logs" description="" />
+		<action name="projectlog.editlog" title="Edit Logs" description="" />
+		<action name="projectlog.editlog.state" title="Edit Log State" description="" />
+		<action name="projectlog.editlog.own" title="Edit Own Logs" description="" />
+	</section>
 </access>

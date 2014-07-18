@@ -313,7 +313,7 @@ class ProjectlogModelProject extends JModelAdmin
 				return;
 			}
 			$user = JFactory::getUser();
-			return $user->authorise('core.delete', 'com_projectlog.category.' . (int) $record->catid);
+			return $user->authorise('core.delete', 'com_projectlog.project.' . (int) $record->id);
 		}
 	}
 
@@ -333,7 +333,7 @@ class ProjectlogModelProject extends JModelAdmin
 		// Check against the category.
 		if (!empty($record->catid))
 		{
-			return $user->authorise('core.edit.state', 'com_projectlog.category.' . (int) $record->catid);
+			return $user->authorise('core.edit.state', 'com_projectlog.project.' . (int) $record->id);
 		}
 		// Default to component settings if category not known.
 		else
@@ -426,7 +426,7 @@ class ProjectlogModelProject extends JModelAdmin
 
 			if ($item->id != null)
 			{
-				$associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_projects', 'com_projectlog.item', $item->id);
+				$associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_projects', 'com_projectlog.project', $item->id);
 
 				foreach ($associations as $tag => $association)
 				{
@@ -540,7 +540,7 @@ class ProjectlogModelProject extends JModelAdmin
 				$db = JFactory::getDbo();
 				$query = $db->getQuery(true)
 					->delete('#__associations')
-					->where('context=' . $db->quote('com_projectlog.item'))
+					->where('context=' . $db->quote('com_projectlog.project'))
 					->where('id IN (' . implode(',', $associations) . ')');
 				$db->setQuery($query);
 				$db->execute();
@@ -560,7 +560,7 @@ class ProjectlogModelProject extends JModelAdmin
 
 					foreach ($associations as $id)
 					{
-						$query->values($id . ',' . $db->quote('com_projectlog.item') . ',' . $db->quote($key));
+						$query->values($id . ',' . $db->quote('com_projectlog.project') . ',' . $db->quote($key));
 					}
 
 					$db->setQuery($query);
@@ -763,4 +763,23 @@ class ProjectlogModelProject extends JModelAdmin
 
 		return array($name, $alias);
 	}
+    
+    public function getLogs()
+    {
+        $project_id = $this->getState('project.id');
+        
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('*')
+                ->from('#__projectlog_logs AS log')
+                ->where('project_id = '.(int)$project_id);
+
+        // Join over the users for the log creator.
+        $query->select('ul.name AS logger_name, ul.email AS logger_email')
+        ->join('LEFT', '#__users AS ul ON ul.id=log.created_by');
+
+        $db->setQuery($query);
+        return $db->loadObjectList(); 
+    }
 }

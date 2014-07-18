@@ -45,7 +45,7 @@ abstract class ProjectlogHelperAssociation extends CategoryHelperAssociation
 		{
 			if ($id)
 			{
-				$associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_projects', 'com_projectlog.item', $id);
+				$associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_projects', 'com_projectlog.project', $id);
 
 				$return = array();
 

@@ -54,6 +54,11 @@ class ProjectlogTableProject extends JTable
 			$registry->loadArray($array['metadata']);
 			$array['metadata'] = (string) $registry;
 		}
+ 
+        if (isset($array['rules']) && is_array($array['rules'])) { 
+            $rules = new JRules($array['rules']); 
+            $this->setRules($rules); 
+        }
 
 		return parent::bind($array, $ignore);
 	}
@@ -234,4 +239,23 @@ class ProjectlogTableProject extends JTable
 
 		return $this->alias;
 	}
+    
+/**
+     * Redefined asset name, as we support action control
+     */
+    protected function _getAssetName() {
+        $k = $this->_tbl_key;
+        return 'com_projectlog.project.'.(int) $this->$k;
+    }
+
+    /**
+     * We provide our global ACL as parent
+     * @see JTable::_getAssetParentId()
+     */
+    protected function _getAssetParentId(JTable $table = null, $id = null)
+    {
+        $asset = JTable::getInstance('Asset');
+        $asset->loadByName('com_projectlog');
+        return $asset->id;
+    }
 }
