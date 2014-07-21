@@ -25,6 +25,8 @@ class ProjectlogViewProject extends JViewLegacy
 	protected $state;
     
     protected $logs;
+    
+    protected $user;
 
 	/**
 	 * Display the view
@@ -36,6 +38,7 @@ class ProjectlogViewProject extends JViewLegacy
 		$this->item		= $this->get('Item');
 		$this->state	= $this->get('State');
         $this->logs     = $this->get('Logs');
+        $this->user     = JFactory::getUser();
         
         $this->canDo	= ProjectlogHelper::getActions('', 'project', $this->item->id);
 

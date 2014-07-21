@@ -1,11 +1,12 @@
 CREATE TABLE `#__projectlog_projects` (
   `id` integer NOT NULL auto_increment,
+  `asset_id` int(10) unsigned NOT NULL default '0',
   `catid` integer NOT NULL default '0',
   `access` tinyint(3) unsigned NOT NULL default '0',
   `job_id` varchar(100) default NULL,
   `release_id` varchar(100) default NULL,
-  `task_id` varchar(255) default NULL,
-  `workorder_id` varchar(255) default NULL,
+  `task_id` varchar(100) default NULL,
+  `workorder_id` varchar(100) default NULL,
   `name` varchar(255) NOT NULL default '',
   `alias` varchar(255) NOT NULL default '',
   `misc` mediumtext,
@@ -14,7 +15,7 @@ CREATE TABLE `#__projectlog_projects` (
   `contract_to` datetime NOT NULL default '0000-00-00 00:00:00',
   `specific_loc` text,
   `general_loc` text,
-  `manager` varchar(255) default NULL,
+  `manager` int(11) default NULL default '0',
   `chief` int(11) NOT NULL default '0',
   `technicians` varchar(200) NOT NULL,
   `deployment_from` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -65,12 +66,12 @@ CREATE TABLE `#__projectlog_projects` (
 )  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__projectlog_docs` (
-  `id` int(11) NOT NULL auto_increment,
-  `project_id` int(11) NOT NULL default '0',
+  `id` integer NOT NULL auto_increment,
+  `project_id` integer NOT NULL default '0',
   `title` varchar(255) NOT NULL default '',
   `path` varchar(255) NOT NULL default '',
-  `created_by` int(10) unsigned NOT NULL default '0',
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
+  `created_by` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) DEFAULT CHARSET=utf8;
 
@@ -79,8 +80,8 @@ CREATE TABLE IF NOT EXISTS `#__projectlog_logs` (
   `project_id` int(11) NOT NULL default '0',
   `title` varchar(255) NOT NULL default '',
   `description` text NOT NULL,
-  `created_by` int(10) unsigned NOT NULL default '0',
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
+  `created_by` int(10) unsigned NOT NULL default '0',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified_by` int(10) unsigned NOT NULL default '0',
   `published` tinyint(1) NOT NULL default '0',

@@ -148,53 +148,53 @@ class ProjectlogControllerProject extends JControllerForm
 
 	private function _sendEmail($data, $project, $copy_email_activated)
 	{
-			$app		= JFactory::getApplication();
+        $app		= JFactory::getApplication();
 
-			if ($project->email_to == '' && $project->manager != 0)
-			{
-				$project_user = JUser::getInstance($project->manager);
-				$project->email_to = $project_user->get('email');
-			}
+        if ($project->email_to == '' && $project->manager != 0)
+        {
+            $project_user = JUser::getInstance($project->manager);
+            $project->email_to = $project_user->get('email');
+        }
 
-			$mailfrom	= $app->getCfg('mailfrom');
-			$fromname	= $app->getCfg('fromname');
-			$sitename	= $app->getCfg('sitename');
+        $mailfrom	= $app->getCfg('mailfrom');
+        $fromname	= $app->getCfg('fromname');
+        $sitename	= $app->getCfg('sitename');
 
-			$name		= $data['project_name'];
-			$email		= JStringPunycode::emailToPunycode($data['project_email']);
-			$subject	= $data['project_subject'];
-			$body		= $data['project_message'];
+        $name		= $data['project_name'];
+        $email		= JStringPunycode::emailToPunycode($data['project_email']);
+        $subject	= $data['project_subject'];
+        $body		= $data['project_message'];
 
-			// Prepare email body
-			$prefix = JText::sprintf('COM_PROJECTLOG_ENQUIRY_TEXT', JUri::base());
-			$body	= $prefix . "\n" . $name . ' <' . $email . '>' . "\r\n\r\n" . stripslashes($body);
+        // Prepare email body
+        $prefix = JText::sprintf('COM_PROJECTLOG_ENQUIRY_TEXT', JUri::base());
+        $body	= $prefix . "\n" . $name . ' <' . $email . '>' . "\r\n\r\n" . stripslashes($body);
 
-			$mail = JFactory::getMailer();
-			$mail->addRecipient($project->email_to);
-			$mail->addReplyTo(array($email, $name));
-			$mail->setSender(array($mailfrom, $fromname));
-			$mail->setSubject($sitename . ': ' . $subject);
-			$mail->setBody($body);
-			$sent = $mail->Send();
+        $mail = JFactory::getMailer();
+        $mail->addRecipient($project->email_to);
+        $mail->addReplyTo(array($email, $name));
+        $mail->setSender(array($mailfrom, $fromname));
+        $mail->setSubject($sitename . ': ' . $subject);
+        $mail->setBody($body);
+        $sent = $mail->Send();
 
-			// If we are supposed to copy the sender, do so.
+        // If we are supposed to copy the sender, do so.
 
-			// Check whether email copy function activated
-			if ($copy_email_activated == true && !empty($data['project_email_copy']))
-			{
-				$copytext		= JText::sprintf('COM_PROJECTLOG_COPYTEXT_OF', $project->name, $sitename);
-				$copytext		.= "\r\n\r\n" . $body;
-				$copysubject	= JText::sprintf('COM_PROJECTLOG_COPYSUBJECT_OF', $subject);
+        // Check whether email copy function activated
+        if ($copy_email_activated == true && !empty($data['project_email_copy']))
+        {
+            $copytext		= JText::sprintf('COM_PROJECTLOG_COPYTEXT_OF', $project->name, $sitename);
+            $copytext		.= "\r\n\r\n" . $body;
+            $copysubject	= JText::sprintf('COM_PROJECTLOG_COPYSUBJECT_OF', $subject);
 
-				$mail = JFactory::getMailer();
-				$mail->addRecipient($email);
-				$mail->addReplyTo(array($email, $name));
-				$mail->setSender(array($mailfrom, $fromname));
-				$mail->setSubject($copysubject);
-				$mail->setBody($copytext);
-				$sent = $mail->Send();
-			}
+            $mail = JFactory::getMailer();
+            $mail->addRecipient($email);
+            $mail->addReplyTo(array($email, $name));
+            $mail->setSender(array($mailfrom, $fromname));
+            $mail->setSubject($copysubject);
+            $mail->setBody($copytext);
+            $sent = $mail->Send();
+        }
 
-			return $sent;
+        return $sent;
 	}
 }

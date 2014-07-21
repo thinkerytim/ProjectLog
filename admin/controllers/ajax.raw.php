@@ -80,15 +80,29 @@ class ProjectlogControllerAjax extends JControllerLegacy
             if(!mysql_errno()){
         */
         
-        $field		= JRequest::getString('log_title');
+        // Check for request forgeries
+        JSession::checkToken() or die( 'Invalid Token');
+        
+        $data       = JRequest::get( 'post');
+        
+        $logtitle   = htmlentities($data['title']);
+        $logdata    = htmlentities($data['log']);
+        $logdate    = JFactory::getDate();
+
+        /*$model = $this->getModel('settings');
+        if($model->saveStypes( $stypes )){
+            echo '<div class="alert alert-success">Success</div>';
+        }else{
+            echo '<div class="alert alert-error">'.$model->getError().'</div>';
+        }*/
         
         echo 
-            '<div class="cmt-cnt">
+            '<div class="log-cnt">
                 <img src="test" alt="" />
-                <div class="thecom">
-                    <h5>test</h5><span  class="com-dt">dtate</span>
+                <div class="thelog">
+                    <h5>'.$logtitle.'</h5><span  class="log-dt">'.$logdate.'</span>
                     <br/>
-                    <p>log here</p>
+                    <p>'.$logdata.'</p>
                 </div>
             </div>';
     }

@@ -129,13 +129,13 @@ $assoc = JLanguageAssociations::isEnabled();
                 <?php if(!$this->item->id): ?>     
                     <div class="alert alert-warning center"><?php echo JText::_('COM_PROJECTLOG_SAVE_FIRST'); ?></div>
                 <?php else: ?>
-                    <div class="cmt-container">
+                    <div class="log-container">
                         <?php
                         foreach($this->logs as $log)
                         {
                             $name       = $log->logger_name;
                             $email      = $log->logger_email;
-                            $comment    = $log->description;
+                            $logdata    = $log->description;
                             $date       = $log->created;
 
                             // Get gravatar Image 
@@ -145,60 +145,58 @@ $assoc = JLanguageAssociations::isEnabled();
                             $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($email)))."?d=".$default."&s=".$size;
 
                             echo 
-                                '<div class="cmt-cnt">
+                                '<div class="log-cnt">
                                     <img src="'.$grav_url.'" />
-                                    <div class="thecom">
+                                    <div class="thelog">
                                         <h5>'.$name.'</h5>
-                                        <span data-utime="1371248446" class="com-dt">'.$date.'</span>
+                                        <span data-utime="1371248446" class="log-dt">'.$date.'</span>
                                         <br/>
-                                        <p>'.$comment.'</p>
+                                        <p>'.$logdata.'</p>
                                     </div>
                                 </div>';                  
                         }
                         ?>
-                        <div class="new-com-bt">
+                        <div class="new-log-bt">
                             <span>Write log entry ...</span>
                         </div>
-                        <div class="new-com-cnt">
-                            <input type="text" id="name-com" name="name-com" value="" placeholder="Your name" />
-                            <input type="text" id="mail-com" name="mail-com" value="" placeholder="Your e-mail adress" />
-                            <textarea class="the-new-com"></textarea>
-                            <div class="bt-add-com">Submit Log</div>
-                            <div class="bt-cancel-com">Cancel</div>
+                        <div class="new-log-cnt">
+                            <input type="text" id="title-log" name="title-log" value="" placeholder="Log Title" />
+                            <textarea class="the-new-log"></textarea>
+                            <div class="bt-add-log">Submit Log</div>
+                            <div class="bt-cancel-log">Cancel</div>
                         </div>
                         <div class="clear"></div>
                     </div>
 
                     <script type="text/javascript">                   
                         (function($) {
-                            $('.new-com-bt').click(function(event){    
+                            $('.new-log-bt').click(function(event){    
                                 $(this).hide();
-                                $('.new-com-cnt').show();
-                                $('#name-com').focus();
+                                $('.new-log-cnt').show();
+                                $('#title-log').focus();
                             });
 
-                            /* when start writing the comment activate the "add" button */
-                            $('.the-new-com').bind('input propertychange', function() {
-                               $(".bt-add-com").css({opacity:0.6});
+                            /* when start writing the log activate the "add" button */
+                            $('.the-new-log').bind('input propertychange', function() {
+                               $(".bt-add-log").css({opacity:0.6});
                                var checklength = $(this).val().length;
-                               if(checklength){ $(".bt-add-com").css({opacity:1}); }
+                               if(checklength){ $(".bt-add-log").css({opacity:1}); }
                             });
 
-                            /* on clic  on the cancel button */
-                            $('.bt-cancel-com').click(function(){
-                                $('.the-new-com').val('');
-                                $('.new-com-cnt').fadeOut('fast', function(){
-                                    $('.new-com-bt').fadeIn('fast');
+                            /* on click on the cancel button */
+                            $('.bt-cancel-log').click(function(){
+                                $('.the-new-log').val('');
+                                $('.new-log-cnt').fadeOut('fast', function(){
+                                    $('.new-log-bt').fadeIn('fast');
                                 });
                             });
 
-                            // on post comment click 
-                            $('.bt-add-com').click(function(){
-                                var theCom = $('.the-new-com');
-                                var theName = $('#name-com');
-                                var theMail = $('#mail-com');
+                            // on post log click 
+                            $('.bt-add-log').click(function(){                                
+                                var theTitle = $('#title-log');
+                                var theLog = $('.the-new-log');
 
-                                if( !theCom.val()){ 
+                                if( !theLog.val()){ 
                                     alert('You need to write a log!'); 
                                 }else{ 
                                     //ajax request vars
@@ -207,21 +205,18 @@ $assoc = JLanguageAssociations::isEnabled();
                                         type: "POST",
                                         url: logurl,
                                         data: {
-                                            'act': 'add-com',
                                             'project_id' : '<?php echo $this->item->id; ?>',
-                                            'name' : theName.val(),
-                                            'email' : theMail.val(),
-                                            'comment' : theCom.val(),
+                                            'title' : theTitle.val(),
+                                            'log' : theLog.val(),
                                             '<?php echo JSession::getFormToken(); ?>':'1',
                                             'format': 'raw'
                                         },
                                         success: function(html){
-                                            theCom.val('');
-                                            theMail.val('');
-                                            theName.val('');
-                                            $('.new-com-cnt').hide('fast', function(){
-                                                $('.new-com-bt').show('fast');
-                                                $('.new-com-bt').before(html);  
+                                            theLog.val('');
+                                            theTitle.val('');
+                                            $('.new-log-cnt').hide('fast', function(){
+                                                $('.new-log-bt').show('fast');
+                                                $('.new-log-bt').before(html);  
                                             })
                                         }  
                                     });
