@@ -13,7 +13,7 @@ jimport('joomla.log.log');
 
 class ProjectlogControllerAjax extends JControllerLegacy
 {
-	protected $text_prefix = 'COM_IPROPERTY';
+	protected $text_prefix = 'COM_PROJECTLOG';
     
     public function resetHits()
     {
@@ -26,7 +26,7 @@ class ProjectlogControllerAjax extends JControllerLegacy
         $db->setQuery($query);
         
         if($db->Query()){
-            echo JText::_('COM_IPROPERTY_COUNTER_RESET');
+            echo JText::_($this->text_prefix.'_COUNTER_RESET');
         }else{
             return false;
         }
@@ -59,52 +59,54 @@ class ProjectlogControllerAjax extends JControllerLegacy
 	}
     
     public function addLog()
-    {
-        /*if($_POST['act'] == 'add-com'):
-            $name = htmlentities($name);
-            $email = htmlentities($email);
-            $comment = htmlentities($comment);
-
-            // Connect to the database
-            include('../config.php'); 
-
-            // Get gravatar Image 
-            // https://fr.gravatar.com/site/implement/images/php/
-            $default = "mm";
-            $size = 35;
-            $grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . $default . "&s=" . $size;
-
-            if(strlen($name) <= '1'){ $name = 'Guest';}
-            //insert the comment in the database
-            mysql_query("INSERT INTO comments (name, email, comment, id_post)VALUES( '$name', '$email', '$comment', '$id_post')");
-            if(!mysql_errno()){
-        */
-        
+    {        
         // Check for request forgeries
         JSession::checkToken() or die( 'Invalid Token');
         
-        $data       = JRequest::get( 'post');
+        $data       = JRequest::get('post');
+        $user       = JFactory::getUser();
+        $currdate   = JFactory::getDate()->toSql();
         
         $logtitle   = htmlentities($data['title']);
-        $logdata    = htmlentities($data['log']);
+        $logdesc    = htmlentities($data['log']);
         $logdate    = JFactory::getDate();
-
-        /*$model = $this->getModel('settings');
-        if($model->saveStypes( $stypes )){
-            echo '<div class="alert alert-success">Success</div>';
-        }else{
-            echo '<div class="alert alert-error">'.$model->getError().'</div>';
-        }*/
+        $project_id = (int)$data['project_id'];
         
-        echo 
-            '<div class="log-cnt">
-                <img src="test" alt="" />
-                <div class="thelog">
-                    <h5>'.$logtitle.'</h5><span  class="log-dt">'.$logdate.'</span>
-                    <br/>
-                    <p>'.$logdata.'</p>
-                </div>
-            </div>';
+        $grav_url = projectlogHtml::getGravatar($user->email);       
+
+        $db = JFactory::getDbo();
+        
+        $newlog = new stdClass();
+        $newlog->title = $logtitle;
+        $newlog->description = $logdesc;
+        $newlog->project_id = (int)$project_id;
+        $newlog->created = $currdate;
+        $newlog->created_by = $user->id;
+        $newlog->published = 1;
+        
+        try
+        {          
+            if($result = $db->insertObject('#__projectlog_logs', $newlog)){
+                $success_msg = 
+                  '<div class="log-cnt">
+                      <img src="'.$grav_url.'" alt="" />
+                      <div class="thelog">
+                          <h5>'.$newlog->title.'</h5>
+                          <br/>
+                          <p>'.$newlog->description.'</p>
+                          <p data-utime="1371248446" class="small log-dt">'.$user->name.' - '.JHtml::date($newlog->created,JText::_('DATE_FORMAT_LC2')).'</p>
+                      </div>
+                  </div>';
+                echo new JResponseJson($success_msg);
+                return;
+            }
+            echo new JResponseJson($result);    
+            return;
+        }
+        catch(Exception $e)
+        {
+          echo new JResponseJson($e);
+        }
     }
 }
 ?>

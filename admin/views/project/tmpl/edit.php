@@ -129,29 +129,28 @@ $assoc = JLanguageAssociations::isEnabled();
                 <?php if(!$this->item->id): ?>     
                     <div class="alert alert-warning center"><?php echo JText::_('COM_PROJECTLOG_SAVE_FIRST'); ?></div>
                 <?php else: ?>
+                    <div id="log-msg"></div>
                     <div class="log-container">
                         <?php
                         foreach($this->logs as $log)
                         {
-                            $name       = $log->logger_name;
-                            $email      = $log->logger_email;
-                            $logdata    = $log->description;
-                            $date       = $log->created;
+                            $loggername     = $log->logger_name;
+                            $loggeremail    = $log->logger_email;
+                            $logtitle       = $log->title;
+                            $logdata        = $log->description;
+                            $logdate        = JHtml::date($log->created,JText::_('DATE_FORMAT_LC2'));
 
                             // Get gravatar Image 
-                            // https://fr.gravatar.com/site/implement/images/php/
-                            $default = "mm";
-                            $size = 35;
-                            $grav_url = "http://www.gravatar.com/avatar/".md5(strtolower(trim($email)))."?d=".$default."&s=".$size;
+                            $grav_url = projectlogHtml::getGravatar($loggeremail);                        
 
                             echo 
                                 '<div class="log-cnt">
                                     <img src="'.$grav_url.'" />
                                     <div class="thelog">
-                                        <h5>'.$name.'</h5>
-                                        <span data-utime="1371248446" class="log-dt">'.$date.'</span>
+                                        <h5>'.$logtitle.'</h5>
                                         <br/>
                                         <p>'.$logdata.'</p>
+                                        <p data-utime="1371248446" class="small log-dt">'.$loggername.' - '.$logdate.'</p>
                                     </div>
                                 </div>';                  
                         }
@@ -162,10 +161,12 @@ $assoc = JLanguageAssociations::isEnabled();
                         <div class="new-log-cnt">
                             <input type="text" id="title-log" name="title-log" value="" placeholder="Log Title" />
                             <textarea class="the-new-log"></textarea>
-                            <div class="bt-add-log">Submit Log</div>
-                            <div class="bt-cancel-log">Cancel</div>
+                            <p>
+                                <div class="bt-add-log"><?php echo JText::_('JSUBMIT'); ?></div>
+                                <div class="bt-cancel-log"><?php echo JText::_('JCANCEL'); ?></div>
+                            </p>
                         </div>
-                        <div class="clear"></div>
+                        <div class="clearfix"></div>
                     </div>
 
                     <script type="text/javascript">                   
@@ -201,8 +202,8 @@ $assoc = JLanguageAssociations::isEnabled();
                                 }else{ 
                                     //ajax request vars
                                     var logurl = '<?php echo JURI::base('true'); ?>/index.php?option=com_projectlog&task=ajax.addLog';
-                                    $.ajax({
-                                        type: "POST",
+                                    var req = new Request.JSON({
+                                        type: "post",
                                         url: logurl,
                                         data: {
                                             'project_id' : '<?php echo $this->item->id; ?>',
@@ -211,15 +212,48 @@ $assoc = JLanguageAssociations::isEnabled();
                                             '<?php echo JSession::getFormToken(); ?>':'1',
                                             'format': 'raw'
                                         },
-                                        success: function(html){
-                                            theLog.val('');
-                                            theTitle.val('');
-                                            $('.new-log-cnt').hide('fast', function(){
-                                                $('.new-log-bt').show('fast');
-                                                $('.new-log-bt').before(html);  
-                                            })
-                                        }  
-                                    });
+                                        onSuccess: function(r){   
+                                            if (!r.success && r.message)
+                                            {
+                                                // Success flag is set to 'false' and main response message given
+                                                // So you can alert it or insert it into some HTML element
+                                                alert(r.message);
+                                            }
+
+                                            if (r.messages)
+                                            {
+                                                // All the enqueued messages of the $app object can simple be
+                                                // rendered by the respective helper function of Joomla!
+                                                // They will automatically be displayed at the messages section of the template
+                                                Joomla.renderMessages(r.messages);
+                                            }
+
+                                            if (r.data)
+                                            {
+                                                theLog.val('');
+                                                theTitle.val('');
+                                                $('.new-log-cnt').hide('fast', function(){
+                                                    $('.new-log-bt').show('fast');
+                                                    $('.new-log-bt').before(r.data);  
+                                                })
+                                            }
+                                            
+                                        }.bind(this),
+                                            onFailure: function(xhr)
+                                            {
+                                                // Reaching this point means that the Ajax request itself was not successful
+                                                // So JResponseJson was never called
+                                                alert('Ajax error');
+                                            }.bind(this),
+                                            onError: function(text, error)
+                                            {
+                                                // Reaching this point means that the Ajax request was answered by the server, but
+                                                // the response was no valid JSON (this happens sometimes if there were PHP errors,
+                                                // warnings or notices during the development process of a new Ajax request).
+                                                alert(error + "\n\n" + text);
+                                            }.bind(this)                                          
+                                        });
+                                        req.post();
                                 }
                             });
 
