@@ -54,7 +54,7 @@ class ProjectlogHelper extends JHelperContent
 		);
 
 		foreach ($actions as $action) {
-			$result->set($action,	$user->authorise($action, 'com_projectlog.'.$section, $id));
+			$result->set($action,	$user->authorise($action, $component.'.'.$section.'.'.$id));
 		}
 
 		return $result;

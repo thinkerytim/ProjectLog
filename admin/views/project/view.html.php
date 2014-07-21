@@ -40,7 +40,7 @@ class ProjectlogViewProject extends JViewLegacy
         $this->logs     = $this->get('Logs');
         $this->user     = JFactory::getUser();
         
-        $this->canDo	= ProjectlogHelper::getActions('', 'project', $this->item->id);
+        $this->canDo	= ProjectlogHelper::getActions('com_projectlog', 'project', $this->item->id);
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
