@@ -771,13 +771,15 @@ class ProjectlogModelProject extends JModelAdmin
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('*')
+        $query->select('*, log.id as log_id')
                 ->from('#__projectlog_logs AS log')
                 ->where('project_id = '.(int)$project_id);
 
         // Join over the users for the log creator.
         $query->select('ul.name AS logger_name, ul.email AS logger_email')
-        ->join('LEFT', '#__users AS ul ON ul.id=log.created_by');
+        ->join('LEFT', '#__users AS ul ON ul.id = log.created_by');
+        
+        $query->order('log.created DESC');
 
         $db->setQuery($query);
         return $db->loadObjectList(); 

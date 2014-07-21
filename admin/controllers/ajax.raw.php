@@ -87,8 +87,9 @@ class ProjectlogControllerAjax extends JControllerLegacy
         try
         {          
             if($result = $db->insertObject('#__projectlog_logs', $newlog)){
+                $new_log_id = $db->insertid();
                 $success_msg = 
-                  '<div class="log-cnt">
+                  '<div class="log-cnt" id="logid-'.$new_log_id.'">
                       <img src="'.$grav_url.'" alt="" />
                       <div class="thelog">
                           <h5>'.$newlog->title.'</h5>
@@ -107,6 +108,38 @@ class ProjectlogControllerAjax extends JControllerLegacy
         {
           echo new JResponseJson($e);
         }
+    }
+    
+    public function deleteLog()
+    {
+        // Check for request forgeries
+        JSession::checkToken() or die( 'Invalid Token');
+        
+        $data       = JRequest::get('post');
+        $log_id     = (int)$data['log_id'];
+        
+        $db         = JFactory::getDbo(); 
+        $query      = $db->getQuery(true);       
+        
+        try{
+            $query->delete($db->quoteName('#__projectlog_logs'));
+            $query->where($db->quoteName('id').' = '.$log_id);
+
+            $db->setQuery($query);
+            $result = $db->query();
+            
+            if($result){
+                echo new JResponseJson($log_id);
+            }
+            else
+            {
+                echo new JResponseJson($result);
+            }
+        }
+        catch(Exception $e)
+        {
+            echo new JResponseJson($e);
+        }            
     }
 }
 ?>
