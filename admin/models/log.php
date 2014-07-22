@@ -18,7 +18,7 @@ JLoader::register('ProjectlogHelper', JPATH_ADMINISTRATOR . '/components/com_pro
  * @subpackage  com_projectlog
  * @since       1.6
  */
-class ProjectlogModelProject extends JModelAdmin
+class ProjectlogModelLog extends JModelAdmin
 {
 	/**
 	 * The type alias for this content type.
@@ -26,7 +26,7 @@ class ProjectlogModelProject extends JModelAdmin
 	 * @var      string
 	 * @since    3.2
 	 */
-	public $typeAlias = 'com_projectlog.project';
+	public $typeAlias = 'com_projectlog.log';
 
 	/**
 	 * Method to perform batch operations on an item or a set of items.
@@ -81,13 +81,13 @@ class ProjectlogModelProject extends JModelAdmin
 
 		$this->tagsObserver = $this->table->getObserverOfClass('JTableObserverTags');
 
-		if (!empty($commands['category_id']))
+		if (!empty($commands['project_id']))
 		{
 			$cmd = JArrayHelper::getValue($commands, 'move_copy', 'c');
 
 			if ($cmd == 'c')
 			{
-				$result = $this->batchCopy($commands['category_id'], $pks, $contexts);
+				$result = $this->batchCopy($commands['project_id'], $pks, $contexts);
 
 				if (is_array($result))
 				{
@@ -98,7 +98,7 @@ class ProjectlogModelProject extends JModelAdmin
 					return false;
 				}
 			}
-			elseif ($cmd == 'm' && !$this->batchMove($commands['category_id'], $pks, $contexts))
+			elseif ($cmd == 'm' && !$this->batchMove($commands['project_id'], $pks, $contexts))
 			{
 				return false;
 			}
@@ -119,26 +119,6 @@ class ProjectlogModelProject extends JModelAdmin
 		if (!empty($commands['language_id']))
 		{
 			if (!$this->batchLanguage($commands['language_id'], $pks, $contexts))
-			{
-				return false;
-			}
-
-			$done = true;
-		}
-
-		if (!empty($commands['tag']))
-		{
-			if (!$this->batchTag($commands['tag'], $pks, $contexts))
-			{
-				return false;
-			}
-
-			$done = true;
-		}
-
-		if (strlen($commands['manager']) > 0)
-		{
-			if (!$this->batchUser($commands['manager'], $pks, $contexts))
 			{
 				return false;
 			}
@@ -172,12 +152,12 @@ class ProjectlogModelProject extends JModelAdmin
 	 */
 	protected function batchCopy($value, $pks, $contexts)
 	{
-		$categoryId = (int) $value;
+		$projectId = (int) $value;
 
 		$table = $this->getTable();
 		$i = 0;
 
-		if (!parent::checkCategoryId($categoryId))
+		if (!parent::checkCategoryId($projectId))
 		{
 			return false;
 		}
@@ -228,8 +208,6 @@ class ProjectlogModelProject extends JModelAdmin
 				return false;
 			}
 
-			parent::createTagsHelper($this->tagsObserver, $this->type, $pk, $this->typeAlias, $this->table);
-
 			// Store the row.
 			if (!$this->table->store())
 			{
@@ -252,50 +230,6 @@ class ProjectlogModelProject extends JModelAdmin
 	}
 
 	/**
-	 * Batch change a linked user.
-	 *
-	 * @param   integer  $value     The new value matching a User ID.
-	 * @param   array    $pks       An array of row IDs.
-	 * @param   array    $contexts  An array of item contexts.
-	 *
-	 * @return  boolean  True if successful, false otherwise and internal error is set.
-	 *
-	 * @since   2.5
-	 */
-	protected function batchUser($value, $pks, $contexts)
-	{
-
-		foreach ($pks as $pk)
-		{
-			if ($this->user->authorise('core.edit', $contexts[$pk]))
-			{
-				$this->table->reset();
-				$this->table->load($pk);
-				$this->table->manager = (int) $value;
-
-				static::createTagsHelper($this->tagsObserver, $this->type, $pk, $this->typeAlias, $this->table);
-
-				if (!$this->table->store())
-				{
-					$this->this->setError($table->getError());
-
-					return false;
-				}
-			}
-			else
-			{
-				$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
-				return false;
-			}
-		}
-
-		// Clean the cache
-		$this->cleanCache();
-
-		return true;
-	}
-
-	/**
 	 * Method to test whether a record can be deleted.
 	 *
 	 * @param   object  $record  A record object.
@@ -313,7 +247,7 @@ class ProjectlogModelProject extends JModelAdmin
 				return;
 			}
 			$user = JFactory::getUser();
-			return $user->authorise('core.delete', 'com_projectlog.project.' . (int) $record->id);
+			return $user->authorise('core.delete', 'com_projectlog.project.' . (int) $record->project_id);
 		}
 	}
 
@@ -331,9 +265,9 @@ class ProjectlogModelProject extends JModelAdmin
 		$user = JFactory::getUser();
 
 		// Check against the category.
-		if (!empty($record->catid))
+		if (!empty($record->project_id))
 		{
-			return $user->authorise('core.edit.state', 'com_projectlog.project.' . (int) $record->id);
+			return $user->authorise('core.edit.state', 'com_projectlog.project.' . (int) $record->project_id);
 		}
 		// Default to component settings if category not known.
 		else
@@ -353,7 +287,7 @@ class ProjectlogModelProject extends JModelAdmin
 	 *
 	 * @since   1.6
 	 */
-	public function getTable($type = 'Project', $prefix = 'ProjectlogTable', $config = array())
+	public function getTable($type = 'Log', $prefix = 'ProjectlogTable', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
@@ -383,13 +317,11 @@ class ProjectlogModelProject extends JModelAdmin
 		if (!$this->canEditState((object) $data))
 		{
 			// Disable fields for display.
-			$form->setFieldAttribute('featured', 'disabled', 'true');
 			$form->setFieldAttribute('ordering', 'disabled', 'true');
 			$form->setFieldAttribute('published', 'disabled', 'true');
 
 			// Disable fields while saving.
 			// The controller has already verified this is a record you can edit.
-			$form->setFieldAttribute('featured', 'filter', 'unset');
 			$form->setFieldAttribute('ordering', 'filter', 'unset');
 			$form->setFieldAttribute('published', 'filter', 'unset');
 		}
@@ -426,20 +358,13 @@ class ProjectlogModelProject extends JModelAdmin
 
 			if ($item->id != null)
 			{
-				$associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_projects', 'com_projectlog.project', $item->id);
+				$associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_logs', 'com_projectlog.log', $item->id);
 
 				foreach ($associations as $tag => $association)
 				{
 					$item->associations[$tag] = $association->id;
 				}
 			}
-		}
-
-		// Load item tags
-		if (!empty($item->id))
-		{
-			$item->tags = new JHelperTags;
-			$item->tags->getTagIds($item->id, 'com_projectlog.project');
 		}
 
 		return $item;
@@ -455,21 +380,21 @@ class ProjectlogModelProject extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_projectlog.edit.project.data', array());
+		$data = JFactory::getApplication()->getUserState('com_projectlog.edit.log.data', array());
 
 		if (empty($data))
 		{
 			$data = $this->getItem();
 
 			// Prime some default values.
-			if ($this->getState('project.id') == 0)
+			if ($this->getState('log.id') == 0)
 			{
 				$app = JFactory::getApplication();
-				$data->set('catid', $app->input->get('catid', $app->getUserState('com_projectlog.projects.filter.category_id'), 'int'));
+				$data->set('project_id', $app->input->get('project_id', $app->getUserState('com_projectlog.logs.filter.project_id'), 'int'));
 			}
 		}
 
-		$this->preprocessData('com_projectlog.project', $data);
+		$this->preprocessData('com_projectlog.log', $data);
 
 		return $data;
 	}
@@ -490,20 +415,9 @@ class ProjectlogModelProject extends JModelAdmin
 		// Alter the title for save as copy
 		if ($app->input->get('task') == 'save2copy')
 		{
-			list($name, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['name']);
-			$data['name'] = $name;
-			$data['alias'] = $alias;
+			list($name, $alias) = $this->generateNewTitle($data['project_id'], '', $data['title']);
+			$data['title'] = $name;
 			$data['published'] = 0;
-		}
-
-		$links = array('linka', 'linkb', 'linkc', 'linkd', 'linke');
-
-		foreach ($links as $link)
-		{
-			if ($data['params'][$link])
-			{
-				$data['params'][$link] = JStringPunycode::urlToPunycode($data['params'][$link]);
-			}
 		}
 
 		if (parent::save($data))
@@ -540,7 +454,7 @@ class ProjectlogModelProject extends JModelAdmin
 				$db = JFactory::getDbo();
 				$query = $db->getQuery(true)
 					->delete('#__associations')
-					->where('context=' . $db->quote('com_projectlog.project'))
+					->where('context=' . $db->quote('com_projectlog.log'))
 					->where('id IN (' . implode(',', $associations) . ')');
 				$db->setQuery($query);
 				$db->execute();
@@ -560,7 +474,7 @@ class ProjectlogModelProject extends JModelAdmin
 
 					foreach ($associations as $id)
 					{
-						$query->values($id . ',' . $db->quote('com_projectlog.project') . ',' . $db->quote($key));
+						$query->values($id . ',' . $db->quote('com_projectlog.log') . ',' . $db->quote($key));
 					}
 
 					$db->setQuery($query);
@@ -594,7 +508,7 @@ class ProjectlogModelProject extends JModelAdmin
 		$date = JFactory::getDate();
 		$user = JFactory::getUser();
 
-		$table->name = htmlspecialchars_decode($table->name, ENT_QUOTES);
+		$table->title = htmlspecialchars_decode($table->title, ENT_QUOTES);
 
 		$table->generateAlias();
 
@@ -609,7 +523,7 @@ class ProjectlogModelProject extends JModelAdmin
 				$db = JFactory::getDbo();
 				$query = $db->getQuery(true)
 					->select('MAX(ordering)')
-					->from($db->quoteName('#__projectlog_projects'));
+					->from($db->quoteName('#__projectlog_logs'));
 				$db->setQuery($query);
 				$max = $db->loadResult();
 
@@ -622,8 +536,6 @@ class ProjectlogModelProject extends JModelAdmin
 			$table->modified = $date->toSql();
 			$table->modified_by = $user->get('id');
 		}
-		// Increment the content version number.
-		$table->version++;
 	}
 
 	/**
@@ -638,7 +550,7 @@ class ProjectlogModelProject extends JModelAdmin
 	protected function getReorderConditions($table)
 	{
 		$condition = array();
-		$condition[] = 'catid = ' . (int) $table->catid;
+		$condition[] = 'project_id = ' . (int) $table->project_id;
 
 		return $condition;
 	}
@@ -687,56 +599,6 @@ class ProjectlogModelProject extends JModelAdmin
 	}
 
 	/**
-	 * Method to toggle the featured setting of projects.
-	 *
-	 * @param   array    $pks    The ids of the items to toggle.
-	 * @param   integer  $value  The value to toggle to.
-	 *
-	 * @return  boolean  True on success.
-	 *
-	 * @since   1.6
-	 */
-	public function featured($pks, $value = 0)
-	{
-		// Sanitize the ids.
-		$pks = (array) $pks;
-		JArrayHelper::toInteger($pks);
-
-		if (empty($pks))
-		{
-			$this->setError(JText::_('COM_PROJECTLOG_NO_ITEM_SELECTED'));
-			return false;
-		}
-
-		$table = $this->getTable();
-
-		try
-		{
-			$db = $this->getDbo();
-
-			$query = $db->getQuery(true);
-			$query->update('#__projectlog_projects');
-			$query->set('featured = ' . (int) $value);
-			$query->where('id IN (' . implode(',', $pks) . ')');
-			$db->setQuery($query);
-
-			$db->execute();
-		}
-		catch (Exception $e)
-		{
-			$this->setError($e->getMessage());
-			return false;
-		}
-
-		$table->reorder();
-
-		// Clean component's cache
-		$this->cleanCache();
-
-		return true;
-	}
-
-	/**
 	 * Method to change the title & alias.
 	 *
 	 * @param   integer  $parent_id  The id of the parent.
@@ -747,13 +609,13 @@ class ProjectlogModelProject extends JModelAdmin
 	 *
 	 * @since   3.1
 	 */
-	protected function generateNewTitle($category_id, $alias, $name)
+	protected function generateNewTitle($project_id, $alias, $name)
 	{
 		// Alter the title & alias
 		$table = $this->getTable();
-		while ($table->load(array('alias' => $alias, 'catid' => $category_id)))
+		while ($table->load(array('alias' => $alias, 'project_id' => $project_id)))
 		{
-			if ($name == $table->name)
+			if ($name == $table->title)
 			{
 				$name = JString::increment($name);
 			}
@@ -763,25 +625,4 @@ class ProjectlogModelProject extends JModelAdmin
 
 		return array($name, $alias);
 	}
-    
-    public function getLogs()
-    {
-        $project_id = $this->getState('project.id');
-        
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('*, log.id as log_id')
-                ->from('#__projectlog_logs AS log')
-                ->where('project_id = '.(int)$project_id);
-
-        // Join over the users for the log creator.
-        $query->select('ul.name AS logger_name, ul.email AS logger_email')
-        ->join('LEFT', '#__users AS ul ON ul.id = log.created_by');
-        
-        $query->order('log.created DESC');
-
-        $db->setQuery($query);
-        return $db->loadObjectList(); 
-    }
 }

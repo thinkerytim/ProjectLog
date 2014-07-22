@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @subpackage  com_projectlog
  * @since       1.6
  */
-class ProjectlogViewProjects extends JViewLegacy
+class ProjectlogViewLogs extends JViewLegacy
 {
 	protected $items;
 
@@ -35,7 +35,7 @@ class ProjectlogViewProjects extends JViewLegacy
 		$this->pagination	= $this->get('Pagination');
 		$this->state		= $this->get('State');
 
-		ProjectlogHelper::addSubmenu('projects');
+		ProjectlogHelper::addSubmenu('logs');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -64,39 +64,39 @@ class ProjectlogViewProjects extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		$canDo	= JHelperContent::getActions('com_projectlog', 'category', $this->state->get('filter.category_id'));
+		$canDo	= JHelperContent::getActions('com_projectlog', 'project', $this->state->get('filter.project_id'));
 		$user	= JFactory::getUser();
 
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
 
-		JToolbarHelper::title(JText::_('COM_PROJECTLOG_MANAGER_PROJECTS'), 'address project');
+		JToolbarHelper::title(JText::_('COM_PROJECTLOG_MANAGER_LOGS'), 'address log');
 
-		if ($canDo->get('core.create') || (count($user->getAuthorisedCategories('com_projectlog', 'core.create'))) > 0)
+		if ($canDo->get('projectlog.createlog') || (count($user->getAuthorisedCategories('com_projectlog', 'core.create'))) > 0)
 		{
-			JToolbarHelper::addNew('project.add');
+			JToolbarHelper::addNew('log.add');
 		}
 
-		if (($canDo->get('core.edit')) || ($canDo->get('core.edit.own')))
+		if (($canDo->get('projectlog.editlog')) || ($canDo->get('projectlog.editlog.own')))
 		{
-			JToolbarHelper::editList('project.edit');
+			JToolbarHelper::editList('log.edit');
 		}
 
-		if ($canDo->get('core.edit.state'))
+		if ($canDo->get('projectlog.editlog.state'))
 		{
-			JToolbarHelper::publish('projects.publish', 'JTOOLBAR_PUBLISH', true);
-			JToolbarHelper::unpublish('projects.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-			JToolbarHelper::archiveList('projects.archive');
-			JToolbarHelper::checkin('projects.checkin');
+			JToolbarHelper::publish('logs.publish', 'JTOOLBAR_PUBLISH', true);
+			JToolbarHelper::unpublish('logs.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+			JToolbarHelper::archiveList('logs.archive');
+			JToolbarHelper::checkin('logs.checkin');
 		}
 
-		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
+		if ($this->state->get('filter.published') == -2 && $canDo->get('projectlog.deletelog'))
 		{
-			JToolbarHelper::deleteList('', 'projects.delete', 'JTOOLBAR_EMPTY_TRASH');
+			JToolbarHelper::deleteList('', 'logs.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
-		elseif ($canDo->get('core.edit.state'))
+		elseif ($canDo->get('projectlog.editlog.state'))
 		{
-			JToolbarHelper::trash('projects.trash');
+			JToolbarHelper::trash('logs.trash');
 		}
 
 		// Add a batch button
@@ -125,28 +125,16 @@ class ProjectlogViewProjects extends JViewLegacy
 			JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->state->get('filter.published'), true)
 		);
 
-		JHtmlSidebar::addFilter(
-			JText::_('JOPTION_SELECT_CATEGORY'),
+		/*JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_PROJECT'),
 			'filter_category_id',
-			JHtml::_('select.options', JHtml::_('category.options', 'com_projectlog'), 'value', 'text', $this->state->get('filter.category_id'))
-		);
-
-		JHtmlSidebar::addFilter(
-			JText::_('JOPTION_SELECT_ACCESS'),
-			'filter_access',
-			JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->state->get('filter.access'))
-		);
+			JHtml::_('select.options', JHtml::_('project.options', 'com_projectlog'), 'value', 'text', $this->state->get('filter.project_id'))
+		);*/
 
 		JHtmlSidebar::addFilter(
 			JText::_('JOPTION_SELECT_LANGUAGE'),
 			'filter_language',
 			JHtml::_('select.options', JHtml::_('contentlanguage.existing', true, true), 'value', 'text', $this->state->get('filter.language'))
-		);
-
-		JHtmlSidebar::addFilter(
-		JText::_('JOPTION_SELECT_TAG'),
-		'filter_tag',
-		JHtml::_('select.options', JHtml::_('tag.options', true, true), 'value', 'text', $this->state->get('filter.tag'))
 		);
 
 	}
@@ -163,10 +151,8 @@ class ProjectlogViewProjects extends JViewLegacy
 		return array(
 			'a.ordering' => JText::_('JGRID_HEADING_ORDERING'),
 			'a.published' => JText::_('JSTATUS'),
-			'a.name' => JText::_('JGLOBAL_TITLE'),
-			'category_title' => JText::_('JCATEGORY'),
-			'ul.name' => JText::_('COM_PROJECTLOG_FIELD_PROJECT_MANAGER_LABEL'),
-			'a.featured' => JText::_('JFEATURED'),
+			'a.title' => JText::_('JGLOBAL_TITLE'),
+			'project_name' => JText::_('COM_PROJECTLOG_PROJECT'),
 			'a.access' => JText::_('JGRID_HEADING_ACCESS'),
 			'a.language' => JText::_('JGRID_HEADING_LANGUAGE'),
 			'a.id' => JText::_('JGRID_HEADING_ID')

@@ -72,6 +72,15 @@ CREATE TABLE IF NOT EXISTS `#__projectlog_docs` (
   `path` varchar(255) NOT NULL default '',
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `created_by` int(10) unsigned NOT NULL default '0',
+  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  `modified_by` int(10) unsigned NOT NULL default '0',
+  `published` tinyint(1) NOT NULL default '0',
+  `publish_up` datetime NOT NULL default '0000-00-00 00:00:00',
+  `publish_down` datetime NOT NULL default '0000-00-00 00:00:00',
+  `checked_out` integer unsigned NOT NULL default '0',
+  `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ordering` integer NOT NULL default '0',
+  `language` char(7) NOT NULL,
   PRIMARY KEY  (`id`)
 ) DEFAULT CHARSET=utf8;
 
@@ -85,6 +94,12 @@ CREATE TABLE IF NOT EXISTS `#__projectlog_logs` (
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified_by` int(10) unsigned NOT NULL default '0',
   `published` tinyint(1) NOT NULL default '0',
+  `publish_up` datetime NOT NULL default '0000-00-00 00:00:00',
+  `publish_down` datetime NOT NULL default '0000-00-00 00:00:00',
+  `checked_out` integer unsigned NOT NULL default '0',
+  `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ordering` integer NOT NULL default '0',
+  `language` char(7) NOT NULL,
   PRIMARY KEY  (`id`)
 ) DEFAULT CHARSET=utf8;
 

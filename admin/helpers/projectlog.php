@@ -29,16 +29,28 @@ class ProjectlogHelper extends JHelperContent
 	 */
 	public static function addSubmenu($vName)
 	{
-		JHtmlSidebar::addEntry(
+        JHtmlSidebar::addEntry(
+			JText::_('COM_PROJECTLOG_SUBMENU_CATEGORIES'),
+			'index.php?option=com_categories&extension=com_projectlog',
+			$vName == 'categories'
+		);
+        
+        JHtmlSidebar::addEntry(
 			JText::_('COM_PROJECTLOG_SUBMENU_PROJECTS'),
 			'index.php?option=com_projectlog&view=projects',
 			$vName == 'projects'
 		);
-
-		JHtmlSidebar::addEntry(
-			JText::_('COM_PROJECTLOG_SUBMENU_CATEGORIES'),
-			'index.php?option=com_categories&extension=com_projectlog',
-			$vName == 'categories'
+        
+        JHtmlSidebar::addEntry(
+			JText::_('COM_PROJECTLOG_SUBMENU_LOGS'),
+			'index.php?option=com_projectlog&view=logs',
+			$vName == 'logs'
+		);
+        
+        JHtmlSidebar::addEntry(
+			JText::_('COM_PROJECTLOG_SUBMENU_DOCS'),
+			'index.php?option=com_projectlog&view=docs',
+			$vName == 'docs'
 		);
 	}
     

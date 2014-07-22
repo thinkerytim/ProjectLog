@@ -58,11 +58,15 @@
 			<!--
 				Note that all & must be escaped to &amp; for the file to be valid
 				XML and be parsed by the installer
-			-->
-			<menu link="option=com_projectlog" img="class:project"
-				alt="Projectlog/Projects">com_projectlog_projects</menu>
+			-->			
 			<menu link="option=com_categories&amp;extension=com_projectlog"
 				view="categories" img="class:project-cat" alt="Projectlog/Categories">com_projectlog_categories</menu>
+            <menu link="option=com_projectlog" img="class:project"
+				alt="Projectlog/Projects">com_projectlog_projects</menu>
+            <menu link="option=com_projectlog" img="class:log"
+				alt="Projectlog/Logs">com_projectlog_logs</menu>
+            <menu link="option=com_projectlog" img="class:doc"
+				alt="Projectlog/Docs">com_projectlog_docs</menu>
 		</submenu>
         <files folder="admin">
             <filename>access.xml</filename>            
