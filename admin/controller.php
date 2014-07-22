@@ -34,7 +34,7 @@ class ProjectlogController extends JControllerLegacy
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
-		require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/project.php';
+		require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/projectlog.php';
 
 		$view   = $this->input->get('view', 'projects');
 		$layout = $this->input->get('layout', 'default');

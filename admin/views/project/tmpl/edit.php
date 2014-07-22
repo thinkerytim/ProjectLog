@@ -41,47 +41,52 @@ $assoc = JLanguageAssociations::isEnabled();
 			<div class="span9">
 				<div class="row-fluid form-horizontal-desktop">
 					<div class="span6">
-                        <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_DETAILS'); ?></h4>
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_DETAILS'); ?></h3>
                         <?php echo $this->form->renderField('client'); ?>
                         <?php echo $this->form->renderField('project_type'); ?>
                         <?php echo $this->form->renderField('release_date'); ?>
                         <?php echo $this->form->renderField('status'); ?>
 						<?php echo $this->form->renderField('image'); ?>
-                    
-                        <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_CREW'); ?></h4>
-						<?php echo $this->form->renderField('manager'); ?>
-                        <?php echo $this->form->renderField('chief'); ?>
-                        <?php echo $this->form->renderField('technicians'); ?>
-                        <?php echo $this->form->renderField('onsite'); ?>
-                    
-                        <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_DATES'); ?></h4>
+                    </div>
+                    <div class="span6">
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_IDENTIFIERS'); ?></h3>       
+                        <?php echo $this->form->renderField('release_id'); ?>
+                        <?php echo $this->form->renderField('job_id'); ?>
+                        <?php echo $this->form->renderField('workorder_id'); ?>
+                        <?php echo $this->form->renderField('task_id'); ?>
+                    </div>
+                </div>
+                <hr />
+                <div class="row-fluid form-horizontal-desktop">
+                    <div class="span6">                  
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_DATES'); ?></h3>
                         <?php echo $this->form->renderField('deployment_from'); ?>
                         <?php echo $this->form->renderField('deployment_to'); ?>
                         <?php echo $this->form->renderField('contract_from'); ?>
                         <?php echo $this->form->renderField('contract_to'); ?>                        					
 					</div>
 					<div class="span6">
-                        <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_LOC'); ?></h4>                        
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_LOC'); ?></h3>                        
                         <?php echo $this->form->renderField('general_loc'); ?>
                         <?php echo $this->form->renderField('specific_loc'); ?>
-						
-                        <h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_IDENTIFIERS'); ?></h4>       
-                        <?php echo $this->form->renderField('release_id'); ?>
-                        <?php echo $this->form->renderField('job_id'); ?>
-                        <?php echo $this->form->renderField('workorder_id'); ?>
-                        <?php echo $this->form->renderField('task_id'); ?>
-                        
-						<h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_CONTACT'); ?></h4>   
+                    </div>
+                </div>
+                <hr />
+                <div class="row-fluid form-horizontal-desktop">
+                    <div class="span6">        
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_CREW'); ?></h3>
+						<?php echo $this->form->renderField('manager'); ?>
+                        <?php echo $this->form->renderField('chief'); ?>
+                        <?php echo $this->form->renderField('technicians'); ?>
+                        <?php echo $this->form->renderField('onsite'); ?>
+                    </div>
+                    <div class="span6">                        
+						<h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_CONTACT'); ?></h3>   
                         <?php echo $this->form->renderField('email_to'); ?>
                         <?php echo $this->form->renderField('mobile'); ?>						
 						<?php echo $this->form->renderField('webpage'); ?>
-                        
-						<h4><?php echo JText::_('COM_PROJECTLOG_PROJECT_FILTERS'); ?></h4>   
-                        <?php echo $this->form->renderField('sortname1'); ?>
-						<?php echo $this->form->renderField('sortname2'); ?>
-						<?php echo $this->form->renderField('sortname3'); ?>
-					</div>
-				</div>
+                    </div>
+                </div>
 			</div>
 			<div class="span3">
 				<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
@@ -96,6 +101,8 @@ $assoc = JLanguageAssociations::isEnabled();
 				</div>
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
+        
+        <?php echo $this->loadTemplate('logs'); ?>
 
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('JGLOBAL_FIELDSET_PUBLISHING', true)); ?>
 		<div class="row-fluid form-horizontal-desktop">
@@ -108,7 +115,7 @@ $assoc = JLanguageAssociations::isEnabled();
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 
-		<?php echo JLayoutHelper::render('joomla.edit.params', $this); ?>
+		<?php echo JLayoutHelper::render('joomla.edit.params', $this); ?>        
 
 		<?php if ($assoc) : ?>
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'associations', JText::_('JGLOBAL_FIELDSET_ASSOCIATIONS', true)); ?>
@@ -117,12 +124,10 @@ $assoc = JLanguageAssociations::isEnabled();
 		<?php endif; ?>
         
         <?php if ($this->canDo->get('core.admin')) : ?>
-			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'permissions', JText::_('JFIELD_RULES_LABEL', true)); ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'permissions', JText::_('COM_PROJECTLOG_RULES_LABEL', true)); ?>
 				<?php echo $this->form->getInput('rules'); ?>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-		<?php endif; ?>
-        
-        <?php echo $this->loadTemplate('logs'); ?>
+		<?php endif; ?>       
 
 		<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 	</div>

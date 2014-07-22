@@ -324,8 +324,8 @@
 			filter="user_utc"
 		/>
         
-        <field name="onsite" type="list"
-            class="chzn-color"
+        <field name="onsite" type="radio"
+            class="btn-group"
             label="COM_PROJECTLOG_FIELD_ONSITE_LABEL"
             description="COM_PROJECTLOG_FIELD_ONSITE_DESC">
             <option value="0">JNO</option>
@@ -813,7 +813,7 @@
         <field name="asset_id" type="hidden" filter="unset" /> 
         <field name="rules" 
                type="rules" 
-               label="JFIELD_RULES_LABEL"
+               label="COM_PROJECTLOG_RULES_LABEL"
                translate_label="false" filter="rules"
                class="inputbox"
                component="com_projectlog"

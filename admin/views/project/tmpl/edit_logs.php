@@ -14,6 +14,7 @@
                     <div class="bt-add-log"><?php echo JText::_('JSUBMIT'); ?></div>
                     <div class="bt-cancel-log"><?php echo JText::_('JCANCEL'); ?></div>
                 </p>
+                <div class="clearfix"></div>
             </div>
             <div class="clearfix"></div>
         <?php endif; ?>            
@@ -30,18 +31,20 @@
 
                 // Get gravatar Image 
                 $grav_url = projectlogHtml::getGravatar($loggeremail); 
-                $delete_btn = ($this->canDo->get('projectlog.deletelog')) ? '<span class="pull-right"><div class="bt-delete-log btn btn-danger" data-log-id="'.$log_id.'">'.JText::_('JACTION_DELETE').'</div></span>' : '';
+                $delete_btn = ($this->canDo->get('projectlog.deletelog')) ? '<div class="bt-delete-log btn btn-danger" data-log-id="'.$log_id.'">'.JText::_('JACTION_DELETE').'</div>' : '';
+                $edit_btn   = ($this->canDo->get('projectlog.editlog') || ($this->canDo->get('projectlog.editlog.own') && $log->created_by == $this->user->id)) ? '<a href="'.JRoute::_('index.php?option=com_iproperty&task=log.edit&id='.$log_id).'" class="btn btn-info">'.JText::_('JACTION_EDIT').'</a>' : '';
 
                 echo 
                     '<div class="log-cnt" id="logid-'.$log_id.'">
-                        <img src="'.$grav_url.'" />'
-                        .$delete_btn.'
+                        <img src="'.$grav_url.'" />
+                        <div class="pull-right btn-group">'.$edit_btn.$delete_btn.'</div>
                         <div class="thelog">
                             <h5>'.$logtitle.'</h5>
                             <br/>
                             <p>'.$logdata.'</p>
                             <p data-utime="1371248446" class="small log-dt">'.$loggername.' - '.$logdate.'</p>
                         </div>
+                        <div class="clearfix"></div>
                     </div>';                  
             }
             ?>
@@ -79,7 +82,7 @@
                     var theLog = $('.the-new-log');
 
                     if( !theLog.val()){ 
-                        alert('You need to write a log!'); 
+                        alert('<?php echo addslashes(JText::_('COM_PROJECTLOG_EMPTY_LOG_MSG')); ?>'); 
                     }else{ 
                         //ajax request vars
                         var logurl = '<?php echo JURI::base('true'); ?>/index.php?option=com_projectlog&task=ajax.addLog';
@@ -103,7 +106,7 @@
 
                                 if (r.messages)
                                 {
-                                    // All the enqueued messages of the $app object can simple be
+                                    // All the enqueued messages of the $app object can simply be
                                     // rendered by the respective helper function of Joomla!
                                     // They will automatically be displayed at the messages section of the template
                                     Joomla.renderMessages(r.messages);
@@ -142,7 +145,7 @@
                 <?php if($this->canDo->get('projectlog.deletelog')): ?>
                 // on post log click 
                 $('.bt-delete-log').click(function(){
-                    if(!confirm('Are you sure?')){
+                    if(!confirm('<?php echo addslashes(JText::_('COM_PROJECTLOG_CONFIRM_LOG_DELETE')); ?>')){
                         return false;
                     }
                     

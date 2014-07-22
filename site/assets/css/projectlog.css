@@ -41,18 +41,9 @@ span.content_header{ color: #1d4e6b; font-weight: bold; font-size: 12px; }
 .jpane-toggler-down {  border-bottom: 1px solid #ccc; }
 .pane-sliders h3{ font-size: 14px; }
 
-
-/**
-  Tutorial : Comments System with Reply Usong jQuery & Ajax
-  Author: Amine Kacem
-  Author URI: http://www.webcodo.com
-*/
-
 /* the logs container  */
 .log-container{ 
-	width: 100%;
 	height: auto; min-height: 30px;
-	padding: 10px;
 	margin: 10px auto;
 	background-color: #fff;
 	border: #d3d6db 1px solid;
@@ -60,10 +51,13 @@ span.content_header{ color: #1d4e6b; font-weight: bold; font-size: 12px; }
 } 
 
 .log-cnt{
-	width: 100%; height: auto; min-height: 35px; 
-	padding: 5px 0;
+    height: auto; 
+    min-height: 35px; 
+	padding: 10px;
 	overflow: auto;
 }
+
+.log-cnt:hover{border-right: solid 4px #ccc;}
 .log-cnt img{
 	width: 35px; height: 35px; 
 	float: left; 
@@ -159,8 +153,8 @@ span.content_header{ color: #1d4e6b; font-weight: bold; font-size: 12px; }
 .new-log-cnt{ 
 	width:100%; height: auto; 
 	display: none;
-	padding-top: 10px; margin-bottom: 10px;
-	border-top: #d9d9d9 1px dotted;
+	padding-bottom: 10px; margin-bottom: 10px;
+	border-bottom: #d9d9d9 1px dotted;
 }
 
 
