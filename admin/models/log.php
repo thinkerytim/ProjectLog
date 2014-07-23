@@ -510,8 +510,6 @@ class ProjectlogModelLog extends JModelAdmin
 
 		$table->title = htmlspecialchars_decode($table->title, ENT_QUOTES);
 
-		$table->generateAlias();
-
 		if (empty($table->id))
 		{
 			// Set the values
@@ -624,5 +622,5 @@ class ProjectlogModelLog extends JModelAdmin
 		}
 
 		return array($name, $alias);
-	}
+	}        
 }

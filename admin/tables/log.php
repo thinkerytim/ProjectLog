@@ -76,17 +76,11 @@ class ProjectlogTableLog extends JTable
 			$this->publish_down = $this->_db->getNullDate();
 		}
 
-		// Set xreference to empty string if not set
-		if (!$this->xreference)
-		{
-			$this->xreference = '';
-		}
-
 		// Verify that the alias is unique
 		$table = JTable::getInstance('Log', 'ProjectlogTable');
-		if ($table->load(array('alias' => $this->alias, 'project_id' => $this->project_id)) && ($table->id != $this->id || $this->id == 0))
+		if ($table->load(array('title' => $this->title, 'project_id' => $this->project_id)) && ($table->id != $this->id || $this->id == 0))
 		{
-			$this->setError(JText::_('COM_PROJECTLOG_ERROR_UNIQUE_ALIAS'));
+			$this->setError(JText::_('COM_PROJECTLOG_ERROR_UNIQUE_TITLE'));
 
 			return false;
 		}

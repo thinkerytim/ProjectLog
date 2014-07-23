@@ -92,7 +92,7 @@
                             data: {
                                 'project_id' : '<?php echo $this->item->id; ?>',
                                 'title' : theTitle.val(),
-                                'log' : theLog.val(),
+                                'description' : theLog.val(),
                                 '<?php echo JSession::getFormToken(); ?>':'1',
                                 'format': 'raw'
                             },

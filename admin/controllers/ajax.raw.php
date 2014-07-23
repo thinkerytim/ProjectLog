@@ -19,10 +19,10 @@ class ProjectlogControllerAjax extends JControllerLegacy
     {
         // Check for request forgeries
         JSession::checkToken() or die( 'Invalid Token');
-        $prop_id = JRequest::getInt('prop_id');
+        $prop_id = JRequest::getInt('project_id');
         
         $db     = JFactory::getDbo();
-        $query  = 'UPDATE #__iproperty SET hits = 0 WHERE id = '.(int)$prop_id.' LIMIT 1';
+        $query  = 'UPDATE #__projectlog_projects SET hits = 0 WHERE id = '.(int)$project_id.' LIMIT 1';
         $db->setQuery($query);
         
         if($db->Query()){
@@ -65,43 +65,27 @@ class ProjectlogControllerAjax extends JControllerLegacy
         
         $data       = JRequest::get('post');
         $user       = JFactory::getUser();
+        $model      = $this->getModel('Log');
         $currdate   = JFactory::getDate()->toSql();
-        
-        $logtitle   = htmlentities($data['title']);
-        $logdesc    = htmlentities($data['log']);
-        $logdate    = JFactory::getDate();
-        $project_id = (int)$data['project_id'];
-        
-        $grav_url = projectlogHtml::getGravatar($user->email);       
-
-        $db = JFactory::getDbo();
-        
-        $newlog = new stdClass();
-        $newlog->title = $logtitle;
-        $newlog->description = $logdesc;
-        $newlog->project_id = (int)$project_id;
-        $newlog->created = $currdate;
-        $newlog->created_by = $user->id;
-        $newlog->published = 1;
         
         try
         {          
-            if($result = $db->insertObject('#__projectlog_logs', $newlog)){
-                $new_log_id = $db->insertid();
+            $result = false;
+            if($model->save($data)){
                 $success_msg = 
-                  '<div class="log-cnt" id="logid-'.$new_log_id.'">
-                      <img src="'.$grav_url.'" alt="" />
+                  '<div class="log-cnt">
+                      <img src="'.projectlogHtml::getGravatar($user->id).'" alt="" />
                       <div class="thelog">
-                          <h5>'.$newlog->title.'</h5>
+                          <h5>'.$data['title'].'</h5>
                           <br/>
-                          <p>'.$newlog->description.'</p>
-                          <p data-utime="1371248446" class="small log-dt">'.$user->name.' - '.JHtml::date($newlog->created,JText::_('DATE_FORMAT_LC2')).'</p>
+                          <p>'.$data['description'].'</p>
+                          <p data-utime="1371248446" class="small log-dt">'.$user->name.' - '.JHtml::date($currdate, JText::_('DATE_FORMAT_LC2')).'</p>
                       </div>
                   </div>';
                 echo new JResponseJson($success_msg);
                 return;
             }
-            echo new JResponseJson($result);    
+            echo new JResponseJson($result, $model->getError());    
             return;
         }
         catch(Exception $e)
