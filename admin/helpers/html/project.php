@@ -9,7 +9,7 @@
 
 defined('_JEXEC') or die;
 
-JLoader::register('ProjectlogHelper', JPATH_ADMINISTRATOR . '/components/com_projectlog/helpers/project.php');
+JLoader::register('ProjectlogHelper', JPATH_ADMINISTRATOR . '/components/com_projectlog/helpers/projectlog.php');
 
 /**
  * @package     Joomla.Administrator

@@ -70,7 +70,7 @@ class ProjectlogViewProjects extends JViewLegacy
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
 
-		JToolbarHelper::title(JText::_('COM_PROJECTLOG_MANAGER_PROJECTS'), 'address project');
+		JToolbarHelper::title(JText::_('COM_PROJECTLOG_MANAGER_PROJECTS'), 'book project');
 
 		if ($canDo->get('core.create') || (count($user->getAuthorisedCategories('com_projectlog', 'core.create'))) > 0)
 		{
@@ -169,7 +169,9 @@ class ProjectlogViewProjects extends JViewLegacy
 			'a.featured' => JText::_('JFEATURED'),
 			'a.access' => JText::_('JGRID_HEADING_ACCESS'),
 			'a.language' => JText::_('JGRID_HEADING_LANGUAGE'),
-			'a.id' => JText::_('JGRID_HEADING_ID')
+			'a.id' => JText::_('JGRID_HEADING_ID'),
+            'a.release_date' => JText::_('COM_PROJECTLOG_FIELD_RELEASE_DATE_LABEL'),
+            'a.status' => JText::_('COM_PROJECTLOG_FIELD_PROJECT_STATUS_LABEL')
 		);
 	}
 }

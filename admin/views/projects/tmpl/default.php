@@ -50,7 +50,7 @@ $assoc		= JLanguageAssociations::isEnabled();
 		Joomla.tableOrdering(order, dirn, '');
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_projectlog'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_projectlog&view=projects'); ?>" method="post" name="adminForm" id="adminForm">
 <?php if (!empty( $this->sidebar)) : ?>
 	<div id="j-sidebar-container" class="span2">
 		<?php echo $this->sidebar; ?>
@@ -59,6 +59,7 @@ $assoc		= JLanguageAssociations::isEnabled();
 <?php else : ?>
 	<div id="j-main-container">
 <?php endif;?>
+        <?php projectlogAdmin::buildAdminToolbar(); ?>
 		<div id="filter-bar" class="btn-toolbar">
 			<div class="filter-search btn-group pull-left">
 				<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_PROJECTLOG_FILTER_SEARCH_DESC');?></label>
@@ -106,10 +107,16 @@ $assoc		= JLanguageAssociations::isEnabled();
                         <th width="1%" style="min-width:55px" class="nowrap center">
                             <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
                         </th>
-                        <th>
+                        <th width="15%">
                             <?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.name', $listDirn, $listOrder); ?>
                         </th>
-                        <th class="nowrap hidden-phone">
+                        <th width="10%" class="nowrap hidden-phone">
+                            <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_FIELD_RELEASE_DATE_LABEL', 'a.release_date', $listDirn, $listOrder); ?>
+                        </th>
+                        <th width="10%" class="nowrap hidden-phone">
+                            <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_FIELD_PROJECT_STATUS_LABEL', 'a.status', $listDirn, $listOrder); ?>
+                        </th>
+                        <th width="10%" class="nowrap hidden-phone">
                             <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_FIELD_PROJECT_MANAGER_LABEL', 'ul.name', $listDirn, $listOrder); ?>
                         </th>
                         <th width="5%" class="nowrap hidden-phone">
@@ -195,15 +202,25 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     <?php else : ?>
                                         <?php echo $this->escape($item->name); ?>
                                     <?php endif; ?>
-                                    <span class="small">
+                                    <div class="small">
                                         <?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias));?>
-                                    </span>
+                                    </div>
                                     <div class="small">
                                         <?php echo $item->category_title; ?>
                                     </div>
                                 </div>
                             </td>
-                            <td align="small hidden-phone">
+                            <td class="small hidden-phone">
+                                <?php if (!empty($item->release_date)) : ?>
+                                    <?php echo $item->release_date;?>
+                                <?php endif; ?>
+                            </td>
+                            <td class="small hidden-phone">
+                                <?php if (!empty($item->status)) : ?>
+                                    <?php echo JText::_('COM_PROJECTLOG_'.strtoupper($item->status));?>
+                                <?php endif; ?>
+                            </td>
+                            <td class="small hidden-phone">
                                 <?php if (!empty($item->manager)) : ?>
                                     <a href="<?php echo JRoute::_('index.php?option=com_users&task=user.edit&id='.$item->manager);?>"><?php echo $item->project_manager;?></a>
                                 <?php endif; ?>
@@ -211,7 +228,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                             <td class="center hidden-phone">
                                 <?php echo JHtml::_('project.featured', $item->featured, $i, $canChange); ?>
                             </td>
-                            <td align="small hidden-phone">
+                            <td class="small hidden-phone">
                                 <?php echo $item->access_level; ?>
                             </td>
                             <?php if ($assoc) : ?>
@@ -228,7 +245,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     <?php echo $item->language_title ? $this->escape($item->language_title) : JText::_('JUNDEFINED'); ?>
                                 <?php endif;?>
                             </td>
-                            <td align="center hidden-phone">
+                            <td class="small center hidden-phone">
                                 <?php echo $item->id; ?>
                             </td>
                         </tr>
@@ -236,7 +253,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="10">
+                        <td colspan="13">
                             <?php echo $this->pagination->getListFooter(); ?>
                         </td>
                     </tr>

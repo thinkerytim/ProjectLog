@@ -79,8 +79,6 @@ class ProjectlogModelLog extends JModelAdmin
 			$typeAlias = $this->type->type_alias;
 		}
 
-		$this->tagsObserver = $this->table->getObserverOfClass('JTableObserverTags');
-
 		if (!empty($commands['project_id']))
 		{
 			$cmd = JArrayHelper::getValue($commands, 'move_copy', 'c');
@@ -99,16 +97,6 @@ class ProjectlogModelLog extends JModelAdmin
 				}
 			}
 			elseif ($cmd == 'm' && !$this->batchMove($commands['project_id'], $pks, $contexts))
-			{
-				return false;
-			}
-
-			$done = true;
-		}
-
-		if (!empty($commands['assetgroup_id']))
-		{
-			if (!$this->batchAccess($commands['assetgroup_id'], $pks, $contexts))
 			{
 				return false;
 			}
@@ -157,11 +145,6 @@ class ProjectlogModelLog extends JModelAdmin
 		$table = $this->getTable();
 		$i = 0;
 
-		if (!parent::checkCategoryId($projectId))
-		{
-			return false;
-		}
-
 		// Parent exists so we proceed
 		while (!empty($pks))
 		{
@@ -188,15 +171,14 @@ class ProjectlogModelLog extends JModelAdmin
 			}
 
 			// Alter the title & alias
-			$data = $this->generateNewTitle($categoryId, $this->table->alias, $this->table->name);
-			$this->table->name = $data['0'];
-			$this->table->alias = $data['1'];
+			$logtitle = $this->generateNewTitle($projectId, '', $this->table->title);
+			$this->table->title = $logtitle;
 
 			// Reset the ID because we are making a copy
 			$this->table->id = 0;
 
 			// New category ID
-			$this->table->catid = $categoryId;
+			$this->table->project_id = $projectId;
 
 			// TODO: Deal with ordering?
 			//$this->table->ordering	= 1;
@@ -247,7 +229,7 @@ class ProjectlogModelLog extends JModelAdmin
 				return;
 			}
 			$user = JFactory::getUser();
-			return $user->authorise('core.delete', 'com_projectlog.project.' . (int) $record->project_id);
+			return $user->authorise('projectlog.deletelog', 'com_projectlog.project.' . (int) $record->project_id);
 		}
 	}
 
@@ -267,7 +249,7 @@ class ProjectlogModelLog extends JModelAdmin
 		// Check against the category.
 		if (!empty($record->project_id))
 		{
-			return $user->authorise('core.edit.state', 'com_projectlog.project.' . (int) $record->project_id);
+			return $user->authorise('projectlog.editlog.state', 'com_projectlog.project.' . (int) $record->project_id);
 		}
 		// Default to component settings if category not known.
 		else
@@ -307,7 +289,7 @@ class ProjectlogModelLog extends JModelAdmin
 		JForm::addFieldPath('JPATH_ADMINISTRATOR/components/com_users/models/fields');
 
 		// Get the form.
-		$form = $this->loadForm('com_projectlog.project', 'project', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_projectlog.log', 'log', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form))
 		{
 			return false;
@@ -340,15 +322,9 @@ class ProjectlogModelLog extends JModelAdmin
 	 */
 	public function getItem($pk = null)
 	{
-		if ($item = parent::getItem($pk))
-		{
-			// Convert the metadata field to an array.
-			$registry = new JRegistry;
-			$registry->loadString($item->metadata);
-			$item->metadata = $registry->toArray();
-		}
+		$item = parent::getItem($pk);
 
-		// Load associated project items
+        // Load associated project items
 		$app = JFactory::getApplication();
 		$assoc = JLanguageAssociations::isEnabled();
 
@@ -415,8 +391,8 @@ class ProjectlogModelLog extends JModelAdmin
 		// Alter the title for save as copy
 		if ($app->input->get('task') == 'save2copy')
 		{
-			list($name, $alias) = $this->generateNewTitle($data['project_id'], '', $data['title']);
-			$data['title'] = $name;
+			$logtitle = $this->generateNewTitle($data['project_id'], '', $data['title']);
+			$data['title'] = $logtitle;
 			$data['published'] = 0;
 		}
 
@@ -607,20 +583,18 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @since   3.1
 	 */
-	protected function generateNewTitle($project_id, $alias, $name)
+	protected function generateNewTitle($project_id, $alias, $title)
 	{
 		// Alter the title & alias
 		$table = $this->getTable();
-		while ($table->load(array('alias' => $alias, 'project_id' => $project_id)))
+		while ($table->load(array('project_id' => $project_id)))
 		{
-			if ($name == $table->title)
+			if ($title == $table->title)
 			{
-				$name = JString::increment($name);
+				$title = JString::increment($title);
 			}
-
-			$alias = JString::increment($alias, 'dash');
 		}
 
-		return array($name, $alias);
+		return $title;
 	}        
 }

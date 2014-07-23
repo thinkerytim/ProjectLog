@@ -120,8 +120,5 @@ class ProjectlogViewProject extends JViewLegacy
 
 			JToolbarHelper::cancel('project.cancel', 'JTOOLBAR_CLOSE');
 		}
-
-		JToolbarHelper::divider();
-		JToolbarHelper::help('JHELP_COMPONENTS_PROJECTS_PROJECTS_EDIT');
 	}
 }

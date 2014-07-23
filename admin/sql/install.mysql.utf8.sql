@@ -65,8 +65,35 @@ CREATE TABLE `#__projectlog_projects` (
   KEY `idx_xreference` (`xreference`)
 )  DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `#__projectlog_logs` (
+  `id` int(11) NOT NULL auto_increment,
+  `asset_id` int(10) unsigned NOT NULL default '0',
+  `project_id` int(11) NOT NULL default '0',
+  `title` varchar(255) NOT NULL default '',
+  `description` text NOT NULL,
+  `created` datetime NOT NULL default '0000-00-00 00:00:00',
+  `created_by` int(10) unsigned NOT NULL default '0',
+  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  `modified_by` int(10) unsigned NOT NULL default '0',
+  `published` tinyint(1) NOT NULL default '0',  
+  `publish_up` datetime NOT NULL default '0000-00-00 00:00:00',
+  `publish_down` datetime NOT NULL default '0000-00-00 00:00:00',
+  `checked_out` integer unsigned NOT NULL default '0',
+  `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ordering` integer NOT NULL default '0',
+  `xreference` varchar(50) NOT NULL COMMENT 'A reference to enable linkages to external data sets.',
+  `language` char(7) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `idx_checkout` (`checked_out`),
+  KEY `idx_client` (`published`),
+  KEY `idx_createdby` (`created_by`),
+  KEY `idx_language` (`language`),
+  KEY `idx_xreference` (`xreference`)
+) DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `#__projectlog_docs` (
   `id` integer NOT NULL auto_increment,
+  `asset_id` int(10) unsigned NOT NULL default '0',
   `project_id` integer NOT NULL default '0',
   `title` varchar(255) NOT NULL default '',
   `path` varchar(255) NOT NULL default '',
@@ -80,26 +107,10 @@ CREATE TABLE IF NOT EXISTS `#__projectlog_docs` (
   `checked_out` integer unsigned NOT NULL default '0',
   `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
   `ordering` integer NOT NULL default '0',
+  `xreference` varchar(50) NOT NULL COMMENT 'A reference to enable linkages to external data sets.',
   `language` char(7) NOT NULL,
   PRIMARY KEY  (`id`)
 ) DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `#__projectlog_logs` (
-  `id` int(11) NOT NULL auto_increment,
-  `project_id` int(11) NOT NULL default '0',
-  `title` varchar(255) NOT NULL default '',
-  `description` text NOT NULL,
-  `created` datetime NOT NULL default '0000-00-00 00:00:00',
-  `created_by` int(10) unsigned NOT NULL default '0',
-  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  `modified_by` int(10) unsigned NOT NULL default '0',
-  `published` tinyint(1) NOT NULL default '0',
-  `publish_up` datetime NOT NULL default '0000-00-00 00:00:00',
-  `publish_down` datetime NOT NULL default '0000-00-00 00:00:00',
-  `checked_out` integer unsigned NOT NULL default '0',
-  `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
-  `ordering` integer NOT NULL default '0',
-  `language` char(7) NOT NULL,
-  PRIMARY KEY  (`id`)
-) DEFAULT CHARSET=utf8;
+
 

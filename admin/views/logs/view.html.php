@@ -64,13 +64,16 @@ class ProjectlogViewLogs extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		$canDo	= JHelperContent::getActions('com_projectlog', 'project', $this->state->get('filter.project_id'));
+		require_once JPATH_COMPONENT .'/models/fields/modal/project.php';
+        $this->projectfield = new JFormFieldModal_Project();
+        
+        $canDo	= JHelperContent::getActions('com_projectlog', 'project', $this->state->get('filter.project_id'));
 		$user	= JFactory::getUser();
 
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
 
-		JToolbarHelper::title(JText::_('COM_PROJECTLOG_MANAGER_LOGS'), 'address log');
+		JToolbarHelper::title(JText::_('COM_PROJECTLOG_MANAGER_LOGS'), 'list log');
 
 		if ($canDo->get('projectlog.createlog') || (count($user->getAuthorisedCategories('com_projectlog', 'core.create'))) > 0)
 		{

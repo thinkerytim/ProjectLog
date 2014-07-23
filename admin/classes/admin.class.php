@@ -41,6 +41,22 @@ class projectlogAdmin
         
         return $manifest[$field_name];
     }
+    
+    public static function buildAdminToolbar()
+    {
+        $user       = JFactory::getUser();
+
+        JPluginHelper::importPlugin('projectlog');
+        $dispatcher = JDispatcher::getInstance();       
+
+        echo '
+            <div class="pull-left">
+                '.JHTML::_('image', 'administrator/components/com_projectlog/assets/images/projectlog_admin_logo.png', 'ProjectLog :: By The Thinkery' ).'
+            </div>';
+            $dispatcher->trigger( 'onAfterRenderPlAdmin', array( &$user ) );
+        echo '<div class="clearfix"></div>'; 
+        echo '<hr />';
+    }
 }
 
 ?>

@@ -27,7 +27,7 @@ $published = $this->state->get('filter.published');
             <?php if ($published >= 0) : ?>
 				<div class="control-group">
 					<div class="controls">
-						<?php echo JHtml::_('batch.item', 'com_projectlog'); ?>
+						<?php echo JHtml::_('batch.item', 'com_projectlog.log'); ?>
 					</div>
 				</div>
 			<?php endif; ?>

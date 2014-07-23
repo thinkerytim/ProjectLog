@@ -16,6 +16,7 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_projectlog'))
 }
 
 require_once (JPATH_COMPONENT_SITE.'/helpers/html.helper.php');
+require_once (JPATH_COMPONENT.'/classes/admin.class.php');
 
 $controller = JControllerLegacy::getInstance('projectlog');
 $controller->execute(JFactory::getApplication()->input->get('task'));

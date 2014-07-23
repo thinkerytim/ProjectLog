@@ -47,6 +47,8 @@ class ProjectlogModelProjects extends JModelList
 				'publish_up', 'a.publish_up',
 				'publish_down', 'a.publish_down',
 				'ul.name', 'project_manager',
+                'a.release_date', 'release_date',
+                'a.status', 'project_status'
 			);
 
 			$app = JFactory::getApplication();
@@ -156,7 +158,7 @@ class ProjectlogModelProjects extends JModelList
 				'list.select',
 				'a.id, a.name, a.alias, a.checked_out, a.checked_out_time, a.catid, a.manager' .
                 ', a.published, a.access, a.created, a.created_by, a.ordering, a.featured, a.language' .
-                ', a.publish_up, a.publish_down'
+                ', a.publish_up, a.publish_down, a.release_date, a.status'
 			)
 		);
 		$query->from('#__projectlog_projects AS a');

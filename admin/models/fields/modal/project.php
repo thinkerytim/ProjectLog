@@ -25,6 +25,14 @@ class JFormFieldModal_Project extends JFormField
 	 * @since   1.6
 	 */
 	protected $type = 'Modal_Project';
+    
+    /**
+     * Form clear button boolean
+     * 
+     * @var     boolean
+     * @since   1.6
+     */
+    protected $showclear = true;
 
 	/**
 	 * Method to get the field input markup.
@@ -36,7 +44,7 @@ class JFormFieldModal_Project extends JFormField
 	protected function getInput()
 	{
 		$allowEdit		= ((string) $this->element['edit'] == 'true') ? true : false;
-		$allowClear		= ((string) $this->element['clear'] != 'false') ? true : false;
+		$allowClear		= ((string) $this->element['clear'] != 'false' && $this->showclear === true) ? true : false;
 
 		// Load language
 		JFactory::getLanguage()->load('com_projectlog', JPATH_ADMINISTRATOR);
@@ -165,4 +173,16 @@ class JFormFieldModal_Project extends JFormField
 
 		return implode("\n", $html);
 	}
+    
+    public function callModal($name, $value)
+    {
+        JFactory::getLanguage()->load('com_projectlog', JPATH_ADMINISTRATOR);
+        
+        $this->name     = $name;
+        $this->id       = $name;
+        $this->value    = $value;
+        $this->showclear = false;
+        
+        echo $this->getInput();
+    }
 }

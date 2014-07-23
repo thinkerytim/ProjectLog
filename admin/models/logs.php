@@ -31,7 +31,7 @@ class ProjectlogModelLogs extends JModelList
 		{
 			$config['filter_fields'] = array(
 				'id', 'a.id',
-				'title', 'a.name',
+				'title', 'a.title',
 				'checked_out', 'a.checked_out',
 				'checked_out_time', 'a.checked_out_time',
 				'projectid', 'a.project_id', 'project_name',
@@ -202,7 +202,7 @@ class ProjectlogModelLogs extends JModelList
 			$query->where('a.project_id IN (' . $projectId . ')');
 		}
 
-		// Filter by search in name.
+		// Filter by search in title.
 		$search = $this->getState('filter.search');
 		if (!empty($search))
 		{
@@ -218,7 +218,7 @@ class ProjectlogModelLogs extends JModelList
 			else
 			{
 				$search = $db->quote('%' . $db->escape($search, true) . '%');
-				$query->where('(a.name LIKE ' . $search . ' OR a.alias LIKE ' . $search . ')');
+				$query->where('(a.title LIKE ' . $search . ')');
 			}
 		}
 
@@ -228,24 +228,12 @@ class ProjectlogModelLogs extends JModelList
 			$query->where('a.language = ' . $db->quote($language));
 		}
 
-		// Filter by a single tag.
-		$tagId = $this->getState('filter.tag');
-		if (is_numeric($tagId))
-		{
-			$query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
-				->join(
-					'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
-					. ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
-					. ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote('com_projectlog.log')
-				);
-		}
-
 		// Add the list ordering clause.
 		$orderCol = $this->state->get('list.ordering', 'a.title');
 		$orderDirn = $this->state->get('list.direction', 'asc');
-		if ($orderCol == 'a.ordering' || $orderCol == 'project_title')
+		if ($orderCol == 'a.ordering' || $orderCol == 'project_name')
 		{
-			$orderCol = 'p.ordering ' . $orderDirn . ', a.ordering';
+			$orderCol = 'p.name ' . $orderDirn . ', a.ordering';
 		}
 		$query->order($db->escape($orderCol . ' ' . $orderDirn));
 
