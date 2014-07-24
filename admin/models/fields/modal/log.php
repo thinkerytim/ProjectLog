@@ -16,7 +16,7 @@ defined('JPATH_BASE') or die;
  * @subpackage  com_projectlog
  * @since       1.6
  */
-class JFormFieldModal_Project extends JFormField
+class JFormFieldModal_Log extends JFormField
 {
 	/**
 	 * The form field type.
@@ -24,7 +24,7 @@ class JFormFieldModal_Project extends JFormField
 	 * @var		string
 	 * @since   1.6
 	 */
-	protected $type = 'Modal_Project';
+	protected $type = 'Modal_Log';
     
     /**
      * Form clear button boolean
@@ -49,11 +49,10 @@ class JFormFieldModal_Project extends JFormField
 	 *
 	 * @since   1.6
 	 */
-	protected function getInput($forcedlanguage = false)
+	protected function getInput()
 	{
 		$allowEdit		= ((string) $this->element['edit'] == 'true') ? true : false;
 		$allowClear		= ((string) $this->element['clear'] != 'false' && $this->showclear === true) ? true : false;
-        $this->element['language'] = $forcedlanguage;
 
 		// Load language
 		JFactory::getLanguage()->load('com_projectlog', JPATH_ADMINISTRATOR);
@@ -67,7 +66,7 @@ class JFormFieldModal_Project extends JFormField
 		$script = array();
 
 		// Select button script
-		$script[] = '	function jSelectProject_' . $this->id . '(id, name, object) {';
+		$script[] = '	function jSelectLog_' . $this->id . '(id, name, object) {';
 		$script[] = '		document.id("' . $this->id . '_id").value = id;';
 		$script[] = '		document.id("' . $this->id . '_name").value = name;';
 
@@ -91,9 +90,9 @@ class JFormFieldModal_Project extends JFormField
 		{
 			$scriptClear = true;
 
-			$script[] = '	function jClearProject(id) {';
+			$script[] = '	function jClearLog(id) {';
 			$script[] = '		document.getElementById(id + "_id").value = "";';
-			$script[] = '		document.getElementById(id + "_name").value = "'.htmlspecialchars(JText::_('COM_PROJECTLOG_SELECT_A_PROJECT', true), ENT_COMPAT, 'UTF-8').'";';
+			$script[] = '		document.getElementById(id + "_name").value = "'.htmlspecialchars(JText::_('COM_PROJECTLOG_SELECT_A_LOG', true), ENT_COMPAT, 'UTF-8').'";';
 			$script[] = '		jQuery("#"+id + "_clear").addClass("hidden");';
 			$script[] = '		if (document.getElementById(id + "_edit")) {';
 			$script[] = '			jQuery("#"+id + "_edit").addClass("hidden");';
@@ -107,7 +106,7 @@ class JFormFieldModal_Project extends JFormField
 
 		// Setup variables for display.
 		$html	= array();
-		$link	= 'index.php?option=com_projectlog&amp;view=projects&amp;layout=modal&amp;tmpl=component&amp;function=jSelectProject_' . $this->id;
+		$link	= 'index.php?option=com_projectlog&amp;view=logs&amp;layout=modal&amp;tmpl=component&amp;function=jSelectLog_' . $this->id;
 
 		if (isset($this->element['language']))
 		{
@@ -120,7 +119,7 @@ class JFormFieldModal_Project extends JFormField
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true)
 				->select($db->quoteName('name'))
-				->from($db->quoteName('#__projectlog_projects'))
+				->from($db->quoteName('#__projectlog_logs'))
 				->where('id = ' . (int) $this->value);
 			$db->setQuery($query);
 
@@ -136,12 +135,12 @@ class JFormFieldModal_Project extends JFormField
 
 		if (empty($title))
 		{
-			$title = JText::_('COM_PROJECTLOG_SELECT_A_PROJECT');
+			$title = JText::_('COM_PROJECTLOG_SELECT_A_LOG');
 		}
 
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
-		// The active project id field.
+		// The active log id field.
 		if (0 == (int) $this->value)
 		{
 			$value = '';
@@ -151,21 +150,21 @@ class JFormFieldModal_Project extends JFormField
 			$value = (int) $this->value;
 		}
 
-		// The current project display field.
+		// The current log display field.
 		$html[] = '<span class="input-append">';
 		$html[] = '<input type="text" class="input-medium" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" size="35" />';
-		$html[] = '<a class="modal btn hasTooltip" title="' . JHtml::tooltipText('COM_PROJECTLOG_CHANGE_PROJECT') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> ' . JText::_('JSELECT') . '</a>';
+		$html[] = '<a class="modal btn hasTooltip" title="' . JHtml::tooltipText('COM_PROJECTLOG_CHANGE_LOG') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> ' . JText::_('JSELECT') . '</a>';
 
 		// Edit article button
 		if ($allowEdit)
 		{
-			$html[] = '<a class="btn hasTooltip' . ($value ? '' : ' hidden') . '" href="index.php?option=com_projectlog&layout=modal&tmpl=component&task=project.edit&id=' . $value . '" target="_blank" title="' . JHtml::tooltipText('COM_PROJECTLOG_EDIT_PROJECT') . '" ><span class="icon-edit"></span> ' . JText::_('JACTION_EDIT') . '</a>';
+			$html[] = '<a class="btn hasTooltip' . ($value ? '' : ' hidden') . '" href="index.php?option=com_projectlog&layout=modal&tmpl=component&task=log.edit&id=' . $value . '" target="_blank" title="' . JHtml::tooltipText('COM_PROJECTLOG_EDIT_LOG') . '" ><span class="icon-edit"></span> ' . JText::_('JACTION_EDIT') . '</a>';
 		}
 
-		// Clear project button
+		// Clear log button
 		if ($allowClear)
 		{
-			$html[] = '<button id="' . $this->id . '_clear" class="btn' . ($value ? '' : ' hidden') . '" onclick="return jClearProject(\'' . $this->id . '\')"><span class="icon-remove"></span> ' . JText::_('JCLEAR') . '</button>';
+			$html[] = '<button id="' . $this->id . '_clear" class="btn' . ($value ? '' : ' hidden') . '" onclick="return jClearLog(\'' . $this->id . '\')"><span class="icon-remove"></span> ' . JText::_('JCLEAR') . '</button>';
 		}
 
 		$html[] = '</span>';
@@ -183,7 +182,7 @@ class JFormFieldModal_Project extends JFormField
 		return implode("\n", $html);
 	}
     
-    public function callModal($name, $value, $id = false, $forcedlanguage = false)
+    public function callModal($name, $value, $id = false)
     {
         JFactory::getLanguage()->load('com_projectlog', JPATH_ADMINISTRATOR);
         
@@ -192,8 +191,7 @@ class JFormFieldModal_Project extends JFormField
         $this->value    = $value;
         $this->showclear = false;
         $this->batch    = false;
-        //$this->element->set('language', $forcedlanguage);
         
-        echo $this->getInput($forcedlanguage);
+        echo $this->getInput();
     }
 }

@@ -128,7 +128,7 @@ class ProjectlogViewProjects extends JViewLegacy
 		JHtmlSidebar::addFilter(
 			JText::_('JOPTION_SELECT_CATEGORY'),
 			'filter_category_id',
-			JHtml::_('select.options', JHtml::_('category.options', 'com_projectlog'), 'value', 'text', $this->state->get('filter.category_id'))
+            JHtml::_('select.options', JHtml::_('category.options', 'com_projectlog', array('filter.published' => array(0, 1), 'filter.language' => ($this->state->get('filter.language')) ? array('*', $this->state->get('filter.language')) : false)), 'value', 'text', $this->state->get('filter.category_id'))
 		);
 
 		JHtmlSidebar::addFilter(

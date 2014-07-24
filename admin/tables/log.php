@@ -78,11 +78,9 @@ class ProjectlogTableLog extends JTable
 
 		// Verify that the alias is unique
 		$table = JTable::getInstance('Log', 'ProjectlogTable');
-		if ($table->load(array('title' => $this->title, 'project_id' => $this->project_id)) && ($table->id != $this->id || $this->id == 0))
+		if ($table->load(array('title' => $this->title, 'project_id' => $this->project_id, 'language' => $this->language)) && ($table->id != $this->id || $this->id == 0))
 		{
-			$this->setError(JText::_('COM_PROJECTLOG_ERROR_UNIQUE_TITLE'));
-
-			return false;
+			$this->title = JString::increment($this->title);
 		}
 
 		return parent::store($updateNulls);

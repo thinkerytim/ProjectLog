@@ -67,8 +67,8 @@ class ProjectlogViewLogs extends JViewLegacy
 		require_once JPATH_COMPONENT .'/models/fields/modal/project.php';
         $this->projectfield = new JFormFieldModal_Project();
         
-        $canDo	= JHelperContent::getActions('com_projectlog', 'project', $this->state->get('filter.project_id'));
-		$user	= JFactory::getUser();
+        $canDo	= ProjectlogHelper::getActions('com_projectlog', 'project', $this->state->get('filter.project_id'));        
+        $user	= JFactory::getUser();
 
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
@@ -127,12 +127,6 @@ class ProjectlogViewLogs extends JViewLegacy
 			'filter_published',
 			JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->state->get('filter.published'), true)
 		);
-
-		/*JHtmlSidebar::addFilter(
-			JText::_('JOPTION_SELECT_PROJECT'),
-			'filter_category_id',
-			JHtml::_('select.options', JHtml::_('project.options', 'com_projectlog'), 'value', 'text', $this->state->get('filter.project_id'))
-		);*/
 
 		JHtmlSidebar::addFilter(
 			JText::_('JOPTION_SELECT_LANGUAGE'),

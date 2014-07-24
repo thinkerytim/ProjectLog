@@ -140,11 +140,19 @@ class ProjectlogModelLog extends JModelAdmin
 	 */
 	protected function batchCopy($value, $pks, $contexts)
 	{
-		$projectId = (int) $value;
+		if (empty($this->batchSet))
+		{
+			// Set some needed variables.
+			$this->user = JFactory::getUser();
+			$this->table = $this->getTable();
+			$this->tableClassName = get_class($this->table);
+			$this->contentType = new JUcmType;
+			$this->type = $this->contentType->getTypeByTable($this->tableClassName);
+		}
+        
+        $projectId = (int) $value;
 
-		$table = $this->getTable();
 		$i = 0;
-
 		// Parent exists so we proceed
 		while (!empty($pks))
 		{
@@ -171,13 +179,13 @@ class ProjectlogModelLog extends JModelAdmin
 			}
 
 			// Alter the title & alias
-			$logtitle = $this->generateNewTitle($projectId, '', $this->table->title);
-			$this->table->title = $logtitle;
+			//$logtitle = $this->generateNewTitle($projectId, '', $this->table->title);
+			//$this->table->title = $logtitle;
 
 			// Reset the ID because we are making a copy
 			$this->table->id = 0;
 
-			// New category ID
+			// New project ID
 			$this->table->project_id = $projectId;
 
 			// TODO: Deal with ordering?
@@ -209,6 +217,74 @@ class ProjectlogModelLog extends JModelAdmin
 		$this->cleanCache();
 
 		return $newIds;
+	}
+    
+    protected function batchMove($value, $pks, $contexts)
+	{
+		if (empty($this->batchSet))
+		{
+			// Set some needed variables.
+			$this->user = JFactory::getUser();
+			$this->table = $this->getTable();
+			$this->tableClassName = get_class($this->table);
+			$this->contentType = new JUcmType;
+			$this->type = $this->contentType->getTypeByTable($this->tableClassName);
+		}
+
+		$projectId = (int) $value;
+
+		// Parent exists so we proceed
+		foreach ($pks as $pk)
+		{
+			if (!$this->user->authorise('core.edit', $contexts[$pk]))
+			{
+				$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
+
+				return false;
+			}
+
+			// Check that the row actually exists
+			if (!$this->table->load($pk))
+			{
+				if ($error = $this->table->getError())
+				{
+					// Fatal error
+					$this->setError($error);
+
+					return false;
+				}
+				else
+				{
+					// Not fatal error
+					$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+					continue;
+				}
+			}
+
+			// Set the new category ID
+			$this->table->project_id = $projectId;
+
+			// Check the row.
+			if (!$this->table->check())
+			{
+				$this->setError($this->table->getError());
+
+				return false;
+			}
+
+			// Store the row.
+			if (!$this->table->store())
+			{
+				$this->setError($this->table->getError());
+
+				return false;
+			}
+		}
+
+		// Clean the cache
+		$this->cleanCache();
+
+		return true;
 	}
 
 	/**
@@ -334,7 +410,7 @@ class ProjectlogModelLog extends JModelAdmin
 
 			if ($item->id != null)
 			{
-				$associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_logs', 'com_projectlog.log', $item->id);
+				$associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_logs', 'com_projectlog.log', $item->id, 'id', false, false);
 
 				foreach ($associations as $tag => $association)
 				{
@@ -367,6 +443,7 @@ class ProjectlogModelLog extends JModelAdmin
 			{
 				$app = JFactory::getApplication();
 				$data->set('project_id', $app->input->get('project_id', $app->getUserState('com_projectlog.logs.filter.project_id'), 'int'));
+                $data->set('language', $app->input->get('language', $app->getUserState('com_projectlog.logs.filter.language')));
 			}
 		}
 
@@ -536,7 +613,7 @@ class ProjectlogModelLog extends JModelAdmin
 		$assoc = JLanguageAssociations::isEnabled();
 		if ($assoc)
 		{
-			$languages = JLanguageHelper::getLanguages('lang_code');
+            $languages = JLanguageHelper::getLanguages('lang_code');
 
 			// force to array (perhaps move to $this->loadFormData())
 			$data = (array) $data;
@@ -555,7 +632,7 @@ class ProjectlogModelLog extends JModelAdmin
 					$add = true;
 					$field = $fieldset->addChild('field');
 					$field->addAttribute('name', $tag);
-					$field->addAttribute('type', 'modal_project');
+					$field->addAttribute('type', 'modal_log');
 					$field->addAttribute('language', $tag);
 					$field->addAttribute('label', $language->title);
 					$field->addAttribute('translate_label', 'false');
@@ -596,5 +673,5 @@ class ProjectlogModelLog extends JModelAdmin
 		}
 
 		return $title;
-	}        
+	}    
 }

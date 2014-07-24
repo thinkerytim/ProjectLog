@@ -27,7 +27,7 @@ $saveOrder	= $listOrder == 'a.ordering';
 if ($saveOrder)
 {
 	$saveOrderingUrl = 'index.php?option=com_projectlog&task=projects.saveOrderAjax&tmpl=component';
-	JHtml::_('sortablelist.sortable', 'articleList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+	JHtml::_('sortablelist.sortable', 'projectList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 $sortFields = $this->getSortFields();
 $assoc		= JLanguageAssociations::isEnabled();
@@ -95,7 +95,7 @@ $assoc		= JLanguageAssociations::isEnabled();
 				<?php echo JText::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
 			</div>
 		<?php else : ?>
-            <table class="table table-striped" id="articleList">
+            <table class="table table-striped" id="projectList">
                 <thead>
                     <tr>
                         <th width="1%" class="nowrap center hidden-phone">

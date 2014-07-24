@@ -73,7 +73,7 @@ $assoc		= JLanguageAssociations::isEnabled();
 			</div>			
             <div class="filter-search btn-group pull-left">
                 <label class="element-invisible" for="filter_project_id"><?php echo JText::_('COM_PROJECTLOG_PROJECT'); ?></label>
-                <?php echo $this->projectfield->callModal('filter_project_id', $this->state->get('filter.project_id')); ?>
+                <?php echo $this->projectfield->callModal('filter_project_id', $this->state->get('filter.project_id'), '', $this->state->get('filter.language')); ?>
             </div>
             <div class="btn-group pull-left">
 				<button type="submit" class="btn hasTooltip" title="<?php echo JHtml::tooltipText('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
@@ -117,18 +117,18 @@ $assoc		= JLanguageAssociations::isEnabled();
                         <th width="1%" style="min-width:55px" class="nowrap center">
                             <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
                         </th>
-                        <th>
+                        <th width="30%">
                             <?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
                         </th>
-                        <th class="nowrap hidden-phone">
+                        <th width="30%" class="nowrap hidden-phone">
                             <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_DESC', 'a.description', $listDirn, $listOrder); ?>
                         </th>
                         <?php if ($assoc) : ?>
-                        <th width="5%" class="nowrap hidden-phone">
+                        <th width="15%" class="nowrap hidden-phone">
                             <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_HEADING_ASSOCIATION', 'association', $listDirn, $listOrder); ?>
                         </th>
                         <?php endif;?>
-                        <th width="5%" class="nowrap hidden-phone">
+                        <th width="15%" class="nowrap hidden-phone">
                             <?php echo JHtml::_('grid.sort', 'JGRID_HEADING_LANGUAGE', 'a.language', $listDirn, $listOrder); ?>
                         </th>
                         <th width="1%" class="nowrap center hidden-phone">
@@ -203,7 +203,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     </div>
                                 </div>
                             </td>
-                            <td class="center hidden-phone">
+                            <td class="hidden-phone">
                                 <?php echo $item->description; ?>
                             </td>
                             <?php if ($assoc) : ?>

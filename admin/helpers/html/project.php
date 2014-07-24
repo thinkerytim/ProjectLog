@@ -113,4 +113,24 @@ abstract class JHtmlProject
 
 		return $html;
 	}
+    
+    public static function batchproject()
+	{
+        require_once JPATH_COMPONENT .'/models/fields/modal/project.php';
+        
+        // Create the copy/move options.
+		$options = array(
+			JHtml::_('select.option', 'c', JText::_('JLIB_HTML_BATCH_COPY')),
+			JHtml::_('select.option', 'm', JText::_('JLIB_HTML_BATCH_MOVE'))
+		);
+        
+        $projectfield = new JFormFieldModal_Project();
+        
+        $batchhtml = $projectfield->callModal("batch[project_id]", '', 'project_id');
+        $batchhtml .= '<div id="batch-move-copy" class="control-group radio">'
+                    . JHtml::_('select.radiolist', $options, 'batch[move_copy]', '', 'value', 'text', 'm')
+                    . '</div>';
+        
+        return $batchhtml;
+	}
 }

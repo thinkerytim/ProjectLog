@@ -49,41 +49,71 @@ $assoc = JLanguageAssociations::isEnabled();
 <hr class="hr-condensed" />
 
 <form action="<?php echo JRoute::_('index.php?option=com_projectlog&layout=modal&tmpl=component&id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="project-form" class="form-validate form-horizontal">
-	<div class="form-horizontal">
+    <div class="form-horizontal">
 		<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'details')); ?>
 
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', empty($this->item->id) ? JText::_('COM_PROJECTLOG_NEW_PROJECT', true) : JText::_('COM_PROJECTLOG_EDIT_PROJECT', true)); ?>
 		<div class="row-fluid">
 			<div class="span9">
+                <div class="row-fluid form-horizontal-desktop">
+                    <?php echo $this->form->renderField('name'); ?>
+                </div>
 				<div class="row-fluid form-horizontal-desktop">
 					<div class="span6">
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_DETAILS'); ?></h3>                        
+                        <?php echo $this->form->renderField('client'); ?>
+                        <?php echo $this->form->renderField('project_type'); ?>
+                        <?php echo $this->form->renderField('release_date'); ?>
+                        <?php echo $this->form->renderField('status'); ?>
 						<?php echo $this->form->renderField('image'); ?>
-						<?php echo $this->form->renderField('manager'); ?>
-						<?php echo $this->form->renderField('email_to'); ?>
-						<?php echo $this->form->renderField('general_loc'); ?>
-						<?php echo $this->form->renderField('project_type'); ?>
-						<?php echo $this->form->renderField('client'); ?>
-						<?php echo $this->form->renderField('job_id'); ?>
-						<?php echo $this->form->renderField('release_id'); ?>
+                    </div>
+                    <div class="span6">
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_IDENTIFIERS'); ?></h3>       
+                        <?php echo $this->form->renderField('release_id'); ?>
+                        <?php echo $this->form->renderField('job_id'); ?>
+                        <?php echo $this->form->renderField('workorder_id'); ?>
+                        <?php echo $this->form->renderField('task_id'); ?>
+                    </div>
+                </div>
+                <hr />
+                <div class="row-fluid form-horizontal-desktop">
+                    <div class="span6">                  
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_DATES'); ?></h3>
+                        <?php echo $this->form->renderField('deployment_from'); ?>
+                        <?php echo $this->form->renderField('deployment_to'); ?>
+                        <?php echo $this->form->renderField('contract_from'); ?>
+                        <?php echo $this->form->renderField('contract_to'); ?>                        					
 					</div>
 					<div class="span6">
-						<?php echo $this->form->renderField('task_id'); ?>
-						<?php echo $this->form->renderField('mobile'); ?>
-						<?php echo $this->form->renderField('workorder_id'); ?>
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_LOC'); ?></h3>                        
+                        <?php echo $this->form->renderField('general_loc'); ?>
+                        <?php echo $this->form->renderField('specific_loc'); ?>
+                    </div>
+                </div>
+                <hr />
+                <div class="row-fluid form-horizontal-desktop">
+                    <div class="span6">        
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_CREW'); ?></h3>
+						<?php echo $this->form->renderField('manager'); ?>
+                        <?php echo $this->form->renderField('chief'); ?>
+                        <?php echo $this->form->renderField('technicians'); ?>
+                        <?php echo $this->form->renderField('onsite'); ?>
+                    </div>
+                    <div class="span6">                        
+						<h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_CONTACT'); ?></h3>   
+                        <?php echo $this->form->renderField('email_to'); ?>
+                        <?php echo $this->form->renderField('mobile'); ?>						
 						<?php echo $this->form->renderField('webpage'); ?>
-						<?php echo $this->form->renderField('sortname1'); ?>
-						<?php echo $this->form->renderField('sortname2'); ?>
-						<?php echo $this->form->renderField('sortname3'); ?>
-					</div>
-				</div>
+                    </div>
+                </div>
 			</div>
 			<div class="span3">
 				<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
 			</div>
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
-
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'misc', JText::_('JGLOBAL_FIELDSET_MISCELLANEOUS', true)); ?>
+        
+        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'misc', JText::_('JGLOBAL_FIELDSET_MISCELLANEOUS', true)); ?>
 		<div class="row-fluid form-horizontal-desktop">
 				<div class="form-vertical">
 					<?php echo $this->form->renderField('misc'); ?>
@@ -103,8 +133,8 @@ $assoc = JLanguageAssociations::isEnabled();
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 
 		<?php echo JLayoutHelper::render('joomla.edit.params', $this); ?>
-
-		<?php if ($assoc) : ?>
+        
+        <?php if ($assoc) : ?>
 			<div class="hidden"><?php echo $this->loadTemplate('associations'); ?></div>
 		<?php endif; ?>
 

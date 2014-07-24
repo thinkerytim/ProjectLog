@@ -103,7 +103,8 @@ class ProjectlogModelProjects extends JModelList
 		$forcedLanguage = $app->input->get('forcedLanguage');
 		if (!empty($forcedLanguage))
 		{
-			$this->setState('filter.language', $forcedLanguage);
+			var_dump($forcedLanguage);
+            $this->setState('filter.language', $forcedLanguage);
 			$this->setState('filter.forcedLanguage', $forcedLanguage);
 		}
 

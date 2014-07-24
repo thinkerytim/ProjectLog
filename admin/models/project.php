@@ -466,6 +466,7 @@ class ProjectlogModelProject extends JModelAdmin
 			{
 				$app = JFactory::getApplication();
 				$data->set('catid', $app->input->get('catid', $app->getUserState('com_projectlog.projects.filter.category_id'), 'int'));
+                $data->set('language', $app->input->get('language', $app->getUserState('com_projectlog.projects.filter.language')));
 			}
 		}
 
