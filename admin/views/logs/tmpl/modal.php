@@ -100,7 +100,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                 ?>
                 <tr class="row<?php echo $i % 2; ?>">
                     <td>
-                        <a href="javascript:void(0)" onclick="if (window.parent) window.parent.<?php echo $this->escape($function);?>('<?php echo $item->id; ?>', '<?php echo $this->escape(addslashes($item->title)); ?>', '<?php echo $this->escape($item->project_id); ?>', null, '<?php echo $this->escape(ProjectlogHelperRoute::getLogRoute($item->id, $item->project_id, $item->language)); ?>', '<?php echo $this->escape($lang); ?>', null);">
+                        <a href="javascript:void(0)" onclick="if (window.parent) window.parent.<?php echo $this->escape($function);?>('<?php echo $item->id; ?>', '<?php echo $this->escape(addslashes($item->title)); ?>', '<?php echo $this->escape($item->project_id); ?>', null, '<?php echo $this->escape('#'); ?>', '<?php echo $this->escape($lang); ?>', null);">
                         <?php echo $this->escape($item->title); ?></a>
                         <div class="small">
                             <?php echo $item->project_name; ?>

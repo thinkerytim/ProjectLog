@@ -209,7 +209,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                             <?php if ($assoc) : ?>
                             <td class="hidden-phone">
                                 <?php if ($item->association) : ?>
-                                    <?php echo JHtml::_('project.association', $item->id); ?>
+                                    <?php echo JHtml::_('project.logassociation', $item->id); ?>
                                 <?php endif; ?>
                             </td>
                             <?php endif;?>

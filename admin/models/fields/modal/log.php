@@ -118,7 +118,7 @@ class JFormFieldModal_Log extends JFormField
 		{
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true)
-				->select($db->quoteName('name'))
+				->select($db->quoteName('title'))
 				->from($db->quoteName('#__projectlog_logs'))
 				->where('id = ' . (int) $this->value);
 			$db->setQuery($query);
