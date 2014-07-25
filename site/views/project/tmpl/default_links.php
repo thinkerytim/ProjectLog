@@ -10,16 +10,7 @@
 defined('_JEXEC') or die;
 ?>
 
-<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
-	<?php echo JHtml::_('bootstrap.addSlide', 'slide-project', JText::_('COM_PROJECTLOG_LINKS'), 'display-links'); ?>
-<?php endif; ?>
-<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
-	<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'display-links', JText::_('COM_PROJECTLOG_LINKS', true)); ?>
-<?php endif; ?>
-<?php if ($this->params->get('presentation_style') == 'plain'):?>
-	<?php echo '<h3>'. JText::_('COM_PROJECTLOG_LINKS').'</h3>';  ?>
-<?php endif; ?>
-
+<?php echo '<h3>'. JText::_('COM_PROJECTLOG_LINKS').'</h3>';  ?>
 <div class="project-links">
 	<ul class="nav nav-tabs nav-stacked">
 		<?php
@@ -45,10 +36,3 @@ defined('_JEXEC') or die;
 		<?php endforeach; ?>
 	</ul>
 </div>
-
-<?php if ($this->params->get('presentation_style') == 'sliders') : ?>
-	<?php echo JHtml::_('bootstrap.endSlide'); ?>
-<?php endif; ?>
-<?php if ($this->params->get('presentation_style') == 'tabs') : ?>
-	<?php echo JHtml::_('bootstrap.endTab'); ?>
-<?php endif; ?>

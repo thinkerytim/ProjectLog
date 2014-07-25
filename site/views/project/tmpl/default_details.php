@@ -8,15 +8,31 @@
  */
 
 defined('_JEXEC') or die;
-
-/**
- * marker_class: Class based on the selection of text, none, or icons
- * jicon-text, jicon-none, jicon-icon
- */
 ?>
+
+<?php if ($this->project->image && $this->params->get('show_image')) : ?>
+    <div class="thumbnail pull-right">
+        <?php echo JHtml::_('image', $this->project->image, JText::_('COM_PROJECTLOG_IMAGE_DETAILS'), array('align' => 'middle', 'itemprop' => 'image')); ?>
+    </div>
+<?php endif; ?>
+
+<?php if ($this->project->manager && $this->params->get('show_manager')) : ?>
+    <dl class="project-position dl-horizontal">
+        <dd itemprop="jobTitle">
+            <?php echo $this->project->manager; ?>
+        </dd>
+    </dl>
+<?php endif; ?>
+
+<?php if ($this->params->get('allow_vcard')) :	?>
+    <?php echo JText::_('COM_PROJECTLOG_DOWNLOAD_INFORMATION_AS');?>
+    <a href="<?php echo JRoute::_('index.php?option=com_projectlog&amp;view=project&amp;id='.$this->project->id . '&amp;format=vcf'); ?>">
+    <?php echo JText::_('COM_PROJECTLOG_VCARD');?></a>
+<?php endif; ?>
+
 <dl class="project-address dl-horizontal" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 	<?php if (($this->params->get('address_check') > 0) &&
-		($this->project->address || $this->project->project_type  || $this->project->client || $this->project->release_id || $this->project->job_id)) : ?>
+		($this->project->specific_loc || $this->project->project_type  || $this->project->client || $this->project->release_id || $this->project->job_id)) : ?>
 		<?php if ($this->params->get('address_check') > 0) : ?>
 			<dt>
 				<span class="<?php echo $this->params->get('marker_class'); ?>" >
@@ -25,10 +41,10 @@ defined('_JEXEC') or die;
 			</dt>
 		<?php endif; ?>
 
-		<?php if ($this->project->address && $this->params->get('show_street_address')) : ?>
+		<?php if ($this->project->specific_loc && $this->params->get('show_street_address')) : ?>
 			<dd>
 				<span class="project-street" itemprop="streetAddress">
-					<?php echo $this->project->address .'<br/>'; ?>
+					<?php echo $this->project->specific_loc .'<br/>'; ?>
 				</span>
 			</dd>
 		<?php endif; ?>
