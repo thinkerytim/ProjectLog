@@ -20,9 +20,9 @@ class ProjectlogCategories extends JCategories
 {
 	public function __construct($options = array())
 	{
-		$options['table'] = '#__projectlog_projects';
-		$options['extension'] = 'com_projectlog';
-		$options['statefield'] = 'published';
+		$options['table']       = '#__projectlog_projects';
+		$options['extension']   = 'com_projectlog';
+		$options['statefield']  = 'published';
 		parent::__construct($options);
 	}
 }

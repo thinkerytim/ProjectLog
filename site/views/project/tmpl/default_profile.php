@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 ?>
 <?php if (JPluginHelper::isEnabled('user', 'profile')) :
 	$fields = $this->item->profile->getFieldset('profile'); ?>
+    <?php echo '<h3>'. JText::_('COM_PROJECTLOG_PROFILE').'</h3>';  ?>
 	<div class="project-profile" id="users-profile-custom">
 		<dl class="dl-horizontal">
 			<?php foreach ($fields as $profile) :

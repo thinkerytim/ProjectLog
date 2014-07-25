@@ -10,12 +10,6 @@
 defined('_JEXEC') or die;
 ?>
 
-<?php if ($this->project->image && $this->params->get('show_image')) : ?>
-    <div class="thumbnail pull-right">
-        <?php echo JHtml::_('image', $this->project->image, JText::_('COM_PROJECTLOG_IMAGE_DETAILS'), array('align' => 'middle', 'itemprop' => 'image')); ?>
-    </div>
-<?php endif; ?>
-
 <?php if ($this->project->manager && $this->params->get('show_manager')) : ?>
     <dl class="project-position dl-horizontal">
         <dd itemprop="jobTitle">
@@ -63,20 +57,8 @@ defined('_JEXEC') or die;
 				</span>
 			</dd>
 		<?php endif; ?>
-		<?php if ($this->project->job_id && $this->params->get('show_job_id')) : ?>
-			<dd>
-				<span class="project-job_id" itemprop="postalCode">
-					<?php echo $this->project->job_id .'<br/>'; ?>
-				</span>
-			</dd>
-		<?php endif; ?>
-		<?php if ($this->project->release_id && $this->params->get('show_release_id')) : ?>
-		<dd>
-			<span class="project-release_id" itemprop="addressCountry">
-				<?php echo $this->project->release_id .'<br/>'; ?>
-			</span>
-		</dd>
-		<?php endif; ?>
+		
+		
 	<?php endif; ?>
 
 <?php if ($this->project->email_to && $this->params->get('show_email')) : ?>
@@ -92,42 +74,8 @@ defined('_JEXEC') or die;
 	</dd>
 <?php endif; ?>
 
-<?php if ($this->project->task_id && $this->params->get('show_task_id')) : ?>
-	<dt>
-		<span class="<?php echo $this->params->get('marker_class'); ?>" >
-			<?php echo $this->params->get('marker_task_id'); ?>
-		</span>
-	</dt>
-	<dd>
-		<span class="project-task_id" itemprop="task_id">
-			<?php echo nl2br($this->project->task_id); ?>
-		</span>
-	</dd>
-<?php endif; ?>
-<?php if ($this->project->workorder_id && $this->params->get('show_workorder_id')) : ?>
-	<dt>
-		<span class="<?php echo $this->params->get('marker_class'); ?>">
-			<?php echo $this->params->get('marker_workorder_id'); ?>
-		</span>
-	</dt>
-	<dd>
-		<span class="project-workorder_id" itemprop="workorder_idNumber">
-		<?php echo nl2br($this->project->workorder_id); ?>
-		</span>
-	</dd>
-<?php endif; ?>
-<?php if ($this->project->mobile && $this->params->get('show_mobile')) :?>
-	<dt>
-		<span class="<?php echo $this->params->get('marker_class'); ?>" >
-			<?php echo $this->params->get('marker_mobile'); ?>
-		</span>
-	</dt>
-	<dd>
-		<span class="project-mobile" itemprop="task_id">
-			<?php echo nl2br($this->project->mobile); ?>
-		</span>
-	</dd>
-<?php endif; ?>
+
+
 <?php if ($this->project->webpage && $this->params->get('show_webpage')) : ?>
 	<dt>
 		<span class="<?php echo $this->params->get('marker_class'); ?>" >

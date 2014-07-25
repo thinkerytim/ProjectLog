@@ -602,6 +602,9 @@ class ProjectlogModelLog extends JModelAdmin
 	{
 		$condition = array();
 		$condition[] = 'project_id = ' . (int) $table->project_id;
+		$condition[] = 'published >= 0';
+
+		return $condition;
 
 		return $condition;
 	}

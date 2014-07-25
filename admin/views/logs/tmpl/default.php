@@ -177,10 +177,10 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     <?php
                                     // Create dropdown items
                                     $action = $archived ? 'unarchive' : 'archive';
-                                    JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'projects');
+                                    JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'logs');
 
                                     $action = $trashed ? 'untrash' : 'trash';
-                                    JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'projects');
+                                    JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'logs');
 
                                     // Render dropdown list
                                     echo JHtml::_('actionsdropdown.render', $this->escape($item->title));

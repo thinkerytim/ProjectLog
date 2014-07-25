@@ -3,11 +3,17 @@
 	<section name="component">
 		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
 		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
-		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
-		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
-		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
-		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
-		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+		<action name="core.create" title="COM_PROJECTLOG_CREATE_PROJECTS" description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="core.delete" title="COM_PROJECTLOG_DELETE_PROJECTS" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.edit" title="COM_PROJECTLOG_EDIT_PROJECTS" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.state" title="COM_PROJECTLOG_EDIT_PROJECTS_STATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
+		<action name="core.edit.own" title="COM_PROJECTLOG_EDIT_OWN_PROJECTS" description="JACTION_EDITOWN_COMPONENT_DESC" />
+        
+        <action name="projectlog.createlog" title="COM_PROJECTLOG_CREATE_LOGS" description="COM_PROJECTLOG_CREATE_LOGS_DESC" />
+		<action name="projectlog.deletelog" title="COM_PROJECTLOG_DELETE_LOGS" description="COM_PROJECTLOG_DELETE_LOGS_DESC" />
+		<action name="projectlog.editlog" title="COM_PROJECTLOG_EDIT_LOGS" description="COM_PROJECTLOG_EDIT_LOGS_DESC" />
+        <action name="projectlog.editlog.state" title="COM_PROJECTLOG_EDIT_LOGS_STATE" description="COM_PROJECTLOG_EDIT_LOGS_STATE" />
+		<action name="projectlog.editlog.own" title="COM_PROJECTLOG_EDIT_OWN_LOGS" description="COM_PROJECTLOG_EDIT_OWN_LOGS_DESC" />
 	</section>
 	<section name="category">
 		<action name="core.create" title="JACTION_CREATE" description="COM_CATEGORIES_ACCESS_CREATE_DESC" />
@@ -17,10 +23,10 @@
 		<action name="core.edit.own" title="JACTION_EDITOWN" description="COM_CATEGORIES_ACCESS_EDITOWN_DESC" />
 	</section>
     <section name="project">
-		<action name="projectlog.createlog" title="Create Logs" description="" />
-		<action name="projectlog.deletelog" title="Delete Logs" description="" />
-		<action name="projectlog.editlog" title="Edit Logs" description="" />
-        <action name="projectlog.editlog.state" title="Edit Log State" description="" />
-		<action name="projectlog.editlog.own" title="Edit Own Logs" description="" />
+		<action name="projectlog.createlog" title="COM_PROJECTLOG_CREATE_LOGS" description="COM_PROJECTLOG_CREATE_LOGS_DESC" />
+		<action name="projectlog.deletelog" title="COM_PROJECTLOG_DELETE_LOGS" description="COM_PROJECTLOG_DELETE_LOGS_DESC" />
+		<action name="projectlog.editlog" title="COM_PROJECTLOG_EDIT_LOGS" description="COM_PROJECTLOG_EDIT_LOGS_DESC" />
+        <action name="projectlog.editlog.state" title="COM_PROJECTLOG_EDIT_LOGS_STATE" description="COM_PROJECTLOG_EDIT_LOGS_STATE" />
+		<action name="projectlog.editlog.own" title="COM_PROJECTLOG_EDIT_OWN_LOGS" description="COM_PROJECTLOG_EDIT_OWN_LOGS_DESC" />
 	</section>
 </access>

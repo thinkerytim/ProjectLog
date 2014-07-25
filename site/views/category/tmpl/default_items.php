@@ -96,12 +96,12 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
                                     <a href="<?php echo JRoute::_(ProjectlogHelperRoute::getProjectRoute($item->slug, $item->catid)); ?>">
                                         <?php echo $item->name; ?></a>
                                     <?php if ($this->items[$i]->published == 0) : ?>
-                                        &nbsp;<span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span>
+                                        &nbsp;<span class="label label-warning hasTooltip" title="<?php echo JText::_('JUNPUBLISHED'); ?>"><span class="icon-thumbs-down"></span></span>
                                     <?php elseif ($this->items[$i]->published == -2) : ?>
-                                        &nbsp;<span class="label label-danger"><?php echo JText::_('JTRASHED'); ?></span>
+                                        &nbsp;<span class="label label-important hasTooltip" title="<?php echo JText::_('JTRASHED'); ?>"><span class="icon-trash"></span></span>
                                     <?php else: ?>
                                         <?php if ($this->items[$i]->featured) : ?>
-                                            &nbsp;<span class="label label-success"><?php echo JText::_('JFEATURED'); ?></span>
+                                            &nbsp;<span class="label label-success hasTooltip" title="<?php echo JText::_('JFEATURED'); ?>"><span class="icon-star"></span></span>
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </div>

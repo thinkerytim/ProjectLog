@@ -774,7 +774,8 @@ class ProjectlogModelProject extends JModelAdmin
 
         $query->select('*, log.id as log_id')
                 ->from('#__projectlog_logs AS log')
-                ->where('project_id = '.(int)$project_id);
+                ->where('project_id = '.(int)$project_id)
+                ->where('published > 0');
 
         // Join over the users for the log creator.
         $query->select('ul.name AS logger_name, ul.email AS logger_email')

@@ -18,6 +18,7 @@ if (isset($this->error)) : ?>
 	</div>
 <?php endif; ?>
 
+<?php echo '<h3>'. JText::_('COM_PROJECTLOG_EMAIL_FORM').'</h3>';  ?>
 <div class="project-form">
 	<form id="project-form" action="<?php echo JRoute::_('index.php'); ?>" method="post" class="form-validate form-horizontal">
 		<fieldset>
