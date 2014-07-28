@@ -8,35 +8,20 @@
  */
 
 defined('_JEXEC') or die;
+
+$identifier_array = array('release_id','job_id','task_id','workorder_id');
+$ident_count = 0;
 ?>
 
-<ul class="breadcrumb">
-    <?php if ($this->project->release_id && $this->params->get('show_release_id')) : ?>
-        <li>
-            <b><?php echo JText::_('COM_PROJECTLOG_RELEASE_ID'); ?>:</b> 
-            <span class="pl-identifier-item"><?php echo $this->project->release_id; ?></span>
-            <span class="divider">/</span>
-        </li>
-    <?php endif; ?>
-    <?php if ($this->project->job_id && $this->params->get('show_job_id')) : ?>
-        <li>
-            <b><?php echo JText::_('COM_PROJECTLOG_JOB_ID'); ?>:</b>
-            <span class="pl-identifier-item"><?php echo $this->project->job_id; ?></span>
-            <span class="divider">/</span>
-        </li>
-    <?php endif; ?>
-    <?php if ($this->project->task_id && $this->params->get('show_task_id')) : ?>
-        <li>
-            <b><?php echo JText::_('COM_PROJECTLOG_TASK_ID'); ?>:</b> 
-            <span class="pl-identifier-item"><?php echo $this->project->task_id; ?></span>
-            <span class="divider">/</span>
-        </li>
-    <?php endif; ?>
-    <?php if ($this->project->workorder_id && $this->params->get('show_workorder_id')) : ?>
-        <li>
-            <b><?php echo JText::_('COM_PROJECTLOG_WORKORDER_ID'); ?>:</b> 
-            <span class="pl-identifier-item"><?php echo $this->project->workorder_id; ?></span>
-        </li>
-    <?php endif; ?>
+<ul class="breadcrumb pl-project-identifiers">
+    <?php foreach($identifier_array as $identifier): ?>
+        <?php if ($this->project->$identifier && $this->params->get('show_'.$identifier)) : ?>
+            <li>
+                <b><?php echo JText::_('COM_PROJECTLOG_'.strtoupper($identifier)); ?>:</b> 
+                <span class="pl-identifier-item"><?php echo $this->project->$identifier; ?></span>
+                <?php $ident_count++; if($ident_count < count($identifier_array)) { ?><span class="divider">/</span><?php } ?>
+            </li>
+        <?php endif; ?>
+    <?php endforeach; ?>
 </ul>
 <div class="clearfix"></div>

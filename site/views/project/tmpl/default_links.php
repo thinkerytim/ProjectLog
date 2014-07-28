@@ -24,25 +24,23 @@ endforeach;
 
 <?php if($valid_links): ?>
     <?php echo '<h3>'. JText::_('COM_PROJECTLOG_LINKS').'</h3>';  ?>
-    <div class="project-links">
-        <ul class="nav nav-list">
-            <?php
-            foreach ($links as $link) :
-                if (!$link['url']) :
-                    continue;
-                endif;
+    <ul class="nav nav-list pl-project-links">
+        <?php
+        foreach ($links as $link) :
+            if (!$link['url']) :
+                continue;
+            endif;
 
-                // Add 'http://' if not present
-                $link_url = (0 === strpos($link['url'], 'http')) ? $link['url'] : 'http://'.$link['url'];
+            // Add 'http://' if not present
+            $link_url = (0 === strpos($link['url'], 'http')) ? $link['url'] : 'http://'.$link['url'];
 
-                // If no label is present, take the link
-                $label = ($link['label']) ? $link['label'] : $link['url'];
-                ?>
-                <li>
-                    <?php echo JHtml::_('link', $link_url, $label,array('target' => '_blank', 'itemprop' => 'url')); ?>
-                </li>
-            <?php endforeach; ?>
-            <li class="divider"></li>
-        </ul>
-    </div>
+            // If no label is present, take the link
+            $label = ($link['label']) ? $link['label'] : $link['url'];
+            ?>
+            <li>
+                <?php echo JHtml::_('link', $link_url, $label,array('target' => '_blank', 'itemprop' => 'url')); ?>
+            </li>
+        <?php endforeach; ?>
+        <li class="divider"></li>
+    </ul>
 <?php endif; ?>

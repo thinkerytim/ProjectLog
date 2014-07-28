@@ -38,6 +38,6 @@ class ProjectlogViewCategory extends JViewCategoryfeed
 	{
 		parent::reconcileNames($item);
 
-		$item->description = $item->general_loc;
+		$item->description = $item->misc;
 	}
 }

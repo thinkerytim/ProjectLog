@@ -149,6 +149,10 @@ class ProjectlogModelProject extends JModelForm
 				// Join over the categories to get parent category titles
 					->select('parent.title as parent_title, parent.id as parent_id, parent.path as parent_route, parent.alias as parent_alias')
 					->join('LEFT', '#__categories as parent ON parent.id = c.parent_id')
+                        
+                // Join on users table.
+					->select('u.name AS manager_name, u.email AS manager_email')
+					->join('LEFT', '#__users AS u on u.id = a.manager')
 
 					->where('a.id = ' . (int) $pk);
 

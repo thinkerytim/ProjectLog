@@ -37,21 +37,7 @@ jimport('joomla.html.html.bootstrap');
                     <?php endif; ?>
                 </h2>
             </div>
-        <?php endif;  ?>
-
-        <!-- display category with or without links -->
-        <?php if ($this->params->get('show_project_category') == 'show_no_link') : ?>
-            <h3>
-                <span class="project-category"><?php echo $this->project->category_title; ?></span>
-            </h3>
-        <?php elseif ($this->params->get('show_project_category') == 'show_with_link') : ?>
-            <?php $projectLink = ProjectlogHelperRoute::getCategoryRoute($this->project->catid); ?>
-            <h3>
-                <span class="project-category">
-                    <a href="<?php echo $projectLink; ?>"><?php echo $this->escape($this->project->category_title); ?></a>
-                </span>
-            </h3>
-        <?php endif; ?>
+        <?php endif;  ?>        
 
         <!-- render drop down for other projects -->
         <?php if ($this->params->get('show_project_list') && count($this->projects) > 1) : ?>
@@ -60,6 +46,8 @@ jimport('joomla.html.html.bootstrap');
                 <?php echo JHtml::_('select.genericlist', $this->projects, 'id', 'class="inputbox" onchange="document.location.href = this.value"', 'link', 'name', $this->project->link);?>
             </form>
         <?php endif; ?>
+        
+        <!-- load identifiers template to show release id, job id, etc -->
         <?php echo $this->loadTemplate('identifiers'); ?>
     </div>
             
@@ -74,16 +62,17 @@ jimport('joomla.html.html.bootstrap');
                     </div>
                 <?php endif; ?>
                 <?php echo $this->project->misc; ?>
+            <?php endif; ?> 
+            
+            <?php if ($this->project->general_loc && $this->params->get('show_general_loc')) : ?>
+                <h3><?php echo JText::_('COM_PROJECTLOG_GENERAL_LOC'); ?></h3> 
+                <?php echo nl2br ( $this->project->general_loc, true ); ?>
             <?php endif; ?>
-
-            <!-- show project details -->
-            <?php  echo '<h3>'. JText::_('COM_PROJECTLOG_DETAILS').'</h3>';  ?>
-            <?php echo $this->loadTemplate('details'); ?>    
-
-            <!-- show manager profile -->
-            <?php if ($this->params->get('show_profile') && $this->project->manager && JPluginHelper::isEnabled('user', 'profile')) : ?>
-                <?php echo $this->loadTemplate('profile'); ?>
-            <?php endif; ?>            
+            
+            <?php if ($this->project->specific_loc && $this->params->get('show_specific_loc')) : ?>
+                <h3><?php echo JText::_('COM_PROJECTLOG_LOCATION'); ?></h3> 
+                <?php echo nl2br ( $this->project->specific_loc, true ); ?>
+            <?php endif; ?>
 
             <!-- show email form -->
             <?php if ($this->params->get('show_email_form') && ($this->project->email_to || $this->project->manager)) : ?>
@@ -91,21 +80,7 @@ jimport('joomla.html.html.bootstrap');
             <?php endif; ?>
         </div>
         <div class="span4 well">
-            <!-- show links -->
-            <?php if ($this->params->get('show_links')) : ?>
-                <?php echo $this->loadTemplate('links'); ?>
-            <?php endif; ?>           
-
-            <!-- show articles created by manager -->
-            <?php if ($this->params->get('show_articles') && $this->project->manager && $this->project->articles) : ?>
-                <?php echo $this->loadTemplate('articles'); ?>
-            <?php endif; ?>
-
-            <!-- render tags -->
-            <?php if ($this->params->get('show_tags', 1) && !empty($this->item->tags)) : ?>
-                <?php $this->item->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
-                <?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
-            <?php endif; ?>
+            <?php echo $this->loadTemplate('sidebar'); ?>
         </div>
     </div>
 </div>
