@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_projectlog
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -30,6 +30,7 @@ class ProjectlogController extends JControllerLegacy
 	public function display($cachable = false, $urlparams = false)
 	{
 		$cachable = true;
+        JFactory::getDocument()->addStyleSheet(JURI::root(true).'/components/com_projectlog/assets/css/projectlog.css');
 
 		// Set the default view name and format from the Request.
 		$vName = $this->input->get('view', 'categories');

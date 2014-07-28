@@ -14,6 +14,12 @@
 		<action name="projectlog.editlog" title="COM_PROJECTLOG_EDIT_LOGS" description="COM_PROJECTLOG_EDIT_LOGS_DESC" />
         <action name="projectlog.editlog.state" title="COM_PROJECTLOG_EDIT_LOGS_STATE" description="COM_PROJECTLOG_EDIT_LOGS_STATE" />
 		<action name="projectlog.editlog.own" title="COM_PROJECTLOG_EDIT_OWN_LOGS" description="COM_PROJECTLOG_EDIT_OWN_LOGS_DESC" />
+        
+        <action name="projectlog.createdoc" title="COM_PROJECTLOG_CREATE_DOCS" description="COM_PROJECTLOG_CREATE_DOCS_DESC" />
+		<action name="projectlog.deletedoc" title="COM_PROJECTLOG_DELETE_DOCS" description="COM_PROJECTLOG_DELETE_DOCS_DESC" />
+		<action name="projectlog.editdoc" title="COM_PROJECTLOG_EDIT_DOCS" description="COM_PROJECTLOG_EDIT_DOCS_DESC" />
+        <action name="projectlog.editdoc.state" title="COM_PROJECTLOG_EDIT_DOCS_STATE" description="COM_PROJECTLOG_EDIT_DOCS_STATE" />
+		<action name="projectlog.editdoc.own" title="COM_PROJECTLOG_EDIT_OWN_DOCS" description="COM_PROJECTLOG_EDIT_OWN_DOCS_DESC" />
 	</section>
 	<section name="category">
 		<action name="core.create" title="JACTION_CREATE" description="COM_CATEGORIES_ACCESS_CREATE_DESC" />

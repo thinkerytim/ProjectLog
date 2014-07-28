@@ -184,58 +184,7 @@
 			class="span12"
 			multiple="true"
 		>
-		</field>
-
-		<field name="project_icons"
-			type="list"
-			default="0"
-			label="COM_PROJECTLOG_FIELD_ICONS_SETTINGS"
-			description="COM_PROJECTLOG_FIELD_ICONS_SETTINGS_DESC"
-		>
-			<option value="0">COM_PROJECTLOG_FIELD_VALUE_NONE
-			</option>
-			<option value="1">COM_PROJECTLOG_FIELD_VALUE_TEXT
-			</option>
-			<option value="2">COM_PROJECTLOG_FIELD_VALUE_ICONS
-			</option>
-		</field>
-
-		<field name="icon_address"
-			type="media"
-			hide_none="1"
-			label="COM_PROJECTLOG_FIELD_ICONS_ADDRESS_LABEL"
-			description="COM_PROJECTLOG_FIELD_ICONS_ADDRESS_DESC"
-		/>
-
-		<field name="icon_email"
-			type="media"
-			hide_none="1" label="COM_PROJECTLOG_FIELD_ICONS_EMAIL_LABEL"
-			description="COM_PROJECTLOG_FIELD_ICONS_EMAIL_DESC"
-		/>
-
-		<field name="icon_task_id"
-			type="media" hide_none="1"
-			label="COM_PROJECTLOG_FIELD_ICONS_TASK_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_ICONS_TASK_ID_DESC" />
-
-		<field name="icon_mobile"
-			type="media"
-			hide_none="1"
-			label="COM_PROJECTLOG_FIELD_ICONS_MOBILE_LABEL"
-			description="COM_PROJECTLOG_FIELD_ICONS_MOBILE_DESC"
-		/>
-
-		<field name="icon_workorder_id"
-			type="media"
-			hide_none="1" label="COM_PROJECTLOG_FIELD_ICONS_WORKORDER_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_ICONS_WORKORDER_ID_DESC"
-		/>
-
-		<field name="icon_misc"
-			type="media"
-			hide_none="1" label="COM_PROJECTLOG_FIELD_ICONS_MISC_LABEL"
-			description="COM_PROJECTLOG_FIELD_ICONS_MISC_DESC"
-		/>       
+		</field>		
 	</fieldset>
 	<fieldset name="details" label="COM_PROJECTLOG_PROJECT_DETAILS">
 
@@ -435,16 +384,6 @@
 			<option value="1">JSHOW</option>
 		</field>
 
-			<field name="presentation_style" type="list"
-				description="COM_PROJECTLOG_FIELD_PRESENTATION_DESC"
-				label="COM_PROJECTLOG_FIELD_PRESENTATION_LABEL"
-			>
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="sliders">COM_PROJECTLOG_FIELD_VALUE_SLIDERS</option>
-				<option value="tabs">COM_PROJECTLOG_FIELD_VALUE_TABS</option>
-				<option value="plain">COM_PROJECTLOG_FIELD_VALUE_PLAIN</option>
-			</field>
-
 			<field name="show_tags" type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_SHOW_TAGS_LABEL"
@@ -485,10 +424,10 @@
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_street_address" type="list"
+			<field name="show_specific_loc" type="list"
 				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_STREET_ADDRESS_LABEL"
-				description="COM_PROJECTLOG_FIELD_PARAMS_STREET_ADDRESS_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_DESC"
 			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
@@ -497,8 +436,8 @@
 
 			<field name="show_project_type" type="list"
 				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECTTYPE_LABEL"
-				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECTTYPE_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_DESC"
 			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
@@ -593,16 +532,6 @@
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_SHOW_IMAGE_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_SHOW_IMAGE_DESC"
-			>
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
-
-			<field name="allow_vcard" type="list"
-				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_VCARD_LABEL"
-				description="COM_PROJECTLOG_FIELD_PARAMS_VCARD_DESC"
 			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
 	<layout title="COM_PROJECTLOG_PROJECT_VIEW_DEFAULT_TITLE" option="COM_PROJECTLOG_PROJECT_VIEW_DEFAULT_OPTION">
-		<help
-			key = "JHELP_MENUS_MENU_ITEM_PROJECT_SINGLE_PROJECT"
-		/>
 		<message>
 			<![CDATA[COM_PROJECTLOG_PROJECT_VIEW_DEFAULT_DESC]]>
 		</message>
@@ -11,9 +8,7 @@
 
 	<!-- Add fields to the request variables for the layout. -->
 	<fields name="request">
-		<fieldset name="request"
-			addfieldpath="/administrator/components/com_projectlog/models/fields"
-		>
+		<fieldset name="request" addfieldpath="/administrator/components/com_projectlog/models/fields">
 			<field name="id"
 				type="modal_project"
 				description="COM_PROJECTLOG_SELECT_PROJECT_DESC"
@@ -29,24 +24,12 @@
 	<fields name="params">
 
 		<!-- Basic options. -->
-		<fieldset name="params"
-			label="COM_PROJECTLOG_BASIC_OPTIONS_FIELDSET_LABEL"
-		>
-			<field name="presentation_style"
-				type="list"
-				description="COM_PROJECTLOG_FIELD_PRESENTATION_DESC"
-				label="COM_PROJECTLOG_FIELD_PRESENTATION_LABEL"
-			>
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="sliders">COM_PROJECTLOG_FIELD_VALUE_SLIDERS</option>
-				<option value="tabs">COM_PROJECTLOG_FIELD_VALUE_TABS</option>
-				<option value="plain">COM_PROJECTLOG_FIELD_VALUE_PLAIN</option>
-			</field>
+		<fieldset name="params"	label="COM_PROJECTLOG_BASIC_OPTIONS_FIELDSET_LABEL">
 			<field name="show_project_category"
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PROJECT_SHOW_CATEGORY_DESC"
 				label="COM_PROJECTLOG_FIELD_PROJECT_SHOW_CATEGORY_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="hide">JHIDE</option>
 				<option value="show_no_link">COM_PROJECTLOG_FIELD_VALUE_NO_LINK</option>
@@ -57,7 +40,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PROJECT_SHOW_LIST_DESC"
 				label="COM_PROJECTLOG_FIELD_PROJECT_SHOW_LIST_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -66,7 +49,7 @@
 			<field name="show_tags" type="list"
 				label="COM_PROJECTLOG_FIELD_SHOW_TAGS_LABEL"
 				description="COM_PROJECTLOG_FIELD_SHOW_TAGS_DESC"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -76,7 +59,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_NAME_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_NAME_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -86,7 +69,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -97,17 +80,17 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_E_MAIL_DESC"
 				label="JGLOBAL_EMAIL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_street_address"
+			<field name="show_specific_loc"
 				type="list"
-				description="COM_PROJECTLOG_FIELD_PARAMS_STREET_ADDRESS_DESC"
-				label="COM_PROJECTLOG_FIELD_PARAMS_STREET_ADDRESS_LABEL"
-			>
+				description="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_LABEL"
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -115,9 +98,9 @@
 
 			<field name="show_project_type"
 				type="list"
-				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECTTYPE_DESC"
-				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECTTYPE_LABEL"
-			>
+				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_LABEL"
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -127,7 +110,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -137,7 +120,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -147,7 +130,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -157,7 +140,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -167,7 +150,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_MOBILE_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_MOBILE_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -177,7 +160,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -187,7 +170,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -197,7 +180,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -207,17 +190,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_IMAGE_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_IMAGE_LABEL"
-			>
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
-
-			<field name="allow_vcard"
-				type="list"
-				description="COM_PROJECTLOG_FIELD_PARAMS_VCARD_DESC"
-				label="COM_PROJECTLOG_FIELD_PARAMS_VCARD_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -227,7 +200,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_DESC"
 				label="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -237,7 +210,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_SHOW_LINKS_DESC"
 				label="COM_PROJECTLOG_FIELD_SHOW_LINKS_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -280,14 +253,11 @@
 		</fieldset>
 
 		<!-- Form options. -->
-		<fieldset name="Project_Form"
-			label="COM_PROJECTLOG_MAIL_FIELDSET_LABEL"
-		>
-
+		<fieldset name="Project_Form" label="COM_PROJECTLOG_MAIL_FIELDSET_LABEL">
 			<field name="show_email_form" type="list"
 				description="COM_PROJECTLOG_FIELD_EMAIL_SHOW_FORM_DESC"
 				label="COM_PROJECTLOG_FIELD_EMAIL_SHOW_FORM_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -297,7 +267,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_EMAIL_EMAIL_COPY_DESC"
 				label="COM_PROJECTLOG_FIELD_EMAIL_EMAIL_COPY_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -331,7 +301,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_CONFIG_SESSION_CHECK_DESC"
 				label="COM_PROJECTLOG_FIELD_CONFIG_SESSION_CHECK_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -341,7 +311,7 @@
 				type="list"
 				description="COM_PROJECTLOG_FIELD_CONFIG_CUSTOM_REPLY_DESC"
 				label="COM_PROJECTLOG_FIELD_CONFIG_CUSTOM_REPLY_LABEL"
-			>
+                >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>

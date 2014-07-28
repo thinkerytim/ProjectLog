@@ -188,61 +188,7 @@
 			label="JFIELD_LANGUAGE_LABEL"
 		>
 			<option value="">JALL</option>
-		</field>
-
-
-		<field name="project_icons" type="list"
-			default="0"
-			description="PARAMPROJECTICONS"
-			label="Icons/text"
-		>
-			<option value="0">PROJECT_ICONS_OPTIONS_NONE</option>
-			<option value="1">PROJECT_ICONS_OPTIONS_TEXT</option>
-			<option value="2">PROJECT_ICONS_OPTIONS_TEXT</option>
-		</field>
-
-		<field name="icon_address" type="imagelist"
-			description="PROJECT_ICONS_ADDRESS_DESC"
-			directory="/images"
-			hide_none="1"
-			label="PROJECT_ICONS_ADDRESS_LABEL"
-		/>
-
-		<field name="icon_email" type="imagelist"
-			description="PROJECT_ICONS_EMAIL_DESC"
-			directory="/images"
-			hide_none="1"
-			label="PROJECT_ICONS_EMAIL_LABEL"
-		/>
-
-		<field name="icon_task_id" type="imagelist"
-			description="PROJECT_ICONS_TELEPHONE_DESC"
-			directory="/images"
-			hide_none="1"
-			label="PROJECT_ICONS_TELEPHONE_LABEL"
-		/>
-
-		<field name="icon_mobile" type="imagelist"
-			description="PROJECT_ICONS_MOBILE_DESC"
-			directory="/images"
-			hide_none="1"
-			label="PROJECT_ICONS_MOBILE_LABEL"
-		/>
-
-		<field name="icon_workorder_id" type="imagelist"
-			description="PROJECT_ICONS_FAX_DESC"
-			directory="/images"
-			hide_none="1"
-			label="PROJECT_ICONS_FAX_LABEL"
-		/>
-
-		<field name="icon_misc" type="imagelist"
-			description="PROJECT_ICONS_MISC_DESC"
-			directory="/images"
-			hide_none="1"
-			label="PROJECT_ICONS_MISC_LABEL"
-		/>
-
+		</field>		
 	</fieldset>
 
 	<fields name="metadata">
@@ -299,9 +245,9 @@
 			<option value="1">JSHOW</option>
 		</field>
 
-		<field name="show_street_address" type="list"
+		<field name="show_specific_loc" type="list"
 			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_STREET_ADDRESS_LABEL"
+			label="PROJECT_PARAMS_SPECIFIC_LOC_LABEL"
 		>
 			<option value="">JGLOBAL_USE_GLOBAL</option>
 			<option value="0">JHIDE</option>
@@ -396,17 +342,8 @@
 			<option value="">JGLOBAL_USE_GLOBAL</option>
 			<option value="0">JHIDE</option>
 			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="allow_vcard" type="list"
-			description="PROJECT_PARAMS_VCARD_LABEL"
-			label="PROJECT_PARAMS_VCARD_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
+        </field>
+        
 		<field name="show_articles" type="list"
 			description="PROJECT_SHOW_ARTICLES_DESC"
 			label="PROJECT_SHOW_ARTICLES_LABEL"

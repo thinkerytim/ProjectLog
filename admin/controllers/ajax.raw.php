@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -12,34 +12,17 @@ jimport('joomla.application.component.controller');
 jimport('joomla.log.log');
 
 class ProjectlogControllerAjax extends JControllerLegacy
-{
-	protected $text_prefix = 'COM_PROJECTLOG';
-    
-    public function resetHits()
-    {
-        // Check for request forgeries
-        JSession::checkToken() or die( 'Invalid Token');
-        $prop_id = JRequest::getInt('project_id');
-        
-        $db     = JFactory::getDbo();
-        $query  = 'UPDATE #__projectlog_projects SET hits = 0 WHERE id = '.(int)$project_id.' LIMIT 1';
-        $db->setQuery($query);
-        
-        if($db->Query()){
-            echo JText::_($this->text_prefix.'_COUNTER_RESET');
-        }else{
-            return false;
-        }
-    }
-    
-	public function ajaxAutocomplete()
-    {
-		/**
-		* Get json encoded list of DB values
-		* @param string $field BD field to filter
-		* @param string $token Joomla token
-		* @return json_encoded list of values
-		*/ 
+{    
+	/**
+     * Get json encoded list of DB values
+     * 
+     * @param string $field BD field to filter     * 
+     * @param string $token Joomla token
+     * 
+     * @return json_encoded list of values
+     */
+    public function ajaxAutocomplete()
+    {		 
 		// Check for request forgeries
 		JSession::checkToken('get') or die( 'Invalid Token');
 		
@@ -58,6 +41,11 @@ class ProjectlogControllerAjax extends JControllerLegacy
 		echo json_encode($data);
 	}
     
+    /**
+     * Add a new log via the project logs tab
+     * 
+     * @return JResponseJson result of ajax request
+     */
     public function addLog()
     {        
         // Check for request forgeries
@@ -94,6 +82,11 @@ class ProjectlogControllerAjax extends JControllerLegacy
         }
     }
     
+    /**
+     * Delete a new log via the project logs tab
+     * 
+     * @return JResponseJson result of ajax request
+     */    
     public function deleteLog()
     {
         // Check for request forgeries

@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_projectlog
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -52,7 +52,7 @@ jimport('joomla.html.html.bootstrap');
     </div>
             
     <div class="row-fluid">
-        <div class="span8">
+        <div class="span8 pl-project-main-container">
             <!-- show project misc -->
             <?php if ($this->project->misc && $this->params->get('show_misc')) : ?>
                 <?php echo '<h3>'. JText::_('COM_PROJECTLOG_OTHER_INFORMATION').'</h3>';  ?>
@@ -79,7 +79,7 @@ jimport('joomla.html.html.bootstrap');
                 <?php  echo $this->loadTemplate('form');  ?>
             <?php endif; ?>
         </div>
-        <div class="span4 well">
+        <div class="span4 pl-project-sidebar-container">
             <?php echo $this->loadTemplate('sidebar'); ?>
         </div>
     </div>

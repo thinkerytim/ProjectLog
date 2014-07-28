@@ -1,148 +1,250 @@
 <?php
 /**
- * @version 1.5.3 2009-10-12
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 the Thinkery
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
-jimport('joomla.application.component.model');
+defined('_JEXEC') or die;
 
-class projectlogModeldocs extends JModel
+/**
+ * Methods supporting a list of project records.
+ *
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ */
+class ProjectlogModelDocs extends JModelList
 {
-	var $_data = null;
-	var $_total = null;
-	var $_pagination = null;
-	
-	function __construct()
+	/**
+	 * Constructor.
+	 *
+	 * @param   array  $config  An optional associative array of configuration settings.
+	 *
+	 * @see     JController
+	 * @since   1.6
+	 */
+	public function __construct($config = array())
 	{
-		parent::__construct();
-
-		global $mainframe, $option;
-
-		$limit		= $mainframe->getUserStateFromRequest( $option.'.docs.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
-		$limitstart = $mainframe->getUserStateFromRequest( $option.'.docs.limitstart', 'limitstart', 0, 'int' );
-
-		$this->setState('limit', $limit);
-		$this->setState('limitstart', $limitstart);
-	}
-	 
-	function getData()
-	{
-		// Lets load the content if it doesn't already exist
-		if (empty($this->_data))
+		if (empty($config['filter_fields']))
 		{
-			$query = $this->_buildQuery();
-			$this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));
+			$config['filter_fields'] = array(
+				'id', 'a.id',
+				'title', 'a.title',
+				'checked_out', 'a.checked_out',
+				'checked_out_time', 'a.checked_out_time',
+				'projectid', 'a.project_id', 'project_name',
+				'published', 'a.published',
+				'created', 'a.created',
+				'created_by', 'a.created_by',
+				'ordering', 'a.ordering',
+				'language', 'a.language',
+				'publish_up', 'a.publish_up',
+				'publish_down', 'a.publish_down'
+			);
+
+			$app = JFactory::getApplication();
+			$assoc = JLanguageAssociations::isEnabled();
+			if ($assoc)
+			{
+				$config['filter_fields'][] = 'association';
+			}
 		}
-		return $this->_data;
+
+		parent::__construct($config);
 	}
 
-	function getTotal()
+	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 *
+	 * @param   string  $ordering   An optional ordering field.
+	 * @param   string  $direction  An optional direction (asc|desc).
+	 *
+	 * @return  void
+	 *
+	 * @since   1.6
+	 */
+	protected function populateState($ordering = null, $direction = null)
 	{
-		// Lets load the total nr if it doesn't already exist
-		if (empty($this->_total))
+		$app = JFactory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		if ($layout = $app->input->get('layout'))
 		{
-			$query = $this->_buildQuery();
-			$this->_total = $this->_getListCount($query);
+			$this->context .= '.' . $layout;
 		}
-		return $this->_total;
-	}
 
+		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+		$this->setState('filter.search', $search);
 
-	function getPagination()
-	{
-		// Lets load the content if it doesn't already exist
-		if (empty($this->_pagination))
+		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
+		$this->setState('filter.published', $published);
+
+		$projectId = $this->getUserStateFromRequest($this->context . '.filter.project_id', 'filter_project_id');
+		$this->setState('filter.project_id', $projectId);
+
+		$language = $this->getUserStateFromRequest($this->context . '.filter.language', 'filter_language', '');
+		$this->setState('filter.language', $language);
+
+		// force a language
+		$forcedLanguage = $app->input->get('forcedLanguage');
+		if (!empty($forcedLanguage))
 		{
-			jimport('joomla.html.pagination');
-			$this->_pagination = new JPagination( $this->getTotal(), $this->getState('limitstart'), $this->getState('limit') );
+			$this->setState('filter.language', $forcedLanguage);
+			$this->setState('filter.forcedLanguage', $forcedLanguage);
 		}
-		return $this->_pagination;
+
+		$tag = $this->getUserStateFromRequest($this->context . '.filter.tag', 'filter_tag', '');
+		$this->setState('filter.tag', $tag);
+
+		// List state information.
+		parent::populateState('a.ordering', 'asc');
 	}
 
-	function _buildQuery()
+	/**
+	 * Method to get a store id based on model configuration state.
+	 *
+	 * This is necessary because the model is used by the component and
+	 * different modules that might need different sets of data or different
+	 * ordering requirements.
+	 *
+	 * @param   string  $id    A prefix for the store id.
+	 *
+	 * @return  string  A store id.
+	 * @since   1.6
+	 */
+	protected function getStoreId($id = '')
 	{
-		// Get the WHERE and ORDER BY clauses for the query
-		$where		= $this->_buildContentWhere();
-		$orderby	= $this->_buildContentOrderBy();
+		// Compile the store id.
+		$id .= ':' . $this->getState('filter.search');
+		$id .= ':' . $this->getState('filter.published');
+		$id .= ':' . $this->getState('filter.project_id');
+		$id .= ':' . $this->getState('filter.language');
 
-		$query = 'SELECT * FROM #__projectlog_docs'
-				 . $where
-				 . $orderby;
+		return parent::getStoreId($id);
+	}
 
+	/**
+	 * Build an SQL query to load the list data.
+	 *
+	 * @return  JDatabaseQuery
+	 * @since   1.6
+	 */
+	protected function getListQuery()
+	{
+		// Create a new query object.
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+		$user = JFactory::getUser();
+		$app = JFactory::getApplication();
+
+		// Select the required fields from the table.
+		$query->select(
+			$this->getState(
+				'list.select',
+				'a.id, a.title, a.path, a.checked_out, a.checked_out_time, a.project_id' .
+                ', a.published, a.created, a.created_by, a.ordering, a.language' .
+                ', a.publish_up, a.publish_down'
+			)
+		);
+		$query->from('#__projectlog_docs AS a');
+
+		// Join over the users for the linked user.
+		$query->select('ul.name AS creator')
+			->join('LEFT', '#__users AS ul ON ul.id = a.created_by');
+
+		// Join over the language
+		$query->select('l.title AS language_title')
+			->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
+
+		// Join over the users for the checked out user.
+		$query->select('uc.name AS editor')
+			->join('LEFT', '#__users AS uc ON uc.id = a.checked_out');
+
+		// Join over the categories.
+		$query->select('p.name AS project_name')
+			->join('LEFT', '#__projectlog_projects AS p ON p.id = a.project_id');
+
+		// Join over the associations.
+		$assoc = JLanguageAssociations::isEnabled();
+		if ($assoc)
+		{
+			$query->select('COUNT(asso2.id)>1 as association')
+				->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_projectlog.log'))
+				->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
+				->group('a.id');
+		}
+
+		// Filter by published state
+		$published = $this->getState('filter.published');
+		if (is_numeric($published))
+		{
+			$query->where('a.published = ' . (int) $published);
+		}
+		elseif ($published === '')
+		{
+			$query->where('(a.published = 0 OR a.published = 1)');
+		}
+
+		// Filter by a single or group of categories.
+		$projectId = $this->getState('filter.project_id');
+		if (is_numeric($projectId))
+		{
+			$query->where('a.project_id = ' . (int) $projectId);
+		}
+		elseif (is_array($projectId))
+		{
+			JArrayHelper::toInteger($projectId);
+			$projectId = implode(',', $projectId);
+			$query->where('a.project_id IN (' . $projectId . ')');
+		}
+
+		// Filter by search in title.
+		$search = $this->getState('filter.search');
+		if (!empty($search))
+		{
+			if (stripos($search, 'id:') === 0)
+			{
+				$query->where('a.id = ' . (int) substr($search, 3));
+			}
+			elseif (stripos($search, 'author:') === 0)
+			{
+				$search = $db->quote('%' . $db->escape(substr($search, 7), true) . '%');
+				$query->where('(uc.name LIKE ' . $search . ' OR uc.username LIKE ' . $search . ')');
+			}
+			else
+			{
+				$search = $db->quote('%' . $db->escape($search, true) . '%');
+				$query->where('(a.title LIKE ' . $search . ')');
+			}
+		}
+
+		// Filter on the language.
+		if ($language = $this->getState('filter.language'))
+		{
+			$query->where('a.language = ' . $db->quote($language));
+		}
+
+		// Add the list ordering clause.
+		$orderCol = $this->state->get('list.ordering', 'a.title');
+		$orderDirn = $this->state->get('list.direction', 'asc');
+		if ($orderCol == 'a.ordering' || $orderCol == 'project_name')
+		{
+			$orderCol = 'p.name ' . $orderDirn . ', a.ordering';
+		}
+		$query->order($db->escape($orderCol . ' ' . $orderDirn));
+
+		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
 	}
-
-	function _buildContentOrderBy()
-	{
-		global $mainframe, $option;
-
-		$filter_order		= $mainframe->getUserStateFromRequest( $option.'.docs.filter_order', 'filter_order', 'path', 'cmd' );
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option.'.docs.filter_order_Dir', 'filter_order_Dir', 'ASC', 'word' );
-
-		$orderby 	= ' ORDER BY '.$filter_order.' '.$filter_order_Dir;
-		return $orderby;
-	}
-
-	function _buildContentWhere()
-	{
-		global $mainframe, $option;
-
-		$filter 			= $mainframe->getUserStateFromRequest( $option.'.docs.filter', 'filter', '', 'int' );
-		$search 			= $mainframe->getUserStateFromRequest( $option.'.docs.search', 'search', '', 'string' );
-		$search 			= $this->_db->getEscaped( trim(JString::strtolower( $search ) ) );
-        $project_id			= $mainframe->getUserStateFromRequest( $option.'.docs.project_id', 'project_id', '', 'int' );
-
-		$where = array();
-
-		if ($search && $filter == 1) {
-			$where[] = ' LOWER(`name`) LIKE \'%'.$search.'%\' ';
-		}elseif( $search && $filter == 2 ){
-            $where[] = ' LOWER(`path`) LIKE \'%'.$search.'%\' ';
-        }
-
-        if($project_id) $where[] = 'project_id = ' . $project_id;
-
-		$where 		= ( count( $where ) ? ' WHERE ' . implode( ' AND ', $where ) : '' );
-
-		return $where;
-	}
-
-	function delete($cid = array())
-	{
-		if (count( $cid ))
-		{
-			foreach($cid AS $c){
-                $query = 'SELECT path FROM #__projectlog_docs WHERE id = ' . $c;
-                $this->_db->setQuery($query);
-                $file = $this->_db->loadResult();
-                $this->deleteFile($file);
-            }
-
-            $cids = implode( ',', $cid );
-			$query = 'DELETE FROM #__projectlog_docs WHERE id IN ('. $cids .')';
-			$this->_db->setQuery( $query );            
-
-			if(!$this->_db->query()) {
-				$this->setError($this->_db->getErrorMsg());
-				return false;
-			}            
-		}else{
-            $this->setError(JText::_('NO DOCS SELECTED'));
-            return false;
-        }
-		return true;
-	}
-
-    function deleteFile($file){
+    
+    function deleteFile($file)
+    {
         jimport('joomla.filesystem.file');
         $path = JPATH_SITE.DS.'media'.DS.'com_projectlog'.DS.'docs'.DS;
         JFile::delete($path.$file);
     }
-}//Class end
-?>
+}

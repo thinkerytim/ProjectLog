@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -16,7 +16,7 @@ JLoader::register('ProjectlogHelper', JPATH_ADMINISTRATOR . '/components/com_pro
  *
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
- * @since       1.6
+ * @since       3.3.1
  */
 class ProjectlogModelLog extends JModelAdmin
 {

@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -94,7 +94,7 @@ abstract class JHtmlProject
 	 * @param   bool $canChange Whether the value can be changed or not
 	 *
 	 * @return  string	The anchor tag to toggle featured/unfeatured projects.
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public static function featured($value = 0, $i, $canChange = true)
 	{
@@ -114,6 +114,11 @@ abstract class JHtmlProject
 		return $html;
 	}
     
+    /**
+	 * Custom batch filter option
+	 *
+	 * @return  string  The batch filter HTML
+	 */    
     public static function batchproject()
 	{
         require_once JPATH_COMPONENT .'/models/fields/modal/project.php';
@@ -134,6 +139,13 @@ abstract class JHtmlProject
         return $batchhtml;
 	}
     
+    /**
+	 * Custom associations function for logs
+	 *
+	 * @param   int  $logid  The item id to search associations
+	 *
+	 * @return  string  The language HTML
+	 */    
     public static function logassociation($logid)
 	{
 		// Defaults

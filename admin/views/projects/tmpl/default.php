@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -59,7 +59,7 @@ $assoc		= JLanguageAssociations::isEnabled();
 <?php else : ?>
 	<div id="j-main-container">
 <?php endif;?>
-        <?php projectlogAdmin::buildAdminToolbar(); ?>
+        <?php ProjectlogHelper::buildAdminToolbar(); ?>
 		<div id="filter-bar" class="btn-toolbar">
 			<div class="filter-search btn-group pull-left">
 				<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_PROJECTLOG_FILTER_SEARCH_DESC');?></label>

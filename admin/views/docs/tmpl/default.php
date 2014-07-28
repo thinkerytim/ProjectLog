@@ -88,4 +88,4 @@ defined('_JEXEC') or die('Restricted access');
 	<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="" />
 </form>
-<p class="copyright"><?php echo projectlogAdmin::footer(); ?></p>
+<p class="copyright"><?php echo ProjectlogHelper::footer(); ?></p>

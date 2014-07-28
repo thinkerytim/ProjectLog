@@ -88,5 +88,5 @@ JHTMLBehavior::formvalidation();
 	<input type="hidden" name="view" value="doc" />
 	<input type="hidden" name="task" value="" />
 </form>
-<p class="copyright"><?php echo projectlogAdmin::footer( ); ?></p>
+<p class="copyright"><?php echo ProjectlogHelper::footer( ); ?></p>
 	

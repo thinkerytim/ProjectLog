@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  *
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
- * @since       1.6
+ * @since       3.3.1
  */
 class ProjectlogControllerLogs extends JControllerAdmin
 {
@@ -25,7 +25,7 @@ class ProjectlogControllerLogs extends JControllerAdmin
 	 *
 	 * @return  ProjectlogControllerLogs
 	 * @see     JController
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function __construct($config = array())
 	{
@@ -39,7 +39,7 @@ class ProjectlogControllerLogs extends JControllerAdmin
 	 * @param   string	$prefix	The prefix for the PHP class name.
 	 *
 	 * @return  JModel
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function getModel($name = 'Log', $prefix = 'ProjectlogModel', $config = array('ignore_request' => true))
 	{

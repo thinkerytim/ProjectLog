@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  *
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
- * @since       1.6
+ * @since       3.3.1
  */
 class ProjectlogControllerLog extends JControllerForm
 {
@@ -25,7 +25,7 @@ class ProjectlogControllerLog extends JControllerForm
 	 *
 	 * @return  boolean
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function allowAdd($data = array())
 	{
@@ -58,7 +58,7 @@ class ProjectlogControllerLog extends JControllerForm
 	 *
 	 * @return  boolean
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function allowEdit($data = array(), $key = 'id')
 	{
@@ -89,7 +89,7 @@ class ProjectlogControllerLog extends JControllerForm
 	 *
 	 * @return  boolean   True if successful, false otherwise and internal error is set.
 	 *
-	 * @since   2.5
+	 * @since   3.3.1
 	 */
 	public function batch($model = null)
 	{
@@ -111,7 +111,7 @@ class ProjectlogControllerLog extends JControllerForm
 	 * @param   array         $validData  The validated data.
 	 *
 	 * @return  void
-	 * @since   3.1
+	 * @since   3.3.1
 	 */
 	protected function postSaveHook(JModelLegacy $model, $validData = array())
 	{
