@@ -1,7 +1,5 @@
 <!-- show details -->
-<?php if ($this->params->get('show_details')) : ?>
-    <?php echo $this->loadTemplate('links'); ?>
-<?php endif; ?>
+<?php echo $this->loadTemplate('details'); ?>
 
 <!-- show links -->
 <?php if ($this->params->get('show_links')) : ?>

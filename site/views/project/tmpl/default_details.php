@@ -10,8 +10,9 @@
 defined('_JEXEC') or die;
 
 require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-
 ?>
+
+<h3><?php echo JText::_('COM_PROJECTLOG_DETAILS'); ?></h3>
 <ul class="nav nav-list pl-project-details">
     <?php if ($this->project->release_date && $this->params->get('show_release_date')) : ?>
         <li>
