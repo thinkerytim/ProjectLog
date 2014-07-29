@@ -46,12 +46,15 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
                     <?php if ($this->params->get('show_release_id_headings')) : ?>
                         <th><?php echo JText::_('COM_PROJECTLOG_RELEASE_NUM'); ?></th>
                     <?php endif; ?>
+                    <?php if ($this->params->get('show_job_id_headings')) : ?>
+                        <th><?php echo JText::_('COM_PROJECTLOG_JOB_NUM'); ?></th>
+                    <?php endif; ?>
+                    <?php if ($this->params->get('show_task_id_headings')) : ?>
+                        <th><?php echo JText::_('COM_PROJECTLOG_TASK_NUM'); ?></th>
+                    <?php endif; ?>                                                
                     <?php if ($this->params->get('show_workorder_id_headings')) : ?>
                         <th><?php echo JText::_('COM_PROJECTLOG_WORKORDER_NUM'); ?></th>
                     <?php endif; ?>                            
-                    <?php if ($this->params->get('show_task_id_headings')) : ?>
-                        <th><?php echo JText::_('COM_PROJECTLOG_TASK_NUM'); ?></th>
-                    <?php endif; ?>
                     <?php if ($this->params->get('show_client_headings')) : ?>
                         <th><?php echo JText::_('COM_PROJECTLOG_CLIENT'); ?></th>
                     <?php endif; ?>
@@ -70,7 +73,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
                 </tr>
             </thead>
             <tfoot>
-                <tr colspan="9">
+                <tr colspan="10">
                     <?php if ($this->params->get('show_pagination')) : ?>
                     <div class="pagination">
                         <?php if ($this->params->def('show_pagination_results', 1)) : ?>
@@ -109,12 +112,15 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
                         <?php if ($this->params->get('show_release_id_headings')) : ?>
                             <td><?php echo ($item->params->get('show_release_id') AND !empty($item->release_id)) ? $item->release_id : '--'; ?></td>
 						<?php endif; ?>
-                        <?php if ($this->params->get('show_workorder_id_headings')) : ?>
-                            <td><?php echo ($item->params->get('show_workorder_id') AND !empty($item->workorder_id)) ? $item->workorder_id : '--'; ?></td>
-                        <?php endif; ?>                            
+                        <?php if ($this->params->get('show_job_id_headings')) : ?>
+                            <td><?php echo ($item->params->get('show_job_id') AND !empty($item->job_id)) ? $item->job_id : '--'; ?></td>
+                        <?php endif; ?>
                         <?php if ($this->params->get('show_task_id_headings')) : ?>
                             <td><?php echo ($item->params->get('show_task_id') AND !empty($item->task_id)) ? $item->task_id : '--'; ?></td>
-                        <?php endif; ?>
+                        <?php endif; ?>                 
+                        <?php if ($this->params->get('show_workorder_id_headings')) : ?>
+                            <td><?php echo ($item->params->get('show_workorder_id') AND !empty($item->workorder_id)) ? $item->workorder_id : '--'; ?></td>
+                        <?php endif; ?>                 
                         <?php if ($this->params->get('show_client_headings')) : ?>
                             <td><?php echo ($item->params->get('show_client') AND !empty($item->client)) ? $item->client : '--'; ?></td>
 						<?php endif; ?>
@@ -122,7 +128,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
                             <td><?php echo ($item->params->get('show_project_type') AND !empty($item->project_type)) ? $item->project_type : '--'; ?></td>
 						<?php endif; ?>
                         <?php if ($this->params->get('show_manager_headings')) : ?>
-                            <td><?php echo ($item->params->get('show_manager') AND !empty($item->manager)) ? $item->manager : '--'; ?></td>
+                            <td><?php echo ($item->params->get('show_manager') AND !empty($item->manager_name)) ? $item->manager_name : '--'; ?></td>
 						<?php endif; ?>
                         <?php if ($this->params->get('show_mobile_headings')) : ?>
                             <td><?php echo ($item->params->get('show_mobile') AND !empty($item->mobile)) ? $item->mobile : '--'; ?></td>

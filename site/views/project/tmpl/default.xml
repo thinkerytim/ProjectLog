@@ -116,50 +116,54 @@
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_job_id"
-				type="list"
-				description="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_DESC"
-				label="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_LABEL"
-                >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
-
 			<field name="show_release_id"
-				type="list"
-				description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_DESC"
-				label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_LABEL"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                default="1"
+                label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_LABEL"
+                description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_DESC"
                 >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
+                <option value="1">JSHOW</option>
+                <option value="0">JHIDE</option>
+            </field>
 
-			<field name="show_task_id"
-				type="list"
-				description="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_DESC"
-				label="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_LABEL"
+            <field name="show_job_id"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                default="1"
+                label="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_LABEL"
+                description="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_DESC"
                 >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
+                <option value="1">JSHOW</option>
+                <option value="0">JHIDE</option>
+            </field>		
+
+            <field name="show_task_id"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                default="1"
+                label="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_LABEL"
+                description="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_DESC"
+                >
+                <option value="1">JSHOW</option>
+                <option value="0">JHIDE</option>
+            </field>
+
+            <field name="show_workorder_id"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                default="1"
+                label="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_LABEL"
+                description="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_DESC"
+                >
+                <option value="1">JSHOW</option>
+                <option value="0">JHIDE</option>
+            </field>
 
 			<field name="show_mobile"
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_MOBILE_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_MOBILE_LABEL"
-                >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
-
-			<field name="show_workorder_id"
-				type="list"
-				description="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_DESC"
-				label="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_LABEL"
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>

@@ -133,7 +133,6 @@
 				<option value="1">JSHOW</option>
 			</field>
 
-
 			<field name="show_subcat_desc" type="list"
 				label="JGLOBAL_SHOW_SUBCATEGORIES_DESCRIPTION_LABEL"
 				description="JGLOBAL_SHOW_SUBCATEGORIES_DESCRIPTION_DESC"
@@ -193,17 +192,7 @@
                 <option value="">JGLOBAL_USE_GLOBAL</option>
                 <option value="0">JHIDE</option>
                 <option value="1">JSHOW</option>
-            </field>
-
-            <field name="show_task_id_headings"
-                type="list"
-                label="COM_PROJECTLOG_FIELD_CONFIG_PHONE_LABEL"
-                description="COM_PROJECTLOG_FIELD_CONFIG_PHONE_DESC"
-                >
-                <option value="">JGLOBAL_USE_GLOBAL</option>
-                <option value="0">JHIDE</option>
-                <option value="1">JSHOW</option>
-            </field>
+            </field>            
 
             <field name="show_mobile_headings"
                 type="list"
@@ -213,17 +202,7 @@
                 <option value="">JGLOBAL_USE_GLOBAL</option>
                 <option value="0">JHIDE</option>
                 <option value="1">JSHOW</option>
-            </field>
-
-            <field name="show_workorder_id_headings"
-                type="list"
-                label="COM_PROJECTLOG_FIELD_CONFIG_WORKORDER_ID_LABEL"
-                description="COM_PROJECTLOG_FIELD_CONFIG_WORKORDER_ID_DESC"
-                >
-                <option value="">JGLOBAL_USE_GLOBAL</option>
-                <option value="0">JHIDE</option>
-                <option value="1">JSHOW</option>
-            </field>
+            </field>            
 
             <field name="show_project_type_headings" type="list"
                 label="COM_PROJECTLOG_FIELD_CONFIG_PROJECTTYPE_LABEL"
@@ -248,6 +227,36 @@
                 type="list"
                 label="COM_PROJECTLOG_FIELD_CONFIG_RELEASE_ID_LABEL"
                 description="COM_PROJECTLOG_FIELD_CONFIG_RELEASE_ID_DESC"
+                >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            
+            <field name="show_job_id_headings"
+                type="list"
+                label="COM_PROJECTLOG_FIELD_CONFIG_JOB_ID_LABEL"
+                description="COM_PROJECTLOG_FIELD_CONFIG_JOB_ID_DESC"
+                >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            
+            <field name="show_task_id_headings"
+                type="list"
+                label="COM_PROJECTLOG_FIELD_CONFIG_TASK_ID_LABEL"
+                description="COM_PROJECTLOG_FIELD_CONFIG_TASK_ID_DESC"
+                >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>           
+            
+            <field name="show_workorder_id_headings"
+                type="list"
+                label="COM_PROJECTLOG_FIELD_CONFIG_WORKORDER_ID_LABEL"
+                description="COM_PROJECTLOG_FIELD_CONFIG_WORKORDER_ID_DESC"
                 >
                 <option value="">JGLOBAL_USE_GLOBAL</option>
                 <option value="0">JHIDE</option>
@@ -297,16 +306,7 @@
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
-			</field>
-
-			<field name="show_tags" type="list"
-				label="COM_PROJECTLOG_FIELD_SHOW_TAGS_LABEL"
-				description="COM_PROJECTLOG_FIELD_SHOW_TAGS_DESC"
-                >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
+			</field>			
 
 			<field name="show_name"
 				type="list"
@@ -326,7 +326,6 @@
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
-
 			</field>
 
 			<field name="show_email"
@@ -368,18 +367,8 @@
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
-
-			<field name="show_job_id"
-				type="list"
-				description="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_DESC"
-				label="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_LABEL"
-                >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
-
-			<field name="show_release_id"
+            
+            <field name="show_release_id"
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_LABEL"
@@ -389,10 +378,30 @@
 				<option value="1">JSHOW</option>
 			</field>
 
+			<field name="show_job_id"
+				type="list"
+				description="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_LABEL"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>			
+
 			<field name="show_task_id"
 				type="list"
 				description="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_DESC"
 				label="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_LABEL"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_workorder_id"
+				type="list"
+				description="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_LABEL"
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
@@ -407,17 +416,7 @@
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
-			</field>
-
-			<field name="show_workorder_id"
-				type="list"
-				description="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_DESC"
-				label="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_LABEL"
-                >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
+			</field>		
 
 			<field name="show_webpage"
 				type="list"
@@ -503,6 +502,15 @@
 				label="COM_PROJECTLOG_FIELD_LINKE_NAME_LABEL"
 				size="30"
 			/>
+            
+            <field name="show_tags" type="list"
+				label="COM_PROJECTLOG_FIELD_SHOW_TAGS_LABEL"
+				description="COM_PROJECTLOG_FIELD_SHOW_TAGS_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
         </fieldset>
         
 		<!-- Form options. -->
@@ -587,8 +595,8 @@
                 default="1"
                 label="JGLOBAL_SHOW_FEED_LINK_LABEL"
                 description="JGLOBAL_SHOW_FEED_LINK_DESC">
-                    <option value="1">JSHOW</option>
-                    <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+                <option value="0">JHIDE</option>
             </field>
         </fieldset>
     </fields>

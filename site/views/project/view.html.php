@@ -24,8 +24,7 @@ class ProjectlogViewProject extends JViewLegacy
 	protected $form;
 	protected $item;
 	protected $return_page;
-    protected $logs;
-    protected $canDo;
+    protected $logs;   
 
 	/**
 	 * Execute and display a template script.
