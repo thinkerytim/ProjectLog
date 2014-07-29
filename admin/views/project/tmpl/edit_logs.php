@@ -10,9 +10,11 @@
             <div class="new-log-cnt">
                 <input type="text" id="title-log" name="title-log" value="" placeholder="<?php echo JText::_('COM_PROJECTLOG_LOG_TITLE'); ?>" />
                 <textarea class="the-new-log"></textarea>
-                <p>
-                    <div class="bt-add-log"><?php echo JText::_('JSUBMIT'); ?></div>
-                    <div class="bt-cancel-log"><?php echo JText::_('JCANCEL'); ?></div>
+                <p>      
+                    <div class="btn-group">
+                    <a class="bt-add-log btn btn-success" disabled><?php echo JText::_('JSUBMIT'); ?></a>
+                    <a class="bt-cancel-log btn btn-danger"><?php echo JText::_('JCANCEL'); ?></a>
+                    </div>
                 </p>
                 <div class="clearfix"></div>
             </div>
@@ -22,30 +24,27 @@
             <?php
             foreach($this->logs as $log)
             {
-                $loggername     = $log->logger_name;
-                $loggeremail    = $log->logger_email;
-                $logtitle       = $log->title;
-                $logdata        = $log->description;
-                $logdate        = JHtml::date($log->created,JText::_('DATE_FORMAT_LC2'));
-                $log_id         = $log->log_id;
+                $log->date = JHtml::date($log->created,JText::_('DATE_FORMAT_LC2'));
 
                 // Get gravatar Image 
-                $grav_url = projectlogHtml::getGravatar($loggeremail); 
-                $delete_btn = ($this->canDo->get('projectlog.deletelog')) ? '<div class="bt-delete-log btn btn-danger" data-log-id="'.$log_id.'">'.JText::_('JACTION_DELETE').'</div>' : '';
-                $edit_btn   = ($this->canDo->get('projectlog.editlog') || ($this->canDo->get('projectlog.editlog.own') && $log->created_by == $this->user->id)) ? '<a href="'.JRoute::_('index.php?option=com_iproperty&task=log.edit&id='.$log_id).'" class="btn btn-info">'.JText::_('JACTION_EDIT').'</a>' : '';
+                $log->gravatar = projectlogHtml::getGravatar($log->logger_email); 
+                $delete_btn = ($this->canDo->get('projectlog.deletelog')) ? '<div class="bt-delete-log btn btn-danger" data-log-id="'.$log->log_id.'">'.JText::_('JACTION_DELETE').'</div>' : '';
+                $edit_btn   = ($this->canDo->get('projectlog.editlog') || ($this->canDo->get('projectlog.editlog.own') && $log->created_by == $this->user->id)) ? '<a href="'.JRoute::_('index.php?option=com_projectlog&task=log.edit&id='.$log->log_id).'" class="btn btn-info" target="blank">'.JText::_('JACTION_EDIT').'</a>' : '';
 
                 echo 
-                    '<div class="log-cnt" id="logid-'.$log_id.'">
-                        <img src="'.$grav_url.'" />
+                    '<div class="log-cnt" id="logid-'.$log->log_id.'">
+                        '.$log->gravatar['image'].'
                         <div class="pull-right btn-group">'.$edit_btn.$delete_btn.'</div>
                         <div class="thelog">
-                            <h5>'.$logtitle.'</h5>
+                            <h5>'.$log->title.'</h5>
                             <br/>
-                            <p>'.$logdata.'</p>
-                            <p data-utime="1371248446" class="small log-dt">'.$loggername.' - '.$logdate.'</p>
+                            <p>'.$log->description.'</p>
+                            <p data-utime="1371248446" class="small log-dt">
+                                '.$log->logger_name.' - '.$log->date.'
+                            </p>
                         </div>
                         <div class="clearfix"></div>
-                    </div>';                  
+                    </div>';                   
             }
             ?>
             
@@ -63,9 +62,9 @@
 
                 /* when start writing the log activate the "add" button */
                 $('.the-new-log').bind('input propertychange', function() {
-                   $(".bt-add-log").css({opacity:0.6});
+                   $(".bt-add-log").attr('disabled', true);
                    var checklength = $(this).val().length;
-                   if(checklength){ $(".bt-add-log").css({opacity:1}); }
+                   if(checklength){ $(".bt-add-log").attr('disabled', false); }
                 });
 
                 /* on click on the cancel button */
@@ -146,7 +145,7 @@
                 <?php if($this->canDo->get('projectlog.deletelog')): ?>
                 // on post log click 
                 $('.bt-delete-log').click(function(){
-                    if(!confirm('<?php echo addslashes(JText::_('COM_PROJECTLOG_CONFIRM_LOG_DELETE')); ?>')){
+                    if(!confirm('<?php echo addslashes(JText::_('COM_PROJECTLOG_CONFIRM_DELETE')); ?>')){
                         return false;
                     }
                     

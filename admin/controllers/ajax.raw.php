@@ -55,6 +55,7 @@ class ProjectlogControllerAjax extends JControllerLegacy
         $user       = JFactory::getUser();
         $model      = $this->getModel('Log');
         $currdate   = JFactory::getDate()->toSql();
+        $gravatar   = projectlogHtml::getGravatar($user->get('email'));
         
         $data['associations']   = array();
         $data['published']      = 1;
@@ -66,12 +67,14 @@ class ProjectlogControllerAjax extends JControllerLegacy
             if($model->save($data)){
                 $success_msg = 
                   '<div class="log-cnt">
-                      <img src="'.projectlogHtml::getGravatar($user->get('id')).'" alt="" />
+                      '.$gravatar["image"].'
                       <div class="thelog">
                           <h5>'.$data['title'].'</h5>
                           <br/>
                           <p>'.$data['description'].'</p>
-                          <p data-utime="1371248446" class="small log-dt">'.$user->get('name').' - '.JHtml::date($currdate, JText::_('DATE_FORMAT_LC2')).'</p>
+                          <p data-utime="1371248446" class="small log-dt">
+                            '.$user->get('name').' - '.JHtml::date($currdate, JText::_('DATE_FORMAT_LC2')).'
+                          </p>
                       </div>
                   </div>';
                 echo new JResponseJson($success_msg);

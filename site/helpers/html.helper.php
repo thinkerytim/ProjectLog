@@ -13,9 +13,11 @@ abstract class ProjectlogHtml
 {
 	public static function getGravatar($email, $default = 'mm', $size = 35)
 	{
-		// Get gravatar Image 
+		$gravatar = array();
+        // Get gravatar Image 
         // https://fr.gravatar.com/site/implement/images/php/
-        $grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . $default . "&s=" . $size;
-        return $grav_url;
+        $gravatar['url']    = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . $default . "&s=" . $size;
+        $gravatar['image']  = JHtml::_('image', $gravatar['url'], JText::_('COM_PROJECTLOG_USER'));
+        return $gravatar;
 	}
 }
