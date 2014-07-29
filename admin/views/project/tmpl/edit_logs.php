@@ -94,6 +94,7 @@
                                 'title' : theTitle.val(),
                                 'description' : theLog.val(),
                                 '<?php echo JSession::getFormToken(); ?>':'1',
+                                'language' : '<?php echo $this->item->language; ?>',
                                 'format': 'raw'
                             },
                             onSuccess: function(r){   

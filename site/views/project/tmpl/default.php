@@ -74,10 +74,46 @@ jimport('joomla.html.html.bootstrap');
                 <?php echo nl2br ( $this->project->specific_loc, true ); ?>
             <?php endif; ?>
 
+            <?php echo JHtml::_('bootstrap.startTabSet', 'projectTab', array('active' => 'logs')); ?>
+                <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'logs', JText::_('COM_PROJECTLOG_LOGS', true)); ?>
+                    <?php
+                    foreach($this->logs as $log)
+                    {
+                        $loggername     = $log->logger_name;
+                        $loggeremail    = $log->logger_email;
+                        $logtitle       = $log->title;
+                        $logdata        = $log->description;
+                        $logdate        = JHtml::date($log->created,JText::_('DATE_FORMAT_LC2'));
+                        $log_id         = $log->log_id;
+
+                        // Get gravatar Image 
+                        $grav_url = projectlogHtml::getGravatar($loggeremail); 
+                        $delete_btn = ($this->canDo->get('projectlog.deletelog')) ? '<div class="bt-delete-log btn btn-danger" data-log-id="'.$log_id.'">'.JText::_('JACTION_DELETE').'</div>' : '';
+                        $edit_btn   = ($this->canDo->get('projectlog.editlog') || ($this->canDo->get('projectlog.editlog.own') && $log->created_by == $this->user->id)) ? '<a href="'.JRoute::_('index.php?option=com_iproperty&task=log.edit&id='.$log_id).'" class="btn btn-info">'.JText::_('JACTION_EDIT').'</a>' : '';
+
+                        echo 
+                            '<div class="log-cnt" id="logid-'.$log_id.'">
+                                <img src="'.$grav_url.'" />
+                                <div class="pull-right btn-group">'.$edit_btn.$delete_btn.'</div>
+                                <div class="thelog">
+                                    <h5>'.$logtitle.'</h5>
+                                    <br/>
+                                    <p>'.$logdata.'</p>
+                                    <p data-utime="1371248446" class="small log-dt">'.$loggername.' - '.$logdate.'</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>';                  
+                    }
+                    ?>
+                <?php echo JHtml::_('bootstrap.endTab'); ?>
+
             <!-- show email form -->
             <?php if ($this->params->get('show_email_form') && ($this->project->email_to || $this->project->manager)) : ?>
-                <?php  echo $this->loadTemplate('form');  ?>
+                <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'contact', JText::_('COM_PROJECTLOG_CONTACT', true)); ?>
+                    <?php  echo $this->loadTemplate('form');  ?>
+                <?php echo JHtml::_('bootstrap.endTab'); ?>
             <?php endif; ?>
+            <?php echo JHtml::_('bootstrap.endTabSet'); ?>
         </div>
         <div class="span4 pl-project-sidebar-container">
             <?php echo $this->loadTemplate('sidebar'); ?>

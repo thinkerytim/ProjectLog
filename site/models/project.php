@@ -416,4 +416,26 @@ class ProjectlogModelProject extends JModelForm
 
 		return true;
 	}
+    
+    public function getLogs()
+    {
+        $project_id = $this->getState('project.id');
+        
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('*, log.id as log_id')
+                ->from('#__projectlog_logs AS log')
+                ->where('project_id = '.(int)$project_id)
+                ->where('published > 0');
+
+        // Join over the users for the log creator.
+        $query->select('ul.name AS logger_name, ul.email AS logger_email')
+        ->join('LEFT', '#__users AS ul ON ul.id = log.created_by');
+        
+        $query->order('log.created DESC');
+
+        $db->setQuery($query);
+        return $db->loadObjectList(); 
+    }
 }

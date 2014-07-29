@@ -56,18 +56,22 @@ class ProjectlogControllerAjax extends JControllerLegacy
         $model      = $this->getModel('Log');
         $currdate   = JFactory::getDate()->toSql();
         
+        $data['associations']   = array();
+        $data['published']      = 1;
+        $data['created_by']     = $user->get('id');
+        
         try
         {          
             $result = false;
             if($model->save($data)){
                 $success_msg = 
                   '<div class="log-cnt">
-                      <img src="'.projectlogHtml::getGravatar($user->id).'" alt="" />
+                      <img src="'.projectlogHtml::getGravatar($user->get('id')).'" alt="" />
                       <div class="thelog">
                           <h5>'.$data['title'].'</h5>
                           <br/>
                           <p>'.$data['description'].'</p>
-                          <p data-utime="1371248446" class="small log-dt">'.$user->name.' - '.JHtml::date($currdate, JText::_('DATE_FORMAT_LC2')).'</p>
+                          <p data-utime="1371248446" class="small log-dt">'.$user->get('name').' - '.JHtml::date($currdate, JText::_('DATE_FORMAT_LC2')).'</p>
                       </div>
                   </div>';
                 echo new JResponseJson($success_msg);

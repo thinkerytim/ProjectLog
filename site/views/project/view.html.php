@@ -28,6 +28,8 @@ class ProjectlogViewProject extends JViewLegacy
 
 	protected $return_page;
 
+    protected $logs;
+
 	/**
 	 * Execute and display a template script.
 	 *
@@ -37,11 +39,12 @@ class ProjectlogViewProject extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		$app		= JFactory::getApplication();
-		$user		= JFactory::getUser();
-		$state		= $this->get('State');
-		$item		= $this->get('Item');
-		$this->form	= $this->get('Form');
+		$app            = JFactory::getApplication();
+		$user           = JFactory::getUser();
+		$state          = $this->get('State');
+		$item           = $this->get('Item');
+		$this->form     = $this->get('Form');
+        $this->logs     = $this->get('Logs');
 
 		// Get the parameters
 		$params = JComponentHelper::getParams('com_projectlog');
