@@ -29,7 +29,9 @@ class ProjectlogController extends JControllerLegacy
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
-		$cachable = true;
+		require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/projectlog.php';
+        
+        $cachable = true;
         JFactory::getDocument()->addStyleSheet(JURI::root(true).'/components/com_projectlog/assets/css/projectlog.css');
 
 		// Set the default view name and format from the Request.

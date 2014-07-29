@@ -21,14 +21,11 @@ require_once JPATH_COMPONENT . '/models/category.php';
 class ProjectlogViewProject extends JViewLegacy
 {
 	protected $state;
-
 	protected $form;
-
 	protected $item;
-
 	protected $return_page;
-
     protected $logs;
+    protected $canDo;
 
 	/**
 	 * Execute and display a template script.
@@ -45,6 +42,8 @@ class ProjectlogViewProject extends JViewLegacy
 		$item           = $this->get('Item');
 		$this->form     = $this->get('Form');
         $this->logs     = $this->get('Logs');
+        
+        $this->canDo	= ProjectlogHelper::getActions('com_projectlog', 'project', $item->id);
 
 		// Get the parameters
 		$params = JComponentHelper::getParams('com_projectlog');

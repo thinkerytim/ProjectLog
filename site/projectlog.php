@@ -9,7 +9,8 @@
 
 defined('_JEXEC') or die;
 
-require_once JPATH_COMPONENT . '/helpers/route.php';
+require_once JPATH_COMPONENT.'/helpers/route.php';
+require_once JPATH_COMPONENT_SITE.'/helpers/html.helper.php';
 
 $controller = JControllerLegacy::getInstance('Projectlog');
 $controller->execute(JFactory::getApplication()->input->get('task'));

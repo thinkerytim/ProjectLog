@@ -75,7 +75,6 @@
             <filename>index.html</filename>
             <filename>projectlog.php</filename>
             <folder>assets</folder>
-            <folder>classes</folder>
             <folder>controllers</folder>
             <folder>helpers</folder>
             <folder>models</folder>
