@@ -20,4 +20,11 @@ abstract class ProjectlogHtml
         $gravatar['image']  = JHtml::_('image', $gravatar['url'], JText::_('COM_PROJECTLOG_USER'));
         return $gravatar;
 	}
+    
+    public static function buildThinkeryFooter()
+    {
+        require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/projectlog.php';
+        $plversion = projectlogHelper::_getversion();
+        return '<p class="small pagination-centered pl-footer">'.sprintf(JText::_('COM_PROJECTLOG_FOOTER'), Jhtml::_('link', 'http://thethinkery.net', 'The Thinkery LLC', array('target' => '_blank')), $plversion).'</p>';
+    }
 }

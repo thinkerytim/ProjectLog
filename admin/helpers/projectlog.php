@@ -149,7 +149,7 @@ class ProjectlogHelper extends JHelperContent
 
         echo '
             <div class="pull-left">
-                '.JHTML::_('image', 'administrator/components/com_projectlog/assets/images/projectlog_admin_logo.png', 'ProjectLog :: By The Thinkery' ).'
+                '.JHTML::_('image', 'administrator/components/com_projectlog/assets/images/projectlog_logo.png', 'ProjectLog :: By The Thinkery' ).'
             </div>';
             $dispatcher->trigger( 'onAfterRenderPlAdmin', array( &$user ) );
         echo '<div class="clearfix"></div>'; 

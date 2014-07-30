@@ -1,5 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
+    <fieldset name="preferences"
+		label="COM_PROJECTLOG_CONFIG_PREFERENCES_LABEL"
+		description="COM_PROJECTLOG_CONFIG_PREFERENCES_DESC"
+		>
+        <field name="pl_offline"
+			type="radio"
+			label="COM_PROJECTLOG_FIELD_CONFIG_OFFLINE_LABEL"
+			description="COM_PROJECTLOG_FIELD_CONFIG_OFFLINE_DESC"
+			class="btn-group btn-group-yesno"
+			default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+        <field name="pl_offline_message"
+			type="textarea"
+			label="COM_PROJECTLOG_FIELD_CONFIG_OFFLINE_MESSAGE_LABEL"
+			description="COM_PROJECTLOG_FIELD_CONFIG_OFFLINE_MESSAGE_DESC"
+            rows="5"
+        />
+		<field name="require_approval"
+			type="radio"
+			label="COM_PROJECTLOG_FIELD_CONFIG_REQUIRE_APPROVAL_LABEL"
+			description="COM_PROJECTLOG_FIELD_CONFIG_REQUIRE_APPROVAL_DESC"
+			class="btn-group btn-group-yesno"
+			default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+        <field name="approval_level"
+			type="radio"
+			label="COM_PROJECTLOG_FIELD_CONFIG_APPROVAL_LEVEL_LABEL"
+			description="COM_PROJECTLOG_FIELD_CONFIG_APPROVAL_LEVEL_DESC"
+			class="btn-group btn-group-yesno"
+			default="1">
+			<option value="1">COM_PROJECTLOG_FIELD_CONFIG_MANAGER_LABEL</option>
+			<option value="0">JADMINISTRATOR</option>
+		</field>
+        <field name="project_notify"
+			type="radio"
+			label="COM_PROJECTLOG_FIELD_CONFIG_PROJECT_NOTIFY_LABEL"
+			description="COM_PROJECTLOG_FIELD_CONFIG_PROJECT_NOTIFY_DESC"
+			class="btn-group btn-group-yesno"
+			default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+        <field name="log_notify"
+			type="radio"
+			label="COM_PROJECTLOG_FIELD_CONFIG_LOG_NOTIFY_LABEL"
+			description="COM_PROJECTLOG_FIELD_CONFIG_LOG_NOTIFY_DESC"
+			class="btn-group btn-group-yesno"
+			default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+        <field name="doc_notify"
+			type="radio"
+			label="COM_PROJECTLOG_FIELD_CONFIG_DOC_NOTIFY_LABEL"
+			description="COM_PROJECTLOG_FIELD_CONFIG_DOC_NOTIFY_DESC"
+			class="btn-group btn-group-yesno"
+			default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+        <field name="allowed_filetypes" 
+            type="text"
+            default="pdf,jpg,zip,gif,png,jpeg"
+            label="COM_PROJECTLOG_FIELD_CONFIG_ALLOWED_FILETYPES_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_ALLOWED_FILETYPES_DESC"
+            size="30"
+        />
+        <field name="show_footer"
+			type="radio"
+			label="COM_PROJECTLOG_FIELD_CONFIG_SHOW_FOOTER_LABEL"
+			description="COM_PROJECTLOG_FIELD_CONFIG_SHOW_FOOTER_DESC"
+			class="btn-group btn-group-yesno"
+			default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+	</fieldset>
+    
 	<fieldset name="project" label="COM_PROJECTLOG_FIELD_CONFIG_INDIVIDUAL_PROJECT_DISPLAY"	description="COM_PROJECTLOG_FIELD_CONFIG_INDIVIDUAL_PROJECT_DESC">
 		<field name="project_layout"
             type="componentlayout"

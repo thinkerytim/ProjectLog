@@ -222,7 +222,7 @@ class com_projectlogInstallerScript
         </style>
 
         <div class="row-fluid pllogoheader">
-            '.JHTML::_('image', 'administrator/components/com_projectlog/assets/images/projectlog_admin_logo.png', 'Project Log :: By The Thinkery' ).'
+            '.JHTML::_('image', 'administrator/components/com_projectlog/assets/images/projectlog_logo.png', 'Project Log :: By The Thinkery' ).'
         </div>
         <div class="row-fluid">
             <div class="span5">

@@ -30,19 +30,31 @@ class ProjectlogController extends JControllerLegacy
 	public function display($cachable = false, $urlparams = false)
 	{
 		require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/projectlog.php';
+        require_once JPATH_COMPONENT_SITE.'/helpers/html.helper.php';
         
-        $cachable = true;
-        JFactory::getDocument()->addStyleSheet(JURI::root(true).'/components/com_projectlog/assets/css/projectlog.css');
+        $params = JComponentHelper::getParams('com_projectlog');
+        
+        if( $params->get('pl_offline') == 1 ){
+            echo '
+                <div class="pl-offline center">
+                    '.JHtml::_('image', 'components/com_projectlog/assets/images/projectlog_logo.png', JText::_('COM_PROJECTLOG_OFFLINE')).'
+                    <div>' . $params->get('pl_offline_message') . '</div>
+                </div>';
+        }else{
+        
+            $cachable = true;
+            JFactory::getDocument()->addStyleSheet(JURI::root(true).'/components/com_projectlog/assets/css/projectlog.css');
 
-		// Set the default view name and format from the Request.
-		$vName = $this->input->get('view', 'categories');
-		$this->input->set('view', $vName);
+            // Set the default view name and format from the Request.
+            $vName = $this->input->get('view', 'categories');
+            $this->input->set('view', $vName);
 
-		$safeurlparams = array('catid' => 'INT', 'id' => 'INT', 'cid' => 'ARRAY', 'year' => 'INT', 'month' => 'INT', 'limit' => 'UINT', 'limitstart' => 'UINT',
-			'showall' => 'INT', 'return' => 'BASE64', 'filter' => 'STRING', 'filter_order' => 'CMD', 'filter_order_Dir' => 'CMD', 'filter-search' => 'STRING', 'print' => 'BOOLEAN', 'lang' => 'CMD');
+            $safeurlparams = array('catid' => 'INT', 'id' => 'INT', 'cid' => 'ARRAY', 'year' => 'INT', 'month' => 'INT', 'limit' => 'UINT', 'limitstart' => 'UINT',
+                'showall' => 'INT', 'return' => 'BASE64', 'filter' => 'STRING', 'filter_order' => 'CMD', 'filter_order_Dir' => 'CMD', 'filter-search' => 'STRING', 'print' => 'BOOLEAN', 'lang' => 'CMD');
 
-		parent::display($cachable, $safeurlparams);
+            parent::display($cachable, $safeurlparams);
 
-		return $this;
+            return $this;
+        }
 	}
 }

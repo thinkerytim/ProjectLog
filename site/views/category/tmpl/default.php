@@ -11,3 +11,5 @@ defined('_JEXEC') or die;
 
 $this->subtemplatename = 'items';
 echo JLayoutHelper::render('joomla.content.category_default', $this);
+
+if($this->params->get('show_footer')) echo projectlogHTML::buildThinkeryFooter();

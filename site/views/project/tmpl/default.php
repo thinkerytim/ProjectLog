@@ -76,35 +76,37 @@ jimport('joomla.html.html.bootstrap');
                 
             <hr class="pl-project-divider"/>
 
-            <?php echo JHtml::_('bootstrap.startTabSet', 'projectTab', array('active' => 'logs')); ?>
-                <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'logs', JText::_('COM_PROJECTLOG_LOGS', true)); ?>
-                    <?php
-                    foreach($this->logs as $log)
-                    {
-                        $log->date = JHtml::date($log->created,JText::_('DATE_FORMAT_LC2'));
+            <?php echo JHtml::_('bootstrap.startTabSet', 'projectTab', array('active' => (count($this->logs)) ? 'logs' : 'contact')); ?>
+                <?php if(count($this->logs)): ?>
+                    <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'logs', JText::_('COM_PROJECTLOG_LOGS', true)); ?>
+                        <?php
+                        foreach($this->logs as $log)
+                        {
+                            $log->date = JHtml::date($log->created,JText::_('DATE_FORMAT_LC2'));
 
-                        // Get gravatar Image 
-                        $log->gravatar = projectlogHtml::getGravatar($log->logger_email); 
-                        $delete_btn = ($this->canDo->get('projectlog.deletelog')) ? '<div class="bt-delete-log btn btn-danger" data-log-id="'.$log->log_id.'">'.JText::_('JACTION_DELETE').'</div>' : '';
-                        $edit_btn   = ($this->canDo->get('projectlog.editlog') || ($this->canDo->get('projectlog.editlog.own') && $log->created_by == $this->user->id)) ? '<a href="'.JRoute::_('index.php?option=com_iproperty&task=log.edit&id='.$log->log_id).'" class="btn btn-info">'.JText::_('JACTION_EDIT').'</a>' : '';
+                            // Get gravatar Image 
+                            $log->gravatar = projectlogHtml::getGravatar($log->logger_email); 
+                            $delete_btn = ($this->canDo->get('projectlog.deletelog')) ? '<div class="bt-delete-log btn btn-danger" data-log-id="'.$log->log_id.'">'.JText::_('JACTION_DELETE').'</div>' : '';
+                            $edit_btn   = ($this->canDo->get('projectlog.editlog') || ($this->canDo->get('projectlog.editlog.own') && $log->created_by == $this->user->id)) ? '<a href="'.JRoute::_('index.php?option=com_iproperty&task=log.edit&id='.$log->log_id).'" class="btn btn-info">'.JText::_('JACTION_EDIT').'</a>' : '';
 
-                        echo 
-                            '<div class="log-cnt" id="logid-'.$log->log_id.'">
-                                '.$log->gravatar['image'].'
-                                <div class="pull-right btn-group">'.$edit_btn.$delete_btn.'</div>
-                                <div class="thelog">
-                                    <h5>'.$log->title.'</h5>
-                                    <br/>
-                                    <p>'.$log->description.'</p>
-                                    <p data-utime="1371248446" class="small log-dt">
-                                        '.$log->logger_name.' - '.$log->date.'
-                                    </p>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>';                  
-                    }
-                    ?>
-                <?php echo JHtml::_('bootstrap.endTab'); ?>
+                            echo 
+                                '<div class="log-cnt" id="logid-'.$log->log_id.'">
+                                    '.$log->gravatar['image'].'
+                                    <div class="pull-right btn-group">'.$edit_btn.$delete_btn.'</div>
+                                    <div class="thelog">
+                                        <h5>'.$log->title.'</h5>
+                                        <br/>
+                                        <p>'.$log->description.'</p>
+                                        <p data-utime="1371248446" class="small log-dt">
+                                            '.$log->logger_name.' - '.$log->date.'
+                                        </p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>';                  
+                        }
+                        ?>
+                    <?php echo JHtml::_('bootstrap.endTab'); ?>
+                <?php endif; ?>
 
                 <!-- show email form -->
                 <?php if ($this->params->get('show_email_form') && ($this->project->email_to || $this->project->manager)) : ?>
@@ -119,3 +121,4 @@ jimport('joomla.html.html.bootstrap');
         </div>
     </div>
 </div>
+<?php if($this->params->get('show_footer')) echo projectlogHTML::buildThinkeryFooter();  ?>
