@@ -49,7 +49,7 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
     <?php if ($this->project->chief && $this->params->get('show_chief')) : ?>
         <li>
             <b><?php echo JText::_('COM_PROJECTLOG_CHIEF'); ?>:</b>&nbsp;
-            <?php echo $this->project->chief; ?>
+            <?php echo $this->project->chief_name; ?>
         </li>
     <?php endif; ?>
     <?php if ($this->project->technicians && $this->params->get('show_technicians')) : ?>
