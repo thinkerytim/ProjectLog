@@ -1,511 +1,704 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset>
-		<field name="id" type="hidden"
-			default="0"
-			label="COM_PROJECTLOG_ID_LABEL"
-			readonly="true"
-			required="true"
+    <fieldset addfieldpath="/administrator/components/com_categories/models/fields">
+		<field name="id"
+			type="text"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			description="JGLOBAL_FIELD_ID_DESC"
 			size="10"
+			default="0"
+			readonly="true"
+			class="readonly"
 		/>
 
-		<field name="name" type="text"
-			description="PROJECT_NAME_DESC"
-			label="PROJECT_NAME_LABEL"
+		<field name="name"
+			type="text"
+			label="COM_PROJECTLOG_FIELD_NAME_LABEL"
+			description="COM_PROJECTLOG_FIELD_NAME_DESC"
+			class="input-xxlarge input-large-text"
+			size="40"
 			required="true"
-			size="30"
-		/>
+		 />
 
-		<field name="alias" type="text"
-			description="JFIELD_ALIAS_DESC"
+		<field name="alias"
+			type="text"
 			label="JFIELD_ALIAS_LABEL"
+			description="JFIELD_ALIAS_DESC"
 			hint="JFIELD_ALIAS_PLACEHOLDER"
-			size="30"
+			size="45"
 		/>
 
-		<field name="published" type="list"
-			default="1"
-			description="JFIELD_PUBLISHED_DESC"
-			label="JFIELD_PUBLISHED_LABEL"
-			size="1"
-		>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
-			<option value="-1">JARCHIVED</option>
-			<option value="-2">JTRASHED</option>
-
-		</field>
-
-		<field name="catid" type="category"
-			description="JFIELD_CATEGORY_DESC"
-			extension="com_projectlog"
-			label="JCATEGORY"
-			required="true"
-		/>
-
-		<field name="access" type="accesslevel"
-			description="JFIELD_ACCESS_DESC"
-			label="JFIELD_ACCESS_LABEL"
-			size="1"
-		/>
-
-		<field name="sortname1" type="text"
-			description="PROJECT_SORTNAME1_DESC"
-			label="PROJECT_SORTNAME1_LABEL"
-			size="30"
-		/>
-
-		<field name="sortname2" type="text"
-			description="PROJECT_SORTNAME3_DESC"
-			label="PROJECT_SORTNAME2_LABEL"
-			size="30"
-		/>
-
-		<field name="sortname3" type="text"
-			description="PROJECT_SORTNAME3_DESC"
-			label="PROJECT_SORTNAME3_LABEL"
-			size="30"
-		/>
-
-		<field name="language" type="text"
-			description="PROJECT_LANGUAGE_DESC"
-			label="PROJECT_LANGUAGE_LABEL"
-			size="30"
-		/>
-
-		<field name="manager" type="text"
-			description="PROJECT_INFORMATION_MANAGER_DESC"
-			label="PROJECT_INFORMATION_MANAGER_LABEL"
-			size="30"
+		<field name="version_note"
+			type="text"
+			label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
+			description="JGLOBAL_FIELD_VERSION_NOTE_DESC"
+			class="span12" size="45"
+			labelclass="control-label"
 		/>
         
-        <field name="manager" type="user"
+        <field id="approved"
+			name="approved"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			label="COM_PROJECTLOG_APPROVED_LABEL"
+			description="COM_PROJECTLOG_APPROVED_DESC"
+			size="1"
+			default="1"
+            >
+			<option value="1">COM_PROJECTLOG_APPROVED</option>
+			<option value="0">COM_PROJECTLOG_UNAPPROVED</option>
+		</field>
+
+		<field id="published"
+			name="published"
+			type="list"
+			label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC"
+			class="chzn-color-state"
+			size="1"
+			default="1"
+            >
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+
+		<field name="catid"
+			type="categoryedit"
+			extension="com_projectlog"
+			label="JCATEGORY"
+			description="JFIELD_CATEGORY_DESC"
+			required="true"
+		/>
+
+		<field name="access"
+			type="accesslevel"
+			label="JFIELD_ACCESS_LABEL"
+			description="JFIELD_ACCESS_DESC"
+			size="1"
+        />
+
+		<field name="misc" type="editor"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_MISC_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_MISC_DESC"
+			filter="JComponentHelper::filterText"
+			buttons="true"
+			hide="readmore,pagebreak"
+        />
+
+		<field name="created_by" type="user"
+			label="JGLOBAL_FIELD_CREATED_BY_LABEL" description="COM_PROJECTLOG_FIELD_CREATED_BY_DESC" 
+        />
+
+		<field name="created_by_alias" type="text"
+			label="COM_PROJECTLOG_FIELD_CREATED_BY_ALIAS_LABEL" description="COM_PROJECTLOG_FIELD_CREATED_BY_ALIAS_DESC"
+			size="20" 
+        />
+
+		<field name="created" type="calendar" label="COM_PROJECTLOG_FIELD_CREATED_LABEL"
+			description="COM_PROJECTLOG_FIELD_CREATED_DESC" size="22"
+			format="%Y-%m-%d %H:%M:%S" filter="user_utc" 
+        />
+
+		<field name="modified" type="calendar" class="readonly"
+			label="JGLOBAL_FIELD_MODIFIED_LABEL" description="COM_PROJECTLOG_FIELD_MODIFIED_DESC"
+			size="22" readonly="true" format="%Y-%m-%d %H:%M:%S" filter="user_utc" 
+        />
+
+		<field name="modified_by" type="user"
+            label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+            class="readonly"
+            readonly="true"
+            filter="unset"
+        />
+
+		<field name="checked_out"
+			type="hidden"
+			filter="unset"
+		/>
+
+		<field name="checked_out_time"
+			type="hidden"
+			filter="unset"
+		/>
+
+		<field name="ordering"
+			type="ordering"
+			label="JFIELD_ORDERING_LABEL"
+			description="JFIELD_ORDERING_DESC"
+            content_type="com_projectlog.project"
+		/>
+
+		<field name="publish_up" type="calendar"
+			label="COM_PROJECTLOG_FIELD_PUBLISH_UP_LABEL" description="COM_PROJECTLOG_FIELD_PUBLISH_UP_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+
+		<field name="publish_down" type="calendar"
+			label="COM_PROJECTLOG_FIELD_PUBLISH_DOWN_LABEL" description="COM_PROJECTLOG_FIELD_PUBLISH_DOWN_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+
+		<field name="metakey"
+			type="textarea"
+			label="JFIELD_META_KEYWORDS_LABEL"
+			description="JFIELD_META_KEYWORDS_DESC"
+			rows="3"
+			cols="30"
+		 />
+
+		<field name="metadesc"
+			type="textarea"
+			label="JFIELD_META_DESCRIPTION_LABEL"
+			description="JFIELD_META_DESCRIPTION_DESC"
+			rows="3"
+			cols="30"
+		/>
+
+		<field name="language" type="contentlanguage" label="JFIELD_LANGUAGE_LABEL"
+			description="COM_PROJECTLOG_FIELD_LANGUAGE_DESC"
+            >
+			<option value="*">JALL</option>
+		</field>
+
+		<field name="featured"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			label="JFEATURED"
+			description="COM_PROJECTLOG_FIELD_FEATURED_DESC"
+			default="0"
+            >
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="tags"
+			type="tag"
+			label="JTAG"
+			description="JTAG_DESC"
+			class="span12"
+			multiple="true"
+		/>		
+	</fieldset>
+    
+	<fieldset name="details" label="COM_PROJECTLOG_PROJECT_DETAILS">
+		<field name="@text_details"
+			type="note"
+			label=""
+			description="COM_PROJECTLOG_EDIT_DETAILS"
+        />
+        
+        <field name="client" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_CLIENT_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_CLIENT_DESC"
+			size="30"
+            required="true"
+        />
+        
+        <field name="project_type" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_PROJECTTYPE_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_PROJECTTYPE_DESC"
+			size="30"
+            required="true"
+        />
+        
+        <field name="release_date" type="calendar"
+			label="COM_PROJECTLOG_FIELD_RELEASE_DATE_LABEL" description="COM_PROJECTLOG_FIELD_RELEASE_DATE_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+            required="true"
+        />
+        
+        <field name="status" type="list"
+            class="chzn-color"
+            label="COM_PROJECTLOG_FIELD_PROJECT_STATUS_LABEL"
+            description="COM_PROJECTLOG_FIELD_PROJECT_STATUS_DESC"
+            default="inprogress"
+            required="true">
+            <option value="inprogress">COM_PROJECTLOG_INPROGRESS</option>
+            <option value="onhold">COM_PROJECTLOG_ONHOLD</option>
+            <option value="complete">COM_PROJECTLOG_COMPLETE</option>
+        </field> 
+
+		<field name="image"
+			type="media"
+			hide_none="1"
+			label="COM_PROJECTLOG_FIELD_PARAMS_IMAGE_LABEL"
+			description="COM_PROJECTLOG_FIELD_PARAMS_IMAGE_DESC"
+        />
+
+		<field name="manager" type="user"
 			label="COM_PROJECTLOG_FIELD_INFORMATION_MANAGER_LABEL"
 			description="COM_PROJECTLOG_FIELD_INFORMATION_MANAGER_DESC"
             required="true"
-		/>
+        />
         
         <field name="chief" type="user"
-			label="COM_PROJECTLOG_FIELD_INFORMATION_CHIEF_LABEL"
-			description="COM_PROJECTLOG_FIELD_INFORMATION_CHIEF_DESC"
-            required="true"
+			label="COM_PROJECTLOG_FIELD_CHIEF_LABEL"
+			description="COM_PROJECTLOG_FIELD_CHIEF_DESC"
+        />
+        
+        <field name="technicians" type="text"
+			label="COM_PROJECTLOG_FIELD_TECHNICIANS_LABEL"
+			description="COM_PROJECTLOG_FIELD_TECHNICIANS_DESC"
+			size="30"
 		/>
+        
+        <field name="deployment_from" type="calendar"
+			label="COM_PROJECTLOG_FIELD_DEPLOYMENT_FROM_LABEL" description="COM_PROJECTLOG_FIELD_DEPLOYMENT_FROM_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="deployment_to" type="calendar"
+			label="COM_PROJECTLOG_FIELD_DEPLOYMENT_TO_LABEL" description="COM_PROJECTLOG_FIELD_DEPLOYMENT_TO_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="contract_from" type="calendar"
+			label="COM_PROJECTLOG_FIELD_CONTRACT_FROM_LABEL" description="COM_PROJECTLOG_FIELD_CONTRACT_FROM_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="contract_to" type="calendar"
+			label="COM_PROJECTLOG_FIELD_CONTRACT_TO_LABEL" description="COM_PROJECTLOG_FIELD_CONTRACT_TO_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="onsite" type="radio"
+            class="btn-group"
+            label="COM_PROJECTLOG_FIELD_ONSITE_LABEL"
+            description="COM_PROJECTLOG_FIELD_ONSITE_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>       
 
 		<field name="email_to" type="email"
-			description="PROJECT_INFORMATION_EMAIL_DESC"
-			label="PROJECT_INFORMATION_EMAIL_LABEL"
-			size="30" validate="email" filter="string"
+			label="JGLOBAL_EMAIL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_EMAIL_DESC"
+			size="30"
 		/>
-
-		<field name="general_loc" type="textarea"
-			cols="30"
-			description="PROJECT_INFORMATION_ADDRESS_DESC"
-			label="PROJECT_INFORMATION_ADDRESS_LABEL"
+        
+        <field name="general_loc" type="textarea"
+			label="COM_PROJECTLOG_FIELD_GENERAL_LOC_LABEL"
+			description="COM_PROJECTLOG_FIELD_GENERAL_LOC_DESC"
 			rows="3"
+			cols="30"
 		/>
-
-		<field name="project_type" type="text"
-			description="PROJECT_INFORMATION_SUBURB_DESC"
-			label="PROJECT_INFORMATION_SUBURB_LABEL"
+        
+        <field name="specific_loc" type="textarea"
+			label="COM_PROJECTLOG_FIELD_SPECIFIC_LOC_LABEL"
+			description="COM_PROJECTLOG_FIELD_SPECIFIC_LOC_DESC"
+			rows="3"
+			cols="30"
+		/>
+        
+        <field name="release_id" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_RELEASE_ID_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_RELEASE_ID_DESC"
 			size="30"
 		/>
-
-		<field name="client" type="text"
-			description="PROJECT_INFORMATION_STATE_DESC"
-			label="PROJECT_INFORMATION_STATE_LABEL"
+        
+        <field name="job_id" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_JOB_ID_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_JOB_ID_DESC"
 			size="30"
-		/>
-
-		<field name="job_id" type="text"
-			description="PROJECT_INFORMATION_POSTCODE_DESC"
-			label="PROJECT_INFORMATION_POSTCODE_LABEL"
-			size="30"
-		/>
-
-		<field name="release_id" type="text"
-			description="PROJECT_INFORMATION_COUNTRY_DESC"
-			label="PROJECT_INFORMATION_COUNTRY_LABEL"
+		/>        
+        
+        <field name="workorder_id" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_WORKORDER_ID_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_WORKORDER_ID_DESC"
 			size="30"
 		/>
 
 		<field name="task_id" type="text"
-			description="PROJECT_INFORMATION_TELEPHONE_DESC"
-			label="PROJECT_INFORMATION_TELEPHONE_LABEL"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_TASK_ID_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_TASK_ID_DESC"
 			size="30"
 		/>
 
 		<field name="mobile" type="text"
-			description="PROJECT_INFORMATION_MOBILE_DESC"
-			label="PROJECT_INFORMATION_MOBILE_LABEL"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_MOBILE_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_MOBILE_DESC"
+			size="30"
+		/>	
+
+		<field name="webpage"
+			type="url"
+			filter="url"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_WEBPAGE_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_WEBPAGE_DESC"
 			size="30"
 		/>
 
-		<field name="webpage" type="text"
-			description="PROJECT_INFORMATION_WEBPAGE_DESC"
-			label="PROJECT_INFORMATION_WEBPAGE_LABEL"
+		<field name="sortname1" type="text"
+			label="COM_PROJECTLOG_FIELD_SORTNAME1_LABEL"
+			description="COM_PROJECTLOG_FIELD_SORTNAME1_DESC"
 			size="30"
 		/>
 
-		<field name="misc" type="editor"
-			buttons="true"
-			hide="pagebreak,readmore"
-			description="PROJECT_INFORMATION_MISC_DESC"
-			filter="safehtml"
-			label="PROJECT_INFORMATION_MISC_LABEL"
+		<field name="sortname2" type="text"
+			label="COM_PROJECTLOG_FIELD_SORTNAME2_LABEL"
+			description="COM_PROJECTLOG_FIELD_SORTNAME2_DESC"
+			size="30" 
+        />
+
+		<field name="sortname3" type="text"
+			label="COM_PROJECTLOG_FIELD_SORTNAME3_LABEL"
+			description="COM_PROJECTLOG_FIELD_SORTNAME3_DESC"
 			size="30"
-		/>
-
-		<field name="checked_out" type="hidden"
-			filter="unset"
-		/>
-
-		<field name="checked_out_time" type="hidden"
-			filter="unset"
-		/>
-
-		<field name="ordering" type="ordering"
-			description="JFIELD_ORDERING_DESC"
-			label="JFIELD_ORDERING_LABEL"
-            content_type="com_projectlog.project"
-		/>
-
-		<field name="metakey" type="textarea"
-			cols="30"
-			description="JFIELD_META_KEYWORDS_DESC"
-			label="JFIELD_META_KEYWORDS_LABEL"
-			rows="3"
-		/>
-
-		<field name="metadesc" type="textarea"
-			cols="30"
-			description="JFIELD_META_DESCRIPTION_DESC"
-			label="JFIELD_META_DESCRIPTION_LABEL"
-			rows="3"
-		/>
-
-		<field name="language" type="contentlanguage"
-			description="JFIELD_PROJECT_LANGUAGE_DESC"
-			label="JFIELD_LANGUAGE_LABEL"
-		>
-			<option value="">JALL</option>
-		</field>		
+        />
 	</fieldset>
 
-	<fields name="metadata">
-		<fieldset name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+	<fields name="params" label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS">
+		<fieldset name="display" label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS">
+			<field
+				name="project_layout"
+				type="componentlayout"
+				label="JFIELD_ALT_LAYOUT_LABEL"
+				description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
+				extension="com_projectlog"
+				view="project"
+				useglobal="true"
+				/>
+            
+            <field name="show_project_category"
+				type="list"
+				label="JGLOBAL_SHOW_CATEGORY_LABEL"
+				description="COM_PROJECTLOG_FIELD_SHOW_CATEGORY_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="hide">JHIDE</option>
+				<option value="show_no_link">COM_PROJECTLOG_FIELD_VALUE_NO_LINK</option>
+				<option value="show_with_link">COM_PROJECTLOG_FIELD_VALUE_WITH_LINK</option>
+			</field>
 
-			<field name="robots"
-			type="list"
-			label="JFIELD_METADATA_ROBOTS_LABEL"
-			description="JFIELD_METADATA_ROBOTS_DESC"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
-			<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
-			<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
-			<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
-		</field>
+			<field name="show_project_list"
+				type="list"
+				class="chzn-color"
+                label="COM_PROJECTLOG_FIELD_PROJECT_SHOW_LIST_LABEL"
+                description="COM_PROJECTLOG_FIELD_PROJECT_SHOW_LIST_DESC"
+                >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>			
 
-			<field name="rights" type="text"
-				description="JFIELD_METADATA_RIGHTS_DESC"
-				label="JFIELD_METADATA_RIGHTS_LABEL"
-				size="20"
+			<field name="show_name"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_NAME_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_NAME_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_client" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_release_date"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_DATE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_DATE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_contract_date"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_CONTRACT_DATE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_CONTRACT_DATE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_deployment_date"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_DEPLOYMENT_DATE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_DEPLOYMENT_DATE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_project_type"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="show_manager" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>           
+            
+            <field name="show_chief" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_CHIEF_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_CHIEF_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_technicians" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_TECHNICIANS_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_TECHNICIANS_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_webpage" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="show_email" type="list"
+				class="chzn-color"
+				label="JGLOBAL_EMAIL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_E_MAIL_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="show_specific_loc" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>			
+            
+            <field name="show_release_id"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="show_job_id" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>			
+
+			<field name="show_task_id"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_workorder_id" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="show_mobile"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_MOBILE_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_MOBILE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+            <field name="show_misc" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="show_image" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_SHOW_IMAGE_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_SHOW_IMAGE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="show_articles" label="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_LABEL"
+				description="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_DESC" type="list"
+				class="chzn-color"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="show_links"
+                label="COM_PROJECTLOG_FIELD_SHOW_LINKS_LABEL"
+                description="COM_PROJECTLOG_FIELD_SHOW_LINKS_DESC"
+                type="list"
+                class="chzn-color"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="linka_name" type="text"
+				label="COM_PROJECTLOG_FIELD_LINKA_NAME_LABEL"
+				description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
+				size="30"
 			/>
 
+			<field name="linka" type="url" filter="url"
+				label="COM_PROJECTLOG_FIELD_LINKA_LABEL"
+				description="COM_PROJECTLOG_FIELD_LINKA_DESC"
+				size="30"
+			/>
+
+			<field name="linkb_name" type="text"
+				label="COM_PROJECTLOG_FIELD_LINKB_NAME_LABEL"
+				description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
+				size="30"
+			/>
+
+			<field name="linkb" type="url" filter="url"
+				label="COM_PROJECTLOG_FIELD_LINKB_LABEL"
+				description="COM_PROJECTLOG_FIELD_LINKB_DESC"
+				size="30"
+			/>
+
+			<field name="linkc_name"
+				type="text"
+				label="COM_PROJECTLOG_FIELD_LINKC_NAME_LABEL"
+				description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
+				size="30"
+			/>
+
+			<field name="linkc"
+				type="url" filter="url"
+				label="COM_PROJECTLOG_FIELD_LINKC_LABEL"
+				description="COM_PROJECTLOG_FIELD_LINKC_DESC"
+				size="30"
+			/>
+
+			<field name="linkd_name"
+				type="text"
+				label="COM_PROJECTLOG_FIELD_LINKD_NAME_LABEL"
+				description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
+				size="30"
+				/>
+
+			<field name="linkd"
+				type="url" filter="url"
+				label="COM_PROJECTLOG_FIELD_LINKD_LABEL"
+				description="COM_PROJECTLOG_FIELD_LINKD_DESC"
+				size="30"
+			/>
+
+			<field name="linke_name"
+				type="text"
+				label="COM_PROJECTLOG_FIELD_LINKE_NAME_LABEL"
+				description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
+				size="30"
+			/>
+
+			<field name="linke"
+				type="text"
+				label="COM_PROJECTLOG_FIELD_LINKE_LABEL"
+				description="COM_PROJECTLOG_FIELD_LINKE_DESC"
+				size="30"
+			/>		
+            
+            <field name="show_tags" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_SHOW_TAGS_LABEL"
+				description="COM_PROJECTLOG_FIELD_SHOW_TAGS_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
 		</fieldset>
 	</fields>
+    
+	<fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+		<fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+			<field name="robots"
+				type="list"
+				label="JFIELD_METADATA_ROBOTS_LABEL"
+				description="JFIELD_METADATA_ROBOTS_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
 
-	<fields name="params">
-		<fieldset name="options" label="PROJECT_PARAMETERS">
-
-		<field name="show_name" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_NAME_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_manager" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_PROJECT_MANAGER_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_email" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_PROJECT_POSITION_E_MAIL_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_specific_loc" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_SPECIFIC_LOC_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_project_type" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_TOWN_SUBURB_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_client" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_STATE_COUNTY_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_job_id" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_POST_ZIP_CODE_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_release_id" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_COUNTRY_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_task_id" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_TELEPHONE_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_mobile" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_MOBILE_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_workorder_id" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_FAX_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_webpage" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_WEBPAGE_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_misc" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_MISC_INFO_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_image" type="list"
-			description="PROJECT_PARAMS_NAME_DESC"
-			label="PROJECT_PARAMS_IMAGE_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-        </field>
-        
-		<field name="show_articles" type="list"
-			description="PROJECT_SHOW_ARTICLES_DESC"
-			label="PROJECT_SHOW_ARTICLES_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field  name="show_profile" type="list"
-			label="PROJECT_PROFILE_SHOW_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="show_links" type="list"
-			description="PROJECT_SHOW_LINKS_DESC"
-			label="PROJECT_SHOW_LINKS_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="linka_name" type="text"
-			description="PROJECT_LINKA_NAME_DESC"
-			label="PROJECT_LINKA_NAME_LABEL"
-			size="30"
-		/>
-
-		<field name="linka" type="text"
-			description="PROJECT_LINKA_DESC"
-			label="PROJECT_LINKA_LABEL"
-			size="30"
-		/>
-
-		<field name="linkb_name" type="text"
-			description="PROJECT_LINKB_NAME_DESC"
-			label="PROJECT_LINKB_NAME_LABEL"
-			size="30"
-		/>
-
-		<field name="linkb" type="text"
-			description="PROJECT_LINKB_DESC"
-			label="PROJECT_LINKB_LABEL"
-			size="30"
-		/>
-
-		<field name="linkc_name" type="text"
-			description="PROJECT_LINKC_NAME_DESC"
-			label="PROJECT_LINKC_NAME_LABEL"
-			size="30"
-		/>
-
-		<field name="linkc" type="text"
-			description="PROJECT_LINKC_DESC"
-			label="PROJECT_LINKC_LABEL"
-			size="30"
-		/>
-
-		<field name="linkd_name" type="text"
-			description="PROJECT_LINKD_NAME_DESC"
-			label="PROJECT_LINKD_NAME_LABEL"
-			size="30"
-		/>
-
-		<field name="linkd" type="text"
-			description="PROJECT_LINKD_DESC"
-			label="PROJECT_LINKD_LABEL"
-			size="30"
-		/>
-
-		<field name="linke_name" type="text"
-			description="PROJECT_LINKE_NAME_DESC"
-			label="PROJECT_LINKE_NAME_LABEL"
-			size="30"
-		/>
-
-		<field name="linke" type="text"
-			description="PROJECT_LINKE_DESC"
-			label="PROJECT_LINKE_LABEL"
-			size="30"
-		/>
-
-		</fieldset>
-	</fields>
-
-	<fields name="email_form">
-		<fieldset name="email_form" label="PROJECT_EMAIL_FORM_LABEL">
-
-		<field name="show_email_form" type="list"
-			description="PROJECT_EMAIL_SHOW_FORM_DESC"
-			label="PROJECT_EMAIL_SHOW_FORM_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="email_description" type="text"
-			description="PROJECT_EMAIL_DESCRIPTION_TEXT_DESC"
-			label="PROJECT_EMAIL_DESCRIPTION_TEXT_LABEL"
-			size="30"
-		/>
-
-		<field name="show_email_copy" type="list"
-			description="PROJECT_EMAIL_EMAIL_COPY_DESC"
-			label="PROJECT_EMAIL_EMAIL_COPY_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
-		</field>
-
-		<field name="banned_email" type="textarea"
-			cols="30"
-			description="PROJECT_EMAIL_BANNED_EMAIL_DESC"
-			label="PROJECT_EMAIL_BANNED_EMAIL_LABEL"
-			rows="3"
-		/>
-
-		<field name="banned_subject" type="textarea"
-			cols="30"
-			description="Project_Email_BANNED_SUBJECT_DESC"
-			label="Project_Email_BANNED_SUBJECT_LABEL"
-			rows="3"
-		/>
-
-		<field name="banned_text" type="textarea"
-			cols="30"
-			description="PROJECT_EMAIL_BANNED_TEXT_DESC"
-			label="PROJECT_EMAIL_BANNED_TEXT_LABEL"
-			rows="3"
-		/>
-
-		<field name="validate_session" type="list"
-			description="PROJECT_CONFIG_SESSION_CHECK_DESC"
-			label="PROJECT_CONFIG_SESSION_CHECK_LABEL"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-
-		<field name="custom_reply" type="list"
-			description="PROJECT_CONFIG_CUSTOM_REPLY_DESC"
-			label="PROJECT_CONFIG_CUSTOM_REPLY"
-		>
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-
-		<field name="redirect" type="text"
-			description="COM_PROJECTLOG_FIELD_CONFIG_REDIRECT_DESC"
-			label="COM_PROJECTLOG_FIELD_CONFIG_REDIRECT_LABEL"
-			size="30"
-		/>
-
+			<field name="rights" type="text"
+				label="JFIELD_METADATA_RIGHTS_LABEL"
+				description="JFIELD_METADATA_RIGHTS_DESC"
+				size="20" />
 		</fieldset>
 	</fields>
 </form>
-

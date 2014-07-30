@@ -1,28 +1,369 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<fieldset name="project" label="COM_PROJECTLOG_FIELD_CONFIG_INDIVIDUAL_PROJECT_DISPLAY"	description="COM_PROJECTLOG_FIELD_CONFIG_INDIVIDUAL_PROJECT_DESC">
-		<field
-			name="project_layout" type="componentlayout"
-			label="JGLOBAL_FIELD_LAYOUT_LABEL"
-			description="JGLOBAL_FIELD_LAYOUT_DESC"
-			menuitems="true"
-			extension="com_projectlog"
-			view="project"
-		/>
+		<field name="project_layout"
+            type="componentlayout"
+            label="JFIELD_ALT_LAYOUT_LABEL"
+            description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
+            extension="com_projectlog"
+            view="project"
+            useglobal="true"
+        />
 
-		<field name="show_project_category"
-			type="list"
-			default="hide"
-			label="COM_PROJECTLOG_FIELD_PROJECT_SHOW_CATEGORY_LABEL"
-			description="COM_PROJECTLOG_FIELD_PROJECT_SHOW_CATEGORY_DESC"
+        <field name="show_project_category"
+            type="list"
+            default="show_with_link"
+            label="JGLOBAL_SHOW_CATEGORY_LABEL"
+            description="COM_PROJECTLOG_FIELD_SHOW_CATEGORY_DESC"
             >
-			<option value="hide">JHIDE</option>
-			<option value="show_no_link">COM_PROJECTLOG_FIELD_VALUE_NO_LINK</option>
-			<option value="show_with_link">COM_PROJECTLOG_FIELD_VALUE_WITH_LINK</option>
-		</field>
-		
-		<field
-			name="save_history"
+            <option value="hide">JHIDE</option>
+            <option value="show_no_link">COM_PROJECTLOG_FIELD_VALUE_NO_LINK</option>
+            <option value="show_with_link">COM_PROJECTLOG_FIELD_VALUE_WITH_LINK</option>
+        </field>
+
+        <field name="show_project_list"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PROJECT_SHOW_LIST_LABEL"
+            description="COM_PROJECTLOG_FIELD_PROJECT_SHOW_LIST_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+        
+        <field name="pl_date_format"
+            type="list"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_CONFIG_DATE_LABEL" 
+            description="COM_PROJECTLOG_FIELD_CONFIG_DATE_DESC"
+            >            
+			<option value="l, d F Y">l, d F Y</option>
+            <option value="m/d/Y">m/d/Y</option>
+            <option value="d F Y">d F Y</option>
+            <option value="Y-m-d">Y-m-d</option>
+            <option value="y-m-d">y-m-d</option>
+            <option value="l, d F Y H:i">l, d F Y H:i</option>
+        </field>			
+
+        <field name="show_name"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_NAME_LABEL" 
+            description="COM_PROJECTLOG_FIELD_PARAMS_NAME_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_client"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_release_date"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_DATE_LABEL" 
+            description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_DATE_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_contract_date"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_CONTRACT_DATE_LABEL" 
+            description="COM_PROJECTLOG_FIELD_PARAMS_CONTRACT_DATE_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_deployment_date"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_DEPLOYMENT_DATE_LABEL" 
+            description="COM_PROJECTLOG_FIELD_PARAMS_DEPLOYMENT_DATE_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_project_type"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_LABEL" 
+            description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_manager"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>           
+
+        <field name="show_chief"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_CHIEF_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_CHIEF_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_technicians"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_TECHNICIANS_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_TECHNICIANS_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_webpage"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_email"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="0"
+            label="JGLOBAL_EMAIL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_E_MAIL_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_specific_loc"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>			
+
+        <field name="show_release_id"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_job_id"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>			
+
+        <field name="show_task_id"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_workorder_id"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_mobile"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="0"
+            label="COM_PROJECTLOG_FIELD_PARAMS_MOBILE_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_MOBILE_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_misc"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_image"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_PARAMS_SHOW_IMAGE_LABEL"
+            description="COM_PROJECTLOG_FIELD_PARAMS_SHOW_IMAGE_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_articles" 
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="0"
+            label="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_LABEL"
+            description="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_links"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_SHOW_LINKS_LABEL"
+            description="COM_PROJECTLOG_FIELD_SHOW_LINKS_DESC"            
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+
+        <field name="linka_name" 
+            type="text"
+            label="COM_PROJECTLOG_FIELD_LINKA_NAME_LABEL"
+            description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
+            size="30"
+        />
+
+        <field name="linka" 
+            type="url" 
+            filter="url"
+            label="COM_PROJECTLOG_FIELD_LINKA_LABEL"
+            description="COM_PROJECTLOG_FIELD_LINKA_DESC"
+            size="30"
+        />
+
+        <field name="linkb_name" 
+            type="text"
+            label="COM_PROJECTLOG_FIELD_LINKB_NAME_LABEL"
+            description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
+            size="30"
+        />
+
+        <field name="linkb" 
+            type="url" 
+            filter="url"
+            label="COM_PROJECTLOG_FIELD_LINKB_LABEL"
+            description="COM_PROJECTLOG_FIELD_LINKB_DESC"
+            size="30"
+        />
+
+        <field name="linkc_name"
+            type="text"
+            label="COM_PROJECTLOG_FIELD_LINKC_NAME_LABEL"
+            description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
+            size="30"
+        />
+
+        <field name="linkc"
+            type="url" 
+            filter="url"
+            label="COM_PROJECTLOG_FIELD_LINKC_LABEL"
+            description="COM_PROJECTLOG_FIELD_LINKC_DESC"
+            size="30"
+        />
+
+        <field name="linkd_name"
+            type="text"
+            label="COM_PROJECTLOG_FIELD_LINKD_NAME_LABEL"
+            description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
+            size="30"
+            />
+
+        <field name="linkd"
+            type="url" 
+            filter="url"
+            label="COM_PROJECTLOG_FIELD_LINKD_LABEL"
+            description="COM_PROJECTLOG_FIELD_LINKD_DESC"
+            size="30"
+        />
+
+        <field name="linke_name"
+            type="text"
+            label="COM_PROJECTLOG_FIELD_LINKE_NAME_LABEL"
+            description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
+            size="30"
+        />
+
+        <field name="linke"
+            type="url"
+            filter="url"
+            label="COM_PROJECTLOG_FIELD_LINKE_LABEL"
+            description="COM_PROJECTLOG_FIELD_LINKE_DESC"
+            size="30"
+        />		
+
+        <field name="show_tags"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_SHOW_TAGS_LABEL"
+            description="COM_PROJECTLOG_FIELD_SHOW_TAGS_DESC"
+            >
+            <option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+        </field>
+        
+        <field name="save_history"
 			type="radio"
 			class="btn-group btn-group-yesno"
 			default="0"
@@ -41,243 +382,6 @@
 			description="JGLOBAL_HISTORY_LIMIT_OPTIONS_DESC"
 			default="5"
 		/>
-
-		<field name="show_project_list"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="0"
-			description="COM_PROJECTLOG_FIELD_PROJECT_SHOW_LIST_DESC"
-            label="COM_PROJECTLOG_FIELD_PROJECT_SHOW_LIST_LABEL"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_name"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_NAME_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_NAME_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_manager"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_email"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="0"
-			label="JGLOBAL_EMAIL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_E_MAIL_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_specific_loc"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1" label="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_project_type"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_client"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-        
-        <field name="show_release_id"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_ID_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_job_id"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>		
-
-		<field name="show_task_id"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_TASK_ID_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-        
-        <field name="show_workorder_id"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_mobile"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_MOBILE_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_MOBILE_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>		
-
-		<field name="show_webpage"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_misc"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_image"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_PARAMS_SHOW_IMAGE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_SHOW_IMAGE_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-        
-		<field name="image"
-			type="media"
-			label="COM_PROJECTLOG_FIELD_PARAMS_IMAGE_LABEL"
-			description="COM_PROJECTLOG_FIELD_PARAMS_IMAGE_DESC"
-            >
-		</field>
-
-		<field name="show_articles"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_LABEL"
-			description="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_links"
-			label="COM_PROJECTLOG_FIELD_SHOW_LINKS_LABEL"
-			description="COM_PROJECTLOG_FIELD_SHOW_LINKS_LABEL"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-
-		</field>
-
-        <field name="linka_name"
-            type="text"
-            label="COM_PROJECTLOG_FIELD_LINKA_NAME_LABEL"
-            description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
-            size="30"
-        />
-
-        <field name="linkb_name"
-            type="text"
-            label="COM_PROJECTLOG_FIELD_LINKB_NAME_LABEL"
-            description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
-            size="30"
-        />
-
-        <field name="linkc_name" type="text"
-            label="COM_PROJECTLOG_FIELD_LINKC_NAME_LABEL" description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
-            size="30" />
-
-        <field name="linkd_name"
-            type="text"
-            label="COM_PROJECTLOG_FIELD_LINKD_NAME_LABEL"
-            description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
-            size="30"
-        />
-
-        <field name="linke_name"
-            type="text"
-            label="COM_PROJECTLOG_FIELD_LINKE_NAME_LABEL"
-            description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
-            size="30"
-        />
-
-		<field
-			id="show_tags"
-			name="show_tags"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_SHOW_TAGS_LABEL"
-			description="COM_PROJECTLOG_FIELD_SHOW_TAGS_DESC">
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
 	</fieldset>
 	
 	<fieldset name="Category" label="JCATEGORY" description="COM_PROJECTLOG_FIELD_CONFIG_CATEGORY_DESC">
@@ -289,38 +393,9 @@
 			extension="com_projectlog"
 			view="category"
 		/>
-
-		<field name="show_category_title" type="radio"
-			default="1"
-			class="btn-group btn-group-yesno"
-			label="JGLOBAL_SHOW_CATEGORY_TITLE"
-			description="JGLOBAL_SHOW_CATEGORY_TITLE_DESC"
-			>
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_description" type="radio"
-			default="1"
-			class="btn-group btn-group-yesno"
-			description="JGLOBAL_SHOW_CATEGORY_DESCRIPTION_DESC"
-			label="JGLOBAL_SHOW_CATEGORY_DESCRIPTION_LABEL"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="show_description_image" type="radio"
-			default="0"
-			class="btn-group btn-group-yesno"
-			description="JGLOBAL_SHOW_CATEGORY_IMAGE_DESC"
-			label="JGLOBAL_SHOW_CATEGORY_IMAGE_LABEL"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-
-		<field name="maxLevel" type="list"
+        
+        <field name="maxLevel" 
+            type="list"
 			default="-1"
 			description="JGLOBAL_MAXIMUM_CATEGORY_LEVELS_DESC"
 			label="JGLOBAL_MAXIMUM_CATEGORY_LEVELS_LABEL"
@@ -334,7 +409,41 @@
 			<option value="5">J5</option>
 		</field>
 
-		<field name="show_empty_categories" type="radio"
+		<field name="show_category_title" 
+            type="radio"
+			default="1"
+			class="btn-group btn-group-yesno"
+			label="JGLOBAL_SHOW_CATEGORY_TITLE"
+			description="JGLOBAL_SHOW_CATEGORY_TITLE_DESC"
+			>
+			<option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+		</field>
+
+		<field name="show_description" 
+            type="radio"
+			default="1"
+			class="btn-group btn-group-yesno"
+			description="JGLOBAL_SHOW_CATEGORY_DESCRIPTION_DESC"
+			label="JGLOBAL_SHOW_CATEGORY_DESCRIPTION_LABEL"
+            >
+			<option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+		</field>
+
+		<field name="show_description_image" 
+            type="radio"
+			default="0"
+			class="btn-group btn-group-yesno"
+			description="JGLOBAL_SHOW_CATEGORY_IMAGE_DESC"
+			label="JGLOBAL_SHOW_CATEGORY_IMAGE_LABEL"
+            >
+			<option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+		</field>	
+
+		<field name="show_empty_categories" 
+            type="radio"
 			default="0"
 			class="btn-group btn-group-yesno"
 			label="JGLOBAL_SHOW_EMPTY_CATEGORIES_LABEL"
@@ -344,7 +453,8 @@
 			<option value="0">JHIDE</option>
 		</field>
 
-		<field name="show_subcat_desc" type="radio"
+		<field name="show_subcat_desc" 
+            type="radio"
 			default="1"
 			class="btn-group btn-group-yesno"
 			label="JGLOBAL_SHOW_SUBCATEGORIES_DESCRIPTION_LABEL"
@@ -354,7 +464,8 @@
 			<option value="0">JHIDE</option>
 		</field>
 
-		<field name="show_cat_items" type="radio"
+		<field name="show_cat_items" 
+            type="radio"
 			default="1"
 			class="btn-group btn-group-yesno"
 			label="COM_PROJECTLOG_FIELD_SHOW_CAT_ITEMS_LABEL"
@@ -364,7 +475,8 @@
 			<option value="0">JHIDE</option>
 		</field>
 
-		<field name="show_cat_tags" type="radio"
+		<field name="show_cat_tags" 
+            type="radio"
 			label="COM_PROJECTLOG_FIELD_SHOW_CAT_TAGS_LABEL"
 			description="COM_PROJECTLOG_FIELD_SHOW_CAT_TAGS_DESC"
 			class="btn-group btn-group-yesno"
@@ -376,7 +488,8 @@
 	</fieldset>
 
     <fieldset name="categories"	label="JCATEGORIES"	description="COM_PROJECTLOG_FIELD_CONFIG_CATEGORIES_DESC">
-		<field name="show_base_description" type="radio"
+		<field name="show_base_description" 
+            type="radio"
 			default="1"
 			class="btn-group btn-group-yesno"
 			label="JGLOBAL_FIELD_SHOW_BASE_DESCRIPTION_LABEL"
@@ -386,7 +499,8 @@
 			<option value="0">JHIDE</option>
 		</field>
 
-		<field name="maxLevelcat" type="list"
+		<field name="maxLevelcat" 
+            type="list"
 			default="-1"
 			description="JGLOBAL_MAXIMUM_CATEGORY_LEVELS_DESC"
 			label="JGLOBAL_MAXIMUM_CATEGORY_LEVELS_LABEL"
@@ -399,7 +513,8 @@
 			<option value="5">J5</option>
 		</field>
 
-		<field name="show_empty_categories_cat" type="radio"
+		<field name="show_empty_categories_cat" 
+            type="radio"
 			default="0"
 			class="btn-group btn-group-yesno"
 			label="JGLOBAL_SHOW_EMPTY_CATEGORIES_LABEL"
@@ -409,7 +524,8 @@
 			<option value="0">JHIDE</option>
 		</field>
 
-		<field name="show_subcat_desc_cat" type="radio"
+		<field name="show_subcat_desc_cat" 
+            type="radio"
 			default="1"
 			class="btn-group btn-group-yesno"
 			label="JGLOBAL_SHOW_SUBCATEGORIES_DESCRIPTION_LABEL"
@@ -419,7 +535,8 @@
 			<option value="0">JHIDE</option>
 		</field>
 
-		<field name="show_cat_items_cat" type="radio"
+		<field name="show_cat_items_cat" 
+            type="radio"
 			default="1"
 			class="btn-group btn-group-yesno"
 			label="COM_PROJECTLOG_FIELD_SHOW_CAT_ITEMS_LABEL"
@@ -431,20 +548,21 @@
 	</fieldset>
 
 	<fieldset name="projects" label="JGLOBAL_LIST_LAYOUT_OPTIONS" description="COM_PROJECTLOG_FIELD_CONFIG_TABLE_OF_PROJECTS_DESC">
-		<field
-			name="filter_field"
-			type="list"
+		<field name="filter_field"
+			type="radio"
+			class="btn-group btn-group-yesno"
 			default="1"
 			description="JGLOBAL_FILTER_FIELD_DESC"
 			label="JGLOBAL_FILTER_FIELD_LABEL"
 			>
-            <option value="hide">JHIDE</option>
             <option value="1">JSHOW</option>
+            <option value="0">JHIDE</option>
 		</field>
 
-		<field name="show_pagination_limit" type="radio"
-			default="1"
+		<field name="show_pagination_limit" 
+            type="radio"
 			class="btn-group btn-group-yesno"
+            default="1"
 			description="JGLOBAL_DISPLAY_SELECT_DESC"
 			label="JGLOBAL_DISPLAY_SELECT_LABEL"
             >
@@ -452,113 +570,107 @@
 			<option value="0">JHIDE</option>
 		</field>
 
-		<field name="show_headings" type="radio"
-			default="1"
+		<field name="show_headings" 
+            type="radio"
 			class="btn-group btn-group-yesno"
+            default="1"
 			description="JGLOBAL_SHOW_HEADINGS_DESC"
 			label="JGLOBAL_SHOW_HEADINGS_LABEL"
             >
 			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
+            <option value="0">JHIDE</option>
 		</field>
 
-		<field name="show_manager_headings" type="radio"
-			default="1"
+		<field name="show_project_type_headings" 
+            type="radio"
 			class="btn-group btn-group-yesno"
-			label="COM_PROJECTLOG_FIELD_CONFIG_MANAGER_LABEL"
-			description="COM_PROJECTLOG_FIELD_CONFIG_MANAGER_DESC"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_CONFIG_PROJECTTYPE_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_PROJECTTYPE_DESC"
             >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
+            <option value="1">JSHOW</option>
+            <option value="0">JHIDE</option>
+        </field>
 
-		<field name="show_email_headings" type="radio"
-			default="0"
+        <field name="show_client_headings"
+            type="radio"
 			class="btn-group btn-group-yesno"
-			label="JGLOBAL_EMAIL"
-			description="COM_PROJECTLOG_FIELD_CONFIG_EMAIL_DESC"
+            default="0"
+            label="COM_PROJECTLOG_FIELD_CONFIG_CLIENT_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_CLIENT_DESC"
             >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
+            <option value="1">JSHOW</option>
+            <option value="0">JHIDE</option>
+        </field>
 
-		<field name="show_mobile_headings"
-			type="radio"
+        <field name="show_manager_headings" 
+            type="radio"
 			class="btn-group btn-group-yesno"
-			default="0"
-			label="COM_PROJECTLOG_FIELD_CONFIG_MOBILE_LABEL"
-			description="COM_PROJECTLOG_FIELD_CONFIG_MOBILE_DESC"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_CONFIG_MANAGER_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_MANAGER_DESC"
             >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
+            <option value="1">JSHOW</option>
+            <option value="0">JHIDE</option>
+        </field>
 
-		<field name="show_project_type_headings" type="radio"
-			default="0"
+        <field name="show_chief_headings" 
+            type="radio"
 			class="btn-group btn-group-yesno"
-			label="COM_PROJECTLOG_FIELD_CONFIG_PROJECTTYPE_LABEL"
-			description="COM_PROJECTLOG_FIELD_CONFIG_PROJECTTYPE_DESC"
+            default="0"
+            label="COM_PROJECTLOG_FIELD_CONFIG_CHIEF_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_CHIEF_DESC"
             >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
+            <option value="1">JSHOW</option>
+            <option value="0">JHIDE</option>
+        </field>          
 
-		<field name="show_client_headings"
-			type="radio"
+        <field name="show_release_id_headings"
+            type="radio"
 			class="btn-group btn-group-yesno"
-			default="0"
-			label="COM_PROJECTLOG_FIELD_CONFIG_CLIENT_LABEL"
-			description="COM_PROJECTLOG_FIELD_CONFIG_CLIENT_DESC"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_CONFIG_RELEASE_ID_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_RELEASE_ID_DESC"
             >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
+            <option value="1">JSHOW</option>
+            <option value="0">JHIDE</option>
+        </field>
 
-		<field name="show_release_id_headings"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="0"
-			label="COM_PROJECTLOG_FIELD_CONFIG_RELEASE_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_CONFIG_RELEASE_ID_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-        
         <field name="show_job_id_headings"
-			type="radio"
+            type="radio"
 			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_CONFIG_JOB_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_CONFIG_JOB_ID_DESC"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_CONFIG_JOB_ID_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_JOB_ID_DESC"
             >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-        
-        <field name="show_task_id_headings"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="1"
-			label="COM_PROJECTLOG_FIELD_CONFIG_TASK_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_CONFIG_TASK_ID_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
-        
-        <field name="show_workorder_id_headings"
-			type="radio"
-			class="btn-group btn-group-yesno"
-			default="0"
-			label="COM_PROJECTLOG_FIELD_CONFIG_WORKORDER_ID_LABEL"
-			description="COM_PROJECTLOG_FIELD_CONFIG_WORKORDER_ID_DESC"
-            >
-			<option value="1">JSHOW</option>
-			<option value="0">JHIDE</option>
-		</field>
+            <option value="1">JSHOW</option>
+            <option value="0">JHIDE</option>
+        </field>
 
-        <field name="show_pagination" type="list"
+        <field name="show_task_id_headings"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_CONFIG_TASK_ID_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_TASK_ID_DESC"
+            >
+            <option value="1">JSHOW</option>
+            <option value="0">JHIDE</option>
+        </field>           
+
+        <field name="show_workorder_id_headings"
+            type="radio"
+			class="btn-group btn-group-yesno"
+            default="1"
+            label="COM_PROJECTLOG_FIELD_CONFIG_WORKORDER_ID_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_WORKORDER_ID_DESC"
+            >
+            <option value="1">JSHOW</option>
+            <option value="0">JHIDE</option>
+        </field>
+
+        <field name="show_pagination" 
+            type="list"
             default="2"
             description="JGLOBAL_PAGINATION_DESC"
             label="JGLOBAL_PAGINATION_LABEL"
@@ -568,8 +680,7 @@
             <option value="2">JGLOBAL_AUTO</option>
         </field>
 
-        <field
-            name="show_pagination_results"
+        <field name="show_pagination_results"
             type="radio"
             class="btn-group btn-group-yesno"
             default="1"
@@ -580,7 +691,8 @@
             <option value="0">JHIDE</option>
         </field>
 
-        <field name="initial_sort" type="list"
+        <field name="initial_sort" 
+            type="list"
             description="COM_PROJECTLOG_FIELD_INITIAL_SORT_DESC"
             label="COM_PROJECTLOG_FIELD_INITIAL_SORT_LABEL"
             validate="options"
@@ -593,8 +705,7 @@
 	</fieldset>
 
 	<fieldset name="Project_Form" label="COM_PROJECTLOG_FIELD_CONFIG_PROJECT_FORM" description="COM_PROJECTLOG_FIELD_CONFIG_INDIVIDUAL_PROJECT_DESC">
-		<field
-			name="captcha"
+		<field name="captcha"
 			type="plugins"
 			folder="captcha"
 			default=""
@@ -682,8 +793,7 @@
 	</fieldset>
 
 	<fieldset name="integration" label="JGLOBAL_INTEGRATION_LABEL" description="COM_PROJECTLOG_CONFIG_INTEGRATION_SETTINGS_DESC">
-		<field
-			name="show_feed_link"
+		<field name="show_feed_link"
 			type="radio"
 			class="btn-group btn-group-yesno"
 			default="1"

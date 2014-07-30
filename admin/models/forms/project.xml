@@ -388,6 +388,20 @@
                 <option value="">JGLOBAL_USE_GLOBAL</option>
                 <option value="0">JHIDE</option>
                 <option value="1">JSHOW</option>
+            </field>	
+            
+            <field name="pl_date_format"
+                type="list"
+                label="COM_PROJECTLOG_FIELD_DATE_FORMAT_LABEL" 
+                description="COM_PROJECTLOG_FIELD_DATE_FORMAT_DESC"
+                >         
+                <option value="">JGLOBAL_USE_GLOBAL</option>   
+                <option value="l, d F Y">l, d F Y</option>
+                <option value="m/d/Y">m/d/Y</option>
+                <option value="d F Y">d F Y</option>
+                <option value="Y-m-d">Y-m-d</option>
+                <option value="y-m-d">y-m-d</option>
+                <option value="l, d F Y H:i">l, d F Y H:i</option>
             </field>			
 
 			<field name="show_name"
@@ -399,11 +413,91 @@
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
+            
+            <field name="show_client" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_release_date"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_DATE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_DATE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_contract_date"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_CONTRACT_DATE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_CONTRACT_DATE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_deployment_date"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_DEPLOYMENT_DATE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_DEPLOYMENT_DATE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_project_type"
+				type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
 
 			<field name="show_manager" type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>           
+            
+            <field name="show_chief" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_CHIEF_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_CHIEF_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_technicians" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_TECHNICIANS_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_TECHNICIANS_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            
+            <field name="show_webpage" type="list"
+				class="chzn-color"
+				label="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_LABEL"
+				description="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_DESC"
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
@@ -428,27 +522,7 @@
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
-			</field>
-
-			<field name="show_project_type" type="list"
-				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_LABEL"
-				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_DESC"
-                >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
-
-			<field name="show_client" type="list"
-				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_LABEL"
-				description="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_DESC"
-                >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
+			</field>			
             
             <field name="show_release_id"
 				type="list"
@@ -501,19 +575,9 @@
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
-			</field>			
-
-			<field name="show_webpage" type="list"
-				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_LABEL"
-				description="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_DESC"
-                >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_misc" type="list"
+            <field name="show_misc" type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_DESC"
@@ -536,16 +600,6 @@
 			<field name="show_articles" label="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_LABEL"
 				description="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_DESC" type="list"
 				class="chzn-color"
-                >
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
-            
-			<field name="show_profile" type="list"
-				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PROFILE_SHOW_LABEL"
-				description="COM_PROJECTLOG_FIELD_PROFILE_SHOW_DESC"
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>

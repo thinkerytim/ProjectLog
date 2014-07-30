@@ -13,25 +13,25 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 
 ?>
 <h3><?php echo JText::_('COM_PROJECTLOG_DETAILS'); ?></h3>
-<ul class="nav nav-list pl-project-details">
+<ul class="pl-project-details">
     <?php if ($this->project->release_date && $this->params->get('show_release_date')) : ?>
         <li>
             <b><?php echo JText::_('COM_PROJECTLOG_RELEASE_DATE'); ?>:</b>&nbsp;
-            <?php echo JHTML::date($this->project->release_date, 'DATE_FORMATE_LC1'); ?>
+            <?php echo JHTML::date($this->project->release_date, $this->params->get('pl_date_format')); ?>
         </li>
     <?php endif; ?>
     <?php if ($this->project->contract_from && $this->params->get('show_contract_date')) : ?>
         <li>
             <b><?php echo JText::_('COM_PROJECTLOG_CONTRACT_DATE'); ?>:</b>&nbsp;
-            <?php echo JHTML::date($this->project->contract_from, 'DATE_FORMATE_LC1'); ?>
-            <?php echo ($this->project->contract_to) ? ' - '.JHTML::date($this->project->contract_to, 'DATE_FORMATE_LC1') : ''; ?>
+            <?php echo JHTML::date($this->project->contract_from, $this->params->get('pl_date_format')); ?>
+            <?php echo ($this->project->contract_to) ? ' - '.JHTML::date($this->project->contract_to, $this->params->get('pl_date_format')) : ''; ?>
         </li>
     <?php endif; ?>
     <?php if ($this->project->deployment_from && $this->params->get('show_deployment_date')) : ?>
         <li>
             <b><?php echo JText::_('COM_PROJECTLOG_DEPLOYMENT_DATE'); ?>:</b>&nbsp;
-            <?php echo JHTML::date($this->project->deployment_from, 'DATE_FORMATE_LC1'); ?>
-            <?php echo ($this->project->deployment_to) ? ' - '.JHTML::date($this->project->deployment_to, 'DATE_FORMATE_LC1') : ''; ?>
+            <?php echo JHTML::date($this->project->deployment_from, $this->params->get('pl_date_format')); ?>
+            <?php echo ($this->project->deployment_to) ? ' - '.JHTML::date($this->project->deployment_to, $this->params->get('pl_date_format')) : ''; ?>
         </li>
     <?php endif; ?>
     <?php if ($this->project->project_type && $this->params->get('show_project_type')) : ?>
@@ -86,4 +86,5 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
             <a href="<?php echo $projectLink; ?>"><?php echo $this->escape($this->project->category_title); ?></a>
         </li>
     <?php endif; ?>
+    <li class="divider"></li>
 </ul>
