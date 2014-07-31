@@ -20,7 +20,7 @@ class ProjectlogControllerProject extends JControllerForm
 		return parent::getModel($name, $prefix, array('ignore_request' => false));
 	}
 
-	public function submit()
+	public function submitContact()
 	{
 		// Check for request forgeries.
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
@@ -46,9 +46,9 @@ class ProjectlogControllerProject extends JControllerForm
 				JError::raiseWarning(403, JText::_('COM_PROJECTLOG_SESSION_INVALID'));
 
 				// Save the data in the session.
-				$app->setUserState('com_projectlog.project.data', $data);
+				$app->setUserState('com_projectlog.contact.data', $data);
 
-				// Redirect back to the project form.
+				// Redirect back to the project.
 				$this->setRedirect(JRoute::_('index.php?option=com_projectlog&view=project&id=' . $stub, false));
 
 				return false;
@@ -56,7 +56,7 @@ class ProjectlogControllerProject extends JControllerForm
 		}
 
 		// Project plugins
-		JPluginHelper::importPlugin('project');
+		JPluginHelper::importPlugin('projectlog');
 		$dispatcher	= JEventDispatcher::getInstance();
 
 		// Validate the posted data.
@@ -90,16 +90,16 @@ class ProjectlogControllerProject extends JControllerForm
 			}
 
 			// Save the data in the session.
-			$app->setUserState('com_projectlog.project.data', $data);
+			$app->setUserState('com_projectlog.contact.data', $data);
 
-			// Redirect back to the project form.
+			// Redirect back to the project.
 			$this->setRedirect(JRoute::_('index.php?option=com_projectlog&view=project&id=' . $stub, false));
 
 			return false;
 		}
 
 		// Validation succeeded, continue with custom handlers
-		$results	= $dispatcher->trigger('onValidateProject', array(&$project, &$data));
+		$results	= $dispatcher->trigger('onValidateProjectContact', array(&$project, &$data));
 
 		foreach ($results as $result)
 		{
@@ -109,8 +109,8 @@ class ProjectlogControllerProject extends JControllerForm
 			}
 		}
 
-		// Passed Validation: Process the project plugins to integrate with other applications
-		$dispatcher->trigger('onSubmitProject', array(&$project, &$data));
+		// Passed Validation: Process the projectlog plugins to integrate with other applications
+		$dispatcher->trigger('onSubmitProjectContact', array(&$project, &$data));
 
 		// Send the email
 		$sent = false;
@@ -131,7 +131,7 @@ class ProjectlogControllerProject extends JControllerForm
 		}
 
 		// Flush the data from the session
-		$app->setUserState('com_projectlog.project.data', null);
+		$app->setUserState('com_projectlog.contact.data', null);
 
 		// Redirect if it is set in the parameters, otherwise redirect back to where we came from
 		if ($project->params->get('redirect'))
@@ -160,13 +160,13 @@ class ProjectlogControllerProject extends JControllerForm
         $fromname	= $app->getCfg('fromname');
         $sitename	= $app->getCfg('sitename');
 
-        $name		= $data['project_name'];
-        $email		= JStringPunycode::emailToPunycode($data['project_email']);
-        $subject	= $data['project_subject'];
-        $body		= $data['project_message'];
+        $name		= $data['contact_name'];
+        $email		= JStringPunycode::emailToPunycode($data['contact_email']);
+        $subject	= $data['contact_subject'];
+        $body		= $data['contact_message'];
 
         // Prepare email body
-        $prefix = JText::sprintf('COM_PROJECTLOG_ENQUIRY_TEXT', JUri::base());
+        $prefix = JText::sprintf('COM_PROJECTLOG_ENQUIRY_TEXT', $project->name, JUri::base());
         $body	= $prefix . "\n" . $name . ' <' . $email . '>' . "\r\n\r\n" . stripslashes($body);
 
         $mail = JFactory::getMailer();
@@ -180,7 +180,7 @@ class ProjectlogControllerProject extends JControllerForm
         // If we are supposed to copy the sender, do so.
 
         // Check whether email copy function activated
-        if ($copy_email_activated == true && !empty($data['project_email_copy']))
+        if ($copy_email_activated == true && !empty($data['contact_email_copy']))
         {
             $copytext		= JText::sprintf('COM_PROJECTLOG_COPYTEXT_OF', $project->name, $sitename);
             $copytext		.= "\r\n\r\n" . $body;

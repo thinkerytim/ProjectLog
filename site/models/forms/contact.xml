@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
-	<fieldset name="project" addrulepath="components/com_projectlog/models/rules" label="COM_PROJECTLOG_FORM_LABEL">
-		<field name="project_name"
+	<fieldset name="contact" addrulepath="components/com_projectlog/models/rules" label="COM_PROJECTLOG_FORM_LABEL">
+		<field name="contact_name"
 			type="text"
-			id="project-name"
+			id="contact-name"
 			size="30"
 			description="COM_PROJECTLOG_PROJECT_EMAIL_NAME_DESC"
 			label="COM_PROJECTLOG_PROJECT_EMAIL_NAME_LABEL"
 			filter="string"
 			required="true"
 		/>
-		<field name="project_email"
+		<field name="contact_email"
 			type="email"
-			id="project-email"
+			id="contact-email"
 			size="30"
 			description="COM_PROJECTLOG_EMAIL_DESC"
 			label="COM_PROJECTLOG_EMAIL_LABEL"
@@ -20,9 +20,9 @@
 			validate="projectemail"
 			required="true"
 		/>
-		<field name="project_subject"
+		<field name="contact_subject"
 			type="text"
-			id="project-emailmsg"
+			id="contact-emailmsg"
 			size="60"
 			description="COM_PROJECTLOG_PROJECT_MESSAGE_SUBJECT_DESC"
 			label="COM_PROJECTLOG_PROJECT_MESSAGE_SUBJECT_LABEL"
@@ -30,20 +30,20 @@
 			validate="projectemailsubject"
 			required="true"
 		/>
-		<field name="project_message"
+		<field name="contact_message"
 			type="textarea"
 			cols="50"
 			rows="10"
-			id="project-message"
+			id="contact-message"
 			description="COM_PROJECTLOG_PROJECT_ENTER_MESSAGE_DESC"
 			label="COM_PROJECTLOG_PROJECT_ENTER_MESSAGE_LABEL"
 			filter="safehtml"
 			validate="projectemailmessage"
 			required="true"
 		/>
-		<field name="project_email_copy"
+		<field name="contact_email_copy"
 			type="checkbox"
-			id="project-email-copy"
+			id="contact-email-copy"
 			description="COM_PROJECTLOG_PROJECT_EMAIL_A_COPY_DESC"
 			label="COM_PROJECTLOG_PROJECT_EMAIL_A_COPY_LABEL"
 			default="0"
@@ -57,7 +57,7 @@
 			label="COM_PROJECTLOG_CAPTCHA_LABEL"
 			description="COM_PROJECTLOG_CAPTCHA_DESC"
 			validate="captcha"
-			namespace="project"
+			namespace="contact"
 		/>
 	</fieldset>
 </form>

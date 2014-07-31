@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 require_once JPATH_SITE . '/components/com_content/helpers/route.php';
+$onsite_class = ($this->item->onsite) ? 'icon-thumbs-up' : 'icon-thumbs-down';
 
 ?>
 <h3><?php echo JText::_('COM_PROJECTLOG_DETAILS'); ?></h3>
@@ -86,5 +87,9 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
             <a href="<?php echo $projectLink; ?>"><?php echo $this->escape($this->project->category_title); ?></a>
         </li>
     <?php endif; ?>
+    <li>
+        <b><?php echo JText::_('COM_PROJECTLOG_CREW_ON_SITE'); ?>:</b>&nbsp;
+        <span class="<?php echo $onsite_class; ?>"></span>
+    </li>
     <li class="divider"></li>
 </ul>

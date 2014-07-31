@@ -68,4 +68,5 @@ $assoc = JLanguageAssociations::isEnabled();
 	</div>
 	<input type="hidden" name="task" value="" />
 	<?php echo JHtml::_('form.token'); ?>
+    <?php echo projectlogHTML::buildThinkeryFooter(); ?>
 </form>

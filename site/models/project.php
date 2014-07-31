@@ -71,7 +71,7 @@ class ProjectlogModelProject extends JModelForm
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
-		$form = $this->loadForm('com_projectlog.project', 'project', array('control' => 'jform', 'load_data' => true));
+		$form = $this->loadForm('com_projectlog.contact', 'contact', array('control' => 'jform', 'load_data' => true));
 
 		if (empty($form))
 		{
@@ -84,7 +84,7 @@ class ProjectlogModelProject extends JModelForm
 		$params->merge($project->params);
 
 		if (!$params->get('show_email_copy', 0)){
-			$form->removeField('project_email_copy');
+			$form->removeField('contact_email_copy');
 		}
 
 		return $form;
@@ -92,9 +92,9 @@ class ProjectlogModelProject extends JModelForm
 
 	protected function loadFormData()
 	{
-		$data = (array) JFactory::getApplication()->getUserState('com_projectlog.project.data', array());
+		$data = (array) JFactory::getApplication()->getUserState('com_projectlog.contact.data', array());
 
-		$this->preprocessData('com_projectlog.project', $data);
+		$this->preprocessData('com_projectlog.contact', $data);
 
 		return $data;
 	}

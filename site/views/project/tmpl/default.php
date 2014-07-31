@@ -64,13 +64,13 @@ jimport('joomla.html.html.bootstrap');
                 <?php echo $this->project->misc; ?>
             <?php endif; ?> 
             
-            <?php if ($this->project->general_loc && $this->params->get('show_general_loc')) : ?>
-                <h3><?php echo JText::_('COM_PROJECTLOG_GENERAL_LOC'); ?></h3> 
+            <?php if ($this->project->general_loc) : ?>
+                <h3><?php echo JText::_('COM_PROJECTLOG_GEN_LOC'); ?></h3> 
                 <?php echo nl2br ( $this->project->general_loc, true ); ?>
             <?php endif; ?>
             
             <?php if ($this->project->specific_loc && $this->params->get('show_specific_loc')) : ?>
-                <h3><?php echo JText::_('COM_PROJECTLOG_LOCATION'); ?></h3> 
+                <h3><?php echo JText::_('COM_PROJECTLOG_SPEC_LOC'); ?></h3> 
                 <?php echo nl2br ( $this->project->specific_loc, true ); ?>
             <?php endif; ?>
                 

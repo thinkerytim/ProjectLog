@@ -88,7 +88,10 @@ $assoc = JLanguageAssociations::isEnabled();
                     </div>
                 </div>
 			</div>
-			<div class="span3">
+			<div class="span3 form-vertical">
+                <div class="control-group " >
+                    <?php echo $this->form->renderField('approved'); ?>
+                </div>
 				<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
 			</div>
 		</div>
@@ -96,9 +99,9 @@ $assoc = JLanguageAssociations::isEnabled();
 
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'misc', JText::_('JGLOBAL_FIELDSET_MISCELLANEOUS', true)); ?>
 		<div class="row-fluid form-horizontal-desktop">
-				<div class="form-vertical">
-					<?php echo $this->form->renderField('misc'); ?>
-				</div>
+            <div class="form-vertical">
+                <?php echo $this->form->renderField('misc'); ?>
+            </div>
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
         
@@ -130,6 +133,7 @@ $assoc = JLanguageAssociations::isEnabled();
 		<?php endif; ?>       
 
 		<?php echo JHtml::_('bootstrap.endTabSet'); ?>
+        <?php echo projectlogHTML::buildThinkeryFooter(); ?>
 	</div>
 	<input type="hidden" name="task" value="" />
 	<?php echo JHtml::_('form.token'); ?>
