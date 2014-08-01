@@ -1,76 +1,158 @@
 <?php
 /**
- * @version 1.5.3 2009-10-12
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 the Thinkery
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
-jimport( 'joomla.application.component.view');
+defined('_JEXEC') or die;
 
-class projectlogViewdocs extends JView {
+/**
+ * View class for a list of projects.
+ *
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ * @since       1.6
+ */
+class ProjectlogViewDocs extends JViewLegacy
+{
+	protected $items;
 
-	function display($tpl = null)
+	protected $pagination;
+
+	protected $state;
+
+	/**
+	 * Display the view
+	 *
+	 * @return  void
+	 */
+	public function display($tpl = null)
 	{
-		global $mainframe, $option;
+		$this->items		= $this->get('Items');
+		$this->pagination	= $this->get('Pagination');
+		$this->state		= $this->get('State');
 
-		//initialise variables
-		$user 		= & JFactory::getUser();
-		$db 		= & JFactory::getDBO();
-		$document	= & JFactory::getDocument();
-		$settings   = & JComponentHelper::getParams( 'com_projectlog' );
-		//get vars
-		$filter_order		= $mainframe->getUserStateFromRequest( $option.'.docs.filter_order', 'filter_order', 'path', 'cmd' );
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option.'.docs.filter_order_Dir', 'filter_order_Dir', 'ASC', 'word' );
-		$filter 			= $mainframe->getUserStateFromRequest( $option.'.docs.filter', 'filter', '', 'int' );
-		$search 			= $mainframe->getUserStateFromRequest( $option.'.docs.search', 'search', '', 'string' );
-		$search 			= $db->getEscaped( trim(JString::strtolower( $search ) ) );
-        $project_id			= $mainframe->getUserStateFromRequest( $option.'.docs.project_id', 'project_id', '', 'int' );
-		$template			= $mainframe->getTemplate();
+		ProjectlogHelper::addSubmenu('docs');
 
-		JHTML::_('behavior.tooltip');
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
+		{
+			JError::raiseError(500, implode("\n", $errors));
+			return false;
+		}
 
-		//create the toolbar
-		JToolBarHelper::title( '<span style="color: #fea100;">'.JText::_( 'PROJECT LOG' ) . '</span> <span style="font-size: 14px;">[' . JText::_( 'DOCS' ) . ']</span>', 'projectlog' );
-		JToolBarHelper::addNew();
-		JToolBarHelper::spacer();
-		JToolBarHelper::editList();
-		JToolBarHelper::divider();
-		JToolBarHelper::deleteList(JText::_('CONFIRM DOC DELETE'));
-		JToolBarHelper::spacer();
+		// Preprocess the list of items to find ordering divisions.
+		// TODO: Complete the ordering stuff with nested sets
+		foreach ($this->items as &$item)
+		{
+			$item->order_up = true;
+			$item->order_dn = true;
+		}
 
-		// Get data from the model
-		$rows      	= & $this->get( 'Data');
-		$pageNav 	= & $this->get( 'Pagination' );
-
-		//publish unpublished filter
-        $lists['projects'] = projectlogHTML::projectSelect('project_id', 'size="1" class="inputbox" style="width: 150px;"', $project_id);
-
-		$filters = array();
-		$filters[] = JHTML::_('select.option', '1', JText::_( 'NAME' ) );
-        $filters[] = JHTML::_('select.option', '2', JText::_( 'FILENAME' ) );
-		$lists['filter'] = JHTML::_('select.genericlist', $filters, 'filter', 'size="1" class="inputbox"', 'value', 'text', $filter );
-
-		// search filter
-		$lists['search']= $search;
-		$lists['order_Dir'] = $filter_order_Dir;
-		$lists['order'] = $filter_order;
-
-		//assign data to template
-		$this->assignRef('lists'      	, $lists);
-		$this->assignRef('rows'      	, $rows);
-		$this->assignRef('pageNav' 		, $pageNav);
-		$this->assignRef('ordering'		, $ordering);
-		$this->assignRef('user'			, $user);
-		$this->assignRef('template'		, $template);
-
-        $iconstyle = '<style type="text/css">.icon-48-projectlog{ background-image: url(components/com_projectlog/assets/images/icon-48-projectlog.png);}</style>';
-        $mainframe->addCustomHeadTag($iconstyle);
-		
+		$this->addToolbar();
+		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
 	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @since   1.6
+	 */
+	protected function addToolbar()
+	{
+		require_once JPATH_COMPONENT .'/models/fields/modal/project.php';
+        $this->projectfield = new JFormFieldModal_Project();
+        
+        $canDo	= ProjectlogHelper::getActions('com_projectlog', 'project', $this->state->get('filter.project_id'));        
+        $user	= JFactory::getUser();
+
+		// Get the toolbar object instance
+		$bar = JToolBar::getInstance('toolbar');
+
+		JToolbarHelper::title(JText::_('COM_PROJECTLOG_MANAGER_DOCS'), 'list doc');
+
+		if ($canDo->get('projectlog.createdoc') || (count($user->getAuthorisedCategories('com_projectlog', 'core.create'))) > 0)
+		{
+			JToolbarHelper::addNew('doc.add');
+		}
+
+		if (($canDo->get('projectlog.editdoc')) || ($canDo->get('projectlog.editdoc.own')))
+		{
+			JToolbarHelper::editList('doc.edit');
+		}
+
+		if ($canDo->get('projectlog.editdoc.state'))
+		{
+			JToolbarHelper::publish('docs.publish', 'JTOOLBAR_PUBLISH', true);
+			JToolbarHelper::unpublish('docs.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+			JToolbarHelper::archiveList('docs.archive');
+			JToolbarHelper::checkin('docs.checkin');
+		}
+
+		if ($this->state->get('filter.published') == -2 && $canDo->get('projectlog.deletedoc'))
+		{
+			JToolbarHelper::deleteList('', 'docs.delete', 'JTOOLBAR_EMPTY_TRASH');
+		}
+		elseif ($canDo->get('projectlog.editdoc.state'))
+		{
+			JToolbarHelper::trash('docs.trash');
+		}
+
+		// Add a batch button
+		if ($user->authorise('core.create', 'com_projectlog') && $user->authorise('core.edit', 'com_projectlog') && $user->authorise('core.edit.state', 'com_projectlog'))
+		{
+			JHtml::_('bootstrap.modal', 'collapseModal');
+			$title = JText::_('JTOOLBAR_BATCH');
+
+			// Instantiate a new JLayoutFile instance and render the batch button
+			$layout = new JLayoutFile('joomla.toolbar.batch');
+
+			$dhtml = $layout->render(array('title' => $title));
+			$bar->appendButton('Custom', $dhtml, 'batch');
+		}
+
+		if ($user->authorise('core.admin', 'com_projectlog'))
+		{
+			JToolbarHelper::preferences('com_projectlog');
+		}
+
+		JHtmlSidebar::setAction('index.php?option=com_projectlog');
+
+		JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_PUBLISHED'),
+			'filter_published',
+			JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->state->get('filter.published'), true)
+		);
+
+		JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_LANGUAGE'),
+			'filter_language',
+			JHtml::_('select.options', JHtml::_('contentlanguage.existing', true, true), 'value', 'text', $this->state->get('filter.language'))
+		);
+
+	}
+
+	/**
+	 * Returns an array of fields the table can be sorted by
+	 *
+	 * @return  array  Array containing the field name to sort by as the key and display text as value
+	 *
+	 * @since   3.0
+	 */
+	protected function getSortFields()
+	{
+		return array(
+			'a.ordering' => JText::_('JGRID_HEADING_ORDERING'),
+			'a.published' => JText::_('JSTATUS'),
+			'a.title' => JText::_('JGLOBAL_TITLE'),
+			'project_name' => JText::_('COM_PROJECTLOG_PROJECT'),
+			'a.access' => JText::_('JGRID_HEADING_ACCESS'),
+			'a.language' => JText::_('JGRID_HEADING_LANGUAGE'),
+			'a.id' => JText::_('JGRID_HEADING_ID')
+		);
+	}
 }
-?>

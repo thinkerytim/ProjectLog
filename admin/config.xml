@@ -64,11 +64,25 @@
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
+        <field name="allowed_mimetypes" 
+            type="text"
+            default="image/jpeg,image/gif,image/png,application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/vnd.oasis.opendocument.text,application/vnd.oasis.opendocument.presentation,application/vnd.oasis.opendocument.spreadsheet,application/x-shockwave-flash,video/mpeg,video/x-msvideo,application/zip"
+            label="COM_PROJECTLOG_FIELD_CONFIG_ALLOWED_MIMETYPES_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_ALLOWED_MIMETYPES_DESC"
+            size="30"
+        />
         <field name="allowed_filetypes" 
             type="text"
             default="pdf,jpg,zip,gif,png,jpeg"
             label="COM_PROJECTLOG_FIELD_CONFIG_ALLOWED_FILETYPES_LABEL"
             description="COM_PROJECTLOG_FIELD_CONFIG_ALLOWED_FILETYPES_DESC"
+            size="30"
+        />
+        <field name="max_imgsize" 
+            type="text"
+            default="2000"
+            label="COM_PROJECTLOG_FIELD_CONFIG_MAX_IMGSIZE_LABEL"
+            description="COM_PROJECTLOG_FIELD_CONFIG_MAX_IMGSIZE_DESC"
             size="30"
         />
         <field name="show_footer"

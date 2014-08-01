@@ -73,7 +73,8 @@ class ProjectlogHelper extends JHelperContent
 		$actions = array(
 			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete',
             'projectlog.createlog', 'projectlog.deletelog', 'projectlog.editlog', 'projectlog.editlog.state',
-            'projectlog.editlog.own'
+            'projectlog.editlog.own', 'projectlog.createdoc', 'projectlog.deletedoc', 'projectlog.editdoc',
+            'projectlog.editdoc.state', 'projectlog.editdoc.own'
 		);
 
 		foreach ($actions as $action) {

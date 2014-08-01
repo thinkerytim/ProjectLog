@@ -173,7 +173,7 @@ class ProjectlogModelDocs extends JModelList
 		if ($assoc)
 		{
 			$query->select('COUNT(asso2.id)>1 as association')
-				->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_projectlog.log'))
+				->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_projectlog.doc'))
 				->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
 				->group('a.id');
 		}
@@ -244,7 +244,7 @@ class ProjectlogModelDocs extends JModelList
     function deleteFile($file)
     {
         jimport('joomla.filesystem.file');
-        $path = JPATH_SITE.DS.'media'.DS.'com_projectlog'.DS.'docs'.DS;
+        $path = JPATH_SITE.'/media/com_projectlog/docs/';
         JFile::delete($path.$file);
     }
 }

@@ -102,7 +102,7 @@ class ProjectlogControllerDoc extends JControllerForm
 		$this->setRedirect(JRoute::_('index.php?option=com_projectlog&view=docs' . $this->getRedirectToListAppend(), false));
 
 		return parent::batch($model);
-	}
+	}   
 
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
@@ -115,5 +115,5 @@ class ProjectlogControllerDoc extends JControllerForm
 	 */
 	protected function postSaveHook(JModelLegacy $model, $validData = array())
 	{
-	}   
+	}    
 }

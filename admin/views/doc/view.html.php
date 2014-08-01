@@ -1,70 +1,110 @@
 <?php
 /**
- * @version 1.5.3 2009-10-12
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 the Thinkery
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
-jimport( 'joomla.application.component.view');
+defined('_JEXEC') or die;
 
-class projectlogViewdoc extends JView {
+/**
+ * View to edit a project.
+ *
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ * @since       1.6
+ */
+class ProjectlogViewDoc extends JViewLegacy
+{
+	protected $form;
 
-	function display($tpl = null)
+	protected $item;
+
+	protected $state;
+    
+    protected $user;
+
+	/**
+	 * Display the view
+	 */
+	public function display($tpl = null)
 	{
-		global $mainframe;
+		// Initialise variables.
+		$this->form		= $this->get('Form');
+		$this->item		= $this->get('Item');
+		$this->state	= $this->get('State');
+        $this->user     = JFactory::getUser();
+        
+        $this->canDo	= ProjectlogHelper::getActions('com_projectlog', 'project', $this->item->project_id);
 
-		// Load pane behavior
-		JHTML::_('behavior.tooltip');
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
+		{
+			JError::raiseError(500, implode("\n", $errors));
+			return false;
+		}
 
-		//initialise variables
-		$editor 	= & JFactory::getEditor();
-		$document	= & JFactory::getDocument();
-        $user       = & JFactory::getUser();
-		$settings	= & JComponentHelper::getParams( 'com_projectlog' );
-        $this->allowed = $settings->get('doc_types');
+		if ($this->getLayout() == 'modal')
+		{
+			$this->form->setFieldAttribute('language', 'readonly', 'true');
+			$this->form->setFieldAttribute('project_id', 'readonly', 'true');
+		}
 
-		//get vars
-		$cid 		= JRequest::getVar( 'cid' );
-		// Get data from the model
-		$model		= & $this->getModel();
-		$doc  	= & $this->get( 'Data');
-		
-		$lists = array();
-        $lists['projects'] = projectlogHTML::projectSelect('project_id', 'size="1" class="inputbox required" style="width: 150px;"', $doc->project_id);
-		
-        if ( $cid ) {
-			JToolBarHelper::title( '<span style="color: #fea100;">'.JText::_( 'PROJECT LOG' ) . '</span> <span style="font-size: 14px;">[' . JText::_( 'EDIT DOC' ) . ']</span>', 'projectlog' );
-		}else{
-            JToolBarHelper::title( '<span style="color: #fea100;">'.JText::_( 'PROJECT LOG' ) . '</span> <span style="font-size: 14px;">[' . JText::_( 'ADD DOC' ) . ']</span>', 'projectlog' );
-            $doc->submittedby = $user->id;
-            $doc->date = JFactory::getDate()->toFormat('%Y-%m-%d %I:%M:%S');
-        }
-		JToolBarHelper::apply();
-		JToolBarHelper::spacer();
-		JToolBarHelper::save();
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
-		JToolBarHelper::spacer();
-
-		JHTML::_('behavior.modal', 'a.modal');
-
-		//assign data to template
-		$this->assignRef('doc'          , $doc);
-		$this->assignRef('lists'      	, $lists);
-		$this->assignRef('editor'      	, $editor);
-		$this->assignRef('settings'     , $settings);
-
-        $iconstyle = '<style type="text/css">
-                        .invalid{background: #ffacac !important; border: solid 1px #ff0000;}
-                        .icon-48-projectlog{ background-image: url(components/com_projectlog/assets/images/icon-48-projectlog.png);}
-                      </style>';
-        $mainframe->addCustomHeadTag($iconstyle);
-
+		$this->addToolbar();
 		parent::display($tpl);
 	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @since   1.6
+	 */
+	protected function addToolbar()
+	{
+		JFactory::getApplication()->input->set('hidemainmenu', true);
+
+		$user		= JFactory::getUser();
+		$userId		= $user->get('id');
+		$isNew		= ($this->item->id == 0);
+		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);		
+
+		JToolbarHelper::title(JText::_('COM_PROJECTLOG_MANAGER_DOC'), 'list doc');
+
+		// Build the actions for new and existing records.
+		if ($isNew)
+		{
+			// For new records, check the create permission.
+			if ($isNew && $this->canDo->get('projectlog.createdoc'))
+			{
+				JToolbarHelper::apply('doc.apply');
+				JToolbarHelper::save('doc.save');
+				JToolbarHelper::save2new('doc.save2new');
+			}
+
+			JToolbarHelper::cancel('doc.cancel');
+		}
+		else
+		{
+			// Can't save the record if it's checked out.
+			if (!$checkedOut)
+			{
+				// Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
+				if ($this->canDo->get('projectlog.editdoc') || ($this->canDo->get('projectlog.editdoc.own') && $this->item->created_by == $userId))
+				{
+					JToolbarHelper::apply('doc.apply');
+					JToolbarHelper::save('doc.save');
+
+					// We can save this record, but check the create permission to see if we can return to make a new one.
+					if ($this->canDo->get('projectlog.createdoc'))
+					{
+						JToolbarHelper::save2new('doc.save2new');
+					}
+				}
+			}
+
+			JToolbarHelper::cancel('doc.cancel', 'JTOOLBAR_CLOSE');
+		}
+	}
 }
-?>

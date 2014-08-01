@@ -47,36 +47,5 @@ class ProjectlogControllerDocs extends JControllerAdmin
 
 		return $model;
     }
-    
-    /*public function saveFile($file)
-    {
-        //Import filesystem libraries. Perhaps not necessary, but does not hurt
-        jimport('joomla.filesystem.file');
-        $settings   = & JComponentHelper::getParams( 'com_projectlog' );
-        $allowed = explode(',',trim($settings->get('doc_types')));
-
-        //Clean up filename to get rid of strange characters like spaces etc
-        $filename = JFile::makeSafe($file['name']);
-
-        //Set up the source and destination of the file
-        $src = $file['tmp_name'];
-        $dest = JPATH_SITE.DS.'media'.DS.'com_projectlog'.DS.'docs'.DS.$filename;
-        $ext = strtolower(JFile::getExt($filename) );
-
-        if(file_exists($dest)){
-            return JText::_('FILE EXISTS').' - '.$filename;
-        }
-
-        //Verify this is an acceptable doc file
-        if (in_array($ext,$allowed)) {
-           if ( JFile::upload($src, $dest) ) {
-              //continue
-           } else {
-              return JText::_('FILE NOT UPLOADED');
-           }
-        } else {
-           return sprintf(JText::_('WRONG FILE TYPE'),$ext);
-        }
-    }*/
 }
 ?>

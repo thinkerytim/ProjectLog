@@ -209,4 +209,75 @@ abstract class JHtmlProject
 
 		return $html;
 	}
+    
+    /**
+	 * Custom associations function for docs
+	 *
+	 * @param   int  $docid  The item id to search associations
+	 *
+	 * @return  string  The language HTML
+	 */    
+    public static function docassociation($docid)
+	{
+		// Defaults
+		$html = '';
+
+		// Get the associations
+		if ($associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_docs', 'com_projectlog.doc', $docid, 'id', false, false))
+		{
+			foreach ($associations as $tag => $associated)
+			{
+				$associations[$tag] = (int) $associated->id;
+			}
+
+			// Get the associated project items
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true)
+				->select('c.id, c.title as title')
+				->select('l.sef as lang_sef')
+				->from('#__projectlog_docs as c')
+				->select('project.name as project_title')
+				->join('LEFT', '#__projectlog_projects as project ON project.id = c.project_id')
+				->where('c.id IN (' . implode(',', array_values($associations)) . ')')
+				->join('LEFT', '#__languages as l ON c.language = l.lang_code')
+				->select('l.image')
+				->select('l.title as language_title');
+			$db->setQuery($query);
+
+			try
+			{
+				$items = $db->loadObjectList('id');
+			}
+			catch (runtimeException $e)
+			{
+				throw new Exception($e->getMessage(), 500);
+
+				return false;
+			}
+
+			if ($items)
+			{
+				foreach ($items as &$item)
+				{
+					$text = strtoupper($item->lang_sef);
+					$url = JRoute::_('index.php?option=com_projectlog&task=doc.edit&id=' . (int) $item->id);
+					$tooltipParts = array(
+						JHtml::_('image', 'mod_languages/' . $item->image . '.gif',
+								$item->language_title,
+								array('title' => $item->language_title),
+								true
+						),
+						$item->title,
+						'(' . $item->project_title . ')'
+					);
+
+					$item->link = JHtml::_('tooltip', implode(' ', $tooltipParts), null, null, $text, $url, null, 'hasTooltip label label-association label-' . $item->lang_sef);
+				}
+			}
+
+			$html = JLayoutHelper::render('joomla.content.associations', $items);
+		}
+
+		return $html;
+	}
 }

@@ -458,8 +458,22 @@ class ProjectlogModelDoc extends JModelAdmin
 	 * @since    3.0
 	 */
 	public function save($data)
-	{
-		$app = JFactory::getApplication();
+	{       
+        $app = JFactory::getApplication();
+        
+        // Upload a new document if it exists
+        $docfile = JRequest::getVar('jform', array(), 'files', 'array');   
+        if($docfile['name']['pl_document']){
+            $plmedia_path   = JPATH_SITE."/media/com_projectlog/docs/";
+            $origdoc        = $plmedia_path.$data['path'];
+            $new_doc        = $this->uploadDoc($docfile, $origdoc, $plmedia_path);
+            
+            if($new_doc && !is_array($new_doc)){
+                $data['path']   = $new_doc;
+            }elseif(is_array($new_doc) && !empty($new_doc)){
+                $app->enqueueMessage($new_doc[0], 'error');
+            }
+        }
 
 		// Alter the title for save as copy
 		if ($app->input->get('task') == 'save2copy')
@@ -672,5 +686,80 @@ class ProjectlogModelDoc extends JModelAdmin
 		}
 
 		return $title;
-	}    
+	} 
+    
+    protected function uploadDoc($docfile, $origdoc, $plmedia_path)
+    {
+        jimport('joomla.filesystem.file');
+        $plparams   = JComponentHelper::getParams('com_projectlog');
+        $accepted_mimetypes = explode(',', trim($plparams->get('allowed_mimetypes')));
+        $errors = array();
+        
+        // check if a file has been uploaded via the doc form
+        // get PL media folder path and check for an original image path              
+        $docfilename    = JFile::makeSafe($docfile['name']['pl_document']);
+        
+        $src_file        = $docfile['tmp_name']['pl_document'];
+        $dest_file       = $plmedia_path.$docfilename;
+        
+        if ( JFile::exists($dest_file) ) {
+            //@todo - create a random file name if this file already exists.
+            //note - we don't want to delete a file if it's attached to another document, so each
+            //document needs to have a unique name!
+            /*$fext   = JFile::getext($docfilename);
+            $fname  = JFile::stripext($docfilename);
+            $fname .= '_'.rand();
+            
+            $new_docfilename = $fname.'.'.$fext;
+            $dest_file = $plmedia_path.$new_docfilename;*/
+            $errors[] = JText::_('COM_PROJECTLOG_FILE_ALREADY_EXISTS');
+            return $errors;
+        }       
+        
+        
+        // we're going to make sure that the file's mime type is in the accepted group of mime types
+        if (function_exists('finfo_file')) {
+            $finfo = finfo_open(FILEINFO_MIME);
+            if (is_resource($finfo)){
+                $mime_type = finfo_file($finfo, $src_file);
+                finfo_close($finfo);
+
+                /* workaround for mime type returning charset */
+                $mime_type = explode(';', $mime_type);
+                $mime_type = $mime_type[0];
+                /* end workaround */
+
+                if (strlen($mime_type) && !in_array($mime_type, $accepted_mimetypes)){
+                    $errors[] = JText::_('COM_PROJECTLOG_WRONG_FILETYPE'). ' Error: PLDOC1';
+                    return $errors;
+                } else if (!is_string($mime_type)) {
+                    $errors[] = JText::_('COM_PROJECTLOG_WRONG_FILETYPE'). ' Error: PLDOC2';
+                    return $errors;
+                }
+            } else {
+                $errors[] = JText::_('COM_PROJECTLOG_FINFO_FAILURE'). ' Error: PLDOC3';
+                return false;
+            }
+        } else if (function_exists('mime_content_type')) {
+            $mime_type = mime_content_type($src_file);
+            if (strlen($mime_type) && !in_array($mime_type, $accepted_mimetypes)){
+                $errors[] = JText::_('COM_PROJECTLOG_WRONG_FILETYPE'). ' Error: PLDOC4';
+                return $errors;
+            }
+        } // else you're pretty much out of luck since we need to access filesystem functions if you don't have these.
+
+        $max_kb = (intval($plparams->get('max_imgsize', 7000)) * 1000);
+        if(filesize($src_file) > $max_kb) {
+            $errors[] = sprintf(JText::_('COM_PROJECTLOG_IMAGE_TOO_LARGE'), (filesize($src_file)/1000).'KB', $max_kb.'KB', ini_get('upload_max_filesize'));
+            return $errors;
+        }        
+        
+        if ( JFile::upload($src_file, $dest_file) ) { 
+            if(JFile::exists($origdoc)){
+                JFile::delete($origdoc);
+            }
+            return $docfilename;
+        } 
+        return $errors;
+    }
 }

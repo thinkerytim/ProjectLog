@@ -17,11 +17,11 @@ JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.framework', true);
 
 $input     = JFactory::getApplication()->input;
-$function  = $input->getCmd('function', 'jSelectLog');
+$function  = $input->getCmd('function', 'jSelectDoc');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_projectlog&view=logs&layout=modal&tmpl=component&function='.$function); ?>" method="post" name="adminForm" id="adminForm" class="form-inline">
+<form action="<?php echo JRoute::_('index.php?option=com_projectlog&view=docs&layout=modal&tmpl=component&function='.$function); ?>" method="post" name="adminForm" id="adminForm" class="form-inline">
 	<fieldset class="filter clearfix">
         <div class="btn-toolbar">
 			<div class="btn-group pull-left">
@@ -66,7 +66,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                     <?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
                 </th>
                 <th class="nowrap hidden-phone">
-                    <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_DESC', 'a.description', $listDirn, $listOrder); ?>
+                    <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_FILE', 'a.path', $listDirn, $listOrder); ?>
                 </th>
                 <th width="5%" class="nowrap hidden-phone">
                     <?php echo JHtml::_('grid.sort', 'JGRID_HEADING_LANGUAGE', 'a.language', $listDirn, $listOrder); ?>
@@ -107,7 +107,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                         </div>
                     </td>
                     <td class="center hidden-phone">
-                        <?php echo $item->description; ?>
+                        <?php echo $item->path; ?>
                     </td>
                     <td class="small hidden-phone">
                         <?php if ($item->language == '*'):?>
