@@ -10,11 +10,11 @@
 defined('_JEXEC') or die;
 
 /**
- * Controller for a single project
+ * Controller for a single document
  *
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
- * @since       1.6
+ * @since       3.3.1
  */
 class ProjectlogControllerDoc extends JControllerForm
 {
@@ -85,9 +85,9 @@ class ProjectlogControllerDoc extends JControllerForm
 	/**
 	 * Method to run batch operations.
 	 *
-	 * @param   object  $model  The model.
+	 * @param   object      $model  The model.
 	 *
-	 * @return  boolean   True if successful, false otherwise and internal error is set.
+	 * @return  boolean     True if successful, false otherwise and internal error is set.
 	 *
 	 * @since   3.3.1
 	 */
@@ -107,8 +107,8 @@ class ProjectlogControllerDoc extends JControllerForm
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
-	 * @param   JModelLegacy  $model      The data model object.
-	 * @param   array         $validData  The validated data.
+	 * @param   JModelLegacy    $model      The data model object.
+	 * @param   array           $validData  The validated data.
 	 *
 	 * @return  void
 	 * @since   3.3.1

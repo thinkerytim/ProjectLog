@@ -23,7 +23,7 @@ class ProjectlogModelProjects extends JModelList
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @see     JController
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function __construct($config = array())
 	{
@@ -72,7 +72,7 @@ class ProjectlogModelProjects extends JModelList
 	 *
 	 * @return  void
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -125,7 +125,7 @@ class ProjectlogModelProjects extends JModelList
 	 * @param   string  $id    A prefix for the store id.
 	 *
 	 * @return  string  A store id.
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -143,7 +143,7 @@ class ProjectlogModelProjects extends JModelList
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return  JDatabaseQuery
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function getListQuery()
 	{

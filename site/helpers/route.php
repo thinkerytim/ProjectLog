@@ -10,12 +10,11 @@
 defined('_JEXEC') or die;
 
 /**
- * Project Component Route Helper
+ * Projectlog Route Helper
  *
- * @static
  * @package     Joomla.Site
  * @subpackage  com_projectlog
- * @since       1.5
+ * @since       3.3.1
  */
 abstract class ProjectlogHelperRoute
 {
@@ -24,7 +23,15 @@ abstract class ProjectlogHelperRoute
 	protected static $lang_lookup = array();
 
 	/**
-	 * @param   integer  The route of the project
+     * Method to return project route
+     * 
+	 * @param   integer  $int The id of the project
+     * @param   integer $catid  The id of the project category
+     * @param   string  $language   The language tag
+     * 
+     * @return  string  $link   The link url
+     * 
+     * @since 3.3.1
 	 */
 	public static function getProjectRoute($id, $catid, $language = 0)
 	{
@@ -65,7 +72,18 @@ abstract class ProjectlogHelperRoute
 
 		return $link;
 	}
-
+    
+    /**
+     * Method to return category route
+     * 
+	 * @param   integer  $int The id of the project
+     * @param   integer $catid  The id of the project category
+     * @param   string  $language   The language tag
+     * 
+     * @return  string  $link   The link url
+     * 
+     * @since 3.3.1
+	 */
 	public static function getCategoryRoute($catid, $language = 0)
 	{
 		if ($catid instanceof JCategoryNode)
@@ -113,7 +131,14 @@ abstract class ProjectlogHelperRoute
 
 		return $link;
 	}
-
+    
+    /**
+     * Method to look up language
+     * 
+     * @return  void
+     * 
+     * @since 3.3.1
+	 */
 	protected static function buildLanguageLookup()
 	{
 		if (count(self::$lang_lookup) == 0)
@@ -133,7 +158,16 @@ abstract class ProjectlogHelperRoute
 			}
 		}
 	}
-
+    
+    /**
+     * Method to find menu item
+     * 
+     * @params array    $needles    Array of needles to search menu items
+     * 
+     * @return  mixed
+     * 
+     * @since 3.3.1
+	 */
 	protected static function _findItem($needles = null)
 	{
 		$app      = JFactory::getApplication();

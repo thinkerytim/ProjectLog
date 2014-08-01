@@ -1,10 +1,9 @@
 /**
- * @version 3.3.1 2014-07-15
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
- * @link http://thethinkery.net
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Site
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 .pl-project-sidebar-container{border-left: dotted 1px #ccc; padding-left: 10px;}

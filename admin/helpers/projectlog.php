@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Project component helper.
+ * Projectlog component helper.
  *
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog

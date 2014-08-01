@@ -14,7 +14,7 @@ defined('JPATH_BASE') or die;
  *
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
- * @since       1.6
+ * @since       3.3.1
  */
 class JFormFieldModal_Project extends JFormField
 {
@@ -22,7 +22,7 @@ class JFormFieldModal_Project extends JFormField
 	 * The form field type.
 	 *
 	 * @var		string
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected $type = 'Modal_Project';
     
@@ -30,7 +30,7 @@ class JFormFieldModal_Project extends JFormField
      * Form clear button boolean
      * 
      * @var     boolean
-     * @since   1.6
+     * @since   3.3.1
      */
     protected $showclear = true;
     
@@ -38,7 +38,7 @@ class JFormFieldModal_Project extends JFormField
      * Form clear button boolean
      * 
      * @var     boolean
-     * @since   1.6
+     * @since   3.3.1
      */
     protected $batch = true;
 
@@ -47,7 +47,7 @@ class JFormFieldModal_Project extends JFormField
 	 *
 	 * @return  string	The field input markup.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function getInput($forcedlanguage = false)
 	{
@@ -183,6 +183,13 @@ class JFormFieldModal_Project extends JFormField
 		return implode("\n", $html);
 	}
     
+    /**
+	 * Method to call the modal input from views
+	 *
+	 * @return  string	The getInput field input markup.
+	 *
+	 * @since   3.3.1
+	 */ 
     public function callModal($name, $value, $id = false, $forcedlanguage = false)
     {
         JFactory::getLanguage()->load('com_projectlog', JPATH_ADMINISTRATOR);

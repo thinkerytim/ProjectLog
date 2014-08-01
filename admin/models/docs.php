@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Methods supporting a list of project records.
+ * Methods supporting a list of document records.
  *
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
@@ -23,7 +23,7 @@ class ProjectlogModelDocs extends JModelList
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @see     JController
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function __construct($config = array())
 	{
@@ -65,7 +65,7 @@ class ProjectlogModelDocs extends JModelList
 	 *
 	 * @return  void
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -114,7 +114,7 @@ class ProjectlogModelDocs extends JModelList
 	 * @param   string  $id    A prefix for the store id.
 	 *
 	 * @return  string  A store id.
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -131,7 +131,7 @@ class ProjectlogModelDocs extends JModelList
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return  JDatabaseQuery
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function getListQuery()
 	{
@@ -245,6 +245,12 @@ class ProjectlogModelDocs extends JModelList
 		return $query;
 	}
     
+    /**
+	 * Delete a document file from projectlog media folder
+	 *
+	 * @return  bool    Returns result of JFile::delete method true or false
+	 * @since   3.3.1
+	 */    
     function deleteFile($file)
     {
         jimport('joomla.filesystem.file');

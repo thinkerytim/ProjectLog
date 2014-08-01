@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  *
  * @package     Joomla.Site
  * @subpackage  com_projectlog
- * @since       3.3
+ * @since       3.3.1
  */
 class ProjectlogRouter extends JComponentRouterBase
 {
@@ -25,7 +25,7 @@ class ProjectlogRouter extends JComponentRouterBase
 	 *
 	 * @return  array  The URL arguments to use to assemble the subsequent URL.
 	 *
-	 * @since   3.3
+	 * @since   3.3.1
 	 */
 	public function build(&$query)
 	{
@@ -167,7 +167,7 @@ class ProjectlogRouter extends JComponentRouterBase
 	 *
 	 * @return  array  The URL attributes to be used by the application.
 	 *
-	 * @since   3.3
+	 * @since   3.3.1
 	 */
 	public function parse(&$segments)
 	{

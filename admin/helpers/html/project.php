@@ -20,9 +20,10 @@ abstract class JHtmlProject
 	/**
 	 * Get the associated language flags
 	 *
-	 * @param   int  $projectid  The item id to search associations
+	 * @param   int  $projectid  The project id to search associations
 	 *
 	 * @return  string  The language HTML
+     * @since   3.3.1
 	 */
 	public static function association($projectid)
 	{
@@ -118,6 +119,7 @@ abstract class JHtmlProject
 	 * Custom batch filter option
 	 *
 	 * @return  string  The batch filter HTML
+     * @since   3.3.1
 	 */    
     public static function batchproject()
 	{
@@ -142,9 +144,10 @@ abstract class JHtmlProject
     /**
 	 * Custom associations function for logs
 	 *
-	 * @param   int  $logid  The item id to search associations
+	 * @param   int  $logid  The log id to search associations
 	 *
 	 * @return  string  The language HTML
+     * @since   3.3.1
 	 */    
     public static function logassociation($logid)
 	{
@@ -213,9 +216,10 @@ abstract class JHtmlProject
     /**
 	 * Custom associations function for docs
 	 *
-	 * @param   int  $docid  The item id to search associations
+	 * @param   int  $docid  The doc id to search associations
 	 *
 	 * @return  string  The language HTML
+     * @since   3.3.1
 	 */    
     public static function docassociation($docid)
 	{

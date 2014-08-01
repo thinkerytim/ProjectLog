@@ -16,7 +16,7 @@ class ProjectlogControllerAjax extends JControllerLegacy
 	/**
      * Get json encoded list of DB values
      * 
-     * @param string $field BD field to filter     * 
+     * @param string $field DB field to filter     * 
      * @param string $token Joomla token
      * 
      * @return json_encoded list of values

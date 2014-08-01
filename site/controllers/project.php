@@ -15,11 +15,27 @@ defined('_JEXEC') or die;
  */
 class ProjectlogControllerProject extends JControllerForm
 {
-	public function getModel($name = '', $prefix = '', $config = array('ignore_request' => true))
+	/**
+	 * Proxy for getModel.
+	 *
+	 * @param   string	$name	The name of the model.
+	 * @param   string	$prefix	The prefix for the PHP class name.
+     * @param   array   $string Array of config options
+	 *
+	 * @return  JModel
+	 * @since   3.3.1
+	 */
+    public function getModel($name = '', $prefix = '', $config = array('ignore_request' => true))
 	{
 		return parent::getModel($name, $prefix, array('ignore_request' => false));
 	}
-
+    
+    /**
+	 * Method to handle project contact form
+	 *
+	 * @return  boolean true if successful, false if not
+	 * @since   3.3.1
+	 */
 	public function submitContact()
 	{
 		// Check for request forgeries.
@@ -145,7 +161,17 @@ class ProjectlogControllerProject extends JControllerForm
 
 		return true;
 	}
-
+    
+    /**
+	 * Method to email project contact form submission data
+	 *
+	 * @param   array       $data                       Form data
+	 * @param   object      $project                    The current project object
+     * @param   boolean     $copy_email_activated       true if copy email config option is enabled
+	 *
+	 * @return  JModel
+	 * @since   3.3.1
+	 */
 	private function _sendEmail($data, $project, $copy_email_activated)
 	{
         $app		= JFactory::getApplication();

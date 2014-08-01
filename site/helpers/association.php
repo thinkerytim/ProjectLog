@@ -13,11 +13,11 @@ JLoader::register('ProjectlogHelper', JPATH_ADMINISTRATOR . '/components/com_pro
 JLoader::register('CategoryHelperAssociation', JPATH_ADMINISTRATOR . '/components/com_categories/helpers/association.php');
 
 /**
- * Project Component Association Helper
+ * Projectlog Component Association Helper
  *
  * @package     Joomla.Site
  * @subpackage  com_projectlog
- * @since       3.0
+ * @since       3.3.1
  */
 abstract class ProjectlogHelperAssociation extends CategoryHelperAssociation
 {
@@ -29,9 +29,8 @@ abstract class ProjectlogHelperAssociation extends CategoryHelperAssociation
 	 *
 	 * @return  array   Array of associations for the item
 	 *
-	 * @since  3.0
+	 * @since  3.3.1
 	 */
-
 	public static function getAssociations($id = 0, $view = null)
 	{
 		jimport('helper.route', JPATH_COMPONENT_SITE);

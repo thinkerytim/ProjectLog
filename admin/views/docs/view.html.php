@@ -28,6 +28,8 @@ class ProjectlogViewDocs extends JViewLegacy
 	 * Display the view
 	 *
 	 * @return  void
+     * 
+     * @since   3.3.1
 	 */
 	public function display($tpl = null)
 	{
@@ -60,7 +62,7 @@ class ProjectlogViewDocs extends JViewLegacy
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function addToolbar()
 	{
@@ -141,7 +143,7 @@ class ProjectlogViewDocs extends JViewLegacy
 	 *
 	 * @return  array  Array containing the field name to sort by as the key and display text as value
 	 *
-	 * @since   3.0
+	 * @since   3.3.1
 	 */
 	protected function getSortFields()
 	{

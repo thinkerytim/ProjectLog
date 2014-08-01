@@ -1,10 +1,10 @@
 <?php
 /**
- * @version 3.3.1 2014-07-15
- * @package Joomla
- * @subpackage Project Log
- * @copyright (C) 2009 - 2014 the Thinkery LLC. All rights reserved.
- * @license GNU/GPL see LICENSE.php
+ * @package     Joomla.Administrator
+ * @subpackage  com_projectlog
+ *
+ * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // no direct access
@@ -26,9 +26,6 @@ class com_projectlogInstallerScript
     private $db                         = null;
     private $plerror                    = array();
 
-    /*
-     * Preflight method-- return false to abort install
-     */
     function preflight($action, $parent)
     {
         $jversion = new JVersion();
@@ -130,11 +127,6 @@ class com_projectlogInstallerScript
             </ul>';
     }
 
-     /**
-     * method to update the component
-     *
-     * @return void
-     */
     function update($parent)
     {
         // Set update message
@@ -207,11 +199,6 @@ class com_projectlogInstallerScript
         </div>';
     }
 
-    /**
-     * method to run after an install/update/uninstall method
-     *
-     * @return void
-     */
     function postflight($action, $parent)
     {
         echo '

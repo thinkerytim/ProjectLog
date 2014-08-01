@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  *
  * @package     Joomla.Site
  * @subpackage  com_projectlog
- * @since       1.5
+ * @since       3.3.1
  */
 class ProjectlogController extends JControllerLegacy
 {
@@ -25,7 +25,7 @@ class ProjectlogController extends JControllerLegacy
 	 * @param   array  An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
 	 * @return  JController		This object to support chaining.
-	 * @since   1.5
+	 * @since   3.3.1
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{

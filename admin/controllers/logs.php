@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Articles list controller class.
+ * Logs list controller class.
  *
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
@@ -37,6 +37,7 @@ class ProjectlogControllerLogs extends JControllerAdmin
 	 *
 	 * @param   string	$name	The name of the model.
 	 * @param   string	$prefix	The prefix for the PHP class name.
+     * @param   array   $string Array of config options
 	 *
 	 * @return  JModel
 	 * @since   3.3.1

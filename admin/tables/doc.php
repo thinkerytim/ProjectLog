@@ -20,7 +20,7 @@ class ProjectlogTableDoc extends JTable
 	 *
 	 * @param   JDatabaseDriver  &$db  Database connector object
 	 *
-	 * @since   1.0
+	 * @since   3.3.1
 	 */
 	public function __construct(&$db)
 	{
@@ -37,7 +37,7 @@ class ProjectlogTableDoc extends JTable
 	 *
 	 * @return  boolean  True on success, false on failure.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function store($updateNulls = false)
 	{
@@ -92,7 +92,7 @@ class ProjectlogTableDoc extends JTable
 	 * @return  boolean  True on success, false on failure
 	 *
 	 * @see JTable::check
-	 * @since 1.5
+	 * @since 3.3.1
 	 */
 	public function check()
 	{
@@ -123,12 +123,38 @@ class ProjectlogTableDoc extends JTable
 		return true;
 	}
     
+    /**
+	 * Method to compute the default name of the asset.
+	 * The default name is in the form table_name.id
+	 * where id is the value of the primary key of the table.
+	 *
+	 * @return  string
+	 *
+	 * @since   3.3.1
+	 */   
     protected function _getAssetName() 
     {
         $k = $this->_tbl_key;
         return 'com_projectlog.doc.'.(int) $this->$k;
     }
-
+    
+    /**
+     * We provide our global ACL as parent
+     * @see JTable::_getAssetParentId()
+     * 
+	 * Method to get the parent asset under which to register this one.
+	 * By default, all assets are registered to the ROOT node with ID,
+	 * which will default to 1 if none exists.
+	 * The extended class can define a table and id to lookup.  If the
+	 * asset does not exist it will be created.
+	 *
+	 * @param   JTable   $table  A JTable object for the asset parent.
+	 * @param   integer  $id     Id to look up
+	 *
+	 * @return  integer
+	 *
+	 * @since   3.3.1
+	 */
     protected function _getAssetParentId(JTable $table = null, $id = null)
     {
         $asset = JTable::getInstance('Asset');

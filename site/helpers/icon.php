@@ -10,12 +10,11 @@
 defined('_JEXEC') or die;
 
 /**
- * Content Component HTML Helper
+ * Projectlog custom Icon helper
  *
- * @static
  * @package     Joomla.Site
- * @subpackage  com_content
- * @since       1.5
+ * @subpackage  com_projectlog
+ * @since       3.3.1
  */
 class JHtmlIcon
 {

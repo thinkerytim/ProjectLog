@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 JLoader::register('ProjectlogHelper', JPATH_ADMINISTRATOR . '/components/com_projectlog/helpers/projectlog.php');
 
 /**
- * Item Model for a Project.
+ * Item Model for a log.
  *
  * @package     Joomla.Administrator
  * @subpackage  com_projectlog
@@ -24,7 +24,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 * The type alias for this content type.
 	 *
 	 * @var      string
-	 * @since    3.2
+	 * @since    3.3.1
 	 */
 	public $typeAlias = 'com_projectlog.log';
 
@@ -37,7 +37,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  boolean  Returns true on success, false on failure.
 	 *
-	 * @since   2.5
+	 * @since   3.3.1
 	 */
 	public function batch($commands, $pks, $contexts)
 	{
@@ -136,7 +136,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  mixed  An array of new IDs on success, boolean false on failure.
 	 *
-	 * @since   11.1
+	 * @since   3.3.1
 	 */
 	protected function batchCopy($value, $pks, $contexts)
 	{
@@ -188,9 +188,6 @@ class ProjectlogModelLog extends JModelAdmin
 			// New project ID
 			$this->table->project_id = $projectId;
 
-			// TODO: Deal with ordering?
-			//$this->table->ordering	= 1;
-
 			// Check the row.
 			if (!$this->table->check())
 			{
@@ -219,6 +216,17 @@ class ProjectlogModelLog extends JModelAdmin
 		return $newIds;
 	}
     
+    /**
+	 * Batch move items to a new category or current.
+	 *
+	 * @param   integer  $value     The new category.
+	 * @param   array    $pks       An array of row IDs.
+	 * @param   array    $contexts  An array of item contexts.
+	 *
+	 * @return  mixed  An array of new IDs on success, boolean false on failure.
+	 *
+	 * @since   3.3.1
+	 */    
     protected function batchMove($value, $pks, $contexts)
 	{
 		if (empty($this->batchSet))
@@ -294,7 +302,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  boolean  True if allowed to delete the record. Defaults to the permission set in the component.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function canDelete($record)
 	{
@@ -316,7 +324,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function canEditState($record)
 	{
@@ -343,7 +351,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  JTable  A database object
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function getTable($type = 'Log', $prefix = 'ProjectlogTable', $config = array())
 	{
@@ -358,7 +366,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  mixed  A JForm object on success, false on failure
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -394,7 +402,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  mixed  Object on success, false on failure.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function getItem($pk = null)
 	{
@@ -427,7 +435,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  mixed  The data for the form.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function loadFormData()
 	{
@@ -459,7 +467,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since    3.0
+	 * @since    3.3.1
 	 */
 	public function save($data)
 	{
@@ -554,7 +562,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  void
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function prepareTable($table)
 	{
@@ -596,7 +604,7 @@ class ProjectlogModelLog extends JModelAdmin
 	 *
 	 * @return  array  An array of conditions to add to add to ordering queries.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function getReorderConditions($table)
 	{
@@ -608,7 +616,20 @@ class ProjectlogModelLog extends JModelAdmin
 
 		return $condition;
 	}
-
+    
+    /**
+	 * Method to allow derived classes to preprocess the form.
+	 *
+	 * @param   JForm   $form   A JForm object.
+	 * @param   mixed   $data   The data expected for the form.
+	 * @param   string  $group  The name of the plugin group to import (defaults to "content").
+	 *
+	 * @return  void
+	 *
+	 * @see     JFormField
+	 * @since   3.3.1
+	 * @throws  Exception if there is an error in the form event.
+	 */
 	protected function preprocessForm(JForm $form, $data, $group = 'content')
 	{
 		// Association content items
@@ -659,9 +680,9 @@ class ProjectlogModelLog extends JModelAdmin
 	 * @param   string   $alias      The alias.
 	 * @param   string   $title      The title.
 	 *
-	 * @return  array  Contains the modified title and alias.
+	 * @return  string  An incremented new title if the current title already exists
 	 *
-	 * @since   3.1
+	 * @since   3.3.1
 	 */
 	protected function generateNewTitle($project_id, $alias, $title)
 	{

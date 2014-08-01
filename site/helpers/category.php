@@ -10,11 +10,11 @@
 defined('_JEXEC') or die;
 
 /**
- * Project Component Category Tree
+ * Projectlog Component Category Tree
  *
  * @package     Joomla.Site
  * @subpackage  com_projectlog
- * @since       1.6
+ * @since       3.3.1
  */
 class ProjectlogCategories extends JCategories
 {
