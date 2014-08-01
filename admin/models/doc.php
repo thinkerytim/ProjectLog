@@ -730,10 +730,10 @@ class ProjectlogModelDoc extends JModelAdmin
                 /* end workaround */
 
                 if (strlen($mime_type) && !in_array($mime_type, $accepted_mimetypes)){
-                    $errors[] = JText::_('COM_PROJECTLOG_WRONG_FILETYPE'). ' Error: PLDOC1';
+                    $errors[] = JText::_('COM_PROJECTLOG_WRONG_MIMETYPE'). ' Error: PLDOC1';
                     return $errors;
                 } else if (!is_string($mime_type)) {
-                    $errors[] = JText::_('COM_PROJECTLOG_WRONG_FILETYPE'). ' Error: PLDOC2';
+                    $errors[] = JText::_('COM_PROJECTLOG_WRONG_MIMETYPE'). ' Error: PLDOC2';
                     return $errors;
                 }
             } else {
@@ -743,7 +743,7 @@ class ProjectlogModelDoc extends JModelAdmin
         } else if (function_exists('mime_content_type')) {
             $mime_type = mime_content_type($src_file);
             if (strlen($mime_type) && !in_array($mime_type, $accepted_mimetypes)){
-                $errors[] = JText::_('COM_PROJECTLOG_WRONG_FILETYPE'). ' Error: PLDOC4';
+                $errors[] = JText::_('COM_PROJECTLOG_WRONG_MIMETYPE'). ' Error: PLDOC4';
                 return $errors;
             }
         } // else you're pretty much out of luck since we need to access filesystem functions if you don't have these.

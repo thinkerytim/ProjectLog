@@ -4,23 +4,23 @@
         <div class="alert alert-warning center"><?php echo JText::_('COM_PROJECTLOG_SAVE_FIRST'); ?></div>
     <?php else: ?>
         <?php if($this->canDo->get('projectlog.createlog')): ?>
-            <div class="new-log-bt">
+            <div class="new-plitem-bt">
                 <span><?php echo JText::_('COM_PROJECTLOG_WRITE_LOG'); ?></span>
             </div>
-            <div class="new-log-cnt">
-                <input type="text" id="title-log" name="title-log" value="" placeholder="<?php echo JText::_('COM_PROJECTLOG_LOG_TITLE'); ?>" />
-                <textarea class="the-new-log"></textarea>
+            <div class="new-plitem-cnt">
+                <input type="text" id="title-plitem" name="title-plitem" value="" placeholder="<?php echo JText::_('COM_PROJECTLOG_LOG_TITLE'); ?>" />
+                <textarea class="the-new-plitem"></textarea>
                 <p>      
                     <div class="btn-group">
-                    <a class="bt-add-log btn btn-success" disabled><?php echo JText::_('JSUBMIT'); ?></a>
-                    <a class="bt-cancel-log btn btn-danger"><?php echo JText::_('JCANCEL'); ?></a>
+                    <a class="bt-add-plitem btn btn-success" disabled><?php echo JText::_('JSUBMIT'); ?></a>
+                    <a class="bt-cancel-plitem btn btn-danger"><?php echo JText::_('JCANCEL'); ?></a>
                     </div>
                 </p>
                 <div class="clearfix"></div>
             </div>
             <div class="clearfix"></div>
         <?php endif; ?>            
-        <div class="log-container" id="log-container">            
+        <div class="plitem-container" id="plitem-container">            
             <?php
             foreach($this->logs as $log)
             {
@@ -28,18 +28,18 @@
 
                 // Get gravatar Image 
                 $log->gravatar = projectlogHtml::getGravatar($log->logger_email); 
-                $delete_btn = ($this->canDo->get('projectlog.deletelog')) ? '<div class="bt-delete-log btn btn-danger" data-log-id="'.$log->log_id.'">'.JText::_('JACTION_DELETE').'</div>' : '';
+                $delete_btn = ($this->canDo->get('projectlog.deletelog')) ? '<div class="bt-delete-plitem btn btn-danger" data-log-id="'.$log->log_id.'">'.JText::_('JACTION_DELETE').'</div>' : '';
                 $edit_btn   = ($this->canDo->get('projectlog.editlog') || ($this->canDo->get('projectlog.editlog.own') && $log->created_by == $this->user->id)) ? '<a href="'.JRoute::_('index.php?option=com_projectlog&task=log.edit&id='.$log->log_id).'" class="btn btn-info" target="blank">'.JText::_('JACTION_EDIT').'</a>' : '';
 
                 echo 
-                    '<div class="log-cnt" id="logid-'.$log->log_id.'">
+                    '<div class="plitem-cnt" id="logid-'.$log->log_id.'">
                         '.$log->gravatar['image'].'
                         <div class="pull-right btn-group">'.$edit_btn.$delete_btn.'</div>
-                        <div class="thelog">
+                        <div class="theplitem">
                             <h5>'.$log->title.'</h5>
                             <br/>
                             <p>'.$log->description.'</p>
-                            <p data-utime="1371248446" class="small log-dt">
+                            <p data-utime="1371248446" class="small plitem-dt">
                                 '.$log->logger_name.' - '.$log->date.'
                             </p>
                         </div>
@@ -54,31 +54,31 @@
         <script type="text/javascript">                   
             (function($) {
                 <?php if($this->canDo->get('projectlog.createlog')): ?>
-                $('.new-log-bt').click(function(event){    
+                $('.new-plitem-bt').click(function(event){    
                     $(this).hide();
-                    $('.new-log-cnt').show();
-                    $('#title-log').focus();
+                    $('.new-plitem-cnt').show();
+                    $('#title-plitem').focus();
                 });
 
                 /* when start writing the log activate the "add" button */
-                $('.the-new-log').bind('input propertychange', function() {
-                   $(".bt-add-log").attr('disabled', true);
+                $('.the-new-plitem').bind('input propertychange', function() {
+                   $(".bt-add-plitem").attr('disabled', true);
                    var checklength = $(this).val().length;
-                   if(checklength){ $(".bt-add-log").attr('disabled', false); }
+                   if(checklength){ $(".bt-add-plitem").attr('disabled', false); }
                 });
 
                 /* on click on the cancel button */
-                $('.bt-cancel-log').click(function(){
-                    $('.the-new-log').val('');
-                    $('.new-log-cnt').fadeOut('fast', function(){
-                        $('.new-log-bt').fadeIn('fast');
+                $('.bt-cancel-plitem').click(function(){
+                    $('.the-new-plitem').val('');
+                    $('.new-plitem-cnt').fadeOut('fast', function(){
+                        $('.new-plitem-bt').fadeIn('fast');
                     });
                 });
 
                 // on post log click 
-                $('.bt-add-log').click(function(){                                
-                    var theTitle = $('#title-log');
-                    var theLog = $('.the-new-log');
+                $('.bt-add-plitem').click(function(){                                
+                    var theTitle = $('#title-plitem');
+                    var theLog = $('.the-new-plitem');
 
                     if( !theLog.val()){ 
                         alert('<?php echo addslashes(JText::_('COM_PROJECTLOG_EMPTY_LOG_MSG')); ?>'); 
@@ -116,9 +116,9 @@
                                 {
                                     theLog.val('');
                                     theTitle.val('');
-                                    $('.new-log-cnt').hide('fast', function(){
-                                        $('.new-log-bt').show('fast');
-                                        $('#log-container').prepend(r.data);  
+                                    $('.new-plitem-cnt').hide('fast', function(){
+                                        $('.new-plitem-bt').show('fast');
+                                        $('#plitem-container').prepend(r.data);  
                                     })
                                 }
 
@@ -144,7 +144,7 @@
     
                 <?php if($this->canDo->get('projectlog.deletelog')): ?>
                 // on post log click 
-                $('.bt-delete-log').click(function(){
+                $('.bt-delete-plitem').click(function(){
                     if(!confirm('<?php echo addslashes(JText::_('COM_PROJECTLOG_CONFIRM_DELETE')); ?>')){
                         return false;
                     }

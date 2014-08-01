@@ -24,7 +24,8 @@ class ProjectlogViewProject extends JViewLegacy
 	protected $form;
 	protected $item;
 	protected $return_page;
-    protected $logs;   
+    protected $logs; 
+    protected $docs; 
 
 	/**
 	 * Execute and display a template script.
@@ -41,6 +42,7 @@ class ProjectlogViewProject extends JViewLegacy
 		$item           = $this->get('Item');
 		$this->form     = $this->get('Form');
         $this->logs     = $this->get('Logs');
+        $this->docs     = $this->get('Docs');
         
         $this->canDo	= ProjectlogHelper::getActions('com_projectlog', 'project', $item->id);
 

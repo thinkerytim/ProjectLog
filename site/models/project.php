@@ -426,17 +426,48 @@ class ProjectlogModelProject extends JModelForm
         
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
+        $nullDate = $db->quote($db->getNullDate());
+		$nowDate = $db->quote(JFactory::getDate()->toSql());
 
         $query->select('*, log.id as log_id')
                 ->from('#__projectlog_logs AS log')
                 ->where('project_id = '.(int)$project_id)
-                ->where('published > 0');
+                ->where('published > 0')
+                ->where('(publish_up = ' . $nullDate . ' OR publish_up <= ' . $nowDate . ')')
+				->where('(publish_down = ' . $nullDate . ' OR publish_down >= ' . $nowDate . ')');
 
         // Join over the users for the log creator.
         $query->select('ul.name AS logger_name, ul.email AS logger_email')
         ->join('LEFT', '#__users AS ul ON ul.id = log.created_by');
         
         $query->order('log.created DESC');
+
+        $db->setQuery($query);
+        return $db->loadObjectList(); 
+    }
+    
+    public function getDocs()
+    {
+        $project_id = $this->getState('project.id');
+        
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        
+        $nullDate = $db->quote($db->getNullDate());
+		$nowDate = $db->quote(JFactory::getDate()->toSql());
+
+        $query->select('*, doc.id as doc_id')
+                ->from('#__projectlog_docs AS doc')
+                ->where('project_id = '.(int)$project_id)
+                ->where('published > 0')
+                ->where('(publish_up = ' . $nullDate . ' OR publish_up <= ' . $nowDate . ')')
+				->where('(publish_down = ' . $nullDate . ' OR publish_down >= ' . $nowDate . ')');
+
+        // Join over the users for the log creator.
+        $query->select('ul.name AS uploader_name, ul.email AS uploader_email')
+        ->join('LEFT', '#__users AS ul ON ul.id = created_by');
+        
+        $query->order('doc.created DESC');
 
         $db->setQuery($query);
         return $db->loadObjectList(); 

@@ -66,13 +66,13 @@ class ProjectlogControllerAjax extends JControllerLegacy
             $result = false;
             if($model->save($data)){
                 $success_msg = 
-                  '<div class="log-cnt">
+                  '<div class="plitem-cnt">
                       '.$gravatar["image"].'
-                      <div class="thelog">
+                      <div class="theplitem">
                           <h5>'.$data['title'].'</h5>
                           <br/>
                           <p>'.$data['description'].'</p>
-                          <p data-utime="1371248446" class="small log-dt">
+                          <p data-utime="1371248446" class="small plitem-dt">
                             '.$user->get('name').' - '.JHtml::date($currdate, JText::_('DATE_FORMAT_LC2')).'
                           </p>
                       </div>

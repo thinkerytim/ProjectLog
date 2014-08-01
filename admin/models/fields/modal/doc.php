@@ -135,7 +135,7 @@ class JFormFieldModal_Doc extends JFormField
 
 		if (empty($title))
 		{
-			$title = JText::_('COM_PROJECTLOG_SELECT_A_DOC');
+			$title = JText::_('COM_PROJECTLOG_DOC');
 		}
 
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');

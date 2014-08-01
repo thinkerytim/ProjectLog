@@ -215,6 +215,10 @@ class ProjectlogModelLogs extends JModelList
 				$search = $db->quote('%' . $db->escape(substr($search, 7), true) . '%');
 				$query->where('(uc.name LIKE ' . $search . ' OR uc.username LIKE ' . $search . ')');
 			}
+            elseif (stripos($search, 'pid:') === 0)
+			{
+				$query->where('p.id = ' . (int) substr($search, 4));
+			}
 			else
 			{
 				$search = $db->quote('%' . $db->escape($search, true) . '%');

@@ -117,10 +117,10 @@ $assoc		= JLanguageAssociations::isEnabled();
                         <th width="1%" style="min-width:55px" class="nowrap center">
                             <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
                         </th>
-                        <th width="30%">
+                        <th width="25%">
                             <?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
                         </th>
-                        <th width="30%" class="nowrap hidden-phone">
+                        <th width="40%" class="nowrap hidden-phone">
                             <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_DOC', 'a.path', $listDirn, $listOrder); ?>
                         </th>
                         <?php if ($assoc) : ?>
@@ -203,8 +203,20 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     </div>
                                 </div>
                             </td>
-                            <td class="hidden-phone">
-                                <?php echo $item->path; ?>
+                            <td class="hidden-phone nowrap">
+                                <?php 
+                                if($item->path){
+                                    $full_path = JPATH_SITE.'/media/com_projectlog/docs/'.$item->path;
+                                    $download_path = JURI::root(true).'/media/com_projectlog/docs/'.$item->path;
+                                    if(!JFile::exists($full_path)){
+                                        echo '<span class="icon-info danger hasTooltip" title="File appears to be missing!"></span> '.$item->path;
+                                    }else{
+                                        echo '<a href="'.$download_path.'" target="_blank"><span class="icon-download"></span></a> '.$item->path;
+                                    }
+                                }else{
+                                    echo '--';
+                                }
+                                ?>
                             </td>
                             <?php if ($assoc) : ?>
                             <td class="hidden-phone">

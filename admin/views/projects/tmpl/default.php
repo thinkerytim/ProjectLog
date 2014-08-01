@@ -208,6 +208,10 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     <div class="small">
                                         <?php echo $item->category_title; ?>
                                     </div>
+                                    <div class="small">
+                                        <a href="<?php echo JRoute::_('index.php?option=com_projectlog&view=logs&filter_search=pid:'.$item->id);?>">View logs (<?php echo $item->log_count; ?>)</a> |
+                                        <a href="<?php echo JRoute::_('index.php?option=com_projectlog&view=docs&filter_search=pid:'.$item->id);?>">View docs (<?php echo $item->doc_count; ?>)</a>
+                                    </div>
                                 </div>
                             </td>
                             <td class="small hidden-phone">
