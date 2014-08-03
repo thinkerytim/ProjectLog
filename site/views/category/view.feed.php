@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
  *
  * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
@@ -12,15 +12,15 @@ defined('_JEXEC') or die;
 /**
  * HTML View class for the Project component
  *
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
- * @since       1.5
+ * @since       3.3.1
  */
 class ProjectlogViewCategory extends JViewCategoryfeed
 {
 	/**
 	 * @var    string  The name of the view to link individual items to
-	 * @since  3.2
+	 * @since  3.3.1
 	 */
 	protected $viewName = 'project';
 
@@ -32,7 +32,7 @@ class ProjectlogViewCategory extends JViewCategoryfeed
 	 *
 	 * @return  void
 	 *
-	 * @since   3.2
+	 * @since   3.3.1
 	 */
 	protected function reconcileNames($item)
 	{

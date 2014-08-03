@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Administrator
+ * @package     Projectlog.Administrator
  * @subpackage  com_projectlog
  *
  * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
@@ -12,7 +12,7 @@ defined('JPATH_BASE') or die;
 /**
  * Supports a modal document picker.
  *
- * @package     Joomla.Administrator
+ * @package     Projectlog.Administrator
  * @subpackage  com_projectlog
  * @since       3.3.1
  */

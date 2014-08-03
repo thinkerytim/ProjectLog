@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Administrator
+ * @package     Projectlog.Administrator
  * @subpackage  com_projectlog
  *
  * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 /**
  * View class for a list of projects.
  *
- * @package     Joomla.Administrator
+ * @package     Projectlog.Administrator
  * @subpackage  com_projectlog
  * @since       1.6
  */

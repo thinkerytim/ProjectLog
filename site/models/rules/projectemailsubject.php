@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
  *
  * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
@@ -12,8 +12,9 @@ defined('_JEXEC') or die;
 /**
  * JFormRule for com_projectlog to make sure the subject contains no banned word.
  *
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
+ * @since       3.3.1
  */
 class JFormRuleProjectEmailSubject extends JFormRule
 {
@@ -29,6 +30,7 @@ class JFormRuleProjectEmailSubject extends JFormRule
 	 * @param   JForm             $form     The form object for which the field is being tested.
 	 *
 	 * @return  boolean  True if the value is valid, false otherwise
+     * @since   3.3.1
 	 */
 	public function test(SimpleXMLElement $element, $value, $group = null, JRegistry $input = null, JForm $form = null)
 	{

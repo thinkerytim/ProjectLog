@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
  *
  * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
@@ -10,17 +10,12 @@
 defined('_JEXEC') or die;
 
 /**
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
- * @since       1.5
+ * @since       3.3.1
  */
 class ProjectlogModelCategory extends JModelList
 {
-	/**
-	 * Category items data
-	 *
-	 * @var array
-	 */
 	protected $_item = null;
 
 	protected $_articles = null;
@@ -31,20 +26,8 @@ class ProjectlogModelCategory extends JModelList
 
 	protected $_parent = null;
 
-	/**
-	 * The category that applies.
-	 *
-	 * @access    protected
-	 * @var        object
-	 */
 	protected $_category = null;
 
-	/**
-	 * The list of other newfeed categories.
-	 *
-	 * @access    protected
-	 * @var        array
-	 */
 	protected $_categories = null;
 
 	/**
@@ -52,7 +35,7 @@ class ProjectlogModelCategory extends JModelList
 	 *
 	 * @param   array  An optional associative array of configuration settings.
 	 * @see     JController
-	 * @since   1.6
+	 * @since       3.3.1
 	 */
 	public function __construct($config = array())
 	{
@@ -80,6 +63,7 @@ class ProjectlogModelCategory extends JModelList
 	 * Method to get a list of items.
 	 *
 	 * @return  mixed  An array of objects on success, false on failure.
+     * @since       3.3.1
 	 */
 	public function getItems()
 	{
@@ -105,10 +89,10 @@ class ProjectlogModelCategory extends JModelList
 	}
 
 	/**
-	 * Method to build an SQL query to load the list data.
+	 * Method to build a SQL query to load the list data.
 	 *
 	 * @return  string    An SQL query
-	 * @since   1.6
+	 * @since       3.3.1
 	 */
 	protected function getListQuery()
 	{
@@ -211,7 +195,7 @@ class ProjectlogModelCategory extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since   1.6
+	 * @since       3.3.1
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -283,7 +267,7 @@ class ProjectlogModelCategory extends JModelList
 	 * @param   integer  An optional ID
 	 *
 	 * @return  object
-	 * @since   1.5
+	 * @since       3.3.1
 	 */
 	public function getCategory()
 	{
@@ -330,6 +314,7 @@ class ProjectlogModelCategory extends JModelList
 	 * @param   integer  An optional category id. If not supplied, the model state 'category.id' will be used.
 	 *
 	 * @return  mixed  An array of categories or false if an error occurs.
+     * @since       3.3.1
 	 */
 	public function getParent()
 	{
@@ -344,6 +329,7 @@ class ProjectlogModelCategory extends JModelList
 	 * Get the sibling (adjacent) categories.
 	 *
 	 * @return  mixed  An array of categories or false if an error occurs.
+     * @since       3.3.1
 	 */
 	function &getLeftSibling()
 	{
@@ -354,6 +340,12 @@ class ProjectlogModelCategory extends JModelList
 		return $this->_leftsibling;
 	}
 
+    /**
+	 * Get the sibling (adjacent) categories.
+	 *
+	 * @return  mixed  An array of categories or false if an error occurs.
+     * @since       3.3.1
+	 */
 	function &getRightSibling()
 	{
 		if (!is_object($this->_item))
@@ -369,6 +361,7 @@ class ProjectlogModelCategory extends JModelList
 	 * @param   integer  An optional category id. If not supplied, the model state 'category.id' will be used.
 	 *
 	 * @return  mixed  An array of categories or false if an error occurs.
+     * @since       3.3.1
 	 */
 	function &getChildren()
 	{
@@ -382,11 +375,10 @@ class ProjectlogModelCategory extends JModelList
 	/**
 	 * Increment the hit counter for the category.
 	 *
-	 * @param   integer  $pk  Optional primary key of the category to increment.
-	 *
+	 * @param   integer  $pk  Optional primary key of the category to increment.	 *
 	 * @return  boolean  True if successful; false otherwise and internal error set.
 	 *
-	 * @since   3.2
+	 * @since       3.3.1
 	 */
 	public function hit($pk = 0)
 	{

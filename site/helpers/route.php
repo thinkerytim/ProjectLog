@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
  *
  * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 /**
  * Projectlog Route Helper
  *
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
  * @since       3.3.1
  */
@@ -25,7 +25,7 @@ abstract class ProjectlogHelperRoute
 	/**
      * Method to return project route
      * 
-	 * @param   integer  $int The id of the project
+	 * @param   integer $int The id of the project
      * @param   integer $catid  The id of the project category
      * @param   string  $language   The language tag
      * 
@@ -76,7 +76,6 @@ abstract class ProjectlogHelperRoute
     /**
      * Method to return category route
      * 
-	 * @param   integer  $int The id of the project
      * @param   integer $catid  The id of the project category
      * @param   string  $language   The language tag
      * 

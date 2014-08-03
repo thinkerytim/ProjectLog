@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
  *
  * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
@@ -15,7 +15,7 @@ JLoader::register('CategoryHelperAssociation', JPATH_ADMINISTRATOR . '/component
 /**
  * Projectlog Component Association Helper
  *
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
  * @since       3.3.1
  */

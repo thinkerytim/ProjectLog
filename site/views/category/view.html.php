@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
  *
  * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
@@ -10,30 +10,18 @@
 defined('_JEXEC') or die;
 
 /**
- * HTML View class for the Projects component
+ * HTML View class for the Projectlog component
  *
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
- * @since       1.5
+ * @since       3.3.1
  */
 class ProjectlogViewCategory extends JViewCategory
 {
-	/**
-	 * @var    string  The name of the extension for the category
-	 * @since  3.2
-	 */
 	protected  $extension = 'com_projectlog';
 
-	/**
-	 * @var    string  Default title to use for page title
-	 * @since  3.2
-	 */
 	protected  $defaultPageTitle = 'COM_PROJECTLOG_DEFAULT_PAGE_TITLE';
 
-	/**
-	 * @var    string  The name of the view to link individual items to
-	 * @since  3.2
-	 */
 	protected $viewName = 'project';
 
 	/**
@@ -42,6 +30,7 @@ class ProjectlogViewCategory extends JViewCategory
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  mixed  A string if successful, otherwise a Error object.
+     * @since   3.3.1
 	 */
 	public function display($tpl = null)
 	{
@@ -79,6 +68,7 @@ class ProjectlogViewCategory extends JViewCategory
 	 * Prepares the document
 	 *
 	 * @return  void
+     * @since   3.3.1
 	 */
 	protected function prepareDocument()
 	{

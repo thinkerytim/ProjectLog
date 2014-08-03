@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
  *
  * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
@@ -12,24 +12,14 @@ defined('_JEXEC') or die;
 /**
  * This models supports retrieving lists of project categories.
  *
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
- * @since       1.6
+ * @since       3.3.1
  */
 class ProjectlogModelCategories extends JModelList
 {
-	/**
-	 * Model context string.
-	 *
-	 * @var		string
-	 */
 	public $_context = 'com_projectlog.categories';
 
-	/**
-	 * The category context (allows other extensions to derived from this model).
-	 *
-	 * @var		string
-	 */
 	protected $_extension = 'com_projectlog';
 
 	private $_parent = null;
@@ -41,7 +31,7 @@ class ProjectlogModelCategories extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since   1.6
+	 * @since       3.3.1
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -69,6 +59,7 @@ class ProjectlogModelCategories extends JModelList
 	 * @param   string  $id	A prefix for the store id.
 	 *
 	 * @return  string  A store id.
+     * @since   3.3.1
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -85,6 +76,7 @@ class ProjectlogModelCategories extends JModelList
 	 * redefine the function an add some properties to make the styling more easy
 	 *
 	 * @return mixed An array of data items on success, false on failure.
+     * @since       3.3.1
 	 */
 	public function getItems()
 	{
@@ -113,6 +105,14 @@ class ProjectlogModelCategories extends JModelList
 		return $this->_items;
 	}
 
+    /**
+	 * Get the parent category.
+	 *
+	 * @param   integer  An optional category id. If not supplied, the model state 'category.id' will be used.
+	 *
+	 * @return  mixed  An array of categories or false if an error occurs.
+     * @since       3.3.1
+	 */
 	public function getParent()
 	{
 		if (!is_object($this->_parent))

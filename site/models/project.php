@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
  *
  * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
@@ -10,24 +10,16 @@
 defined('_JEXEC') or die;
 
 /**
- * @package     Joomla.Site
+ * @package     Projectlog.site
  * @subpackage  com_projectlog
- * @since       1.5
+ * @since       3.3.1
  */
 class ProjectlogModelProject extends JModelForm
 {
-	/**
-	 * @since   1.6
-	 */
 	protected $view_item = 'project';
 
 	protected $_item = null;
 
-	/**
-	 * Model context string.
-	 *
-	 * @var		string
-	 */
 	protected $_context = 'com_projectlog.project';
 
 	/**
@@ -35,7 +27,7 @@ class ProjectlogModelProject extends JModelForm
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since   1.6
+	 * @since       3.3.1
 	 */
 	protected function populateState()
 	{
@@ -66,7 +58,7 @@ class ProjectlogModelProject extends JModelForm
 	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 * 
 	 * @return  JForm  A JForm object on success, false on failure
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -90,6 +82,12 @@ class ProjectlogModelProject extends JModelForm
 		return $form;
 	}
 
+    /**
+	 * Load the project contact form
+	 *
+	 * @return array Form data
+     * @since  3.3.1
+	 */
 	protected function loadFormData()
 	{
 		$data = (array) JFactory::getApplication()->getUserState('com_projectlog.contact.data', array());
@@ -104,7 +102,8 @@ class ProjectlogModelProject extends JModelForm
 	 *
 	 * @param   integer  $pk  Id for the project
 	 *
-	 * @return mixed Object or null
+	 * @return  mixed Object or null
+     * @since   3.3.1
 	 */
 	public function &getItem($pk = null)
 	{
@@ -244,6 +243,14 @@ class ProjectlogModelProject extends JModelForm
 		return $this->_item[$pk];
 	}
 
+    /**
+	 * Create the project query
+	 *
+	 * @param   integer  $pk  Id for the project
+	 *
+	 * @return  mixed Object or null
+     * @since   3.3.1
+	 */
 	protected function getProjectQuery($pk = null)
 	{
 		// @todo Cache on the fingerprint of the arguments
@@ -401,7 +408,7 @@ class ProjectlogModelProject extends JModelForm
 	 *
 	 * @return  boolean  True if successful; false otherwise and internal error set.
 	 *
-	 * @since   3.0
+	 * @since   3.3.1
 	 */
 	public function hit($pk = 0)
 	{
@@ -420,6 +427,12 @@ class ProjectlogModelProject extends JModelForm
 		return true;
 	}
     
+    /**
+	 * Retrieve the log entries for current project
+	 *
+     * return   mixed   Object list or error
+	 * @since   3.3.1
+	 */
     public function getLogs()
     {
         $project_id = $this->getState('project.id');
@@ -446,6 +459,12 @@ class ProjectlogModelProject extends JModelForm
         return $db->loadObjectList(); 
     }
     
+    /**
+	 * Retrieve the document entries for current project
+	 *
+     * return   mixed   Object list or error
+	 * @since   3.3.1
+	 */
     public function getDocs()
     {
         $project_id = $this->getState('project.id');
