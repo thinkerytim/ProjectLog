@@ -17,7 +17,7 @@ class com_projectlogInstallerScript
     private $plmedia;
     private $installed_mods             = array();
     private $installed_plugs            = array();
-    private $release                    = '3.3.1';
+    private $release                    = '3.3.1beta';
     private $minimum_joomla_release     = '3.1';
     private $preflight_message          = null;
     private $install_message            = null;
@@ -100,7 +100,9 @@ class com_projectlogInstallerScript
         $this->install_message .= '
             <h3>Installation Status:</h3>
             <p>Congratulations on your install of Project Log! The first thing to do to get started with Project Log
-            is to go into the settings area and configure your component.</p>
+            is to <a href="'.JRoute::_('index.php?option=com_config&view=component&component=com_projectlog').'">configure your component</a>. After saving your
+            configuration, create a new project category. A sample project, log, and document has been created on installation. After you create a category, simply edit the sample project and apply
+            your newly created category. Once a category is assigned to your project, you can create a menu item to a Project Log view via your menu manager.</p>
 
             <ul>
                 <li>Sample data execution: '.$sample_data_rslt.'</li>
