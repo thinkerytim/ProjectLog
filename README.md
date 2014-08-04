@@ -1,6 +1,7 @@
 # Project Log 3
-Copyright (C) 2009 - 2014 The Thinkery, LLC. [thethinkery.net](http://thethinkery.net). 
-(https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+Copyright (C) 2009 - 2014 The Thinkery, LLC. [thethinkery.net](http://thethinkery.net).
+ 
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
 
 ## Welcome to Project Log 3
 
