@@ -66,14 +66,14 @@
 		</field>
         <field name="allowed_mimetypes" 
             type="text"
-            default="image/jpeg,image/gif,image/png,application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/vnd.oasis.opendocument.text,application/vnd.oasis.opendocument.presentation,application/vnd.oasis.opendocument.spreadsheet,application/x-shockwave-flash,video/mpeg,video/x-msvideo,application/zip"
+            default="image/jpeg,image/gif,image/png,application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/vnd.oasis.opendocument.text,application/vnd.oasis.opendocument.presentation,application/vnd.oasis.opendocument.spreadsheet,video/mpeg,video/x-msvideo,application/zip"
             label="COM_PROJECTLOG_FIELD_CONFIG_ALLOWED_MIMETYPES_LABEL"
             description="COM_PROJECTLOG_FIELD_CONFIG_ALLOWED_MIMETYPES_DESC"
             size="30"
         />
         <field name="allowed_filetypes" 
             type="text"
-            default="pdf,jpg,zip,gif,png,jpeg"
+            default="jpg,gif,png,pdf,doc,xls,odt,ods,ppt,mpeg,avi,zip"
             label="COM_PROJECTLOG_FIELD_CONFIG_ALLOWED_FILETYPES_LABEL"
             description="COM_PROJECTLOG_FIELD_CONFIG_ALLOWED_FILETYPES_DESC"
             size="30"
@@ -529,7 +529,7 @@
 
 		<field name="show_description_image" 
             type="radio"
-			default="0"
+			default="1"
 			class="btn-group btn-group-yesno"
 			description="JGLOBAL_SHOW_CATEGORY_IMAGE_DESC"
 			label="JGLOBAL_SHOW_CATEGORY_IMAGE_LABEL"
@@ -551,7 +551,7 @@
 
 		<field name="show_subcat_desc" 
             type="radio"
-			default="1"
+			default="0"
 			class="btn-group btn-group-yesno"
 			label="JGLOBAL_SHOW_SUBCATEGORIES_DESCRIPTION_LABEL"
 			description="JGLOBAL_SHOW_SUBCATEGORIES_DESCRIPTION_DESC"
@@ -746,7 +746,7 @@
         <field name="show_task_id_headings"
             type="radio"
 			class="btn-group btn-group-yesno"
-            default="1"
+            default="0"
             label="COM_PROJECTLOG_FIELD_CONFIG_TASK_ID_LABEL"
             description="COM_PROJECTLOG_FIELD_CONFIG_TASK_ID_DESC"
             >
@@ -757,7 +757,7 @@
         <field name="show_workorder_id_headings"
             type="radio"
 			class="btn-group btn-group-yesno"
-            default="1"
+            default="0"
             label="COM_PROJECTLOG_FIELD_CONFIG_WORKORDER_ID_LABEL"
             description="COM_PROJECTLOG_FIELD_CONFIG_WORKORDER_ID_DESC"
             >

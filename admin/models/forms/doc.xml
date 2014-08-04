@@ -38,8 +38,7 @@
             type="file" 
             label="COM_PROJECTLOG_DOC" 
             description="" 
-            size="10" 
-            accept="audio/*,video/*,image/*"
+            size="10"            
         />
 
 		<field id="published"

@@ -23,11 +23,6 @@
         <folder>models</folder>
         <folder>views</folder>
     </files>
-
-    <media folder="media/com_projectlog" destination="com_projectlog">
-		<filename>index.html</filename>
-        <folder>docs</folder>
-	</media>
     
     <languages>
         <language tag="en-GB">languages/site/en-GB/en-GB.com_projectlog.ini</language>

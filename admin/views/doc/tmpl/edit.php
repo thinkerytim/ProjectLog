@@ -22,7 +22,7 @@ $assoc = JLanguageAssociations::isEnabled();
 
 $allowed_types_desc = sprintf(JText::_('COM_PROJECTLOG_ALLOWED_FILETYPES'), $plparams->get('allowed_filetypes'));
 $this->form->setFieldAttribute('path', 'description', $allowed_types_desc);
-
+$this->form->setFieldAttribute('pl_document', 'accept', trim($plparams->get('allowed_mimetypes', 'image/*')));
 ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
