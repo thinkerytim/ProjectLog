@@ -95,6 +95,6 @@
     
     <!-- Update servers here -->
     <!--<updateservers>
-        <server type="extension" priority="1" name="Intellectual Property Update Server">http://extensions.thethinkery.net/iproperty.xml</server>
+        <server type="extension" priority="1" name="ProjectLog Update Server">http://extensions.thethinkery.net/projectlog.xml</server>
     </updateservers>-->
 </extension>
