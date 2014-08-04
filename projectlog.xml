@@ -24,6 +24,11 @@
         <folder>views</folder>
     </files>
     
+    <media folder="media/pltmp" destination="pltmp">
+        <filename>index.html</filename>
+        <filename>sample.pdf</filename>
+    </media>
+    
     <languages>
         <language tag="en-GB">languages/site/en-GB/en-GB.com_projectlog.ini</language>
     </languages>

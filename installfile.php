@@ -14,6 +14,7 @@ jimport('joomla.filesystem.file');
 
 class com_projectlogInstallerScript
 {
+    private $tmppath;
     private $plmedia;
     private $installed_mods             = array();
     private $installed_plugs            = array();
@@ -34,6 +35,7 @@ class com_projectlogInstallerScript
         $this->release  = $parent->get("manifest")->version;
         $this->db       = JFactory::getDBO();
         $this->plmedia  = JPATH_ROOT.'/media/com_projectlog';
+        $this->tmppath  = JPATH_ROOT.'/media/pltmp';
 
         // Find mimimum required joomla version
         $this->minimum_joomla_release = $parent->get("manifest")->attributes()->version;
@@ -112,6 +114,7 @@ class com_projectlogInstallerScript
             <ul>';
                 //create media folders
                 $folder_array       = array('', 'docs');
+                $default_files      = JFolder::files($this->tmppath);
                 foreach($folder_array as $folder){
                     if(!JFolder::exists($this->plmedia.'/'.$folder)){
                         if(!JFolder::create($this->plmedia.'/'.$folder, 0755) ) {
@@ -119,12 +122,22 @@ class com_projectlogInstallerScript
                             $this->install_message .= '<li>media/com_projectlog/'.$folder.': <span class="text-error">Not created</span></li>';
                         }else{
                             $folderpath = $this->plmedia.'/'.$folder;
+                            foreach( $default_files as $file ){
+                                if($folder == 'docs'){ // we want to copy the sample pdf and index.html to this folder                                    
+                                    JFile::copy($this->tmppath.'/'.$file, $folderpath.'/'.$file);
+                                }else{ // we only want the index.html in the root projectlog folder
+                                    if(JFile::getExt($file) != 'pdf'){
+                                        JFile::copy($this->tmppath.'/'.$file, $folderpath.'/'.$file);
+                                    }
+                                }                                        
+                            }
                             $this->install_message .= '<li>media/com_projectlog/'.$folder.': <span class="label label-success">Created</span></li>';
                         }
                     }else{
                         $this->install_message .= '<li>media/com_projectlog/'.$folder.': <span class="label label-success">Exists from previous install</span></li>';
                     }
                 }
+                JFolder::delete($this->tmppath);
         $this->install_message .= '
             </ul>';
     }
