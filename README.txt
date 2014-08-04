@@ -11,3 +11,5 @@
 Welcome to Project Log 3
 
 Project Log is a project management component for the Joomla! content management system. 
+
+**Please make sure to read the _must_ instructions and information here to avoid confusion!**
