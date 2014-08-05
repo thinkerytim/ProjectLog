@@ -48,6 +48,7 @@ class ProjectlogViewProject extends JViewLegacy
         $this->docs     = $this->get('Docs');
         $this->plmedia  = JPATH_SITE.'/media/com_projectlog/docs/';
         $this->print	= $app->input->getBool('print');
+        $this->return_page	= base64_encode(JURI::getInstance()->toString());
         
         $this->canDo	= ProjectlogHelper::getActions('com_projectlog', 'project', $item->id);
 

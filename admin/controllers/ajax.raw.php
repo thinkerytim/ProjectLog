@@ -53,7 +53,10 @@ class ProjectlogControllerAjax extends JControllerLegacy
         
         $data       = JRequest::get('post');
         $user       = JFactory::getUser();
-        $model      = $this->getModel('Log');
+        
+        $clientmodel    = (JFactory::getApplication()->getName() == 'site') ? 'Logform' : 'Log';
+        $model          = $this->getModel($clientmodel);
+
         $currdate   = JFactory::getDate()->toSql();
         $gravatar   = projectlogHtml::getGravatar($user->get('email'));
         

@@ -93,68 +93,11 @@ $canEdit = $params->get('access-edit');
 
             <?php echo JHtml::_('bootstrap.startTabSet', 'projectTab', array('active' => (count($this->logs)) ? 'logs' : 'contact')); ?>
                 <?php if(count($this->logs)): ?>
-                    <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'logs', JText::_('COM_PROJECTLOG_LOGS', true)); ?>
-                        <?php
-                        foreach($this->logs as $log)
-                        {
-                            $log->date = JHtml::date($log->created,JText::_('DATE_FORMAT_LC2'));
-
-                            // Get gravatar Image 
-                            $log->gravatar = projectlogHtml::getGravatar($log->logger_email); 
-                            //$delete_btn = ($this->canDo->get('projectlog.deletelog')) ? '<div class="bt-delete-log btn btn-danger" data-log-id="'.$log->log_id.'">'.JText::_('JACTION_DELETE').'</div>' : '';
-                            //$edit_btn   = ($this->canDo->get('projectlog.editlog') || ($this->canDo->get('projectlog.editlog.own') && $log->created_by == $this->user->id)) ? '<a href="'.JRoute::_('index.php?option=com_iproperty&task=log.edit&id='.$log->log_id).'" class="btn btn-info">'.JText::_('JACTION_EDIT').'</a>' : '';
-
-                            echo 
-                                '<div class="plitem-cnt" id="logid-'.$log->log_id.'">
-                                    '.$log->gravatar['image'].'
-                                    <div class="theplitem">
-                                        <h5>'.$log->title.'</h5>
-                                        <br/>
-                                        <p>'.$log->description.'</p>
-                                        <p data-utime="1371248446" class="small plitem-dt">
-                                            '.$log->logger_name.' - '.$log->date.'
-                                        </p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>';                  
-                        }
-                        ?>
-                    <?php echo JHtml::_('bootstrap.endTab'); ?>
+                    <?php echo $this->loadTemplate('logs'); ?>
                 <?php endif; ?>
             
                 <?php if(count($this->docs)): ?>
-                    <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'docs', JText::_('COM_PROJECTLOG_RELATED_DOCS', true)); ?>
-                        <?php
-                        foreach($this->docs as $doc)
-                        {
-                            $doc->date  = JHtml::date($doc->created,JText::_('DATE_FORMAT_LC2'));
-                            $full_path  = $this->plmedia.$doc->path;
-                            $rel_path   = JURI::root(true).'/media/com_projectlog/docs/'.$doc->path;
-                            
-                            if($doc->path && JFile::exists($full_path)):
-
-                                // Get gravatar Image 
-                                $doc->gravatar = projectlogHtml::getGravatar($doc->uploader_email); 
-                                //$delete_btn = ($this->canDo->get('projectlog.deletedoc')) ? '<div class="bt-delete-log btn btn-danger" data-doc-id="'.$doc->doc_id.'">'.JText::_('JACTION_DELETE').'</div>' : '';
-                                //$edit_btn   = ($this->canDo->get('projectlog.editdoc') || ($this->canDo->get('projectlog.editdoc.own') && $doc->created_by == $this->user->id)) ? '<a href="'.JRoute::_('index.php?option=com_iproperty&task=doc.edit&id='.$doc->doc_id).'" class="btn btn-info">'.JText::_('JACTION_EDIT').'</a>' : '';
-
-                                echo 
-                                    '<div class="plitem-cnt" id="docid-'.$doc->doc_id.'">
-                                        '.$doc->gravatar['image'].'
-                                        <div class="theplitem">
-                                            <h5>'.$doc->title.'</h5>
-                                            <br/>
-                                            <p>'.$doc->path.' <a href="'.$rel_path.'" target="_blank"><span class="icon-download" class="hasTooltip" title="'.JText::_('COM_PROJECTLOG_DOWNLOAD').'"></span> '.JText::_('COM_PROJECTLOG_DOWNLOAD').'</a></p>
-                                            <p data-utime="1371248446" class="small plitem-dt">
-                                                '.$doc->uploader_name.' - '.$doc->date.'
-                                            </p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>'; 
-                            endif;
-                        }
-                        ?>
-                    <?php echo JHtml::_('bootstrap.endTab'); ?>
+                    <?php echo $this->loadTemplate('docs'); ?>
                 <?php endif; ?>
 
                 <!-- show email form -->
