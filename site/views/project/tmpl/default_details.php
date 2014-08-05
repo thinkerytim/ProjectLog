@@ -15,6 +15,10 @@ $onsite_class = ($this->item->onsite) ? 'icon-thumbs-up' : 'icon-thumbs-down';
 ?>
 <h3><?php echo JText::_('COM_PROJECTLOG_DETAILS'); ?></h3>
 <ul class="pl-project-details">
+    <li>
+        <b><?php echo JText::_('COM_PROJECTLOG_STATUS'); ?>:</b>&nbsp;
+        <?php echo JText::_('COM_PROJECTLOG_'.strtoupper($this->project->status)); ?>
+    </li>
     <?php if ($this->project->release_date && $this->params->get('show_release_date')) : ?>
         <li>
             <b><?php echo JText::_('COM_PROJECTLOG_RELEASE_DATE'); ?>:</b>&nbsp;

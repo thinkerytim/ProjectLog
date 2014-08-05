@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset addfieldpath="/administrator/components/com_categories/models/fields">
+		<field
+			id="id"
+			name="id"
+			type="hidden"
+			class="inputbox"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			size="10"
+			default="0"
+			readonly="true" 
+        />
+        
+        <field
+			id="projecthistory"
+			name="projecthistory"
+			type="contenthistory"
+			data-typeAlias="com_projectlog.project"
+			label="JTOOLBAR_VERSIONS" 
+        />
+
+		<field name="name"
+			type="text"
+			label="COM_PROJECTLOG_FIELD_NAME_LABEL"
+			description="COM_PROJECTLOG_FIELD_NAME_DESC"
+			class="input-xxlarge input-large-text"
+			size="40"
+			required="true"
+		 />
+
+		<field name="alias"
+			type="text"
+			label="JFIELD_ALIAS_LABEL"
+			description="JFIELD_ALIAS_DESC"
+			hint="JFIELD_ALIAS_PLACEHOLDER"
+			size="45"
+		/>
+
+		<field name="version_note"
+			type="text"
+			label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
+			description="JGLOBAL_FIELD_VERSION_NOTE_DESC"
+			class="span12" size="45"
+			labelclass="control-label"
+		/>
+        
+        <field name="approved"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			label="COM_PROJECTLOG_APPROVED_LABEL"
+			size="1"
+			default="1"
+            >
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field id="published"
+			name="published"
+			type="list"
+			label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC"
+			class="chzn-color-state"
+			size="1"
+			default="1"
+            >
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+
+		<field name="catid"
+			type="categoryedit"
+			extension="com_projectlog"
+			label="JCATEGORY"
+			description="JFIELD_CATEGORY_DESC"
+			required="true"
+		/>
+
+		<field name="access"
+			type="accesslevel"
+			label="JFIELD_ACCESS_LABEL"
+			description="JFIELD_ACCESS_DESC"
+			size="1"
+        />
+
+		<field name="misc" 
+            type="editor"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_MISC_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_MISC_DESC"
+			filter="JComponentHelper::filterText"
+			buttons="true"
+			hide="readmore,pagebreak"
+        />
+
+		<field name="created_by" 
+            type="user"
+			label="JGLOBAL_FIELD_CREATED_BY_LABEL" 
+            description="COM_PROJECTLOG_FIELD_CREATED_BY_DESC" 
+        />
+
+		<field name="created_by_alias" 
+            type="text"
+			label="COM_PROJECTLOG_FIELD_CREATED_BY_ALIAS_LABEL" 
+            description="COM_PROJECTLOG_FIELD_CREATED_BY_ALIAS_DESC"
+			size="20" 
+        />
+
+		<field name="created" 
+            type="calendar" 
+            label="COM_PROJECTLOG_FIELD_CREATED_LABEL"
+			description="COM_PROJECTLOG_FIELD_CREATED_DESC" 
+            size="22"
+			format="%Y-%m-%d %H:%M:%S" filter="user_utc" 
+        />
+
+		<field name="modified" 
+            type="calendar" 
+            class="readonly"
+			label="JGLOBAL_FIELD_MODIFIED_LABEL" 
+            description="COM_PROJECTLOG_FIELD_MODIFIED_DESC"
+			size="22" 
+            readonly="true" 
+            format="%Y-%m-%d %H:%M:%S" 
+            filter="user_utc" 
+        />
+
+		<field name="modified_by"
+            type="user"
+            label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+            class="readonly"
+            readonly="true"
+            filter="unset"
+        />
+
+		<field name="checked_out"
+			type="hidden"
+			filter="unset"
+		/>
+
+		<field name="checked_out_time"
+			type="hidden"
+			filter="unset"
+		/>
+
+		<field name="ordering"
+			type="ordering"
+			label="JFIELD_ORDERING_LABEL"
+			description="JFIELD_ORDERING_DESC"
+            content_type="com_projectlog.project"
+		/>
+
+		<field name="publish_up" 
+            type="calendar"
+			label="COM_PROJECTLOG_FIELD_PUBLISH_UP_LABEL" 
+            description="COM_PROJECTLOG_FIELD_PUBLISH_UP_DESC"
+			format="%Y-%m-%d %H:%M:%S" 
+            size="22"
+			filter="user_utc"
+		/>
+
+		<field name="publish_down" 
+            type="calendar"
+			label="COM_PROJECTLOG_FIELD_PUBLISH_DOWN_LABEL" 
+            description="COM_PROJECTLOG_FIELD_PUBLISH_DOWN_DESC"
+			format="%Y-%m-%d %H:%M:%S" 
+            size="22"
+			filter="user_utc"
+		/>
+
+		<field name="metakey"
+			type="textarea"
+			label="JFIELD_META_KEYWORDS_LABEL"
+			description="JFIELD_META_KEYWORDS_DESC"
+			rows="3"
+			cols="30"
+		 />
+
+		<field name="metadesc"
+			type="textarea"
+			label="JFIELD_META_DESCRIPTION_LABEL"
+			description="JFIELD_META_DESCRIPTION_DESC"
+			rows="3"
+			cols="30"
+		/>
+
+		<field name="language" 
+            type="contentlanguage" 
+            label="JFIELD_LANGUAGE_LABEL"
+			description="COM_PROJECTLOG_FIELD_LANGUAGE_DESC"
+            >
+			<option value="*">JALL</option>
+		</field>
+
+		<field name="featured"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			label="JFEATURED"
+			default="0"
+            >
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="tags"
+			type="tag"
+			label="JTAG"
+			description="JTAG_DESC"
+			class="span12"
+			multiple="true"
+		/>		
+	</fieldset>
+    
+	<fieldset name="details" label="COM_PROJECTLOG_PROJECT_DETAILS">
+		<field name="@text_details"
+			type="note"
+			label=""
+			description="COM_PROJECTLOG_EDIT_DETAILS"
+        />
+        
+        <field name="client" 
+            type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_CLIENT_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_CLIENT_DESC"
+			size="30"
+            required="true"
+        />
+        
+        <field name="project_type" 
+            type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_PROJECTTYPE_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_PROJECTTYPE_DESC"
+			size="30"
+            required="true"
+        />
+        
+        <field name="release_date" 
+            type="calendar"
+			label="COM_PROJECTLOG_FIELD_RELEASE_DATE_LABEL" 
+            description="COM_PROJECTLOG_FIELD_RELEASE_DATE_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+            required="true"
+        />
+        
+        <field name="status" type="list"
+            class="chzn-color"
+            label="COM_PROJECTLOG_FIELD_PROJECT_STATUS_LABEL"
+            description="COM_PROJECTLOG_FIELD_PROJECT_STATUS_DESC"
+            default="inprogress"
+            required="true">
+            <option value="inprogress">COM_PROJECTLOG_INPROGRESS</option>
+            <option value="onhold">COM_PROJECTLOG_ONHOLD</option>
+            <option value="complete">COM_PROJECTLOG_COMPLETE</option>
+        </field> 
+
+		<field name="image"
+			type="media"
+			hide_none="1"
+			label="COM_PROJECTLOG_FIELD_PARAMS_IMAGE_LABEL"
+			description="COM_PROJECTLOG_FIELD_PARAMS_IMAGE_DESC"
+        />
+
+		<field name="manager" type="user"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_MANAGER_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_MANAGER_DESC"
+            required="true"
+        />
+        
+        <field name="chief" type="user"
+			label="COM_PROJECTLOG_FIELD_CHIEF_LABEL"
+			description="COM_PROJECTLOG_FIELD_CHIEF_DESC"
+        />
+        
+        <field name="technicians" type="text"
+			label="COM_PROJECTLOG_FIELD_TECHNICIANS_LABEL"
+			description="COM_PROJECTLOG_FIELD_TECHNICIANS_DESC"
+			size="30"
+		/>
+        
+        <field name="deployment_from" type="calendar"
+			label="COM_PROJECTLOG_FIELD_DEPLOYMENT_FROM_LABEL" 
+            description="COM_PROJECTLOG_FIELD_DEPLOYMENT_FROM_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="deployment_to" type="calendar"
+			label="COM_PROJECTLOG_FIELD_DEPLOYMENT_TO_LABEL" 
+            description="COM_PROJECTLOG_FIELD_DEPLOYMENT_TO_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="contract_from" type="calendar"
+			label="COM_PROJECTLOG_FIELD_CONTRACT_FROM_LABEL" 
+            description="COM_PROJECTLOG_FIELD_CONTRACT_FROM_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="contract_to" type="calendar"
+			label="COM_PROJECTLOG_FIELD_CONTRACT_TO_LABEL" 
+            description="COM_PROJECTLOG_FIELD_CONTRACT_TO_DESC"
+			format="%Y-%m-%d %H:%M:%S" size="22"
+			filter="user_utc"
+		/>
+        
+        <field name="onsite" type="radio"
+            class="btn-group"
+            label="COM_PROJECTLOG_FIELD_ONSITE_LABEL"
+            description="COM_PROJECTLOG_FIELD_ONSITE_DESC"
+            default="0"
+            >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>       
+
+		<field name="email_to" type="email"
+			label="JGLOBAL_EMAIL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_EMAIL_DESC"
+			size="30"
+		/>
+        
+        <field name="general_loc" type="textarea"
+			label="COM_PROJECTLOG_FIELD_GENERAL_LOC_LABEL"
+			description="COM_PROJECTLOG_FIELD_GENERAL_LOC_DESC"
+			rows="3"
+			cols="30"
+		/>
+        
+        <field name="specific_loc" type="textarea"
+			label="COM_PROJECTLOG_FIELD_SPECIFIC_LOC_LABEL"
+			description="COM_PROJECTLOG_FIELD_SPECIFIC_LOC_DESC"
+			rows="3"
+			cols="30"
+		/>
+        
+        <field name="release_id" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_RELEASE_ID_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_RELEASE_ID_DESC"
+			size="30"
+		/>
+        
+        <field name="job_id" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_JOB_ID_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_JOB_ID_DESC"
+			size="30"
+		/>        
+        
+        <field name="workorder_id" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_WORKORDER_ID_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_WORKORDER_ID_DESC"
+			size="30"
+		/>
+
+		<field name="task_id" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_TASK_ID_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_TASK_ID_DESC"
+			size="30"
+		/>
+
+		<field name="mobile" type="text"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_MOBILE_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_MOBILE_DESC"
+			size="30"
+		/>	
+
+		<field name="webpage"
+			type="url"
+			filter="url"
+			label="COM_PROJECTLOG_FIELD_INFORMATION_WEBPAGE_LABEL"
+			description="COM_PROJECTLOG_FIELD_INFORMATION_WEBPAGE_DESC"
+			size="30"
+		/>
+
+		<field name="sortname1" type="text"
+			label="COM_PROJECTLOG_FIELD_SORTNAME1_LABEL"
+			description="COM_PROJECTLOG_FIELD_SORTNAME1_DESC"
+			size="30"
+		/>
+
+		<field name="sortname2" type="text"
+			label="COM_PROJECTLOG_FIELD_SORTNAME2_LABEL"
+			description="COM_PROJECTLOG_FIELD_SORTNAME2_DESC"
+			size="30" 
+        />
+
+		<field name="sortname3" type="text"
+			label="COM_PROJECTLOG_FIELD_SORTNAME3_LABEL"
+			description="COM_PROJECTLOG_FIELD_SORTNAME3_DESC"
+			size="30"
+        />
+	</fieldset>
+
+	
+    
+	<fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+		<fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+			<field name="robots"
+				type="list"
+				label="JFIELD_METADATA_ROBOTS_LABEL"
+				description="JFIELD_METADATA_ROBOTS_DESC"
+                >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
+
+			<field name="rights" type="text"
+				label="JFIELD_METADATA_RIGHTS_LABEL"
+				description="JFIELD_METADATA_RIGHTS_DESC"
+				size="20" />
+		</fieldset>
+	</fields>
+
+	<field name="hits"
+		type="text"
+		class="readonly"
+		size="6" label="JGLOBAL_HITS"
+		description="COM_PROJECTLOG_HITS_DESC"
+		readonly="true"
+		filter="unset" 
+    />
+
+	<field name="version" 
+        type="text" 
+        class="readonly"
+		label="COM_PROJECTLOG_FIELD_VERSION_LABEL" 
+        size="6" 
+        description="COM_PROJECTLOG_FIELD_VERSION_DESC"
+		readonly="true" 
+        filter="unset" 
+    />
+</form>

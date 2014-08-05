@@ -35,7 +35,7 @@ abstract class JHtmlIcon
 
 		$uri = JUri::getInstance();
 
-		$url = 'index.php?option=com_projectlog&task=project.add&return=' . base64_encode($uri) . '&a_id=0&catid=' . $category->id;
+		$url = 'index.php?option=com_projectlog&task=projectform.add&return=' . base64_encode($uri) . '&a_id=0&catid=' . $category->id;
 
 		if ($params->get('show_icons'))
 		{
@@ -161,7 +161,7 @@ abstract class JHtmlIcon
 			return '<span class="hasTooltip" title="' . JHtml::tooltipText($tooltip. '', 0) . '">' . $button . '</span>';
 		}
 
-		$url = 'index.php?option=com_projectlog&task=project.edit&a_id=' . $project->id . '&return=' . base64_encode($uri);
+		$url = 'index.php?option=com_projectlog&task=projectform.edit&a_id=' . $project->id . '&return=' . base64_encode($uri);
 
 		if ($project->published == 0)
 		{
