@@ -8,11 +8,13 @@
  */
 
 defined('_JEXEC') or die;
-
-$cparams = JComponentHelper::getParams('com_media');
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 
 jimport('joomla.html.html.bootstrap');
-JHtml::_('bootstrap.tooltip');
+
+// Create shortcuts to some parameters.
+$params  = $this->project->params;
+$canEdit = $params->get('access-edit');
 
 // @todo - set itemtype data -- https://support.google.com/webmasters/answer/164506?hl=en&ref_topic=1088474
 ?>
@@ -38,7 +40,19 @@ JHtml::_('bootstrap.tooltip');
                     <?php endif; ?>
                 </h2>
             </div>
-        <?php endif;  ?>        
+        <?php endif;  ?>  
+        
+        <?php if (!$this->print) : ?>
+            <?php if ($canEdit || $params->get('show_print_icon') || $params->get('show_email_icon')) : ?>
+                <?php echo JLayoutHelper::render('joomla.content.icons', array('params' => $params, 'item' => $this->project, 'print' => false)); ?>
+            <?php endif; ?>
+            <div class="clearfix"></div>
+        <?php else : ?>
+            <div id="pop-print" class="btn hidden-print">
+                <?php echo JHtml::_('icon.print_screen', $this->item, $params); ?>
+            </div>
+            <div class="clearfix"></div>
+        <?php endif; ?>
 
         <!-- render drop down for other projects -->
         <?php if ($this->params->get('show_project_list') && count($this->projects) > 1) : ?>
@@ -130,7 +144,7 @@ JHtml::_('bootstrap.tooltip');
                                         <div class="theplitem">
                                             <h5>'.$doc->title.'</h5>
                                             <br/>
-                                            <p>'.$doc->path.' - <a href="'.$rel_path.'" target="_blank"><span class="icon-download hasTooltip" title="'.JText::_('COM_PROJECTLOG_DOWNLOAD').'"></span> '.JText::_('COM_PROJECTLOG_DOWNLOAD').'</a></p>
+                                            <p>'.$doc->path.' <a href="'.$rel_path.'" target="_blank"><span class="icon-download" class="hasTooltip" title="'.JText::_('COM_PROJECTLOG_DOWNLOAD').'"></span> '.JText::_('COM_PROJECTLOG_DOWNLOAD').'</a></p>
                                             <p data-utime="1371248446" class="small plitem-dt">
                                                 '.$doc->uploader_name.' - '.$doc->date.'
                                             </p>

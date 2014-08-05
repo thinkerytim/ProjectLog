@@ -44,7 +44,7 @@ class ProjectlogModelCategory extends JModelList
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'name', 'a.name',
-				'manager', 'a.manager',
+				'manager', 'a.manager', 'manager_name',
 				'project_type', 'a.project_type',
 				'client', 'a.client',
 				'release_id', 'a.release_id',
@@ -52,7 +52,12 @@ class ProjectlogModelCategory extends JModelList
 				'sortname',
 				'sortname1', 'a.sortname1',
 				'sortname2', 'a.sortname2',
-				'sortname3', 'a.sortname3'
+				'sortname3', 'a.sortname3',
+                'cat_id', 'c.id',
+                'job_id', 'a.job_id',
+                'task_id', 'a.task_id',
+                'workorder_id', 'a.workorder_id',
+                'project_type', 'a.project_type'
 			);
 		}
 
@@ -67,7 +72,9 @@ class ProjectlogModelCategory extends JModelList
 	 */
 	public function getItems()
 	{
-		// Invoke the parent getItems method to get the main list
+		$user = JFactory::getUser();
+
+        // Invoke the parent getItems method to get the main list
 		$items = parent::getItems();
 
 		// Convert the params field into an object, saving original in _params
@@ -82,6 +89,29 @@ class ProjectlogModelCategory extends JModelList
 			}
 			$this->tags = new JHelperTags;
 			$this->tags->getItemTags('com_projectlog.project', $item->id);
+            
+            // Technically guest could edit an article, but lets not check that to improve performance a little.
+            if (!$user->get('guest'))
+            {
+                $userId = $user->get('id');
+                $asset = 'com_projectlog.project.' . $item->id;
+
+                // Check general edit permission first.
+                if ($user->authorise('core.edit', $asset))
+                {
+                    $item->params->set('access-edit', true);
+                }
+
+                // Now check if edit.own is available.
+                elseif (!empty($userId) && $user->authorise('core.edit.own', $asset))
+                {
+                    // Check for a valid user and that they are the owner.
+                    if ($userId == $item->created_by)
+                    {
+                        $item->params->set('access-edit', true);
+                    }
+                }
+            }
 
 		}
 
@@ -121,9 +151,6 @@ class ProjectlogModelCategory extends JModelList
 		$case_when1 .= ' ELSE ';
 		$case_when1 .= $c_id . ' END as catslug';
 		$query->select($this->getState('list.select', 'a.*') . ',' . $case_when . ',' . $case_when1)
-		// TODO: we actually should be doing it but it's wrong this way
-		//	. ' CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END as slug, '
-		//	. ' CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(\':\', c.id, c.alias) ELSE c.id END AS catslug ');
 			->from($db->quoteName('#__projectlog_projects') . ' AS a')
 			->join('LEFT', '#__categories AS c ON c.id = a.catid')
 			->where('a.access IN (' . $groups . ')');
@@ -187,6 +214,7 @@ class ProjectlogModelCategory extends JModelList
 			$query->order($db->escape($this->getState('list.ordering', 'a.ordering')) . ' ' . $db->escape($this->getState('list.direction', 'ASC')));
 		}
 
+        //echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
 	}
 
@@ -287,14 +315,26 @@ class ProjectlogModelCategory extends JModelList
 			$options['countItems'] = $params->get('show_cat_items', 1) || $params->get('show_empty_categories', 0);
 			$categories = JCategories::getInstance('Projectlog', $options);
 			$this->_item = $categories->get($this->getState('category.id', 'root'));
-			if (is_object($this->_item))
+			
+            if (is_object($this->_item))
 			{
-				$this->_children = $this->_item->getChildren();
+				$user	= JFactory::getUser();
+				$asset	= 'com_projectlog.category.'.$this->_item->id;
+
+				// Check general create permission.
+				if ($user->authorise('core.create', $asset))
+				{
+					$this->_item->getParams()->set('access-create', true);
+				}
+                
+                $this->_children = $this->_item->getChildren();
 				$this->_parent = false;
+                
 				if ($this->_item->getParent())
 				{
 					$this->_parent = $this->_item->getParent();
 				}
+                
 				$this->_rightsibling = $this->_item->getSibling();
 				$this->_leftsibling = $this->_item->getSibling(false);
 			}

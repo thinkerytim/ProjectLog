@@ -9,83 +9,104 @@
 
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.framework');
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 
+// Create some shortcuts.
+$params		= &$this->item->params;
+$n			= count($this->items);
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
+
+// Check for at least one editable project
+$isEditable = false;
+
+if (!empty($this->items))
+{
+	foreach ($this->items as $item)
+	{
+        if ($item->params->get('access-edit'))
+		{
+			$isEditable = true;
+			break;
+		}
+	}
+}
 ?>
+
+<?php if ($this->category->getParams()->get('access-create')) : ?>
+    <div class="pull-right">
+        <?php echo JHtml::_('icon.create', $this->category, $this->category->params); ?>
+    </div>
+    <div class="clearfix"></div>
+<?php  endif; ?>
+
 <?php if (empty($this->items)) : ?>
 	<div class="alert alert-info center"> <?php echo JText::_('COM_PROJECTLOG_NO_PROJECTS'); ?></div>
 <?php else : ?>
 
 	<form action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
-	<?php if ($this->params->get('filter_field') != 'hide' || $this->params->get('show_pagination_limit')) :?>
-	<fieldset class="filters btn-toolbar">
-		<?php if ($this->params->get('filter_field') != 'hide') :?>
-			<div class="btn-group">
-				<label class="filter-search-lbl element-invisible" for="filter-search"><span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span><?php echo JText::_('COM_PROJECTLOG_FILTER_LABEL').'&#160;'; ?></label>
-				<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_PROJECTLOG_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo JText::_('COM_PROJECTLOG_FILTER_SEARCH_DESC'); ?>" />
-			</div>
-		<?php endif; ?>
+        <?php if ($this->params->get('filter_field') != 'hide' || $this->params->get('show_pagination_limit')) :?>
+        <fieldset class="filters btn-toolbar">
+            <?php if ($this->params->get('filter_field') != 'hide') :?>
+                <div class="btn-group">
+                    <label class="filter-search-lbl element-invisible" for="filter-search"><span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span><?php echo JText::_('COM_PROJECTLOG_FILTER_LABEL').'&#160;'; ?></label>
+                    <input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_PROJECTLOG_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo JText::_('COM_PROJECTLOG_FILTER_SEARCH_DESC'); ?>" />
+                </div>
+            <?php endif; ?>
 
-		<?php if ($this->params->get('show_pagination_limit')) : ?>
-			<div class="btn-group pull-right">
-				<label for="limit" class="element-invisible">
-					<?php echo JText::_('JGLOBAL_DISPLAY_NUM'); ?>
-				</label>
-				<?php echo $this->pagination->getLimitBox(); ?>
-			</div>
-		<?php endif; ?>
-	</fieldset>
-	<?php endif; ?>
+            <?php if ($this->params->get('show_pagination_limit')) : ?>
+                <div class="btn-group pull-right">
+                    <label for="limit" class="element-invisible">
+                        <?php echo JText::_('JGLOBAL_DISPLAY_NUM'); ?>
+                    </label>
+                    <?php echo $this->pagination->getLimitBox(); ?>
+                </div>
+            <?php endif; ?>
+            <input type="hidden" name="filter_order" value="" />
+            <input type="hidden" name="filter_order_Dir" value="" />
+            <input type="hidden" name="limitstart" value="" />
+            <input type="hidden" name="task" value="" />
+        </fieldset>
+        <?php endif; ?>
 
-		<table class="table table-striped category">
+		<table class="category table table-striped table-hover">
+            <?php if ($this->params->get('show_headings')) : ?>
             <thead>
                 <tr>
-                    <th><?php echo JText::_('COM_PROJECTLOG_PROJECT_NAME'); ?></th>
+                    <th id="categorylist_header_title"><?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_PROJECT_NAME', 'name', $listDirn, $listOrder); ?></th>
                     <?php if ($this->params->get('show_release_id_headings')) : ?>
-                        <th><?php echo JText::_('COM_PROJECTLOG_RELEASE_NUM'); ?></th>
+                        <th><?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_RELEASE_NUM', 'release_id', $listDirn, $listOrder); ?></th>
                     <?php endif; ?>
                     <?php if ($this->params->get('show_job_id_headings')) : ?>
-                        <th><?php echo JText::_('COM_PROJECTLOG_JOB_NUM'); ?></th>
+                        <th><?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_JOB_NUM', 'job_id', $listDirn, $listOrder); ?></th>
                     <?php endif; ?>
                     <?php if ($this->params->get('show_task_id_headings')) : ?>
-                        <th><?php echo JText::_('COM_PROJECTLOG_TASK_NUM'); ?></th>
+                        <th><?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_TASK_NUM', 'task_id', $listDirn, $listOrder); ?></th>
                     <?php endif; ?>                                                
                     <?php if ($this->params->get('show_workorder_id_headings')) : ?>
-                        <th><?php echo JText::_('COM_PROJECTLOG_WORKORDER_NUM'); ?></th>
+                        <th><?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_WORKORDER_NUM', 'workorder_id', $listDirn, $listOrder); ?></th>
                     <?php endif; ?>                            
                     <?php if ($this->params->get('show_client_headings')) : ?>
-                        <th><?php echo JText::_('COM_PROJECTLOG_CLIENT'); ?></th>
+                        <th><?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_CLIENT', 'client', $listDirn, $listOrder); ?></th>
                     <?php endif; ?>
                     <?php if ($this->params->get('show_project_type_headings')) : ?>
-                        <th><?php echo JText::_('COM_PROJECTLOG_PROJECT_TYPE'); ?></th>
+                        <th><?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_PROJECT_TYPE', 'project_type', $listDirn, $listOrder); ?></th>
                     <?php endif; ?>
                     <?php if ($this->params->get('show_manager_headings')) : ?>
-                        <th><?php echo JText::_('COM_PROJECTLOG_MANAGER'); ?></th>
+                        <th><?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_MANAGER', 'manager_name', $listDirn, $listOrder); ?></th>
                     <?php endif; ?>
                     <?php if ($this->params->get('show_mobile_headings')) : ?>
-                        <th><?php echo JText::_('COM_PROJECTLOG_MOBILE'); ?></th>
+                        <th><?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_MOBILE', 'mobile', $listDirn, $listOrder); ?></th>
                     <?php endif; ?>                        
                     <?php if ($this->params->get('show_email_headings')) : ?>
-                        <th><?php echo JText::_('COM_PROJECTLOG_EMAIL_LABEL'); ?></th>
+                        <th><?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_EMAIL_LABEL', 'email_to', $listDirn, $listOrder); ?></th>
+                    <?php endif; ?>
+                    <?php if ($isEditable) : ?>
+                        <th id="categorylist_header_edit"><?php echo JText::_('JGLOBAL_EDIT'); ?></th>
                     <?php endif; ?>
                 </tr>
             </thead>
-            <tfoot>
-                <tr colspan="10">
-                    <?php if ($this->params->get('show_pagination')) : ?>
-                    <div class="pagination">
-                        <?php if ($this->params->def('show_pagination_results', 1)) : ?>
-                        <p class="counter">
-                            <?php echo $this->pagination->getPagesCounter(); ?>
-                        </p>
-                        <?php endif; ?>
-                        <?php echo $this->pagination->getPagesLinks(); ?>
-                    </div>
-                    <?php endif; ?>
-                </tr>
-            </tfoot>
+            <?php endif; ?>
             <tbody>
 			<?php foreach ($this->items as $i => $item) : ?>            
 				<?php if (in_array($item->access, $this->user->getAuthorisedViewLevels())) : ?>
@@ -136,16 +157,33 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
                         <?php if ($this->params->get('show_email_headings')) : ?>
                             <td><?php echo ($item->params->get('show_email') AND !empty($item->email_to)) ? $item->email_to : '--'; ?></td>
 						<?php endif; ?>
+                        <?php if ($isEditable) : ?>
+                            <td headers="categorylist_header_edit" class="list-edit">
+                                <?php if ($item->params->get('access-edit')) : ?>
+                                    <?php echo JHtml::_('icon.edit', $item, $params); ?>
+                                <?php endif; ?>
+                            </td>
+                        <?php endif; ?>
 					</tr>
 				<?php endif; ?>
 			<?php endforeach; ?>
             </tbody>
 		</table>
-
-		
-		<div>
-			<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
-			<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		</div>
-</form>
 <?php endif; ?>
+
+<?php // Add pagination links ?>
+<?php if (!empty($this->items)) : ?>
+	<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
+	<div class="pagination">
+
+		<?php if ($this->params->def('show_pagination_results', 1)) : ?>
+			<p class="counter pull-right">
+				<?php echo $this->pagination->getPagesCounter(); ?>
+			</p>
+		<?php endif; ?>
+
+		<?php echo $this->pagination->getPagesLinks(); ?>
+	</div>
+	<?php endif; ?>
+</form>
+<?php  endif; ?>

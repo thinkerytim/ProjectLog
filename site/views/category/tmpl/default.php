@@ -9,7 +9,16 @@
 
 defined('_JEXEC') or die;
 
-$this->subtemplatename = 'items';
-echo JLayoutHelper::render('joomla.content.category_default', $this);
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+?>
 
-if($this->params->get('show_footer')) echo projectlogHTML::buildThinkeryFooter();
+<div class="category-list<?php echo $this->pageclass_sfx;?>">
+
+    <?php
+    $this->subtemplatename = 'items';
+    echo JLayoutHelper::render('joomla.content.category_default', $this);
+    ?>
+    
+</div>
+
+<?php if($this->params->get('show_footer')) echo projectlogHTML::buildThinkeryFooter();

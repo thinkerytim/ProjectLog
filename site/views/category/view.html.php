@@ -18,11 +18,11 @@ defined('_JEXEC') or die;
  */
 class ProjectlogViewCategory extends JViewCategory
 {
-	protected  $extension = 'com_projectlog';
+	protected   $extension = 'com_projectlog';
 
-	protected  $defaultPageTitle = 'COM_PROJECTLOG_DEFAULT_PAGE_TITLE';
+	protected   $defaultPageTitle = 'COM_PROJECTLOG_DEFAULT_PAGE_TITLE';
 
-	protected $viewName = 'project';
+	protected   $viewName = 'project';
 
 	/**
 	 * Execute and display a template script.

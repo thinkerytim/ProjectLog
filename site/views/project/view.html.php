@@ -27,6 +27,7 @@ class ProjectlogViewProject extends JViewLegacy
     protected $logs; 
     protected $docs; 
     protected $plmedia;
+    protected $print;
 
 	/**
 	 * Execute and display a template script.
@@ -46,6 +47,7 @@ class ProjectlogViewProject extends JViewLegacy
         $this->logs     = $this->get('Logs');
         $this->docs     = $this->get('Docs');
         $this->plmedia  = JPATH_SITE.'/media/com_projectlog/docs/';
+        $this->print	= $app->input->getBool('print');
         
         $this->canDo	= ProjectlogHelper::getActions('com_projectlog', 'project', $item->id);
 
@@ -248,6 +250,11 @@ class ProjectlogViewProject extends JViewLegacy
 			{
 				$this->document->setMetadata($k, $v);
 			}
+		}
+        
+        if ($this->print)
+		{
+			$this->document->setMetaData('robots', 'noindex, nofollow');
 		}
 	}
 }

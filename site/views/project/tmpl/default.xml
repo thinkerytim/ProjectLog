@@ -38,6 +38,7 @@
 
 			<field name="show_project_list"
 				type="list"
+                class="chzn-color"
 				description="COM_PROJECTLOG_FIELD_PROJECT_SHOW_LIST_DESC"
 				label="COM_PROJECTLOG_FIELD_PROJECT_SHOW_LIST_LABEL"
                 >
@@ -78,6 +79,39 @@
                 <option value="1">JSHOW</option>
             </field>
             
+            <field name="show_icons"
+                type="list"
+                class="chzn-color"
+                label="JGLOBAL_SHOW_ICONS_LABEL"
+                description="JGLOBAL_SHOW_ICONS_DESC"
+                >
+                <option value="">JGLOBAL_USE_GLOBAL</option> 
+                <option value="1">JSHOW</option>
+                <option value="0">JHIDE</option>
+            </field>
+
+            <field name="show_print_icon"
+                type="list"
+                class="chzn-color"
+                label="JGLOBAL_SHOW_PRINT_ICON_LABEL"
+                description="JGLOBAL_SHOW_PRINT_ICON_DESC"
+                >
+                <option value="">JGLOBAL_USE_GLOBAL</option> 
+                <option value="1">JSHOW</option>
+                <option value="0">JHIDE</option>
+            </field>
+
+            <field name="show_email_icon"
+                type="list"
+                class="chzn-color"
+                label="JGLOBAL_SHOW_EMAIL_ICON_LABEL"
+                description="JGLOBAL_SHOW_EMAIL_ICON_DESC"
+                >
+                <option value="">JGLOBAL_USE_GLOBAL</option> 
+                <option value="1">JSHOW</option>
+                <option value="0">JHIDE</option>
+            </field>
+            
             <field name="pl_date_format"
                 type="list"
                 label="COM_PROJECTLOG_FIELD_DATE_FORMAT_LABEL" 
@@ -95,7 +129,8 @@
 			<field name="show_name"
 				type="list"
 				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_NAME_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_NAME_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_NAME_LABEL" 
+                description="COM_PROJECTLOG_FIELD_PARAMS_NAME_DESC"
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
@@ -105,7 +140,8 @@
             <field name="show_release_date"
 				type="list"
 				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_DATE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_DATE_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_DATE_LABEL" 
+                description="COM_PROJECTLOG_FIELD_PARAMS_RELEASE_DATE_DESC"
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
@@ -115,7 +151,8 @@
             <field name="show_contract_date"
 				type="list"
 				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_CONTRACT_DATE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_CONTRACT_DATE_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_CONTRACT_DATE_LABEL" 
+                description="COM_PROJECTLOG_FIELD_PARAMS_CONTRACT_DATE_DESC"
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
@@ -125,7 +162,8 @@
             <field name="show_deployment_date"
 				type="list"
 				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_DEPLOYMENT_DATE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_DEPLOYMENT_DATE_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_DEPLOYMENT_DATE_LABEL" 
+                description="COM_PROJECTLOG_FIELD_PARAMS_DEPLOYMENT_DATE_DESC"
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
@@ -135,14 +173,16 @@
             <field name="show_project_type"
 				type="list"
 				class="chzn-color"
-				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_LABEL" description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_DESC"
+				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_LABEL" 
+                description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_TYPE_DESC"
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_manager" type="list"
+			<field name="show_manager" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_MANAGER_DESC"
@@ -152,7 +192,8 @@
 				<option value="1">JSHOW</option>
 			</field>
             
-            <field name="show_chief" type="list"
+            <field name="show_chief" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_CHIEF_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_CHIEF_DESC"
@@ -162,7 +203,8 @@
 				<option value="1">JSHOW</option>
 			</field>
             
-            <field name="show_technicians" type="list"
+            <field name="show_technicians" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_TECHNICIANS_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_TECHNICIANS_DESC"
@@ -172,7 +214,8 @@
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_email" type="list"
+			<field name="show_email" 
+                type="list"
 				class="chzn-color"
 				label="JGLOBAL_EMAIL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_PROJECT_E_MAIL_DESC"
@@ -182,7 +225,8 @@
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_specific_loc" type="list"
+			<field name="show_specific_loc" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_SPECIFIC_LOC_DESC"
@@ -192,7 +236,8 @@
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_client" type="list"
+			<field name="show_client" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_CLIENT_DESC"
@@ -213,7 +258,8 @@
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_job_id" type="list"
+			<field name="show_job_id" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_JOB_ID_DESC"
@@ -234,7 +280,8 @@
 				<option value="1">JSHOW</option>
 			</field>
             
-            <field name="show_workorder_id" type="list"
+            <field name="show_workorder_id" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_WORKORDER_ID_DESC"
@@ -255,7 +302,8 @@
 				<option value="1">JSHOW</option>
 			</field>			
 
-			<field name="show_webpage" type="list"
+			<field name="show_webpage" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_WEBPAGE_DESC"
@@ -265,7 +313,8 @@
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_misc" type="list"
+			<field name="show_misc" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_MISC_INFO_DESC"
@@ -275,7 +324,8 @@
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_image" type="list"
+			<field name="show_image" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PARAMS_SHOW_IMAGE_LABEL"
 				description="COM_PROJECTLOG_FIELD_PARAMS_SHOW_IMAGE_DESC"
@@ -285,16 +335,19 @@
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="show_articles" label="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_LABEL"
-				description="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_DESC" type="list"
-				class="chzn-color"
+			<field name="show_articles"
+                type="list"
+                class="chzn-color"
+                label="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_LABEL"
+				description="COM_PROJECTLOG_FIELD_ARTICLES_SHOW_DESC"				
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
             
-			<field name="show_profile" type="list"
+			<field name="show_profile" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_PROFILE_SHOW_LABEL"
 				description="COM_PROJECTLOG_FIELD_PROFILE_SHOW_DESC"
@@ -305,35 +358,41 @@
 			</field>
 
 			<field name="show_links"
-                label="COM_PROJECTLOG_FIELD_SHOW_LINKS_LABEL"
-                description="COM_PROJECTLOG_FIELD_SHOW_LINKS_DESC"
                 type="list"
                 class="chzn-color"
+                label="COM_PROJECTLOG_FIELD_SHOW_LINKS_LABEL"
+                description="COM_PROJECTLOG_FIELD_SHOW_LINKS_DESC"                
                 >
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
-			<field name="linka_name" type="text"
+			<field name="linka_name" 
+                type="text"
 				label="COM_PROJECTLOG_FIELD_LINKA_NAME_LABEL"
 				description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
 				size="30"
 			/>
 
-			<field name="linka" type="url" filter="url"
+			<field name="linka" 
+                type="url" 
+                filter="url"
 				label="COM_PROJECTLOG_FIELD_LINKA_LABEL"
 				description="COM_PROJECTLOG_FIELD_LINKA_DESC"
 				size="30"
 			/>
 
-			<field name="linkb_name" type="text"
+			<field name="linkb_name" 
+                type="text"
 				label="COM_PROJECTLOG_FIELD_LINKB_NAME_LABEL"
 				description="COM_PROJECTLOG_FIELD_LINK_NAME_DESC"
 				size="30"
 			/>
 
-			<field name="linkb" type="url" filter="url"
+			<field name="linkb" 
+                type="url" 
+                filter="url"
 				label="COM_PROJECTLOG_FIELD_LINKB_LABEL"
 				description="COM_PROJECTLOG_FIELD_LINKB_DESC"
 				size="30"
@@ -347,7 +406,8 @@
 			/>
 
 			<field name="linkc"
-				type="url" filter="url"
+				type="url" 
+                filter="url"
 				label="COM_PROJECTLOG_FIELD_LINKC_LABEL"
 				description="COM_PROJECTLOG_FIELD_LINKC_DESC"
 				size="30"
@@ -361,7 +421,8 @@
 				/>
 
 			<field name="linkd"
-				type="url" filter="url"
+				type="url" 
+                filter="url"
 				label="COM_PROJECTLOG_FIELD_LINKD_LABEL"
 				description="COM_PROJECTLOG_FIELD_LINKD_DESC"
 				size="30"
@@ -381,7 +442,8 @@
 				size="30"
 			/>		
             
-            <field name="show_tags" type="list"
+            <field name="show_tags" 
+                type="list"
 				class="chzn-color"
 				label="COM_PROJECTLOG_FIELD_SHOW_TAGS_LABEL"
 				description="COM_PROJECTLOG_FIELD_SHOW_TAGS_DESC"
@@ -394,7 +456,9 @@
 
 		<!-- Form options. -->
 		<fieldset name="Project_Form" label="COM_PROJECTLOG_MAIL_FIELDSET_LABEL">
-			<field name="show_email_form" type="list"
+			<field name="show_email_form" 
+                type="list"
+                class="chzn-color"
 				description="COM_PROJECTLOG_FIELD_EMAIL_SHOW_FORM_DESC"
 				label="COM_PROJECTLOG_FIELD_EMAIL_SHOW_FORM_LABEL"
                 >
@@ -405,6 +469,7 @@
 
 			<field name="show_email_copy"
 				type="list"
+                class="chzn-color"
 				description="COM_PROJECTLOG_FIELD_EMAIL_EMAIL_COPY_DESC"
 				label="COM_PROJECTLOG_FIELD_EMAIL_EMAIL_COPY_LABEL"
                 >
@@ -439,6 +504,7 @@
 
 			<field name="validate_session"
 				type="list"
+                class="chzn-color"
 				description="COM_PROJECTLOG_FIELD_CONFIG_SESSION_CHECK_DESC"
 				label="COM_PROJECTLOG_FIELD_CONFIG_SESSION_CHECK_LABEL"
                 >
@@ -449,6 +515,7 @@
 
 			<field name="custom_reply"
 				type="list"
+                class="chzn-color"
 				description="COM_PROJECTLOG_FIELD_CONFIG_CUSTOM_REPLY_DESC"
 				label="COM_PROJECTLOG_FIELD_CONFIG_CUSTOM_REPLY_LABEL"
                 >

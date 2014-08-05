@@ -107,7 +107,9 @@ class ProjectlogModelProject extends JModelForm
 	 */
 	public function &getItem($pk = null)
 	{
-		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
+		$user	= JFactory::getUser();
+        
+        $pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
 
 		if ($this->_item === null)
 		{
@@ -141,22 +143,25 @@ class ProjectlogModelProject extends JModelForm
 				$query->select($this->getState('item.select', 'a.*') . ',' . $case_when . ',' . $case_when1)
 					->from('#__projectlog_projects AS a')
 
-				// Join on category table.
-					->select('c.title AS category_title, c.alias AS category_alias, c.access AS category_access')
-					->join('LEFT', '#__categories AS c on c.id = a.catid')
+                    // Join on category table.
+                    ->select('c.title AS category_title, c.alias AS category_alias, c.access AS category_access')
+                    ->join('LEFT', '#__categories AS c on c.id = a.catid')
 
-				// Join over the categories to get parent category titles
-					->select('parent.title as parent_title, parent.id as parent_id, parent.path as parent_route, parent.alias as parent_alias')
-					->join('LEFT', '#__categories as parent ON parent.id = c.parent_id')
-                        
-                // Join on users table.
-					->select('u.name AS manager_name, u.email AS manager_email')
-					->join('LEFT', '#__users AS u on u.id = a.manager')
-                        
+                    // Join over the categories to get parent category titles
+                    ->select('parent.title as parent_title, parent.id as parent_id, parent.path as parent_route, parent.alias as parent_alias')
+                    ->join('LEFT', '#__categories as parent ON parent.id = c.parent_id')
+
+                    // Join on users table.
+                    ->select('u.name AS manager_name, u.email AS manager_email')
+                    ->join('LEFT', '#__users AS u on u.id = a.manager')
+
                     ->select('uc.name AS chief_name, uc.email AS chief_email')
-					->join('LEFT', '#__users AS uc on uc.id = a.chief')
+                    ->join('LEFT', '#__users AS uc on uc.id = a.chief')
+                        
+                    ->select('ua.name AS author')
+					->join('LEFT', '#__users AS ua on ua.id = a.created_by')
 
-					->where('a.id = ' . (int) $pk);
+                    ->where('a.id = ' . (int) $pk);
 
 				// Filter by start and end dates.
 				$nullDate = $db->quote($db->getNullDate());
@@ -199,6 +204,29 @@ class ProjectlogModelProject extends JModelForm
 
 				$data->tags = new JHelperTags;
 				$data->tags->getItemTags('com_projectlog.project', $data->id);
+                
+                // Technically guest could edit an article, but lets not check that to improve performance a little.
+				if (!$user->get('guest'))
+				{
+					$userId = $user->get('id');
+					$asset = 'com_projectlog.project.' . $data->id;
+
+					// Check general edit permission first.
+					if ($user->authorise('core.edit', $asset))
+					{
+						$data->params->set('access-edit', true);
+					}
+
+					// Now check if edit.own is available.
+					elseif (!empty($userId) && $user->authorise('core.edit.own', $asset))
+					{
+						// Check for a valid user and that they are the owner.
+						if ($userId == $data->created_by)
+						{
+							$data->params->set('access-edit', true);
+						}
+					}
+				}
 
 				// Compute access permissions.
 				if ($access = $this->getState('filter.access')) {

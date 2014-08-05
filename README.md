@@ -38,7 +38,8 @@ Remember, this is only a beta version and is not intended to be used on producti
 bugs found to info @ thethinkery.net and we'll get them fixed! 
 
 ### Beta Version Notes:
-* Front end management is still under construction
+* Front end management is still under construction - form links do not work
 * Documentation is not yet written, but it's pretty straight forward if you're comfortable with Joomla!
-* We will be working on documentation and tutorial videos soon as well as finishing the front end management. 
+* We will be working on documentation and tutorial videos soon as well as finishing the front end management.
+* Routing still in progress - may have problems with SEF urls enabled 
 * We appreciate feedback!!
