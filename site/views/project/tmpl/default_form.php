@@ -11,7 +11,11 @@ defined('_JEXEC') or die;
 
 JHtml::_('behavior.keepalive');
 JHtml::_('behavior.formvalidation');
+?>
 
+<?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'contact', JText::_('COM_PROJECTLOG_CONTACT', true)); ?>
+
+<?php
 if (isset($this->error)) : ?>
 	<div class="contact-error">
 		<?php echo $this->error; ?>
@@ -77,3 +81,4 @@ if (isset($this->error)) : ?>
 		</fieldset>
 	</form>
 </div>
+<?php echo JHtml::_('bootstrap.endTab'); ?>

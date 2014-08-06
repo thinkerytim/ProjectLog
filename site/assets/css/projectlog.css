@@ -32,4 +32,11 @@ ul.pl-project-details{margin: 0; padding: 0;}
 ul.pl-project-details li{list-style-type: none; margin-left: 0px; padding: 5px 0;}
 ul.pl-project-details li.divider {height: 1px; padding: 0; margin: 8px 1px; overflow: hidden; background-color: #e5e5e5; border-bottom: 1px solid #fff;}
 
+@media print {
+  a[href]:after {
+    content: none !important;
+  }
+  .plitem-container{border: none;}
+}
+
 

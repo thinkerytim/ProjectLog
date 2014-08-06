@@ -56,13 +56,13 @@ $params = $this->state->get('params');
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', empty($this->item->id) ? JText::_('COM_PROJECTLOG_NEW_LOG', true) : JText::_('COM_PROJECTLOG_EDIT_LOG', true)); ?>
 
                 <div class="row-fluid">
-                    <div class="span9">
+                    <div class="span7">
                         <div class="row-fluid form-horizontal-desktop">
                             <?php echo $this->form->renderField('project_id'); ?>
                             <?php echo $this->form->renderField('description'); ?>
                         </div>                
                     </div>
-                    <div class="span3">
+                    <div class="span5">
                         <?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
                     </div>
                 </div>

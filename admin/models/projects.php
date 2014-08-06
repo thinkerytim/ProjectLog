@@ -182,15 +182,7 @@ class ProjectlogModelProjects extends JModelList
 
 		// Join over the categories.
 		$query->select('c.title AS category_title')
-			->join('LEFT', '#__categories AS c ON c.id = a.catid');
-        
-        // Join over the logs.
-		$query->select('count(DISTINCT(pl.id)) AS log_count')
-			->join('LEFT', '#__projectlog_logs AS pl ON pl.project_id = a.id');
-        
-        // Join over the logs.
-		$query->select('count(DISTINCT(pld.id)) AS doc_count')
-			->join('LEFT', '#__projectlog_docs AS pld ON pld.project_id = a.id');
+			->join('LEFT', '#__categories AS c ON c.id = a.catid');       
 
 		// Join over the associations.
 		$assoc = JLanguageAssociations::isEnabled();

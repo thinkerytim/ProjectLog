@@ -156,4 +156,34 @@ class ProjectlogHelper extends JHelperContent
         echo '<div class="clearfix"></div>'; 
         echo '<hr />';
     }
+    
+    public static function getLogCount($project_id)
+    {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        
+        // Join over the logs.
+		$query->select('count(DISTINCT(id)) AS log_count')
+			->from($db->quoteName('#__projectlog_logs'))
+            ->where('project_id = '.(int)$project_id)
+            ->where('published > 0');
+        
+        $db->setQuery($query);
+        return $db->loadResult();
+    }
+    
+    public static function getDocCount($project_id)
+    {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        
+        // Join over the logs.
+		$query->select('count(DISTINCT(id)) AS doc_count')
+			->from($db->quoteName('#__projectlog_docs'))
+            ->where('project_id = '.(int)$project_id)
+            ->where('published > 0');
+        
+        $db->setQuery($query);
+        return $db->loadResult();
+    }
 }

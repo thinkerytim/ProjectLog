@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 
 ?>
+<?php if (!$this->print) : ?>
 <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'logs', JText::_('COM_PROJECTLOG_LOGS', true)); ?>
     <?php if($this->canDo->get('projectlog.createlog')): ?>
         <div class="new-plitem-bt">
@@ -29,7 +30,8 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
             <div class="clearfix"></div>
         </div>
         <div class="clearfix"></div>
-    <?php endif; ?>            
+    <?php endif; ?> 
+<?php endif; ?>
     <div class="plitem-container" id="plitem-container"> 
         <?php
         foreach($this->logs as $log)
@@ -43,8 +45,11 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 
             echo 
                 '<div class="plitem-cnt" id="logid-'.$log->log_id.'">
-                    '.$log->gravatar['image'].'
-                    <div class="pull-right btn-group">'.$edit_btn.$delete_btn.'</div>
+                    '.$log->gravatar['image'];
+                    if(!$this->print){
+                        echo '<div class="pull-right btn-group">'.$edit_btn.$delete_btn.'</div>';
+                    }
+                    echo '
                     <div class="theplitem">
                         <h5>'.$log->title.'</h5>
                         <br/>
@@ -59,8 +64,10 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
         ?>            
         <div class="clearfix"></div>
     </div>
+<?php if (!$this->print) : ?>
 <?php echo JHtml::_('bootstrap.endTab'); ?>
 
+        
 <script type="text/javascript">                   
     (function($) {
         <?php if($this->canDo->get('projectlog.createlog')): ?>
@@ -222,3 +229,4 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
         });
     })(jQuery);
 </script>
+<?php endif; ?>

@@ -53,20 +53,9 @@ class JFormFieldModal_Project extends JFormField
 	{
 		$app            = JFactory::getApplication();
         
-        $allowEdit		= ((string) $this->element['edit'] == 'true') ? true : false;
-		$allowClear		= ((string) $this->element['clear'] != 'false' && $this->showclear === true) ? true : false;
+        $allowEdit		= ((string) $this->element['edit'] == 'true' && !isset($this->element['readonly'])) ? true : false;
+		$allowClear		= ((string) $this->element['clear'] != 'false' && $this->showclear === true && !isset($this->element['readonly'])) ? true : false;
         $this->element['language'] = $forcedlanguage;
-        
-        // If calling from front end, restrict project list
-        if($app->getName() == 'site')
-        {
-            $vlink = 'project';
-            //$vlink = 'category&amp;id='.$app->input->getInt('catid');
-            //$vlink = 'allproperties';
-            
-        }else{ // If calling from adim panel, use the properties view since it already uses ACL to restrict access
-            $vlink = 'projects';
-        }
 
 		// Load language
 		JFactory::getLanguage()->load('com_projectlog', JPATH_ADMINISTRATOR);
@@ -120,7 +109,7 @@ class JFormFieldModal_Project extends JFormField
 
 		// Setup variables for display.
 		$html	= array();
-		$link	= 'index.php?option=com_projectlog&amp;view='.$vlink.'&amp;layout=modal&amp;tmpl=component&amp;function=jSelectProject_' . $this->id;
+		$link	= 'index.php?option=com_projectlog&amp;view=projects&amp;layout=modal&amp;tmpl=component&amp;function=jSelectProject_' . $this->id;
 
 		if (isset($this->element['language']))
 		{
@@ -167,7 +156,7 @@ class JFormFieldModal_Project extends JFormField
 		// The current project display field.
 		$html[] = '<span class="input-append">';
 		$html[] = '<input type="text" class="input-medium" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" size="35" />';
-		$html[] = '<a class="modal btn hasTooltip" title="' . JHtml::tooltipText('COM_PROJECTLOG_CHANGE_PROJECT') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> ' . JText::_('JSELECT') . '</a>';
+		if(!isset($this->element['readonly'])) $html[] = '<a class="modal btn hasTooltip" title="' . JHtml::tooltipText('COM_PROJECTLOG_CHANGE_PROJECT') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> ' . JText::_('JSELECT') . '</a>';
 
 		// Edit article button
 		if ($allowEdit)

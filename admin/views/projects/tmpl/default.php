@@ -150,6 +150,8 @@ $assoc		= JLanguageAssociations::isEnabled();
                         $canChange	= $user->authorise('core.edit.state', 'com_projectlog.category.'.$item->catid) && $canCheckin;
 
                         $item->cat_link = JRoute::_('index.php?option=com_categories&extension=com_projectlog&task=edit&type=other&id='.$item->catid);
+                        $log_count = ProjectlogHelper::getLogCount($item->id);
+                        $doc_count = ProjectlogHelper::getDocCount($item->id);
                         ?>
                         <tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->catid?>">
                             <td class="order nowrap center hidden-phone">
@@ -209,8 +211,8 @@ $assoc		= JLanguageAssociations::isEnabled();
                                         <?php echo $item->category_title; ?>
                                     </div>
                                     <div class="small">
-                                        <a href="<?php echo JRoute::_('index.php?option=com_projectlog&view=logs&filter_search=pid:'.$item->id);?>">View logs (<?php echo $item->log_count; ?>)</a> |
-                                        <a href="<?php echo JRoute::_('index.php?option=com_projectlog&view=docs&filter_search=pid:'.$item->id);?>">View docs (<?php echo $item->doc_count; ?>)</a>
+                                        <a href="<?php echo JRoute::_('index.php?option=com_projectlog&view=logs&filter_search=pid:'.$item->id);?>">View logs (<?php echo $log_count; ?>)</a> |
+                                        <a href="<?php echo JRoute::_('index.php?option=com_projectlog&view=docs&filter_search=pid:'.$item->id);?>">View docs (<?php echo $doc_count; ?>)</a>
                                     </div>
                                 </div>
                             </td>

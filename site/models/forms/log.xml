@@ -24,7 +24,7 @@
 			type="modal_project"
 			label="COM_PROJECTLOG_FIELD_PROJECT_LABEL"
 			description="COM_PROJECTLOG_FIELD_PROJECT_DESC"
-			required="true"
+			readonly="true"
 		/>
         
         <field name="description" 

@@ -55,7 +55,7 @@ $canEdit = $params->get('access-edit');
         <?php endif; ?>
 
         <!-- render drop down for other projects -->
-        <?php if ($this->params->get('show_project_list') && count($this->projects) > 1) : ?>
+        <?php if ($this->params->get('show_project_list') && count($this->projects) > 1 && !$this->print) : ?>
             <form action="#" method="get" name="selectForm" id="selectForm">
                 <?php echo JText::_('COM_PROJECTLOG_SELECT_PROJECT'); ?>
                 <?php echo JHtml::_('select.genericlist', $this->projects, 'id', 'class="inputbox" onchange="document.location.href = this.value"', 'link', 'name', $this->project->link);?>
@@ -92,20 +92,19 @@ $canEdit = $params->get('access-edit');
             <hr class="pl-project-divider"/>
 
             <?php echo JHtml::_('bootstrap.startTabSet', 'projectTab', array('active' => (count($this->logs)) ? 'logs' : 'contact')); ?>
+            
                 <?php if(count($this->logs)): ?>
                     <?php echo $this->loadTemplate('logs'); ?>
                 <?php endif; ?>
             
-                <?php if(count($this->docs)): ?>
+                <?php if(count($this->docs) && !$this->print): ?>
                     <?php echo $this->loadTemplate('docs'); ?>
                 <?php endif; ?>
 
-                <!-- show email form -->
-                <?php if ($this->params->get('show_email_form') && ($this->project->email_to || $this->project->manager)) : ?>
-                    <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'contact', JText::_('COM_PROJECTLOG_CONTACT', true)); ?>
-                        <?php  echo $this->loadTemplate('form');  ?>
-                    <?php echo JHtml::_('bootstrap.endTab'); ?>
+                <?php if ($this->params->get('show_email_form') && ($this->project->email_to || $this->project->manager) && !$this->print) : ?>                    
+                    <?php  echo $this->loadTemplate('form');  ?>                    
                 <?php endif; ?>
+                
             <?php echo JHtml::_('bootstrap.endTabSet'); ?>
         </div>
         <div class="span4 pl-project-sidebar-container">
