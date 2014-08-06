@@ -304,10 +304,6 @@ class ProjectlogModelDoc extends JModelAdmin
 	{
 		if (!empty($record->id))
 		{
-			if ($record->published != -2)
-			{
-				return;
-			}
 			$user = JFactory::getUser();
 			return $user->authorise('projectlog.deletedoc', 'com_projectlog.project.' . (int) $record->project_id);
 		}
@@ -471,6 +467,7 @@ class ProjectlogModelDoc extends JModelAdmin
         
         // Upload a new document if it exists
         $docfile = JRequest::getVar('jform', array(), 'files', 'array');   
+
         if($docfile['name']['pl_document']){
             $plmedia_path   = JPATH_SITE."/media/com_projectlog/docs/";
             $origdoc        = $plmedia_path.$data['path'];
@@ -793,5 +790,47 @@ class ProjectlogModelDoc extends JModelAdmin
             return $docfilename;
         } 
         return $errors;
+    }
+    
+    /**
+	 * Method to delete one or more records.
+	 *
+	 * @param   array  &$pks  An array of record primary keys.
+	 *
+	 * @return  boolean  True if successful, false if an error occurs.
+	 *
+	 * @since   3.3.1
+	 */    
+    public function delete(&$pks)
+    {
+        $table      = $this->getTable();
+        $plmedia    = JPATH_SITE.'/media/com_projectlog/docs/';
+        
+        $pks = (array) $pks;
+		$table = $this->getTable();
+        
+        // Iterate the items to delete each one.        
+        $files_array = array();
+		foreach ($pks as $i => $pk)
+		{
+			if ($table->load($pk))
+			{
+                $files_array[] = $plmedia.$table->path;                
+            }
+        }
+        
+        // First delete the rows from the db
+        $result = parent::delete($pks);
+        
+        // Then delete the files
+        foreach($files_array as $file)
+        {
+            if(JFile::exists($plmedia.$table->path)){
+                JFile::delete($plmedia.$table->path);
+            }
+        }
+        
+        // return the result
+        return $result;
     }
 }

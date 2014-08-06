@@ -10,22 +10,22 @@
 defined('_JEXEC') or die;
 
 // Base this model on the backend version.
-require_once JPATH_ADMINISTRATOR.'/components/com_projectlog/models/project.php';
+require_once JPATH_ADMINISTRATOR.'/components/com_projectlog/models/doc.php';
 
 /**
- * Projectlog Component Projectform Model
+ * Projectlog Component Docform Model
  *
  * @package     Projectlog.site
  * @subpackage  com_projectlog
  */
-class ProjectlogModelProjectform extends ProjectlogModelProject
+class ProjectlogModelDocform extends ProjectlogModelDoc
 {
 	/**
 	 * Model typeAlias string. Used for version history.
 	 *
 	 * @var        string
 	 */
-	public $typeAlias = 'com_projectlog.project';
+	public $typeAlias = 'com_projectlog.doc';
 
 	/**
 	 * Method to auto-populate the model state.
@@ -42,7 +42,9 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 
 		// Load state from the request.
 		$pk = $app->input->getInt('a_id');
-		$this->setState('project.id', $pk);	
+		$this->setState('doc.id', $pk);
+
+		$this->setState('doc.project_id', $app->input->getInt('project_id'));
 
 		$return = $app->input->get('return', null, 'base64');
 		$this->setState('return_page', base64_decode($return));
@@ -50,24 +52,20 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 		// Load the parameters.
 		$params	= $app->getParams();
 		$this->setState('params', $params);
-        
-        // Automatically set the catid if creating a new project directly from category view
-        // Fall back to menu item parameters catid if it exists
-        $this->setState('project.catid', ($app->input->getInt('catid')) ? $app->input->getInt('catid') : $params->get('catid'));
 
 		$this->setState('layout', $app->input->getString('layout'));
 	}
 
 	/**
-	 * Method to get project data.
+	 * Method to get item data.
 	 *
-	 * @param   integer  $itemId  The id of the project.
+	 * @param   integer  $itemId  The id of the item.
 	 *
 	 * @return  mixed  Content item data object on success, false on failure.
 	 */
 	public function getItem($itemId = null)
 	{
-		$itemId = (int) (!empty($itemId)) ? $itemId : $this->getState('project.id');
+		$itemId = (int) (!empty($itemId)) ? $itemId : $this->getState('doc.id');
 
 		// Get a row instance.
 		$table = $this->getTable();
@@ -92,16 +90,16 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 		// Compute selected asset permissions.
 		$user	= JFactory::getUser();
 		$userId	= $user->get('id');
-		$asset	= 'com_projectlog.project.' . $value->id;
+		$asset	= 'com_projectlog.project.' . $value->project_id;
 
 		// Check general edit permission first.
-		if ($user->authorise('core.edit', $asset))
+		if ($user->authorise('projectlog.createdoc', $asset))
 		{
 			$value->params->set('access-edit', true);
 		}
 
 		// Now check if edit.own is available.
-		elseif (!empty($userId) && $user->authorise('core.edit.own', $asset))
+		elseif (!empty($userId) && $user->authorise('projectlog.editdoc.own', $asset))
 		{
 			// Check for a valid user and that they are the owner.
 			if ($userId == $value->created_by)
@@ -114,41 +112,22 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 		if ($itemId)
 		{
 			// Existing item
-			$value->params->set('access-change', $user->authorise('core.edit.state', $asset));
+			$value->params->set('access-change', $user->authorise('projectlog.editdoc.state', $asset));
 		}
 		else
 		{
 			// New item.
-			$catId = (int) $this->getState('project.catid');
+			$project_id = (int) $this->getState('doc.project_id');
 
-			if ($catId)
+			if ($project_id)
 			{
-				$value->params->set('access-change', $user->authorise('core.edit.state', 'com_projectlog.category.' . $catId));
-				$value->catid = $catId;
+				$value->params->set('access-change', $user->authorise('projectlog.editdoc.state', 'com_projectlog.project.' . $project_id));
+				$value->project_id = $project_id;
 			}
 			else
 			{
-				$value->params->set('access-change', $user->authorise('core.edit.state', 'com_projectlog'));
+				$value->params->set('access-change', $user->authorise('projectlog.editdoc.state', 'com_projectlog'));
 			}
-		}
-
-		$value->projecttext = $value->misc;
-
-		if (!empty($value->fulltext))
-		{
-			$value->projecttext .= '<hr id="system-readmore" />' . $value->fulltext;
-		}
-
-		// Convert the metadata field to an array.
-		$registry = new JRegistry;
-		$registry->loadString($value->metadata);
-		$value->metadata = $registry->toArray();
-
-		if ($itemId)
-		{
-			$value->tags = new JHelperTags;
-			$value->tags->getTagIds($value->id, 'com_projectlog.project');
-			$value->metadata['tags'] = $value->tags;
 		}
 
 		return $value;
@@ -180,7 +159,7 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 		// Associations are not edited in frontend ATM so we have to inherit them
 		if (JLanguageAssociations::isEnabled() && !empty($data['id']))
 		{
-			if ($associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_projects', 'com_projectlog.project', $data['id']))
+			if ($associations = JLanguageAssociations::getAssociations('com_projectlog', '#__projectlog_docs', 'com_projectlog.doc', $data['id']))
 			{
 				foreach ($associations as $tag => $associated)
 				{

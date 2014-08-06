@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 ?>
 
 <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'logs', JText::_('COM_PROJECTLOG_LOGS', true)); ?>
-
+<div id="log-error-msg"></div>
     <?php if(!$this->item->id): ?>     
         <div class="alert alert-warning center"><?php echo JText::_('COM_PROJECTLOG_SAVE_FIRST'); ?></div>
     <?php else: ?>
@@ -98,7 +98,7 @@ defined('_JEXEC') or die;
                         //ajax request vars
                         var logurl = '<?php echo JURI::base('true'); ?>/index.php?option=com_projectlog&task=ajax.addLog';
                         var req = new Request.JSON({
-                            type: "post",
+                            method: "post",
                             url: logurl,
                             data: {
                                 'project_id' : '<?php echo $this->item->id; ?>',
@@ -106,14 +106,14 @@ defined('_JEXEC') or die;
                                 'description' : theLog.val(),
                                 '<?php echo JSession::getFormToken(); ?>':'1',
                                 'language' : '<?php echo $this->item->language; ?>',
-                                'format': 'raw'
+                                'format': 'json'
                             },
                             onSuccess: function(r){   
                                 if (!r.success && r.message)
                                 {
                                     // Success flag is set to 'false' and main response message given
                                     // So you can alert it or insert it into some HTML element
-                                    alert(r.message);
+                                    $('#log-error-msg').html(r.message);
                                 }
 
                                 if (r.messages)
@@ -126,6 +126,7 @@ defined('_JEXEC') or die;
 
                                 if (r.data)
                                 {
+                                    $('#log-error-msg').empty();
                                     theLog.val('');
                                     theTitle.val('');
                                     $('.new-plitem-cnt').hide('fast', function(){
@@ -139,14 +140,14 @@ defined('_JEXEC') or die;
                                 {
                                     // Reaching this point means that the Ajax request itself was not successful
                                     // So JResponseJson was never called
-                                    alert('Ajax error');
+                                    $('#log-error-msg').html('Ajax error');
                                 }.bind(this),
                                 onError: function(text, error)
                                 {
                                     // Reaching this point means that the Ajax request was answered by the server, but
                                     // the response was no valid JSON (this happens sometimes if there were PHP errors,
                                     // warnings or notices during the development process of a new Ajax request).
-                                    alert(error + "\n\n" + text);
+                                    $('#log-error-msg').html(error + "\n\n" + text);
                                 }.bind(this)                                          
                             });
                             req.post();
@@ -171,14 +172,14 @@ defined('_JEXEC') or die;
                         data: {
                             'log_id' : logId,
                             '<?php echo JSession::getFormToken(); ?>':'1',
-                            'format': 'raw'
+                            'format': 'json'
                         },
                         onSuccess: function(r){   
                             if (!r.success && r.message)
                             {
                                 // Success flag is set to 'false' and main response message given
                                 // So you can alert it or insert it into some HTML element
-                                alert(r.message);
+                                $('#log-error-msg').html(r.message);
                             }
 
                             if (r.messages)
@@ -208,20 +209,12 @@ defined('_JEXEC') or die;
                                 // Reaching this point means that the Ajax request was answered by the server, but
                                 // the response was no valid JSON (this happens sometimes if there were PHP errors,
                                 // warnings or notices during the development process of a new Ajax request).
-                                alert(error + "\n\n" + text);
+                                $('#log-error-msg').html(error + "\n\n" + text);
                             }.bind(this)                                          
                         });
                         req.post();
                 });
                 <?php endif; ?>
-
-                // create auto complete
-                $.each(['project_type'], function(index, value){
-                    var url = '<?php echo JURI::base('true'); ?>/index.php?option=com_projectlog&task=ajax.ajaxAutocomplete&format=raw&field='+value+'&<?php echo JSession::getFormToken(); ?>=1';
-                    $.getJSON(url).done(function( data ){
-                        $('#jform_'+value).typeahead({source: data, items:5});
-                    });
-                });
             })(jQuery);
         </script>
     <?php endif; ?>

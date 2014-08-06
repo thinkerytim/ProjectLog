@@ -57,9 +57,9 @@ class ProjectlogModelLogform extends ProjectlogModelLog
 	}
 
 	/**
-	 * Method to get project data.
+	 * Method to get item data.
 	 *
-	 * @param   integer  $itemId  The id of the project.
+	 * @param   integer  $itemId  The id of the item.
 	 *
 	 * @return  mixed  Content item data object on success, false on failure.
 	 */

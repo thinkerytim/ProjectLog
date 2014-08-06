@@ -17,12 +17,17 @@ JHtml::_('formbehavior.chosen', 'select');
 
 // Create shortcut to parameters.
 $params = $this->state->get('params');
+$plparams = JComponentHelper::getParams('com_projectlog');
+
+$allowed_types_desc = sprintf(JText::_('COM_PROJECTLOG_ALLOWED_FILETYPES'), $plparams->get('allowed_filetypes'));
+$this->form->setFieldAttribute('path', 'description', $allowed_types_desc);
+$this->form->setFieldAttribute('pl_document', 'accept', trim($plparams->get('allowed_mimetypes', 'image/*')));
 ?>
 
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		if (task == 'logform.cancel' || document.formvalidator.isValid(document.getElementById('adminForm')))
+		if (task == 'docform.cancel' || document.formvalidator.isValid(document.getElementById('adminForm')))
 		{
 			Joomla.submitform(task);
 		}
@@ -37,15 +42,15 @@ $params = $this->state->get('params');
 	</div>
 	<?php endif; ?>
 
-	<form action="<?php echo JRoute::_('index.php?option=com_projectlog&a_id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate form-vertical">
+	<form action="<?php echo JRoute::_('index.php?option=com_projectlog&a_id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate form-vertical" enctype="multipart/form-data">
 		<div class="btn-toolbar">
 			<div class="btn-group">
-				<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('logform.save')">
+				<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('docform.save')">
 					<span class="icon-ok"></span>&#160;<?php echo JText::_('JSAVE') ?>
 				</button>
 			</div>
 			<div class="btn-group">
-				<button type="button" class="btn" onclick="Joomla.submitbutton('logform.cancel')">
+				<button type="button" class="btn" onclick="Joomla.submitbutton('docform.cancel')">
 					<span class="icon-cancel"></span>&#160;<?php echo JText::_('JCANCEL') ?>
 				</button>
 			</div>
@@ -53,13 +58,18 @@ $params = $this->state->get('params');
         <?php echo JLayoutHelper::render('joomla.edit.title_alias', $this); ?>
         <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'details')); ?>
 
-            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', empty($this->item->id) ? JText::_('COM_PROJECTLOG_NEW_LOG', true) : JText::_('COM_PROJECTLOG_EDIT_LOG', true)); ?>
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', empty($this->item->id) ? JText::_('COM_PROJECTLOG_NEW_DOC', true) : JText::_('COM_PROJECTLOG_EDIT_DOC', true)); ?>
 
                 <div class="row-fluid">
                     <div class="span7">
                         <div class="row-fluid form-horizontal-desktop">
                             <?php echo $this->form->renderField('project_id'); ?>
-                            <?php echo $this->form->renderField('description'); ?>
+                            <?php if($this->item->id && $this->item->path): ?>
+                                <div class="alert alert-info"><h3><?php echo JText::_('NOTICE'); ?></h3><p><?php echo sprintf(JText::_('COM_PROJECTLOG_DOC_UPLOAD_NOTE'), $this->item->path); ?></p></div>
+                                <?php echo $this->form->renderField('path'); ?>
+                            <?php endif; ?>
+                            <div class="alert alert-warning"><?php echo $allowed_types_desc; ?></div>
+                            <?php echo $this->form->renderField('pl_document'); ?>
                         </div>                
                     </div>
                     <div class="span5">

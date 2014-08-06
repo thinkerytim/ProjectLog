@@ -21,14 +21,14 @@ $canEdit = $params->get('access-edit');
 
 <div class="pl-project<?php echo $this->pageclass_sfx?>" itemscope itemtype="http://data-vocabulary.org/Event">
     <div class="row-fluid">
-        <!-- display page heading -->
+        <?php // display page heading ?>
         <?php if ($this->params->get('show_page_heading')) : ?>
             <h1>
                 <?php echo $this->escape($this->params->get('page_heading')); ?>
             </h1>
         <?php endif; ?>
 
-        <!-- display project name -->
+        <?php // display project name ?>
         <?php if ($this->project->name && $this->params->get('show_name')) : ?>
             <div class="page-header">
                 <h2>                
@@ -42,6 +42,7 @@ $canEdit = $params->get('access-edit');
             </div>
         <?php endif;  ?>  
         
+        <?php //if print layout, show print button; otherwise, show email,print,edit dropdown ?>
         <?php if (!$this->print) : ?>
             <?php if ($canEdit || $params->get('show_print_icon') || $params->get('show_email_icon')) : ?>
                 <?php echo JLayoutHelper::render('joomla.content.icons', array('params' => $params, 'item' => $this->project, 'print' => false)); ?>
@@ -54,21 +55,21 @@ $canEdit = $params->get('access-edit');
             <div class="clearfix"></div>
         <?php endif; ?>
 
-        <!-- render drop down for other projects -->
+        <?php // render drop down for other projects ?>
         <?php if ($this->params->get('show_project_list') && count($this->projects) > 1 && !$this->print) : ?>
             <form action="#" method="get" name="selectForm" id="selectForm">
                 <?php echo JText::_('COM_PROJECTLOG_SELECT_PROJECT'); ?>
                 <?php echo JHtml::_('select.genericlist', $this->projects, 'id', 'class="inputbox" onchange="document.location.href = this.value"', 'link', 'name', $this->project->link);?>
             </form>
         <?php endif; ?>
-        
-        <!-- load identifiers template to show release id, job id, etc -->
+
+        <?php //load identifiers template to show release id, job id, etc ?>
         <?php echo $this->loadTemplate('identifiers'); ?>
     </div>
             
     <div class="row-fluid">
         <div class="span8 pl-project-main-container">
-            <!-- show project misc -->
+            <?php // show project misc ?>
             <?php if ($this->project->misc && $this->params->get('show_misc')) : ?>
                 <?php echo '<h3>'. JText::_('COM_PROJECTLOG_OTHER_INFORMATION').'</h3>';  ?>
                 <?php if ($this->project->image && $this->params->get('show_image')) : ?>
@@ -79,11 +80,13 @@ $canEdit = $params->get('access-edit');
                 <?php echo $this->project->misc; ?>
             <?php endif; ?> 
             
+            <?php // show general location ?>
             <?php if ($this->project->general_loc) : ?>
                 <h3><?php echo JText::_('COM_PROJECTLOG_GEN_LOC'); ?></h3> 
                 <?php echo nl2br ( $this->project->general_loc, true ); ?>
             <?php endif; ?>
             
+            <?php // show specific location ?>
             <?php if ($this->project->specific_loc && $this->params->get('show_specific_loc')) : ?>
                 <h3><?php echo JText::_('COM_PROJECTLOG_SPEC_LOC'); ?></h3> 
                 <?php echo nl2br ( $this->project->specific_loc, true ); ?>
@@ -93,14 +96,15 @@ $canEdit = $params->get('access-edit');
 
             <?php echo JHtml::_('bootstrap.startTabSet', 'projectTab', array('active' => (count($this->logs)) ? 'logs' : 'contact')); ?>
             
-                <?php if(count($this->logs)): ?>
-                    <?php echo $this->loadTemplate('logs'); ?>
-                <?php endif; ?>
+                <?php // load logs template ?>
+                <?php echo $this->loadTemplate('logs'); ?>
             
-                <?php if(count($this->docs) && !$this->print): ?>
+                <?php // if not print layout, show documents ?>
+                <?php if(!$this->print): ?>
                     <?php echo $this->loadTemplate('docs'); ?>
                 <?php endif; ?>
 
+                <?php // show project contact form ?>
                 <?php if ($this->params->get('show_email_form') && ($this->project->email_to || $this->project->manager) && !$this->print) : ?>                    
                     <?php  echo $this->loadTemplate('form');  ?>                    
                 <?php endif; ?>
@@ -113,3 +117,8 @@ $canEdit = $params->get('access-edit');
     </div>
 </div>
 <?php if($this->params->get('show_footer')) echo projectlogHTML::buildThinkeryFooter();  ?>
+
+<?php //@todo: remove the script from the page and load externally ?>
+<?php if(!$this->print): ?>
+    <?php echo $this->loadTemplate('script'); ?>
+<?php endif; ?>

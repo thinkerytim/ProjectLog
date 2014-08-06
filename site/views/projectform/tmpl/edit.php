@@ -18,6 +18,7 @@ JHtml::_('behavior.modal', 'a.modal_jform_contenthistory');
 
 // Create shortcut to parameters.
 $params = $this->state->get('params');
+if($this->item && $this->item->catid) $this->state->set('project.catid', $this->item->catid);
 ?>
 
 <script type="text/javascript">
@@ -65,6 +66,9 @@ $params = $this->state->get('params');
                 <div class="row-fluid">
                     <div class="span6">
                         <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_DETAILS'); ?></h3>
+                        <?php if (!$this->params->get('enable_category', 0) == 1 && !$this->state->get('project.catid')) :?>
+                            <?php echo $this->form->renderField('catid'); ?>
+                        <?php endif; ?>
                         <?php echo $this->form->renderField('client'); ?>
                         <?php echo $this->form->renderField('project_type'); ?>
                         <?php echo $this->form->renderField('release_date'); ?>
@@ -119,10 +123,28 @@ $params = $this->state->get('params');
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('JGLOBAL_FIELDSET_PUBLISHING', true)); ?>
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
-                        <?php echo JLayoutHelper::render('joomla.edit.publishingdata', $this); ?>
-                    </div>
-                    <div class="span6">
+                        <?php echo $this->form->renderField('tags'); ?>
+                        <?php if ($params->get('save_history', 0)) : ?>
+                            <?php echo $this->form->renderField('version_note'); ?>
+                        <?php endif; ?>
+                        <?php echo $this->form->renderField('created_by_alias'); ?>
+                        <?php if ($this->item->params->get('access-change')) : ?>
+                            <?php echo $this->form->renderField('published'); ?>
+                            <?php echo $this->form->renderField('featured'); ?>
+                            <?php echo $this->form->renderField('publish_up'); ?>
+                            <?php echo $this->form->renderField('publish_down'); ?>
+                        <?php endif; ?>
+                        <?php echo $this->form->renderField('access'); ?>
+                        <?php if (is_null($this->item->id)):?>
+                            <div class="control-group">
+                                <div class="control-label">
+                                </div>
+                                <div class="controls">
+                                    <?php echo JText::_('COM_PROJECTLOG_ORDERING'); ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php echo $this->form->renderField('language'); ?>
                         <?php echo JLayoutHelper::render('joomla.edit.metadata', $this); ?>
                     </div>                
                 </div>
@@ -130,9 +152,10 @@ $params = $this->state->get('params');
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
         <input type="hidden" name="task" value="" />
         <input type="hidden" name="return" value="<?php echo $this->return_page; ?>" />
-        <?php if ($this->params->get('enable_category', 0) == 1) :?>
-            <input type="hidden" name="jform[catid]" value="<?php echo $this->params->get('catid', 1); ?>" />
+        <?php if ($this->params->get('enable_category', 0) == 1 || $this->state->get('project.catid')) :?>
+            <input type="hidden" name="jform[catid]" value="<?php echo $this->state->get('project.catid'); ?>" />
         <?php endif; ?>
         <?php echo JHtml::_('form.token'); ?>
 	</form>
 </div>
+<?php if($this->params->get('show_footer')) echo projectlogHTML::buildThinkeryFooter();  ?>

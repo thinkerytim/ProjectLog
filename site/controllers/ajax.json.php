@@ -9,4 +9,4 @@
 
 defined( '_JEXEC' ) or die( 'Restricted access');
 require_once JPATH_COMPONENT_SITE.'/helpers/html.helper.php';
-require_once JPATH_COMPONENT_ADMINISTRATOR.'/controllers/ajax.raw.php';
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/controllers/ajax.json.php';

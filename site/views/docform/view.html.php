@@ -10,12 +10,12 @@
 defined('_JEXEC') or die;
 
 /**
- * HTML Project Edit View class for the Projectlog component
+ * HTML Document Edit View class for the Projectlog component
  *
  * @package     Projectlog.site
  * @subpackage  com_projectlog
  */
-class ProjectlogViewProjectform extends JViewLegacy
+class ProjectlogViewDocform extends JViewLegacy
 {
 	protected $form;
 
@@ -24,6 +24,7 @@ class ProjectlogViewProjectform extends JViewLegacy
 	protected $return_page;
 
 	protected $state;
+    
 
 	/**
 	 * Execute and display a template script.
@@ -48,7 +49,7 @@ class ProjectlogViewProjectform extends JViewLegacy
 
 		if (empty($this->item->id))
 		{
-			$authorised = $user->authorise('core.create', 'com_projectlog') || (count($user->getAuthorisedCategories('com_projectlog', 'core.create')));
+			$authorised = $user->authorise('core.create', 'com_projectlog') || $user->authorise('projectlog.createdoc', 'com_projectlog.project.' . $this->state->get('doc.project_id'));
 		}
 		else
 		{
@@ -59,13 +60,6 @@ class ProjectlogViewProjectform extends JViewLegacy
 		{
 			JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
 			return false;
-		}
-
-		$this->item->tags = new JHelperTags;
-
-		if (!empty($this->item->id))
-		{
-			$this->item->tags->getItemTags('com_projectlog.project.', $this->item->id);
 		}
 
 		// Check for errors.
@@ -86,12 +80,6 @@ class ProjectlogViewProjectform extends JViewLegacy
 		// Override global params with article specific params
 		$this->params->merge($this->item->params);
 		$this->user   = $user;
-
-		if ($params->get('enable_category') == 1)
-		{
-			$this->form->setFieldAttribute('catid', 'default', $params->get('catid', 1));
-			$this->form->setFieldAttribute('catid', 'readonly', 'true');
-		}
 
 		$this->_prepareDocument();
 		parent::display($tpl);
@@ -116,10 +104,10 @@ class ProjectlogViewProjectform extends JViewLegacy
 		}
 		else
 		{
-			$this->params->def('page_heading', JText::_('COM_PROJECTLOG_FORM_EDIT_PROJECT'));
+			$this->params->def('page_heading', JText::_('COM_PROJECTLOG_FORM_EDIT_DOC'));
 		}
 
-		$title = $this->params->def('page_title', JText::_('COM_PROJECTLOG_FORM_EDIT_PROJECT'));
+		$title = $this->params->def('page_title', JText::_('COM_PROJECTLOG_FORM_EDIT_DOC'));
 
 		if ($app->get('sitename_pagetitles', 0) == 1)
 		{

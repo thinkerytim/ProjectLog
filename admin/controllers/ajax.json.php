@@ -21,9 +21,9 @@ class ProjectlogControllerAjax extends JControllerLegacy
      * 
      * @return json_encoded list of values
      */
-    public function ajaxAutocomplete()
-    {		 
-		// Check for request forgeries
+    public function autoComplete()
+    {        
+        // Check for request forgeries
 		JSession::checkToken('get') or die( 'Invalid Token');
 		
 		$field		= JRequest::getString('field');
@@ -38,7 +38,7 @@ class ProjectlogControllerAjax extends JControllerLegacy
 		$db->setQuery($query);
 		$data = $db->loadColumn();               
 		
-		echo json_encode($data);
+		echo new JResponseJson($data);
 	}
     
     /**
@@ -50,6 +50,7 @@ class ProjectlogControllerAjax extends JControllerLegacy
     {        
         // Check for request forgeries
         JSession::checkToken() or die( 'Invalid Token');
+        $app = JFactory::getApplication();
         
         $data       = JRequest::get('post');
         $user       = JFactory::getUser();
@@ -68,7 +69,7 @@ class ProjectlogControllerAjax extends JControllerLegacy
         {          
             $result = false;
             if($model->save($data)){
-                $success_msg = 
+                $new_log = 
                   '<div class="plitem-cnt">
                       '.$gravatar["image"].'
                       <div class="theplitem">
@@ -80,7 +81,8 @@ class ProjectlogControllerAjax extends JControllerLegacy
                           </p>
                       </div>
                   </div>';
-                echo new JResponseJson($success_msg);
+                //$app->enqueueMessage(JText::_('COM_PROJECTLOG_SUCCESS'));
+                echo new JResponseJson($new_log);
                 return;
             }
             echo new JResponseJson($result, $model->getError());    
@@ -93,7 +95,7 @@ class ProjectlogControllerAjax extends JControllerLegacy
     }
     
     /**
-     * Delete a new log via the project logs tab
+     * Delete a log via the project logs tab
      * 
      * @return JResponseJson result of ajax request
      */    
@@ -105,22 +107,49 @@ class ProjectlogControllerAjax extends JControllerLegacy
         $data       = JRequest::get('post');
         $log_id     = (int)$data['log_id'];
         
-        $db         = JFactory::getDbo(); 
-        $query      = $db->getQuery(true);       
+        $clientmodel    = (JFactory::getApplication()->getName() == 'site') ? 'Logform' : 'Log';
+        $model          = $this->getModel($clientmodel);       
         
         try{
-            $query->delete($db->quoteName('#__projectlog_logs'));
-            $query->where($db->quoteName('id').' = '.$log_id);
-
-            $db->setQuery($query);
-            $result = $db->query();
-            
-            if($result){
+            $result = false;
+            if($model->delete($log_id)){
                 echo new JResponseJson($log_id);
             }
             else
             {
-                echo new JResponseJson($result);
+                echo new JResponseJson($result, $model->getError());
+            }
+        }
+        catch(Exception $e)
+        {
+            echo new JResponseJson($e);
+        }            
+    }
+    
+    /**
+     * Delete a document via the project docs tab
+     * 
+     * @return JResponseJson result of ajax request
+     */    
+    public function deleteDoc()
+    {
+        // Check for request forgeries
+        JSession::checkToken() or die( 'Invalid Token');
+        
+        $data       = JRequest::get('post');
+        $doc_id     = (int)$data['doc_id'];
+        
+        $clientmodel    = (JFactory::getApplication()->getName() == 'site') ? 'Docform' : 'Doc';
+        $model          = $this->getModel($clientmodel);       
+        
+        try{
+            $result = false;
+            if($model->delete($doc_id)){
+                echo new JResponseJson($doc_id);
+            }
+            else
+            {
+                echo new JResponseJson($result, $model->getError());
             }
         }
         catch(Exception $e)

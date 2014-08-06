@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * HTML Project Edit View class for the Projectlog component
+ * HTML Log Edit View class for the Projectlog component
  *
  * @package     Projectlog.site
  * @subpackage  com_projectlog
@@ -45,6 +45,7 @@ class ProjectlogViewLogform extends JViewLegacy
         
         // Make sure to include admin language file for form fields
         JFactory::getLanguage()->load('com_projectlog', JPATH_ADMINISTRATOR);
+        JFactory::getLanguage()->load('', JPATH_ADMINISTRATOR);
 
 		if (empty($this->item->id))
 		{

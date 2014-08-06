@@ -17,3 +17,5 @@ echo JLayoutHelper::render('joomla.content.categories_default', $this);
 echo $this->loadTemplate('items');
 
 if($this->params->get('show_footer')) echo projectlogHTML::buildThinkeryFooter();
+?>
+</div>

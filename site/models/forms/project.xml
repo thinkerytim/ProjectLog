@@ -35,6 +35,7 @@
 			description="JFIELD_ALIAS_DESC"
 			hint="JFIELD_ALIAS_PLACEHOLDER"
 			size="45"
+            readonly="true"
 		/>
 
 		<field name="version_note"
@@ -46,8 +47,8 @@
 		/>
         
         <field name="approved"
-			type="radio"
-			class="btn-group btn-group-yesno"
+			type="list"
+			class="chzn-color-state"
 			label="COM_PROJECTLOG_APPROVED_LABEL"
 			size="1"
 			default="1"
@@ -195,8 +196,8 @@
 		</field>
 
 		<field name="featured"
-			type="radio"
-			class="btn-group btn-group-yesno"
+			type="list"
+			class="chzn-color-state"
 			label="JFEATURED"
 			default="0"
             >
@@ -308,8 +309,9 @@
 			filter="user_utc"
 		/>
         
-        <field name="onsite" type="radio"
-            class="btn-group"
+        <field name="onsite" 
+            type="list"
+            class="chzn-color-state"
             label="COM_PROJECTLOG_FIELD_ONSITE_LABEL"
             description="COM_PROJECTLOG_FIELD_ONSITE_DESC"
             default="0"

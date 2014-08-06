@@ -306,13 +306,9 @@ class ProjectlogModelLog extends JModelAdmin
 	 */
 	protected function canDelete($record)
 	{
-		if (!empty($record->id))
+        if (!empty($record->id))
 		{
-			if ($record->published != -2)
-			{
-				return;
-			}
-			$user = JFactory::getUser();
+			$user = JFactory::getUser();            
 			return $user->authorise('projectlog.deletelog', 'com_projectlog.project.' . (int) $record->project_id);
 		}
 	}
