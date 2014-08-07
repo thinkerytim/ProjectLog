@@ -13,15 +13,16 @@ defined('_JEXEC') or die;
 require_once JPATH_ADMINISTRATOR.'/components/com_projectlog/models/doc.php';
 
 /**
- * Projectlog Component Docform Model
+ * This model extends admin model for front end doc management
  *
  * @package     Projectlog.site
  * @subpackage  com_projectlog
+ * @since       3.3.1
  */
 class ProjectlogModelDocform extends ProjectlogModelDoc
 {
 	/**
-	 * Model typeAlias string. Used for version history.
+	 * Model typeAlias string
 	 *
 	 * @var        string
 	 */
@@ -34,7 +35,7 @@ class ProjectlogModelDocform extends ProjectlogModelDoc
 	 *
 	 * @return  void
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function populateState()
 	{
@@ -62,6 +63,7 @@ class ProjectlogModelDocform extends ProjectlogModelDoc
 	 * @param   integer  $itemId  The id of the item.
 	 *
 	 * @return  mixed  Content item data object on success, false on failure.
+     * @since   3.3.1
 	 */
 	public function getItem($itemId = null)
 	{
@@ -138,7 +140,7 @@ class ProjectlogModelDocform extends ProjectlogModelDoc
 	 *
 	 * @return  string	The return URL.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function getReturnPage()
 	{
@@ -152,7 +154,7 @@ class ProjectlogModelDocform extends ProjectlogModelDoc
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   3.2
+	 * @since   3.3.1
 	 */
 	public function save($data)
 	{

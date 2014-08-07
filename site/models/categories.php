@@ -73,7 +73,7 @@ class ProjectlogModelCategories extends JModelList
 	}
 
 	/**
-	 * redefine the function an add some properties to make the styling more easy
+	 * Redefine the function an add some properties to make the styling more easy
 	 *
 	 * @return mixed An array of data items on success, false on failure.
      * @since       3.3.1
@@ -107,8 +107,6 @@ class ProjectlogModelCategories extends JModelList
 
     /**
 	 * Get the parent category.
-	 *
-	 * @param   integer  An optional category id. If not supplied, the model state 'category.id' will be used.
 	 *
 	 * @return  mixed  An array of categories or false if an error occurs.
      * @since       3.3.1

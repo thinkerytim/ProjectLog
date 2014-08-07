@@ -10,6 +10,8 @@
 defined('_JEXEC') or die;
 
 /**
+ * This models supports retrieving lists of projects in a category.
+ *
  * @package     Projectlog.site
  * @subpackage  com_projectlog
  * @since       3.3.1
@@ -34,6 +36,7 @@ class ProjectlogModelCategory extends JModelList
 	 * Constructor.
 	 *
 	 * @param   array  An optional associative array of configuration settings.
+     * @return  ProjectlogModelCategory
 	 * @see     JController
 	 * @since       3.3.1
 	 */
@@ -90,7 +93,7 @@ class ProjectlogModelCategory extends JModelList
 			$this->tags = new JHelperTags;
 			$this->tags->getItemTags('com_projectlog.project', $item->id);
             
-            // Technically guest could edit an article, but lets not check that to improve performance a little.
+            // Technically guest could edit a project, but lets not check that to improve performance a little.
             if (!$user->get('guest'))
             {
                 $userId = $user->get('id');
@@ -134,7 +137,6 @@ class ProjectlogModelCategory extends JModelList
 		$query = $db->getQuery(true);
 
 		// Select required fields from the categories.
-		//sqlsrv changes
 		$case_when = ' CASE WHEN ';
 		$case_when .= $query->charLength('a.alias', '!=', '0');
 		$case_when .= ' THEN ';
@@ -351,8 +353,6 @@ class ProjectlogModelCategory extends JModelList
 	/**
 	 * Get the parent category.
 	 *
-	 * @param   integer  An optional category id. If not supplied, the model state 'category.id' will be used.
-	 *
 	 * @return  mixed  An array of categories or false if an error occurs.
      * @since       3.3.1
 	 */
@@ -397,8 +397,6 @@ class ProjectlogModelCategory extends JModelList
 
 	/**
 	 * Get the child categories.
-	 *
-	 * @param   integer  An optional category id. If not supplied, the model state 'category.id' will be used.
 	 *
 	 * @return  mixed  An array of categories or false if an error occurs.
      * @since       3.3.1

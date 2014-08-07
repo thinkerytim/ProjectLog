@@ -13,10 +13,11 @@ defined('_JEXEC') or die;
 require_once JPATH_ADMINISTRATOR.'/components/com_projectlog/models/project.php';
 
 /**
- * Projectlog Component Projectform Model
+ * This models extends admin project model for front end project management
  *
  * @package     Projectlog.site
  * @subpackage  com_projectlog
+ * @since       3.3.1
  */
 class ProjectlogModelProjectform extends ProjectlogModelProject
 {
@@ -34,7 +35,7 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 	 *
 	 * @return  void
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function populateState()
 	{
@@ -180,7 +181,7 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 	 *
 	 * @return  string	The return URL.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	public function getReturnPage()
 	{
@@ -194,7 +195,7 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   3.2
+	 * @since   3.3.1
 	 */
 	public function save($data)
 	{

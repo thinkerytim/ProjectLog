@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * HTML View class for the Project component
+ * HTML Category Feed View class for the Projectlog component
  *
  * @package     Projectlog.site
  * @subpackage  com_projectlog

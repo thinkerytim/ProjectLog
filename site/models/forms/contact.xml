@@ -10,6 +10,7 @@
 			filter="string"
 			required="true"
 		/>
+        
 		<field name="contact_email"
 			type="email"
 			id="contact-email"
@@ -20,6 +21,7 @@
 			validate="projectemail"
 			required="true"
 		/>
+        
 		<field name="contact_subject"
 			type="text"
 			id="contact-emailmsg"
@@ -30,6 +32,7 @@
 			validate="projectemailsubject"
 			required="true"
 		/>
+        
 		<field name="contact_message"
 			type="textarea"
 			cols="50"
@@ -41,6 +44,7 @@
 			validate="projectemailmessage"
 			required="true"
 		/>
+        
 		<field name="contact_email_copy"
 			type="checkbox"
 			id="contact-email-copy"

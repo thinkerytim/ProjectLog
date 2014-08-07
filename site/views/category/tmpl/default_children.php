@@ -8,6 +8,7 @@
  */
 
 defined('_JEXEC') or die;
+
 $class = ' class="first"';
 if (count($this->children[$this->category->id]) > 0 && $this->maxLevel != 0) :
 ?>

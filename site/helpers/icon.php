@@ -128,7 +128,7 @@ abstract class JHtmlIcon
 	 * @param   array      $attribs  Optional attributes for the link
 	 * @param   boolean    $legacy   True to use legacy images, false to use icomoon based graphic
 	 *
-	 * @return  string	The HTML for the article edit icon.
+	 * @return  string	The HTML for the edit item link.
 	 * @since   3.3.1
 	 */
 	public static function edit($project, $params, $attribs = array(), $legacy = false)
@@ -150,7 +150,7 @@ abstract class JHtmlIcon
 
 		JHtml::_('bootstrap.tooltip');
 
-		// Show checked_out icon if the article is checked out by a different user
+		// Show checked_out icon if the item is checked out by a different user
 		if (property_exists($project, 'checked_out') && property_exists($project, 'checked_out_time') && $project->checked_out > 0 && $project->checked_out != $user->get('id'))
 		{
 			$checkoutUser = JFactory::getUser($project->checked_out);
@@ -207,14 +207,14 @@ abstract class JHtmlIcon
 	}
 
 	/**
-	 * Method to generate a popup link to print an article
+	 * Method to generate a popup link to print a project
 	 *
 	 * @param   object     $project  The project information
 	 * @param   JRegistry  $params   The item parameters
 	 * @param   array      $attribs  Optional attributes for the link
 	 * @param   boolean    $legacy   True to use legacy images, false to use icomoon based graphic
 	 *
-	 * @return  string  The HTML markup for the popup link
+	 * @return  string     The HTML markup for the popup item link
      * @since   3.3.1
 	 */
 	public static function print_popup($project, $params, $attribs = array(), $legacy = false)
@@ -254,14 +254,14 @@ abstract class JHtmlIcon
 
 	/**
 	 * Method to generate a link to print a project
-     * Keeping deprecated arguments in order to use content icons layout
+     * NOTE: Keeping deprecated arguments in order to use content icons layout
 	 *
 	 * @param   object     $project  Not used, @deprecated for 4.0
 	 * @param   JRegistry  $params   The item parameters
 	 * @param   array      $attribs  Not used, @deprecated for 4.0
 	 * @param   boolean    $legacy   True to use legacy images, false to use icomoon based graphic
 	 *
-	 * @return  string  The HTML markup for the popup link
+	 * @return  string  The HTML markup for the print button
      * @since   3.3.1
 	 */
 	public static function print_screen($project, $params, $attribs = array(), $legacy = false)

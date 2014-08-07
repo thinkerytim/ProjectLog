@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
  *
  * @package     Projectlog.site
  * @subpackage  com_projectlog
+ * @since       3.3.1
  */
 class ProjectlogViewDocform extends JViewLegacy
 {
@@ -32,6 +33,7 @@ class ProjectlogViewDocform extends JViewLegacy
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  mixed  A string if successful, otherwise a Error object.
+     * @since   3.3.1
 	 */
 	public function display($tpl = null)
 	{
@@ -87,6 +89,9 @@ class ProjectlogViewDocform extends JViewLegacy
 
 	/**
 	 * Prepares the document
+     * 
+     * @return  void
+     * @since   3.3.1
 	 */
 	protected function _prepareDocument()
 	{

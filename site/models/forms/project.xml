@@ -403,6 +403,7 @@
     
 	<fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
 		<fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+            
 			<field name="robots"
 				type="list"
 				label="JFIELD_METADATA_ROBOTS_LABEL"
@@ -418,7 +419,8 @@
 			<field name="rights" type="text"
 				label="JFIELD_METADATA_RIGHTS_LABEL"
 				description="JFIELD_METADATA_RIGHTS_DESC"
-				size="20" />
+				size="20" 
+            />
 		</fieldset>
 	</fields>
 

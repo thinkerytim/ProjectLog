@@ -91,7 +91,7 @@ class ProjectlogControllerLogform extends JControllerForm
 
 		if ($projectId)
 		{
-			// The category has been set. Check the category permissions.
+			// The project has been set. Check the project permissions.
 			return JFactory::getUser()->authorise('projectlog.editlog', $this->option . '.project.' . $projectId);
 		}
 		else

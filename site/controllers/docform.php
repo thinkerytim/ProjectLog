@@ -66,7 +66,7 @@ class ProjectlogControllerDocform extends JControllerForm
 
 		if ($projectId)
 		{
-			// If the category has been passed in the URL check it.
+			// If the project has been passed in the URL check it.
 			$allow = $user->authorise('projectlog.createdoc', $this->option . '.project.' . $projectId);
 		}
 
@@ -103,7 +103,7 @@ class ProjectlogControllerDocform extends JControllerForm
 
 		if ($projectId)
 		{
-			// The category has been set. Check the category permissions.
+			// The project has been set. Check the project permissions.
 			return JFactory::getUser()->authorise('projectlog.editdoc', $this->option . '.project.' . $projectId);
 		}
 		else

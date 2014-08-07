@@ -10,6 +10,8 @@
 defined('_JEXEC') or die;
 
 /**
+ * This model retrieves a single project
+ *
  * @package     Projectlog.site
  * @subpackage  com_projectlog
  * @since       3.3.1
@@ -202,7 +204,7 @@ class ProjectlogModelProject extends JModelForm
 				$data->tags = new JHelperTags;
 				$data->tags->getItemTags('com_projectlog.project', $data->id);
                 
-                // Technically guest could edit an article, but lets not check that to improve performance a little.
+                // Technically guest could edit a project, but lets not check that to improve performance a little.
 				if (!$user->get('guest'))
 				{
 					$userId = $user->get('id');

@@ -18,7 +18,16 @@ defined('_JEXEC') or die;
  */
 class ProjectlogCategories extends JCategories
 {
-	public function __construct($options = array())
+	/**
+     * Constructor
+     * 
+     * @param   array   $options   Array of configuration options
+     * 
+     * @return  ProjectlogCategories
+     * @see     JCategories
+     * @since   3.3.1
+     */
+    public function __construct($options = array())
 	{
 		$options['table']       = '#__projectlog_projects';
 		$options['extension']   = 'com_projectlog';
