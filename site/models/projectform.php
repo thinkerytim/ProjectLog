@@ -153,6 +153,27 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 
 		return $value;
 	}
+    
+    /**
+	 * Method to get the data that should be injected in the form.
+	 *
+	 * @return  mixed  The data for the form.
+	 *
+	 * @since   3.3.1
+	 */
+	protected function loadFormData()
+	{
+        $data = parent::loadFormData();
+
+        // Prime some default values.
+        if ($this->getState('project.id') == 0)
+        {
+            $app = JFactory::getApplication();
+            $data->set('manager', JFactory::getUser()->get('id'), 'int');				
+        }
+
+		return $data;
+	}
 
 	/**
 	 * Get the return URL.

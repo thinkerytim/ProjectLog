@@ -117,10 +117,13 @@ $assoc		= JLanguageAssociations::isEnabled();
                         <th width="1%" style="min-width:55px" class="nowrap center">
                             <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
                         </th>
-                        <th width="30%">
+                        <th width="15%">
                             <?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
                         </th>
-                        <th width="30%" class="nowrap hidden-phone">
+                        <th width="15%">
+                            <?php echo JHtml::_('grid.sort', 'JGLOBAL_CREATED', 'a.created', $listDirn, $listOrder); ?>
+                        </th>
+                        <th width="40%" class="hidden-phone">
                             <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_DESC', 'a.description', $listDirn, $listOrder); ?>
                         </th>
                         <?php if ($assoc) : ?>
@@ -187,7 +190,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     ?>
                                 </div>
                             </td>                            
-                            <td class="nowrap has-context">
+                            <td class="nowrap">
                                 <div class="pull-left">
                                     <?php if ($item->checked_out) : ?>
                                         <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'logs.', $canCheckin); ?>
@@ -203,8 +206,11 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     </div>
                                 </div>
                             </td>
+                            <td>
+                                <?php echo $item->created; ?>
+                            </td> 
                             <td class="hidden-phone">
-                                <?php echo $item->description; ?>
+                                <?php echo projectlogHtml::snippet($item->description, 200); ?>
                             </td>
                             <?php if ($assoc) : ?>
                             <td class="hidden-phone">

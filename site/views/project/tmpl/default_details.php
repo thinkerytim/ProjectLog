@@ -54,7 +54,7 @@ $onsite_class = ($this->item->onsite) ? 'icon-thumbs-up' : 'icon-thumbs-down';
     <?php if ($this->project->chief && $this->params->get('show_chief')) : ?>
         <li>
             <b><?php echo JText::_('COM_PROJECTLOG_CHIEF'); ?>:</b>&nbsp;
-            <?php echo $this->project->chief_name; ?>
+            <?php echo $this->project->chief; ?>
         </li>
     <?php endif; ?>
     <?php if ($this->project->technicians && $this->params->get('show_technicians')) : ?>

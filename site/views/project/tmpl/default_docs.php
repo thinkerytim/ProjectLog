@@ -14,8 +14,10 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'docs', JText::_('COM_PROJECTLOG_RELATED_DOCS', true)); ?>
 
 <?php if($this->canDo->get('projectlog.createdoc')): ?>
-<a href="#//add link with preset project id when landing on form" class="btn">
-    <span class="icon icon-edit hasTooltip" title="<?php echo JText::_('JACTION_ADD'); ?>">&nbsp;</span>
+<a href="<?php echo JRoute::_('index.php?option=com_projectlog&task=docform.add&project_id='.$this->project->id.'&return='.$this->return_page); ?>" class="btn btn-primary">
+    <span class="icon icon-edit">
+        &nbsp;<?php echo JText::_('COM_PROJECTLOG_FORM_ADD_DOC'); ?>
+    </span>
 </a>
 <?php endif; ?>
 <div id="doc-error-msg"></div>    

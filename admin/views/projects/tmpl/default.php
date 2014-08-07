@@ -110,10 +110,10 @@ $assoc		= JLanguageAssociations::isEnabled();
                         <th width="15%">
                             <?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.name', $listDirn, $listOrder); ?>
                         </th>
-                        <th width="10%" class="nowrap hidden-phone">
+                        <th width="10%" class="nowrap">
                             <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_FIELD_RELEASE_DATE_LABEL', 'a.release_date', $listDirn, $listOrder); ?>
                         </th>
-                        <th width="10%" class="nowrap hidden-phone">
+                        <th width="10%" class="nowrap">
                             <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_FIELD_PROJECT_STATUS_LABEL', 'a.status', $listDirn, $listOrder); ?>
                         </th>
                         <th width="10%" class="nowrap hidden-phone">
@@ -193,7 +193,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     ?>
                                 </div>
                             </td>
-                            <td class="nowrap has-context">
+                            <td class="nowrap">
                                 <div class="pull-left">
                                     <?php if ($item->checked_out) : ?>
                                         <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'projects.', $canCheckin); ?>
@@ -216,12 +216,12 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     </div>
                                 </div>
                             </td>
-                            <td class="small hidden-phone">
+                            <td class="small">
                                 <?php if (!empty($item->release_date)) : ?>
                                     <?php echo $item->release_date;?>
                                 <?php endif; ?>
                             </td>
-                            <td class="small hidden-phone">
+                            <td class="small">
                                 <?php if (!empty($item->status)) : ?>
                                     <?php echo JText::_('COM_PROJECTLOG_'.strtoupper($item->status));?>
                                 <?php endif; ?>

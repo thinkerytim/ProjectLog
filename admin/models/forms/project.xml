@@ -260,9 +260,10 @@
             required="true"
         />
         
-        <field name="chief" type="user"
+        <field name="chief" type="text"
 			label="COM_PROJECTLOG_FIELD_CHIEF_LABEL"
 			description="COM_PROJECTLOG_FIELD_CHIEF_DESC"
+            size="30"
         />
         
         <field name="technicians" type="text"

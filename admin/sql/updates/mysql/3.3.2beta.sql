@@ -1,0 +1,1 @@
+ALTER TABLE  `#__projectlog_projects` MODIFY `chief` varchar(200) NOT NULL;

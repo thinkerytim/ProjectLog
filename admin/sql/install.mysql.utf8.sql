@@ -16,7 +16,7 @@ CREATE TABLE `#__projectlog_projects` (
   `specific_loc` text,
   `general_loc` text,
   `manager` int(11) default NULL default '0',
-  `chief` int(11) NOT NULL default '0',
+  `chief` varchar(200) NOT NULL,
   `technicians` varchar(200) NOT NULL,
   `deployment_from` datetime NOT NULL default '0000-00-00 00:00:00',
   `deployment_to` datetime NOT NULL default '0000-00-00 00:00:00',

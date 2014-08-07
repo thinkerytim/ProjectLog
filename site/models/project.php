@@ -154,9 +154,6 @@ class ProjectlogModelProject extends JModelForm
                     // Join on users table.
                     ->select('u.name AS manager_name, u.email AS manager_email')
                     ->join('LEFT', '#__users AS u on u.id = a.manager')
-
-                    ->select('uc.name AS chief_name, uc.email AS chief_email')
-                    ->join('LEFT', '#__users AS uc on uc.id = a.chief')
                         
                     ->select('ua.name AS author')
 					->join('LEFT', '#__users AS ua on ua.id = a.created_by')

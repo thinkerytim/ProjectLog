@@ -30,7 +30,19 @@ class ProjectlogControllerDocform extends JControllerForm
 	 */
 	public function add()
 	{
-		if (!parent::add())
+		$app = JFactory::getApplication();
+        $project_id = $app->input->getInt('project_id');
+        
+        // if there is no project id associated with the front end doc upload, we want to kick
+        // the user out -- no document can be submitted without knowing the project id
+        if (!$project_id){
+            $this->setRedirect($this->getReturnPage());
+        }
+        
+        // set the project id state so the parent model can set the project field state
+        // when loading the form
+        $app->setUserState('com_projectlog.docs.filter.project_id', $project_id);
+        if (!parent::add())
 		{
 			// Redirect to the return page.
 			$this->setRedirect($this->getReturnPage());

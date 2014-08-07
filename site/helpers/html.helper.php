@@ -19,6 +19,39 @@ defined('_JEXEC') or die;
 abstract class ProjectlogHtml
 {
     /**
+	 * Method to truncate a string and add a tail to indicate there's more to read
+	 *
+	 * @param   string  $text   The text to truncate
+	 * @param   int     $length Character length to reduce the string to
+     * @param   string  $tail   Optional tailing indicator
+     * @param   boolean $strip_tags True to strip html tags, false to leave html
+	 *
+	 * @return  string   The truncated string
+	 *
+	 * @since  3.3.1
+	 */    
+    public static function snippet($text, $length = 200, $tail = "(...)", $strip_tags = true)
+    {
+       $text = trim($text);
+       $text = ($strip_tags) ? strip_tags($text) : $text;
+       $txtl = strlen($text);
+       if($txtl > $length) {
+           for ($i = 1; $text[$length-$i] != " "; $i++) 
+           {
+               if ($i == $length) {
+                   return substr($text, 0, $length) . $tail;
+               }
+           }
+           $text = substr($text, 0, $length-$i+1) . $tail;
+       }
+	   // strip out curly bracket plugin text if it exists
+	   $text = preg_replace( "/{([^:}]*):?([^}]*)}/", '', $text );
+	   $text = str_replace( '  ', ' ', $text );
+	   
+       return $text;
+    }
+    
+    /**
 	 * Method to get a gravatar image from user email
 	 *
 	 * @param   string  $email  Email address

@@ -64,6 +64,8 @@ class ProjectlogControllerAjax extends JControllerLegacy
         $data['associations']   = array();
         $data['published']      = 1;
         $data['created_by']     = $user->get('id');
+        $data['language']       = JFactory::getLanguage()->getTag();
+        if(!$data['language']) $data['language'] = '*';
         
         try
         {          

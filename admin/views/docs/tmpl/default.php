@@ -117,10 +117,10 @@ $assoc		= JLanguageAssociations::isEnabled();
                         <th width="1%" style="min-width:55px" class="nowrap center">
                             <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
                         </th>
-                        <th width="25%">
+                        <th width="20%">
                             <?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
                         </th>
-                        <th width="40%" class="nowrap hidden-phone">
+                        <th width="40%" class="nowrap">
                             <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_DOC', 'a.path', $listDirn, $listOrder); ?>
                         </th>
                         <?php if ($assoc) : ?>
@@ -187,7 +187,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     ?>
                                 </div>
                             </td>                            
-                            <td class="nowrap has-context">
+                            <td class="nowrap">
                                 <div class="pull-left">
                                     <?php if ($item->checked_out) : ?>
                                         <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'docs.', $canCheckin); ?>
@@ -203,7 +203,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                                     </div>
                                 </div>
                             </td>
-                            <td class="hidden-phone nowrap">
+                            <td class="nowrap">
                                 <?php 
                                 if($item->path){
                                     $full_path = JPATH_SITE.'/media/com_projectlog/docs/'.$item->path;
