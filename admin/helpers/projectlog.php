@@ -157,6 +157,15 @@ class ProjectlogHelper extends JHelperContent
         echo '<hr />';
     }
     
+    /**
+	 * Helper function to get count of logs for a project
+     * 
+     * @param   int     $project_id The ID of the project
+     * 
+     * @return  mixed   The return value or null if the query failed.
+	 *
+	 * @since   3.3.1
+	 */
     public static function getLogCount($project_id)
     {
         $db = JFactory::getDbo();
@@ -172,6 +181,15 @@ class ProjectlogHelper extends JHelperContent
         return $db->loadResult();
     }
     
+    /**
+	 * Helper function to get count of documents for a project
+     * 
+     * @param   int     $project_id The ID of the project
+     * 
+     * @return  mixed   The return value or null if the query failed.
+	 *
+	 * @since   3.3.1
+	 */
     public static function getDocCount($project_id)
     {
         $db = JFactory::getDbo();

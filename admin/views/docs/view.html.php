@@ -10,11 +10,11 @@
 defined('_JEXEC') or die;
 
 /**
- * View class for a list of projects.
+ * View class for a list of documents.
  *
  * @package     Projectlog.Administrator
  * @subpackage  com_projectlog
- * @since       1.6
+ * @since       3.3.1
  */
 class ProjectlogViewDocs extends JViewLegacy
 {
@@ -152,7 +152,6 @@ class ProjectlogViewDocs extends JViewLegacy
 			'a.published' => JText::_('JSTATUS'),
 			'a.title' => JText::_('JGLOBAL_TITLE'),
 			'project_name' => JText::_('COM_PROJECTLOG_PROJECT'),
-			'a.access' => JText::_('JGRID_HEADING_ACCESS'),
 			'a.language' => JText::_('JGRID_HEADING_LANGUAGE'),
 			'a.id' => JText::_('JGRID_HEADING_ID')
 		);

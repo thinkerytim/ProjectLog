@@ -3,4 +3,9 @@
 ========================================
 * First release for Joomla 3
 
+3.3.1 Project Log 2014-08-07
+========================================
+========================================
+* Finished development and ready for beta testers and feedback
+
 

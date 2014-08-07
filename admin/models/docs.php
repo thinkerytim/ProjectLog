@@ -20,9 +20,10 @@ class ProjectlogModelDocs extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config	An optional associative array of configuration settings.
 	 *
-	 * @see     JController
+	 * @return  ProjectlogModelDocs
+	 * @see     JModel
 	 * @since   3.3.1
 	 */
 	public function __construct($config = array())
@@ -164,7 +165,7 @@ class ProjectlogModelDocs extends JModelList
 		$query->select('uc.name AS editor')
 			->join('LEFT', '#__users AS uc ON uc.id = a.checked_out');
 
-		// Join over the categories.
+		// Join over the projects.
 		$query->select('p.name AS project_name')
 			->join('LEFT', '#__projectlog_projects AS p ON p.id = a.project_id');
 
@@ -189,7 +190,7 @@ class ProjectlogModelDocs extends JModelList
 			$query->where('(a.published = 0 OR a.published = 1)');
 		}
 
-		// Filter by a single or group of categories.
+		// Filter by a single or group of projects.
 		$projectId = $this->getState('filter.project_id');
 		if (is_numeric($projectId))
 		{

@@ -35,7 +35,7 @@ class JFormFieldModal_Log extends JFormField
     protected $showclear = true;
     
     /**
-     * Form clear button boolean
+     * Batch indicator
      * 
      * @var     boolean
      * @since   3.3.1
@@ -113,7 +113,7 @@ class JFormFieldModal_Log extends JFormField
 			$link .= '&amp;forcedLanguage=' . $this->element['language'];
 		}
 
-		// Get the title of the linked chart
+		// Get the title of the linked item value
 		if ((int) $this->value > 0)
 		{
 			$db = JFactory::getDbo();
@@ -140,7 +140,7 @@ class JFormFieldModal_Log extends JFormField
 
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
-		// The active log id field.
+		// The active item id field.
 		if (0 == (int) $this->value)
 		{
 			$value = '';
@@ -150,18 +150,18 @@ class JFormFieldModal_Log extends JFormField
 			$value = (int) $this->value;
 		}
 
-		// The current log display field.
+		// The current item display field.
 		$html[] = '<span class="input-append">';
 		$html[] = '<input type="text" class="input-medium" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" size="35" />';
 		$html[] = '<a class="modal btn hasTooltip" title="' . JHtml::tooltipText('COM_PROJECTLOG_CHANGE_LOG') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> ' . JText::_('JSELECT') . '</a>';
 
-		// Edit article button
+		// Edit button
 		if ($allowEdit)
 		{
 			$html[] = '<a class="btn hasTooltip' . ($value ? '' : ' hidden') . '" href="index.php?option=com_projectlog&layout=modal&tmpl=component&task=log.edit&id=' . $value . '" target="_blank" title="' . JHtml::tooltipText('COM_PROJECTLOG_EDIT_LOG') . '" ><span class="icon-edit"></span> ' . JText::_('JACTION_EDIT') . '</a>';
 		}
 
-		// Clear log button
+		// Clear button
 		if ($allowClear)
 		{
 			$html[] = '<button id="' . $this->id . '_clear" class="btn' . ($value ? '' : ' hidden') . '" onclick="return jClearLog(\'' . $this->id . '\')"><span class="icon-remove"></span> ' . JText::_('JCLEAR') . '</button>';
@@ -183,7 +183,7 @@ class JFormFieldModal_Log extends JFormField
 	}
     
     /**
-	 * Method to call the modal input from views
+	 * Method to call the modal input from views with custom arguments
 	 *
 	 * @return  string	The getInput field input markup.
 	 *

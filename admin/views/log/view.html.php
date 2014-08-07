@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * View to edit a project.
+ * View to edit a log.
  *
  * @package     Projectlog.Administrator
  * @subpackage  com_projectlog

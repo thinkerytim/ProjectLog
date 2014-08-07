@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  *
  * @package     Projectlog.Administrator
  * @subpackage  com_projectlog
- * @since       1.6
+ * @since       3.3.1
  */
 class ProjectlogViewProjects extends JViewLegacy
 {
@@ -26,8 +26,10 @@ class ProjectlogViewProjects extends JViewLegacy
 
 	/**
 	 * Display the view
-	 *
-	 * @return  void
+     * 
+     * @return void
+     * 
+     * @since 3.3.1
 	 */
 	public function display($tpl = null)
 	{
@@ -60,7 +62,7 @@ class ProjectlogViewProjects extends JViewLegacy
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @since   1.6
+	 * @since   3.3.1
 	 */
 	protected function addToolbar()
 	{
@@ -156,7 +158,7 @@ class ProjectlogViewProjects extends JViewLegacy
 	 *
 	 * @return  array  Array containing the field name to sort by as the key and display text as value
 	 *
-	 * @since   3.0
+	 * @since   3.3.1
 	 */
 	protected function getSortFields()
 	{

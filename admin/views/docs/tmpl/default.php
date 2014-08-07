@@ -118,7 +118,8 @@ $assoc		= JLanguageAssociations::isEnabled();
                             <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
                         </th>
                         <th width="20%">
-                            <?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
+                            <?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?> /
+                            <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_PROJECT', 'project_name', $listDirn, $listOrder); ?>
                         </th>
                         <th width="40%" class="nowrap">
                             <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_DOC', 'a.path', $listDirn, $listOrder); ?>

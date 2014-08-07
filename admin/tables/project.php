@@ -20,6 +20,7 @@ class ProjectlogTableProject extends JTable
 	 *
 	 * @param   JDatabaseDriver  &$db  Database connector object
 	 *
+	 * @return  ProjectlogTableProject
 	 * @since   1.0
 	 */
 	public function __construct(&$db)
@@ -240,7 +241,7 @@ class ProjectlogTableProject extends JTable
 		return $this->alias;
 	}
     
-/**
+    /**
      * Redefined asset name, as we support action control
      */
     protected function _getAssetName() {

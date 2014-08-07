@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * View class for a list of projects.
+ * View class for a list of logs.
  *
  * @package     Projectlog.Administrator
  * @subpackage  com_projectlog

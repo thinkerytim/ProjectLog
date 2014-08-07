@@ -162,7 +162,7 @@ abstract class JHtmlProject
 				$associations[$tag] = (int) $associated->id;
 			}
 
-			// Get the associated project items
+			// Get the associated log items
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true)
 				->select('c.id, c.title as title')
@@ -234,7 +234,7 @@ abstract class JHtmlProject
 				$associations[$tag] = (int) $associated->id;
 			}
 
-			// Get the associated project items
+			// Get the associated document items
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true)
 				->select('c.id, c.title as title')

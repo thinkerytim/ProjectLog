@@ -20,8 +20,9 @@ class ProjectlogModelProjects extends JModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
+	 * @param   array  $config	An optional associative array of configuration settings.
 	 *
+	 * @return  ProjectlogModelProjects
 	 * @see     JController
 	 * @since   3.3.1
 	 */

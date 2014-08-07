@@ -20,6 +20,7 @@ class ProjectlogTableDoc extends JTable
 	 *
 	 * @param   JDatabaseDriver  &$db  Database connector object
 	 *
+	 * @return  ProjectlogTableDoc
 	 * @since   3.3.1
 	 */
 	public function __construct(&$db)
@@ -31,7 +32,7 @@ class ProjectlogTableDoc extends JTable
 	}
 
 	/**
-	 * Stores a project
+	 * Stores a document
 	 *
 	 * @param   boolean  True to update fields even if they are null.
 	 *
@@ -52,7 +53,7 @@ class ProjectlogTableDoc extends JTable
 		}
 		else
 		{
-			// New project. A project created and created_by field can be set by the user,
+			// New documnet. A document created and created_by field can be set by the user,
 			// so we don't touch either of these if they are set.
 			if (!(int) $this->created)
 			{
@@ -104,7 +105,7 @@ class ProjectlogTableDoc extends JTable
 			return false;
 		}
 
-		/** check for valid category */
+		/** check for valid project */
 		if (trim($this->project_id) == '')
 		{
 			$this->setError(JText::_('COM_PROJECTLOG_WARNING_PROJECT'));

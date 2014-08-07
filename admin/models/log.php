@@ -128,9 +128,9 @@ class ProjectlogModelLog extends JModelAdmin
 	}
 
 	/**
-	 * Batch copy items to a new category or current.
+	 * Batch copy items to a new project or current.
 	 *
-	 * @param   integer  $value     The new category.
+	 * @param   integer  $value     The new project ID.
 	 * @param   array    $pks       An array of row IDs.
 	 * @param   array    $contexts  An array of item contexts.
 	 *
@@ -217,9 +217,9 @@ class ProjectlogModelLog extends JModelAdmin
 	}
     
     /**
-	 * Batch move items to a new category or current.
+	 * Batch move items to a new project or current.
 	 *
-	 * @param   integer  $value     The new category.
+	 * @param   integer  $value     The new project ID.
 	 * @param   array    $pks       An array of row IDs.
 	 * @param   array    $contexts  An array of item contexts.
 	 *
@@ -269,7 +269,7 @@ class ProjectlogModelLog extends JModelAdmin
 				}
 			}
 
-			// Set the new category ID
+			// Set the new project ID
 			$this->table->project_id = $projectId;
 
 			// Check the row.
@@ -326,12 +326,12 @@ class ProjectlogModelLog extends JModelAdmin
 	{
 		$user = JFactory::getUser();
 
-		// Check against the category.
+		// Check against the project.
 		if (!empty($record->project_id))
 		{
 			return $user->authorise('projectlog.editlog.state', 'com_projectlog.project.' . (int) $record->project_id);
 		}
-		// Default to component settings if category not known.
+		// Default to component settings if project not known.
 		else
 		{
 			return parent::canEditState($record);
