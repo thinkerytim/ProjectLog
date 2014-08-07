@@ -38,8 +38,8 @@ Remember, this is only a beta version and is not intended to be used on producti
 bugs found to info @ thethinkery.net and we'll get them fixed! 
 
 ### Beta Version Notes:
-* Front end management is still under construction - the document 'add' button and project form user field modals do not currently work but should be done soon.
 * Documentation is not yet written, but it's pretty straight forward if you're comfortable with Joomla!
 * We will be working on documentation and tutorial videos soon as well as finishing the front end management.
 * Routing still in progress - may have problems with SEF urls enabled 
+* Admin project approval functionality not yet build - need to add post save hook to check against settings, set to unapproved, and send admin and email with approval link
 * We appreciate feedback!!

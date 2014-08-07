@@ -109,6 +109,7 @@ class ProjectlogViewProjectform extends JViewLegacy
 		// Because the application sets a default page title,
 		// we need to get it from the menu item itself
 		$menu = $menus->getActive();
+        $edit_title = ($this->item->id) ? JText::_('COM_PROJECTLOG_EDIT_PROJECT') : JText::_('COM_PROJECTLOG_ADD_PROJECT');
 
 		if ($menu)
 		{
@@ -116,10 +117,10 @@ class ProjectlogViewProjectform extends JViewLegacy
 		}
 		else
 		{
-			$this->params->def('page_heading', JText::_('COM_PROJECTLOG_FORM_EDIT_PROJECT'));
+			$this->params->def('page_heading', $edit_title);
 		}
 
-		$title = $this->params->def('page_title', JText::_('COM_PROJECTLOG_FORM_EDIT_PROJECT'));
+		$title = $this->params->def('page_title', $edit_title);
 
 		if ($app->get('sitename_pagetitles', 0) == 1)
 		{
