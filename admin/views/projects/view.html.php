@@ -165,14 +165,15 @@ class ProjectlogViewProjects extends JViewLegacy
 		return array(
 			'a.ordering' => JText::_('JGRID_HEADING_ORDERING'),
 			'a.published' => JText::_('JSTATUS'),
+            'a.approved' => JText::_('COM_PROJECTLOG_APPROVED'),
 			'a.name' => JText::_('JGLOBAL_TITLE'),
+            'a.release_date' => JText::_('COM_PROJECTLOG_FIELD_RELEASE_DATE_LABEL'),
 			'category_title' => JText::_('JCATEGORY'),
 			'ul.name' => JText::_('COM_PROJECTLOG_FIELD_PROJECT_MANAGER_LABEL'),
 			'a.featured' => JText::_('JFEATURED'),
 			'a.access' => JText::_('JGRID_HEADING_ACCESS'),
 			'a.language' => JText::_('JGRID_HEADING_LANGUAGE'),
-			'a.id' => JText::_('JGRID_HEADING_ID'),
-            'a.release_date' => JText::_('COM_PROJECTLOG_FIELD_RELEASE_DATE_LABEL'),
+			'a.id' => JText::_('JGRID_HEADING_ID'),            
             'a.status' => JText::_('COM_PROJECTLOG_FIELD_PROJECT_STATUS_LABEL')
 		);
 	}

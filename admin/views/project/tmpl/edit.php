@@ -15,8 +15,9 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('behavior.formvalidation');
 JHtml::_('formbehavior.chosen', 'select');
 
-$app = JFactory::getApplication();
-$assoc = JLanguageAssociations::isEnabled();
+$app        = JFactory::getApplication();
+$assoc      = JLanguageAssociations::isEnabled();
+$plparams   = JComponentHelper::getParams('com_projectlog');
 ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
@@ -89,9 +90,11 @@ $assoc = JLanguageAssociations::isEnabled();
                 </div>
 			</div>
 			<div class="span3 form-vertical">
+                <?php if ($plparams->get('require_approval', 1)): ?>
                 <div class="control-group " >
                     <?php echo $this->form->renderField('approved'); ?>
                 </div>
+                <?php endif; ?>
 				<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
 			</div>
 		</div>

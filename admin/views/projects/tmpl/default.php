@@ -18,6 +18,8 @@ JHtml::_('formbehavior.chosen', 'select');
 $app		= JFactory::getApplication();
 $user		= JFactory::getUser();
 $userId		= $user->get('id');
+$plparams   = JComponentHelper::getParams('com_projectlog');
+
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 $archived	= $this->state->get('filter.published') == 2 ? true : false;
@@ -122,9 +124,14 @@ $assoc		= JLanguageAssociations::isEnabled();
                         <th width="5%" class="nowrap hidden-phone">
                             <?php echo JHtml::_('grid.sort', 'JFEATURED', 'a.featured', $listDirn, $listOrder); ?>
                         </th>
-                        <th width="10%" class="nowrap hidden-phone">
+                        <th width="5%" class="nowrap hidden-phone">
                             <?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ACCESS', 'a.access', $listDirn, $listOrder); ?>
                         </th>
+                        <?php if ($plparams->get('require_approval', 1)): ?>
+                        <th width="5%" class="nowrap">
+                            <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_APPROVED', 'approved', $listDirn, $listOrder); ?>
+                        </th>
+                        <?php endif; ?>
                         <?php if ($assoc) : ?>
                         <th width="5%" class="nowrap hidden-phone">
                             <?php echo JHtml::_('grid.sort', 'COM_PROJECTLOG_HEADING_ASSOCIATION', 'association', $listDirn, $listOrder); ?>
@@ -148,6 +155,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                         $canCheckin	= $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
                         $canEditOwn	= $user->authorise('core.edit.own',   'com_projectlog.category.'.$item->catid) && $item->created_by == $userId;
                         $canChange	= $user->authorise('core.edit.state', 'com_projectlog.category.'.$item->catid) && $canCheckin;
+                        $canApprove = $user->authorise('core.manage',     'com_projectlog') || ($userId == $item->manager && $plparams->get('approval_level', 1) == 1);
 
                         $item->cat_link = JRoute::_('index.php?option=com_categories&extension=com_projectlog&task=edit&type=other&id='.$item->catid);
                         $log_count = ProjectlogHelper::getLogCount($item->id);
@@ -237,6 +245,11 @@ $assoc		= JLanguageAssociations::isEnabled();
                             <td class="small hidden-phone">
                                 <?php echo $item->access_level; ?>
                             </td>
+                            <?php if ($plparams->get('require_approval', 1)) : ?>
+                            <td class="center">
+                                <?php echo JHtml::_('project.approved', $item->approved, $i, $canApprove); ?>
+                            </td>
+                            <?php endif;?>
                             <?php if ($assoc) : ?>
                             <td class="hidden-phone">
                                 <?php if ($item->association) : ?>
@@ -259,7 +272,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="13">
+                        <td colspan="14">
                             <?php echo $this->pagination->getListFooter(); ?>
                         </td>
                     </tr>

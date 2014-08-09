@@ -749,6 +749,56 @@ class ProjectlogModelProject extends JModelAdmin
 
 		return true;
 	}
+    
+    /**
+	 * Method to toggle the approved setting of projects.
+	 *
+	 * @param   array    $pks    The ids of the items to toggle.
+	 * @param   integer  $value  The value to toggle to.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   3.3.1
+	 */
+	public function approved($pks, $value = 0)
+	{
+		// Sanitize the ids.
+		$pks = (array) $pks;
+		JArrayHelper::toInteger($pks);
+
+		if (empty($pks))
+		{
+			$this->setError(JText::_('COM_PROJECTLOG_NO_ITEM_SELECTED'));
+			return false;
+		}
+
+		$table = $this->getTable();
+
+		try
+		{
+			$db = $this->getDbo();
+
+			$query = $db->getQuery(true);
+			$query->update('#__projectlog_projects');
+			$query->set('approved = ' . (int) $value);
+			$query->where('id IN (' . implode(',', $pks) . ')');
+			$db->setQuery($query);
+
+			$db->execute();
+		}
+		catch (Exception $e)
+		{
+			$this->setError($e->getMessage());
+			return false;
+		}
+
+		$table->reorder();
+
+		// Clean component's cache
+		$this->cleanCache();
+
+		return true;
+	}
 
 	/**
 	 * Method to change the title & alias.

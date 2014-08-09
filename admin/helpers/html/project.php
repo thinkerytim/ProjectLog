@@ -116,6 +116,32 @@ abstract class JHtmlProject
 	}
     
     /**
+	 * @param   int $value	The approved value
+	 * @param   int $i
+	 * @param   bool $canApprove Whether the value can be changed or not
+	 *
+	 * @return  string	The anchor tag to toggle approve/unapprove projects.
+	 * @since   3.3.1
+	 */
+	public static function approved($value = 0, $i, $canApprove = true)
+	{
+		// Array of image, task, title, action
+		$states	= array(
+			0	=> array('disabled.png', 'projects.approved', 'COM_PROJECTLOG_UNAPPROVED', 'COM_PROJECTLOG_TOGGLE_TO_APPROVE'),
+			1	=> array('tick.png', 'projects.unapproved', 'COM_PROJECTLOG_APPROVED', 'COM_PROJECTLOG_TOGGLE_TO_UNAPPROVE'),
+		);
+		$state	= JArrayHelper::getValue($states, (int) $value, $states[1]);
+		$html	= JHtml::_('image', 'admin/'.$state[0], JText::_($state[2]), null, true);
+		if ($canApprove)
+		{
+			$html	= '<a href="#" onclick="return listItemTask(\'cb'.$i.'\',\''.$state[1].'\')" title="'.JText::_($state[3]).'">'
+					. $html .'</a>';
+		}
+
+		return $html;
+	}
+    
+    /**
 	 * Custom batch filter option
 	 *
 	 * @return  string  The batch filter HTML

@@ -38,7 +38,7 @@
 			class="btn-group btn-group-yesno"
 			default="1">
 			<option value="1">COM_PROJECTLOG_FIELD_CONFIG_MANAGER_LABEL</option>
-			<option value="0">JADMINISTRATOR</option>
+			<option value="2">JADMINISTRATOR</option>
 		</field>
         
         <field name="project_notify"

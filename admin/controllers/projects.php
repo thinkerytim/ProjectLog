@@ -32,6 +32,7 @@ class ProjectlogControllerProjects extends JControllerAdmin
 		parent::__construct($config);
 
 		$this->registerTask('unfeatured',	'featured');
+        $this->registerTask('unapproved',	'approved');
 	}
 
 	/**
@@ -72,8 +73,56 @@ class ProjectlogControllerProjects extends JControllerAdmin
 		}
 		else
 		{
-			// Publish the items.
+			// Change the items.
 			if (!$model->featured($ids, $value))
+			{
+				JError::raiseWarning(500, $model->getError());
+			}
+		}
+
+		$this->setRedirect('index.php?option=com_projectlog&view=projects');
+	}
+    
+    /**
+	 * Method to toggle the approved value of projects.
+	 *
+	 * @return  void
+	 * @since   3.3.1
+	 */
+	public function approved()
+	{
+		// Check for request forgeries
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+		$user   = JFactory::getUser();
+		$ids    = $this->input->get('cid', array(), 'array');
+		$values = array('approved' => 1, 'uanpproved' => 0);
+		$task   = $this->getTask();
+		$value  = JArrayHelper::getValue($values, $task, 0, 'int');
+
+		// Get the model.
+		$model  = $this->getModel();
+
+		// Access checks.
+		foreach ($ids as $i => $id)
+		{
+			$item = $model->getItem($id);
+			if (!$user->authorise('core.edit.state', 'com_projectlog.category.'.(int) $item->catid))
+			{
+				// Prune items that you can't change.
+				unset($ids[$i]);
+				JError::raiseNotice(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+			}
+		}
+
+		if (empty($ids))
+		{
+			JError::raiseWarning(500, JText::_('COM_PROJECTLOG_NO_ITEM_SELECTED'));
+		}
+		else
+		{
+			// Change the items.
+			if (!$model->approved($ids, $value))
 			{
 				JError::raiseWarning(500, $model->getError());
 			}
