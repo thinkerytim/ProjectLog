@@ -49,7 +49,7 @@ class ProjectlogControllerAjax extends JControllerLegacy
     public function addLog()
     {        
         // Check for request forgeries
-        JSession::checkToken() or die( 'Invalid Token');
+        JSession::checkToken('get') or die( 'Invalid Token');
         $app = JFactory::getApplication();
         
         $data       = JRequest::get('post');
@@ -104,7 +104,7 @@ class ProjectlogControllerAjax extends JControllerLegacy
     public function deleteLog()
     {
         // Check for request forgeries
-        JSession::checkToken() or die( 'Invalid Token');
+        JSession::checkToken('get') or die( 'Invalid Token');
         
         $data       = JRequest::get('post');
         $log_id     = (int)$data['log_id'];
@@ -136,7 +136,7 @@ class ProjectlogControllerAjax extends JControllerLegacy
     public function deleteDoc()
     {
         // Check for request forgeries
-        JSession::checkToken() or die( 'Invalid Token');
+        JSession::checkToken('get') or die( 'Invalid Token');
         
         $data       = JRequest::get('post');
         $doc_id     = (int)$data['doc_id'];

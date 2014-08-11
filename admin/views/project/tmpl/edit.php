@@ -141,3 +141,4 @@ $plparams   = JComponentHelper::getParams('com_projectlog');
 	<input type="hidden" name="task" value="" />
 	<?php echo JHtml::_('form.token'); ?>
 </form>
+<?php echo $this->loadTemplate('script'); ?>
