@@ -9,10 +9,10 @@
 
 defined('_JEXEC') or die;
 
-require_once JPATH_SITE . '/components/com_content/helpers/route.php';
+// Toggle onsite css class
 $onsite_class = ($this->item->onsite) ? 'icon-thumbs-up' : 'icon-thumbs-down';
-
 ?>
+
 <h3><?php echo JText::_('COM_PROJECTLOG_DETAILS'); ?></h3>
 <ul class="pl-project-details">
     <li>

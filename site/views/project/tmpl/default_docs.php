@@ -8,7 +8,6 @@
  */
 
 defined('_JEXEC') or die;
-require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 ?>
 
 <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'docs', JText::_('COM_PROJECTLOG_RELATED_DOCS', true)); ?>

@@ -9,8 +9,6 @@
 
 defined('_JEXEC') or die;
 
-require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-
 // We only need to include this script if the user is allowed to create logs or delete logs/docs
 if ($this->canDo->get('projectlog.createlog') || $this->canDo->get('projectlog.deletelog')):
     JFactory::getDocument()->addScript( JURI::root(true).'/components/com_projectlog/assets/js/projectlog.js');

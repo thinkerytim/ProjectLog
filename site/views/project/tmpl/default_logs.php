@@ -8,10 +8,8 @@
  */
 
 defined('_JEXEC') or die;
-
-require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-
 ?>
+
 <?php if (!$this->print) : ?>
 <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'logs', JText::_('COM_PROJECTLOG_LOGS', true)); ?>
 <div id="log-error-msg"></div>
