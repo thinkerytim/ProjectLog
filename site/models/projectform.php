@@ -213,6 +213,16 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 			}
 		}
 
-		return parent::save($data);
+		if (parent::save($data))
+        {
+            $plparams = JComponentHelper::getParams('com_projectlog');
+            if($plparams->get('project_notify') == 1 && $this->getState($this->getName().'.new')){
+                $project_id = $this->getState($this->getName().'.id');
+                projectlogHtml::notifyAdmin($project_id, 'project');
+            }
+            return true;
+        }
+        
+        return false;
 	}
 }
