@@ -56,7 +56,9 @@ jQuery(function($) {
                             {
                                 // Success flag is set to 'false' and main response message given
                                 // So you can alert it or insert it into some HTML element
-                                $('#log-error-msg').html(r.message+' plError111');
+                                $('#log-error-msg').fadeIn(500, function(){                                
+                                    $(this).addClass('alert alert-danger').html(r.message+' PLLOG111');
+                                }).delay(2000).fadeOut(500);
                             }
 
                             if (r.messages)
@@ -64,12 +66,11 @@ jQuery(function($) {
                                 // All the enqueued messages of the $app object can simply be
                                 // rendered by the respective helper function of Joomla!
                                 // They will automatically be displayed at the messages section of the template
-                                Joomla.renderMessages(r.messages+' pl112');
+                                Joomla.renderMessages(r.messages+' PLLOG112');
                             }
 
                             if (r.data)
-                            {
-                                $('#log-error-msg').empty();
+                            {                                
                                 theLog.val('');
                                 theTitle.val('');
                                 $('.new-plitem-cnt').hide('fast', function(){
@@ -83,14 +84,14 @@ jQuery(function($) {
                             {
                                 // Reaching this point means that the Ajax request itself was not successful
                                 // So JResponseJson was never called
-                                $('#log-error-msg').html('Ajax error plError113');
+                                $('#log-error-msg').html('Ajax error PLLOG113');
                             }.bind(this),
                             onError: function(text, error)
                             {
                                 // Reaching this point means that the Ajax request was answered by the server, but
                                 // the response was no valid JSON (this happens sometimes if there were PHP errors,
                                 // warnings or notices during the development process of a new Ajax request).
-                                $('#log-error-msg').html(error + "\n\n plError114 \n\n" + text);
+                                $('#log-error-msg').html(error + "\n\n PLLOG114 \n\n" + text);
                             }.bind(this)                                          
                         });
                     req.post();
@@ -104,10 +105,11 @@ jQuery(function($) {
                 if(!confirm(plOptions.plMessages.confirmDelete)){
                     return false;
                 }
-
+                
+                // get the ID of the log
                 var logId = this.getAttribute("data-log-id");
 
-                //ajax request vars
+                // ajax request vars
                 var logurl = plOptions.plBaseurl+plOptions.plClient+'/index.php?option=com_projectlog&task=ajax.deleteLog&'+plOptions.plToken+'=1';
                 var req = new Request.JSON({
                     type: "post",
@@ -119,39 +121,36 @@ jQuery(function($) {
                     onSuccess: function(r){   
                         if (!r.success && r.message)
                         {
-                            // Success flag is set to 'false' and main response message given
-                            // So you can alert it or insert it into some HTML element
-                            $('#log-error-msg').html(r.message);
+                            $('#log-error-msg').fadeIn(500, function(){                                
+                                $(this).addClass('alert alert-danger').html(r.message+' PLLOG115');
+                            }).delay(2000).fadeOut(500);
                         }
 
                         if (r.messages)
                         {
-                            // All the enqueued messages of the $app object can simple be
-                            // rendered by the respective helper function of Joomla!
-                            // They will automatically be displayed at the messages section of the template
-                            Joomla.renderMessages(r.messages);
+                            Joomla.renderMessages(r.messages+' PLLOG116');
                         }
 
                         if (r.data)
-                        {
-                           $('#logid-'+r.data).fadeOut(300, function(){
-                               $(this).remove();
+                        {                           
+                            $('#logid-'+r.data).fadeOut(300, function(){
+                                // Add success message
+                                $('#log-error-msg').fadeIn(100, function(){                                
+                                    $(this).addClass('alert alert-success').html(plOptions.plMessages.successMsg);
+                                }).delay(1000).fadeOut(100);
+                                // Remove the item
+                                $(this).remove();
                             });
                         }
 
                     }.bind(this),
                         onFailure: function(xhr)
                         {
-                            // Reaching this point means that the Ajax request itself was not successful
-                            // So JResponseJson was never called
-                            alert('Ajax error');
+                            $('#log-error-msg').html('Ajax error PLLOG117');
                         }.bind(this),
                         onError: function(text, error)
                         {
-                            // Reaching this point means that the Ajax request was answered by the server, but
-                            // the response was no valid JSON (this happens sometimes if there were PHP errors,
-                            // warnings or notices during the development process of a new Ajax request).
-                            $('#log-error-msg').html(error + "\n\n" + text);
+                            $('#log-error-msg').html(error + "\n\n PLLOG118 \n\n" + text);
                         }.bind(this)                                          
                     });
                  req.post();
@@ -165,9 +164,10 @@ jQuery(function($) {
                     return false;
                 }
 
+                // get the ID of the doc
                 var docId = this.getAttribute("data-doc-id");
 
-                //ajax request vars
+                // ajax request vars
                 var docurl = plOptions.plBaseurl+plOptions.plClient+'/index.php?option=com_projectlog&task=ajax.deleteDoc&'+plOptions.plToken+'=1';
                 var req = new Request.JSON({
                     type: "post",
@@ -179,42 +179,39 @@ jQuery(function($) {
                     onSuccess: function(r){   
                         if (!r.success && r.message)
                         {
-                            // Success flag is set to 'false' and main response message given
-                            // So you can alert it or insert it into some HTML element
-                            $('#doc-error-msg').html(r.message);
+                            $('#doc-error-msg').fadeIn(500, function(){                                
+                                $(this).addClass('alert alert-danger').html(r.message+' PLLOG119');
+                            }).delay(2000).fadeOut(500);
                         }
 
                         if (r.messages)
                         {
-                            // All the enqueued messages of the $app object can simple be
-                            // rendered by the respective helper function of Joomla!
-                            // They will automatically be displayed at the messages section of the template
-                            Joomla.renderMessages(r.messages);
+                            Joomla.renderMessages(r.messages+' PLLOG120');
                         }
 
                         if (r.data)
                         {
                            $('#docid-'+r.data).fadeOut(300, function(){
-                               $(this).remove();
-                            });
+                               // Add success message
+                                $('#doc-error-msg').fadeIn(100, function(){                                
+                                    $(this).addClass('alert alert-success').html(plOptions.plMessages.successMsg);
+                                }).delay(1000).fadeOut(100);
+                                // Remove the item
+                                $(this).remove();
+                           });
                         }
 
                     }.bind(this),
                         onFailure: function(xhr)
                         {
-                            // Reaching this point means that the Ajax request itself was not successful
-                            // So JResponseJson was never called
-                            alert('Ajax error');
+                            $('#doc-error-msg').html('Ajax error PLLOG121');
                         }.bind(this),
                         onError: function(text, error)
                         {
-                            // Reaching this point means that the Ajax request was answered by the server, but
-                            // the response was no valid JSON (this happens sometimes if there were PHP errors,
-                            // warnings or notices during the development process of a new Ajax request).
-                            $('#doc-error-msg').html(error + "\n\n" + text);
+                            $('#doc-error-msg').html(error + "\n\n PLLOG122 \n\n" + text);
                         }.bind(this)                                          
                     });
-                    req.post();
+                req.post();
             });
         }
 	});

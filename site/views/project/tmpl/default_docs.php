@@ -8,19 +8,20 @@
  */
 
 defined('_JEXEC') or die;
-
 require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 ?>
+
 <?php echo JHtml::_('bootstrap.addTab', 'projectTab', 'docs', JText::_('COM_PROJECTLOG_RELATED_DOCS', true)); ?>
 
-<?php if($this->canDo->get('projectlog.createdoc')): ?>
-<a href="<?php echo JRoute::_('index.php?option=com_projectlog&task=docform.add&project_id='.$this->project->id.'&return='.$this->return_page); ?>" class="btn btn-primary">
-    <span class="icon icon-edit">
-        &nbsp;<?php echo JText::_('COM_PROJECTLOG_FORM_ADD_DOC'); ?>
-    </span>
-</a>
-<?php endif; ?>
-<div id="doc-error-msg"></div>    
+    <div id="doc-error-msg"></div>  
+    <?php if($this->canDo->get('projectlog.createdoc')): // Add doc button if permitted ?>
+        <a href="<?php echo JRoute::_('index.php?option=com_projectlog&task=docform.add&project_id='.$this->project->id.'&return='.$this->return_page); ?>" class="btn btn-primary">
+            <span class="icon icon-plus">
+                &nbsp;<?php echo JText::_('COM_PROJECTLOG_FORM_ADD_DOC'); ?>
+            </span>
+        </a>
+    <?php endif; ?>
+      
     <div class="plitem-container" id="plitem-doc-container"> 
         <?php
         foreach($this->docs as $doc)

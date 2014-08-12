@@ -29,7 +29,8 @@ if ($this->canDo->get('projectlog.createlog') || $this->canDo->get('projectlog.d
             plLanguageTag : '<?php echo $this->item->language; ?>',
             plMessages: {
                 confirmDelete : '<?php echo addslashes(JText::_('COM_PROJECTLOG_CONFIRM_DELETE')); ?>',
-                emptyLog: '<?php echo addslashes(JText::_('COM_PROJECTLOG_EMPTY_LOG_MSG')); ?>'
+                emptyLog: '<?php echo addslashes(JText::_('COM_PROJECTLOG_EMPTY_LOG_MSG')); ?>',
+                successMsg: '<?php echo addslashes(JText::_('COM_PROJECTLOG_SUCCESSFUL')); ?>'
             },
             plClient : '<?php echo (JFactory::getApplication()->getName() == 'administrator') ? '/administrator' : ''; ?>'
         };
