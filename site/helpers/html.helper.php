@@ -27,7 +27,6 @@ abstract class ProjectlogHtml
      * @param   boolean $strip_tags True to strip html tags, false to leave html
 	 *
 	 * @return  string   The truncated string
-	 *
 	 * @since  3.3.1
 	 */    
     public static function snippet($text, $length = 200, $tail = "(...)", $strip_tags = true)
@@ -59,7 +58,6 @@ abstract class ProjectlogHtml
      * @param   string  $size   Image size
 	 *
 	 * @return  array   Array of image url and actual image html
-	 *
 	 * @since  3.3.1
 	 */
     public static function getGravatar($email, $default = 'mm', $size = 35)
@@ -75,8 +73,7 @@ abstract class ProjectlogHtml
     /**
 	 * Method to build the Thinkery footer
 	 *
-	 * @return  html   footer html
-	 *
+	 * @return  string   footer html
 	 * @since  3.3.1
 	 */    
     public static function buildThinkeryFooter()
@@ -86,8 +83,19 @@ abstract class ProjectlogHtml
         return '<p class="small pagination-centered pl-footer">'.sprintf(JText::_('COM_PROJECTLOG_FOOTER'), Jhtml::_('link', 'http://thethinkery.net', 'The Thinkery LLC', array('target' => '_blank')), $plversion).'</p>';
     }
     
+    /**
+	 * Method to return project name from id
+     * 
+     * @param   int     $project_id     The project id
+	 *
+	 * @return  mixed   False if no result, project name string if successful
+	 * @since  3.3.1
+	 */ 
     public static function getProjectName($project_id)
     {
+        // If no project id, return false
+        if(!$project_id) return false;
+        
         $db = JFactory::getDbo();
         
         $query = $db->getQuery(true);
@@ -99,8 +107,17 @@ abstract class ProjectlogHtml
         return $db->loadResult();
     }
     
+    /**
+	 * Method to return basic project information like project name, category, manager info
+     * 
+     * @param   int     $project_id     The project id
+	 *
+	 * @return  mixed   False if no project id or query fails, object if successful
+	 * @since  3.3.1
+	 */
     public static function getBasicProjectInfo($project_id)
     {
+        // If no project id, return false
         if(!$project_id) return false;
         
         $db = JFactory::getDbo();
@@ -118,12 +135,23 @@ abstract class ProjectlogHtml
         return $db->loadObject();
     }
     
+    /**
+	 * Method to send notification emails to admin/manager
+     * 
+     * @param   int     $project_id     The project id
+     * @param   string  $type           The type of notification (log, doc, or project)
+	 *
+	 * @return  mixed   False if no project id or query fails, db row object if successful
+	 * @since  3.3.1
+	 */
     public static function notifyAdmin($project_id, $type = 'project')
     {
-		if(!$project_id) return false;
+		// If no project id or an invalid notification type, return false
+        if(!$project_id or !in_array($type, array('log','doc','project'))) return false;
         
         $app    = JFactory::getApplication();
         $user   = JFactory::getUser();
+        $plparams = JComponentHelper::getParams('com_projectlog');
         
 		// Set some basic vars for date, ip address and user
         $full_date      = JHTML::_('date','now',JText::_('DATE_FORMAT_LC2'));
@@ -141,19 +169,31 @@ abstract class ProjectlogHtml
         $manager_name   = $project_info->manager_name;
         $manager_email  = $project_info->manager_email;
         
-        // Add recipients - admin and manager
-        $recipients = array($admin_email);
-        // @todo: Eventually we should make it optional to notify the project manager
-        if($manager_email && $manager_email != $admin_email){
-            $recipients[] = $manager_email;
+        // Add recipients
+        $recipients = array();
+        
+        // Notify levels: 0:administrator, 1:manager, 2:both administrator and manager
+        $notify_level = $plparams->get('notify_level',0);
+        // If notify level is not set to only manager, add the admin email to recipient array
+        if($notify_level != 1){
+            $recipients[] = $admin_email;
         }
+        
+        // If notify level is not set to only administrator and the manager email is not the same as the
+        // administrator email, add the manager email to recipient array
+        if(in_array($notify_level, array(1,2))){
+            if($manager_email && $manager_email != $admin_email){
+                $recipients[] = $manager_email;
+            }
+        }   
         
         // Build the project path to include in email
         $uri            = JUri::getInstance();
 		$base           = $uri->toString(array('scheme', 'host', 'port'));
 		$project_path   = $base . JRoute::_(ProjectlogHelperRoute::getProjectRoute($project_info->project_id, $project_info->project_cat), false);
 
-		if($type){
+		// Switch the notification type subject and body content and send email
+        if($type){
             switch($type){
                 case 'project':
                     $subject    = sprintf(JText::_('COM_PROJECTLOG_NOTIFICATION_SUBJECT'), 'project', $site_name);
