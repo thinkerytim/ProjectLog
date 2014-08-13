@@ -217,6 +217,7 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
         {
             $plparams = JComponentHelper::getParams('com_projectlog');
             if($plparams->get('project_notify') == 1 && $this->getState($this->getName().'.new')){
+                require_once JPATH_SITE.'/components/com_projectlog/helpers/html.helper.php';
                 $project_id = $this->getState($this->getName().'.id');
                 projectlogHtml::notifyAdmin($project_id, 'project');
             }

@@ -176,6 +176,7 @@ class ProjectlogModelDocform extends ProjectlogModelDoc
         {
             $plparams = JComponentHelper::getParams('com_projectlog');
             if($plparams->get('doc_notify') == 1 && $this->getState($this->getName().'.new')){
+                require_once JPATH_SITE.'/components/com_projectlog/helpers/html.helper.php';
                 projectlogHtml::notifyAdmin($data['project_id'], 'doc');
             }
             return true;
