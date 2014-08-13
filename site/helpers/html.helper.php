@@ -144,7 +144,7 @@ abstract class ProjectlogHtml
 	 * @return  mixed   False if no project id or query fails, db row object if successful
 	 * @since  3.3.1
 	 */
-    public static function notifyAdmin($project_id, $type = 'project')
+    public static function notifyAdmin($project_id, $type = 'project', $needs_approval = false, $new = false)
     {
 		// If no project id or an invalid notification type, return false
         if(!$project_id or !in_array($type, array('log','doc','project'))) return false;
@@ -196,7 +196,7 @@ abstract class ProjectlogHtml
         if($type){
             switch($type){
                 case 'project':
-                    $subject    = sprintf(JText::_('COM_PROJECTLOG_NOTIFICATION_SUBJECT'), 'project', $site_name);
+                    $subject    = ($new) ? sprintf(JText::_('COM_PROJECTLOG_NOTIFICATION_SUBJECT'), 'project', $site_name) : sprintf(JText::_('COM_PROJECTLOG_UPDATE_NOTIFICATION_SUBJECT'), 'project', $site_name);
                     $body       = sprintf(JText::_('COM_PROJECTLOG_NOTIFICATION_BODY'), 'project', $site_name, $user_name, $project_name, $manager_name, $project_path);
                 break;
                 case 'log':
@@ -207,6 +207,19 @@ abstract class ProjectlogHtml
                     $subject    = sprintf(JText::_('COM_PROJECTLOG_NOTIFICATION_SUBJECT'), 'project document', $site_name);
                     $body       = sprintf(JText::_('COM_PROJECTLOG_NOTIFICATION_BODY'), 'project document', $site_name, $user_name, $project_name, $manager_name, $project_path);
                 break;
+                case 'approval':
+                    $subject    = sprintf(JText::_('COM_PROJECTLOG_APPROVAL_SUBJECT'), $site_name);
+                    $body       = sprintf(JText::_('COM_PROJECTLOG_APPROVAL_BODY'), $project_name, $project_path);
+                break;
+            }
+            
+            if($needs_approval){
+                $config         = JFactory::getConfig();
+                $secret         = $config->get('secret');
+                $hash           = md5($project_id.$secret);
+                $approve_link   = $base . "index.php?option=com_projectlog&task=project.approveProject&id=".(int)$project_id."&token=".$hash;
+                
+                $body .= sprintf(JText::_('COM_PROJECTLOG_PROJECT_APPROVAL_REQUIRED'), $approve_link);
             }
 
             $body .= sprintf(JText::_('COM_PROJECTLOG_GENERATED_BY'), $full_date, $ipaddress);
@@ -219,5 +232,5 @@ abstract class ProjectlogHtml
             $mail->setBody( $body );    
             $mail->Send();
         }
-    }
+    }   
 }

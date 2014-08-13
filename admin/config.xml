@@ -31,14 +31,14 @@
 			<option value="0">JNO</option>
 		</field>
         
-        <field name="approval_level"
+        <field name="moderate_projects"
 			type="radio"
-			label="COM_PROJECTLOG_FIELD_CONFIG_APPROVAL_LEVEL_LABEL"
-			description="COM_PROJECTLOG_FIELD_CONFIG_APPROVAL_LEVEL_DESC"
+			label="COM_PROJECTLOG_FIELD_CONFIG_MODERATE_LABEL"
+			description="COM_PROJECTLOG_FIELD_CONFIG_MODERATE_DESC"
 			class="btn-group btn-group-yesno"
-			default="1">
-			<option value="1">COM_PROJECTLOG_FIELD_CONFIG_MANAGER_LABEL</option>
-			<option value="2">JADMINISTRATOR</option>
+			default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
 		</field>
         
         <field name="project_notify"

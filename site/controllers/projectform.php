@@ -266,6 +266,10 @@ class ProjectlogControllerProjectform extends JControllerForm
 	 */
 	protected function postSaveHook(JModelLegacy $model, $validData = array())
 	{
+        $app = JFactory::getApplication();
+        if($msg = $model->autoApproveCheck($validData)){
+            $app->enqueueMessage($msg);
+        }
         return;
 	}
 

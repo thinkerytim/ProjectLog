@@ -155,7 +155,7 @@ $assoc		= JLanguageAssociations::isEnabled();
                         $canCheckin	= $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
                         $canEditOwn	= $user->authorise('core.edit.own',   'com_projectlog.category.'.$item->catid) && $item->created_by == $userId;
                         $canChange	= $user->authorise('core.edit.state', 'com_projectlog.category.'.$item->catid) && $canCheckin;
-                        $canApprove = $user->authorise('core.manage',     'com_projectlog') || ($userId == $item->manager && $plparams->get('approval_level', 1) == 1);
+                        $canApprove = $user->authorise('core.manage',     'com_projectlog');
 
                         $item->cat_link = JRoute::_('index.php?option=com_categories&extension=com_projectlog&task=edit&type=other&id='.$item->catid);
                         $log_count = ProjectlogHelper::getLogCount($item->id);

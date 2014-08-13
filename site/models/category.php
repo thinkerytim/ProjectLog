@@ -180,6 +180,8 @@ class ProjectlogModelCategory extends JModelList
 		{
 			$query->where('a.published = ' . (int) $state);
 		}
+        $query->where('a.approved = 1');
+        
 		// Filter by start and end dates.
 		$nullDate = $db->quote($db->getNullDate());
 		$nowDate = $db->quote(JFactory::getDate()->toSql());

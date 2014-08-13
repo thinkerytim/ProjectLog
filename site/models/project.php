@@ -175,6 +175,7 @@ class ProjectlogModelProject extends JModelForm
 						->where('(a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ')')
 						->where('(a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
 				}
+                $query->where('a.approved = 1');
 
 				$db->setQuery($query);
 
@@ -518,4 +519,61 @@ class ProjectlogModelProject extends JModelForm
         $db->setQuery($query);
         return $db->loadObjectList(); 
     }
+    
+    /**
+	 * Method to approve a project
+	 *
+     * return   boolean   True if successful, false with error message if fails
+	 * @since   3.3.1
+	 */
+    public function approveProject($project_id, $token)
+    {	
+        $db     = JFactory::getDbo();
+        $query  = $db->getQuery(true);
+        
+        $query->select('id')
+                ->from('#__projectlog_projects')
+                ->where('id = '.(int) $project_id);
+        
+        $db->setQuery($query);
+        
+        if ($result = $db->loadResult())
+        {
+            // check the token and set email_update to false
+            $config     = JFactory::getConfig();
+            $secret     = $config->get('secret');
+            $hash       = md5($result.$secret);
+            
+            // compare the hash to the passed in token
+            if ($hash == $token)
+            {
+                require_once JPATH_SITE.'/components/com_projectlog/helpers/html.helper.php';
+                
+                $query = $db->getQuery(true);                
+                $query->update('#__projectlog_projects')
+                        ->set('approved = 1')
+                        ->where('id = '.(int)$result);
+                
+                $db->setQuery($query);
+                
+                try{
+                    $success = $db->execute();
+                    projectlogHtml::notifyAdmin($project_id, 'approval');
+                    return true;
+                }
+                catch (Exception $e)
+                {
+                    $this->setError($db->getErrorMsg());
+                    $this->setError($e->getMessage());
+                    return false;
+                }
+            } else {
+                $this->setError(JText::_('COM_PROJECTLOG_INVALID_ID_OR_TOKEN_PASSED'));
+                return false;
+            }
+        }else{
+            $this->setError(JText::_('COM_PROJECTLOG_PROJECT_NOT_FOUND'));
+            return false;
+        }    
+    }   
 }

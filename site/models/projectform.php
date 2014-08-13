@@ -213,17 +213,81 @@ class ProjectlogModelProjectform extends ProjectlogModelProject
 			}
 		}
 
-		if (parent::save($data))
-        {
-            $plparams = JComponentHelper::getParams('com_projectlog');
-            if($plparams->get('project_notify') == 1 && $this->getState($this->getName().'.new')){
-                require_once JPATH_SITE.'/components/com_projectlog/helpers/html.helper.php';
-                $project_id = $this->getState($this->getName().'.id');
-                projectlogHtml::notifyAdmin($project_id, 'project');
-            }
-            return true;
+		return parent::save($data);
+	}
+    
+    /**
+	 * Method to check for required approval. If required and current user does not have approval 
+     * permissions, set the project as unapproved and email a notification to admin
+     * If user does have approval permissions, carry on as normal with no approval change or email
+	 *
+	 * @param   array  $data  The project data.
+	 *
+	 * @return  mixed   False if no approval is necessary, False with error if a problem occurs, or string message with approval notice
+	 *
+	 * @since   3.3.1
+	 */
+    public function autoApproveCheck($data)
+    {
+        $plparams           = JComponentHelper::getParams('com_projectlog');
+        
+        // If no approval is required and no project notifications are enabled, 
+        // return and continue without setting approval flag
+        if(!$plparams->get('require_approval', 1) && !$plparams->get('project_notify', 1)){
+            return false;
         }
         
-        return false;
-	}
+        require_once JPATH_SITE.'/components/com_projectlog/helpers/html.helper.php';
+        
+        $user               = JFactory::getUser();
+        $project_id         = $this->getState($this->getName().'.id');
+        $new                = $this->getState($this->getName().'.new');
+        $msg                = '';
+        $needs_approval     = false;
+        $canApprove         = $user->authorise('core.manage',   'com_projectlog');
+        $plAdmin            = $user->authorise('core.admin',    'com_projectlog');
+
+        // determines if the project should be set to unapproved on update AND new
+        $approveOnUpdate    = $plparams->get('moderate_projects'); // admin setting to moderate updated projects
+        $doApprove          = ($new || $approveOnUpdate) ? true : false;
+
+        // Check to see if there is a valid project id,
+        // the project requires approval (new or moderated),
+        // and if the current user does not have permission to approve projects.
+        // Set this project 'approved' to 0 if arguments return true.
+        if($project_id && $plparams->get('require_approval', 1) && $doApprove && !$canApprove)
+        {
+            $db     = JFactory::getDbo();
+            $query  = $db->getQuery(true);
+            
+            $query->update('#__projectlog_projects')
+                    ->set('approved = 0')
+                    ->where('id = '.(int)$project_id);
+            $db->setQuery($query);
+            
+            try{
+                $success = $db->execute();
+                $needs_approval = true;
+                $msg = JText::_('COM_PROJECTLOG_REQUIRES_APPROVAL');
+            }
+            catch(Exception $e)
+            {
+                $this->setError('Problem with autoapprove function - the project has not been disabled!');
+                $this->setError($e->getMessage());
+                return false;
+            }
+        }
+        
+        // If this is a new project or updated project that requires moderation
+        // or project notifications are enabled, 
+        // and the current user is not PL administrator
+        // send a notification email
+        if(($doApprove || $plparams->get('project_notify') == 1) && !$plAdmin){
+            // Email basic notification but add any additional approval message
+            projectlogHtml::notifyAdmin($project_id, 'project', $needs_approval, $new);
+        }
+
+        // return false by default since this is an optional setting and not always needed to return a message
+        return $msg;
+    }    
 }
