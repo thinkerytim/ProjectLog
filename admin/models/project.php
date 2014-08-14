@@ -784,7 +784,14 @@ class ProjectlogModelProject extends JModelAdmin
 			$query->where('id IN (' . implode(',', $pks) . ')');
 			$db->setQuery($query);
 
-			$db->execute();
+			if($db->execute() && $value == 1){
+                require_once JPATH_COMPONENT_SITE.'/helpers/route.php';
+                JFactory::getLanguage()->load('com_projectlog', JPATH_SITE);
+                //send notification here
+                foreach($pks as $pk){
+                    projectlogHtml::notifyAdmin($pk, 'approval');
+                }
+            }
 		}
 		catch (Exception $e)
 		{

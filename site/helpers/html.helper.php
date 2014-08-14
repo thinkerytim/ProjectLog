@@ -175,22 +175,22 @@ abstract class ProjectlogHtml
         // Notify levels: 0:administrator, 1:manager, 2:both administrator and manager
         $notify_level = $plparams->get('notify_level',0);
         // If notify level is not set to only manager, add the admin email to recipient array
-        if($notify_level != 1){
+        if($notify_level != 1 && $type != 'approval'){
             $recipients[] = $admin_email;
         }
         
         // If notify level is not set to only administrator and the manager email is not the same as the
         // administrator email, add the manager email to recipient array
-        if(in_array($notify_level, array(1,2))){
-            if($manager_email && $manager_email != $admin_email){
+        if(in_array($notify_level, array(1,2)) || $type == 'approval'){
+            //if($manager_email && $manager_email != $admin_email){
                 $recipients[] = $manager_email;
-            }
+            //}
         }   
         
         // Build the project path to include in email
         $uri            = JUri::getInstance();
 		$base           = $uri->toString(array('scheme', 'host', 'port'));
-		$project_path   = $base . JRoute::_(ProjectlogHelperRoute::getProjectRoute($project_info->project_id, $project_info->project_cat), false);
+		$project_path   = str_replace('administrator/', '', $base . JRoute::_(ProjectlogHelperRoute::getProjectRoute($project_info->project_id, $project_info->project_cat), false));
 
 		// Switch the notification type subject and body content and send email
         if($type){
