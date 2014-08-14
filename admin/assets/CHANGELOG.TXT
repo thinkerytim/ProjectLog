@@ -1,11 +1,15 @@
-3.3.1 Project Log
+3.3.2beta Project Log 2014-08-14
 ========================================
 ========================================
-* First release for Joomla 3
+* Finished development and notifications/approval functionality
+* Ready for beta testers and feedback
 
-3.3.1 Project Log 2014-08-07
+3.3.1beta Project Log
 ========================================
 ========================================
-* Finished development and ready for beta testers and feedback
+* First beta release for Joomla 3
+* Many features still under construction
+
+
 
 
