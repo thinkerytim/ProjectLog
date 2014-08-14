@@ -147,7 +147,7 @@ abstract class ProjectlogHtml
     public static function notifyAdmin($project_id, $type = 'project', $needs_approval = false, $new = false)
     {
 		// If no project id or an invalid notification type, return false
-        if(!$project_id or !in_array($type, array('log','doc','project'))) return false;
+        if(!$project_id or !in_array($type, array('log','doc','project','approval'))) return false;
         
         $app    = JFactory::getApplication();
         $user   = JFactory::getUser();
@@ -217,7 +217,7 @@ abstract class ProjectlogHtml
                 $config         = JFactory::getConfig();
                 $secret         = $config->get('secret');
                 $hash           = md5($project_id.$secret);
-                $approve_link   = $base . "index.php?option=com_projectlog&task=project.approveProject&id=".(int)$project_id."&token=".$hash;
+                $approve_link   = $base . JRoute::_(ProjectlogHelperRoute::getCategoryRoute($project_info->project_cat), false).'&task=project.approveProject&project_id='.(int)$project_id.'&token='.$hash;
                 
                 $body .= sprintf(JText::_('COM_PROJECTLOG_PROJECT_APPROVAL_REQUIRED'), $approve_link);
             }

@@ -223,4 +223,25 @@ class ProjectlogControllerProject extends JControllerForm
 
         return $sent;
 	}
+    
+    // Approval link for automatic approval from email
+    public function approveProject()
+    {
+        $vars       = JRequest::get( 'GET');
+        $project_id = $vars['project_id']; // id of object to change
+        $token      = $vars['token']; // type of object to change
+        $cat_id     = $vars['id'];
+        
+        if (!$project_id || !$token) {
+            $this->setRedirect(JRoute::_(projectlogHelperRoute::getCategoryRoute($cat_id), false), JText::_('COM_PROJECTLOG_INVALID_ID_OR_TOKEN_PASSED'));
+            return false;
+        }
+        
+        $model  = $this->getModel('projectform');
+        if($model->approveProject($project_id, $token)){
+            $this->setRedirect(JRoute::_(projectlogHelperRoute::getProjectRoute($project_id, $cat_id), false), JText::_('COM_PROJECTLOG_APPROVAL_SUCCESSFUL'));
+        }else{
+            $this->setRedirect(JRoute::_(projectlogHelperRoute::getCategoryRoute($cat_id), false), JText::_('COM_PROJECTLOG_APPROVAL_FAILED').': '.$model->getError(), 'notice'); 
+        }
+    }
 }

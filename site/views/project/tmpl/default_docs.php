@@ -15,9 +15,7 @@ defined('_JEXEC') or die;
     <div id="doc-error-msg"></div>  
     <?php if($this->canDo->get('projectlog.createdoc')): // Add doc button if permitted ?>
         <a href="<?php echo JRoute::_('index.php?option=com_projectlog&task=docform.add&project_id='.$this->project->id.'&return='.$this->return_page); ?>" class="btn btn-primary">
-            <span class="icon icon-plus">
-                &nbsp;<?php echo JText::_('COM_PROJECTLOG_FORM_ADD_DOC'); ?>
-            </span>
+            <span class="icon icon-plus"></span>&nbsp;<?php echo JText::_('COM_PROJECTLOG_FORM_ADD_DOC'); ?>
         </a>
     <?php endif; ?>
       

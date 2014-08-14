@@ -39,6 +39,16 @@ if($this->item && $this->item->catid) $this->state->set('project.catid', $this->
 		</h1>
 	</div>
 	<?php endif; ?>
+    
+    <?php if(!$this->item->id && $this->params->get('require_approval', 1)): ?>
+    <div class="alert alert-info">
+        <?php echo JText::_('COM_PROJECTLOG_APPROVAL_REQUIRED_NOTICE'); ?>
+    </div>
+    <?php elseif($this->item->id && $this->params->get('moderate_projects', 1)): ?>
+    <div class="alert alert-info">
+        <?php echo JText::_('COM_PROJECTLOG_MODERATION_NOTICE'); ?>
+    </div>
+    <?php endif; ?>
 
 	<form action="<?php echo JRoute::_('index.php?option=com_projectlog&a_id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate form-vertical">
 		<div class="btn-toolbar">
