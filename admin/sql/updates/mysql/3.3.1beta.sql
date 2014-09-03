@@ -1,0 +1,10 @@
+INSERT INTO `#__content_types` (
+`type_title`, 
+`type_alias`, 
+`table`, 
+`rules`, 
+`field_mappings`, 
+`router`, 
+`content_history_options`
+) VALUES 
+('WorkForce Employee', 'com_workforce.employee',     '{"special": {"dbtable": "#__workforce_employees",   "key": "id", "type": "Employee",   "prefix": "WorkforceTable", "config": "array()"}, "common": {"dbtable": "#__ucm_content", "key": "ucm_id", "type": "Corecontent", "prefix": "JTable", "config": "array()"}}', '', '{"common": {"core_content_item_id": "id", "core_title": "lname", "core_state": "state", "core_alias": "alias", "core_created_time": "null", "core_modified_time": "null", "core_body": "bio",  "core_hits": "null", "core_publish_up": "null", "core_publish_down": "null", "core_access": "null",   "core_params": "params", "core_featured": "featured", "core_metadata": "metadata", "core_language": "language", "core_images": "image", "core_version": "version", "core_ordering": "ordering", "core_metakey": "metakey", "core_metadesc": "metadesc", "core_catid": "catid", "core_xreference": "null", "asset_id": "null"},"special": {}}', 'WorkforceHelperRoute::getEmployeeRoute', '{"formFile": "administrator/components/com_workforce/models/forms/employee.xml", "hideFields": [ "checked_out", "checked_out_time", "version", "reset"],"ignoreChanges": [  "modified_by",  "modified",  "checked_out",  "checked_out_time",  "version",  "imptotal",  "impmade",  "reset"],"convertToInt": [ "publish_up",  "publish_down",  "ordering"],"displayLookup": [  {    "sourceColumn": "catid",    "targetTable": "#__categories",    "targetColumn": "id",    "displayColumn": "title"  },  {    "sourceColumn": "created_by",    "targetTable": "#__users",    "targetColumn": "id",    "displayColumn": "lname" },  {    "sourceColumn": "modified_by",    "targetTable": "#__users",    "targetColumn": "id",    "displayColumn": "name"  }]}');

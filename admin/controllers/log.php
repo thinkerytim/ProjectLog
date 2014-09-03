@@ -19,6 +19,12 @@ defined('_JEXEC') or die;
 class ProjectlogControllerLog extends JControllerForm
 {
 	/**
+	 * @var    string  The prefix to use with controller messages.
+	 * @since  3.3.1
+	 */
+	protected $text_prefix = 'COM_PROJECTLOG_LOG';
+    
+    /**
 	 * Method override to check if you can add a new record.
 	 *
 	 * @param   array  $data  An array of input data.
