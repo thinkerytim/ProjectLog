@@ -200,7 +200,7 @@ class ProjectlogRouter extends JComponentRouterBase
 		// From the categories view, we can only jump to a category.
 		$id = (isset($item->query['id']) && $item->query['id'] > 1) ? $item->query['id'] : 'root';
 
-		$projectCategory = JCategories::getInstance('Project')->get($id);
+		$projectCategory = JCategories::getInstance('Projectlog')->get($id);
 
 		$categories = ($projectCategory) ? $projectCategory->getChildren() : array();
 		$vars['catid'] = $id;
