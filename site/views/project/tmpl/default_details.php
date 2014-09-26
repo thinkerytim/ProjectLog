@@ -19,20 +19,20 @@ $onsite_class = ($this->item->onsite) ? 'icon-thumbs-up' : 'icon-thumbs-down';
         <b><?php echo JText::_('COM_PROJECTLOG_STATUS'); ?>:</b>&nbsp;
         <?php echo JText::_('COM_PROJECTLOG_'.strtoupper($this->project->status)); ?>
     </li>
-    <?php if ($this->project->release_date && $this->params->get('show_release_date')) : ?>
+    <?php if ($this->project->release_date && $this->project->release_date != '0000-00-00 00:00:00' && $this->params->get('show_release_date')) : ?>
         <li>
             <b><?php echo JText::_('COM_PROJECTLOG_RELEASE_DATE'); ?>:</b>&nbsp;
             <?php echo JHTML::date($this->project->release_date, $this->params->get('pl_date_format')); ?>
         </li>
     <?php endif; ?>
-    <?php if ($this->project->contract_from && $this->params->get('show_contract_date')) : ?>
+    <?php if ($this->project->contract_from && $this->project->contract_from != '0000-00-00 00:00:00' && $this->params->get('show_contract_date')) : ?>
         <li>
             <b><?php echo JText::_('COM_PROJECTLOG_CONTRACT_DATE'); ?>:</b>&nbsp;
             <?php echo JHTML::date($this->project->contract_from, $this->params->get('pl_date_format')); ?>
             <?php echo ($this->project->contract_to) ? ' - '.JHTML::date($this->project->contract_to, $this->params->get('pl_date_format')) : ''; ?>
         </li>
     <?php endif; ?>
-    <?php if ($this->project->deployment_from && $this->params->get('show_deployment_date')) : ?>
+    <?php if ($this->project->deployment_from && $this->project->deployment_from != '0000-00-00 00:00:00' && $this->params->get('show_deployment_date')) : ?>
         <li>
             <b><?php echo JText::_('COM_PROJECTLOG_DEPLOYMENT_DATE'); ?>:</b>&nbsp;
             <?php echo JHTML::date($this->project->deployment_from, $this->params->get('pl_date_format')); ?>
