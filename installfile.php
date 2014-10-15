@@ -18,7 +18,7 @@ class com_projectlogInstallerScript
     private $plmedia;
     private $installed_mods             = array();
     private $installed_plugs            = array();
-    private $release                    = '3.3.1beta';
+    private $release                    = '3.3.2';
     private $minimum_joomla_release     = '3.1';
     private $preflight_message          = null;
     private $install_message            = null;

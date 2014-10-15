@@ -7,9 +7,9 @@ Copyright (C) 2009 - 2014 The Thinkery, LLC. [thethinkery.net](http://thethinker
 
 Project Log is a project management component for the Joomla! content management system. 
 
-## PL3 Beta Instructions:
+## PL3 Instructions:
 ------
-**Please make sure to read the `beta` instructions and information here to avoid confusion!**
+**Please make sure to read the instructions and information here to avoid confusion!**
 
 * Step 1 - Click on the 'Download Zip' button above and save the file on your computer.
 * Step 2 - Install zip file via your Joomla 3.x installer
@@ -33,12 +33,6 @@ Project Log 3 has many significant improvements from the Joomla! 1.5 version. So
 * Associations - PL3 also supports associations for all projects and logs when enabled. To enable associations, enable the 'system->language filter' plugin via your admin plugins manager
 * Filter all content by language and easily switch between languages via the front end
 
-### In Progress Development
-Remember, this is only a beta version and is not intended to be used on production sites! It is only for feedback purposes. Please report any
-bugs found to info @ thethinkery.net and we'll get them fixed! 
-
-### Beta Version Notes:
+### PL3 Notes:
 * Documentation is not yet written, but it's pretty straight forward
 * We will be working on documentation and tutorial videos soon
-* Routing still in progress - may have problems with SEF urls enabled 
-* Project, doc, log, and approval notifications need thorough testing with/without sef urls
