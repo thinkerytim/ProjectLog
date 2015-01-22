@@ -94,7 +94,7 @@
     <plugins />
     
     <!-- Update servers here -->
-    <!--<updateservers>
-        <server type="extension" priority="1" name="ProjectLog Update Server">http://extensions.thethinkery.net/projectlog.xml</server>
+    <updateservers>
+        <server type="extension" priority="1" name="ProjectLog Update Server">http://extensions.thethinkery.net/index.php?option=com_ars&amp;view=update&amp;task=stream&amp;format=xml&amp;id=1</server>
     </updateservers>-->
 </extension>
