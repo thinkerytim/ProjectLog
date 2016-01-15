@@ -120,8 +120,8 @@ $plparams   = JComponentHelper::getParams('com_projectlog');
 			</div>
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
-
-		<?php echo JLayoutHelper::render('joomla.edit.params', $this); ?>        
+   
+		<?php echo $this->loadTemplate('params'); ?>     
 
 		<?php if ($assoc) : ?>
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'associations', JText::_('JGLOBAL_FIELDSET_ASSOCIATIONS', true)); ?>

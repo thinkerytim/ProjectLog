@@ -267,7 +267,7 @@
 		<field name="manager" type="user"
 			label="COM_PROJECTLOG_FIELD_INFORMATION_MANAGER_LABEL"
 			description="COM_PROJECTLOG_FIELD_INFORMATION_MANAGER_DESC"
-            required="validate-username"
+            required="true"
             readonly="true"
         />
         
