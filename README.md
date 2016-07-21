@@ -1,5 +1,5 @@
 # Proj3ct Log 3
-Copyright (C) 2009 - 2014 The Thinkery, LLC. [thethinkery.net](http://thethinkery.net).
+Copyright (C) 2009 - 2016 The Thinkery, LLC. [thethinkery.net](http://thethinkery.net).
  
 ![alt text](https://github.com/thinkerytim/ProjectLog/blob/PL30/site/assets/images/projectlog_logo.png "Projectlog Three")
 

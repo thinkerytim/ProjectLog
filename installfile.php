@@ -3,7 +3,7 @@
  * @package     Projectlog.Administrator
  * @subpackage  com_projectlog
  *
- * @copyright   Copyright (C) 2009 - 2014 The Thinkery, LLC. All rights reserved.
+ * @copyright   Copyright (C) 2009 - 2016 The Thinkery, LLC. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -18,7 +18,7 @@ class com_projectlogInstallerScript
     private $plmedia;
     private $installed_mods             = array();
     private $installed_plugs            = array();
-    private $release                    = '3.3.2';
+    private $release                    = '3.3.3';
     private $minimum_joomla_release     = '3.1';
     private $preflight_message          = null;
     private $install_message            = null;
@@ -44,7 +44,7 @@ class com_projectlogInstallerScript
             Jerror::raise(E_WARNING, null, 'Cannot install Project Log '.$this->release.' in a Joomla release prior to '.$this->minimum_joomla_release);
             return false;
         }
-        
+
         // abort if the component being installed is not newer than the currently installed version
         switch ($action){
             case 'update':
@@ -123,13 +123,13 @@ class com_projectlogInstallerScript
                         }else{
                             $folderpath = $this->plmedia.'/'.$folder;
                             foreach( $default_files as $file ){
-                                if($folder == 'docs'){ // we want to copy the sample pdf and index.html to this folder                                    
+                                if($folder == 'docs'){ // we want to copy the sample pdf and index.html to this folder
                                     JFile::copy($this->tmppath.'/'.$file, $folderpath.'/'.$file);
                                 }else{ // we only want the index.html in the root projectlog folder
                                     if(JFile::getExt($file) != 'pdf'){
                                         JFile::copy($this->tmppath.'/'.$file, $folderpath.'/'.$file);
                                     }
-                                }                                        
+                                }
                             }
                             $this->install_message .= '<li>media/com_projectlog/'.$folder.': <span class="label label-success">Created</span></li>';
                         }
@@ -190,7 +190,7 @@ class com_projectlogInstallerScript
                     <tbody>
                         <tr><td class="key">Docs Table</td><td style="text-align: center !important;">'.$drop_results['pldocs'].'</td></tr>
                         <tr><td class="key">Logs Table</td><td style="text-align: center !important;">'.$drop_results['pllogs'].'</td></tr>
-                        <tr><td class="key">Projects Table</td><td style="text-align: center !important;">'.$drop_results['plprojects'].'</td></tr>                        
+                        <tr><td class="key">Projects Table</td><td style="text-align: center !important;">'.$drop_results['plprojects'].'</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -353,7 +353,7 @@ class com_projectlogInstallerScript
                     }
             echo '
             </div>
-        </div>';             
+        </div>';
     }
 
     function getParam( $name )

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.1" method="upgrade">
     <name>COM_PROJECTLOG</name>
-    <creationDate>August 2014</creationDate>
+    <creationDate>July 2016</creationDate>
     <author>The Thinkery</author>
     <authorEmail>info@thethinkery.net</authorEmail>
     <authorUrl>http://www.thethinkery.net</authorUrl>
-    <copyright>Copyright (C) 2009 - 2014 The Thinkery LLC. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2009 - 2016 The Thinkery LLC. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-    <version>3.3.2</version>
+    <version>3.3.3</version>
     <description></description>
     <scriptfile>installfile.php</scriptfile>
 
     <files folder="site">
-        <filename>controller.php</filename>        
+        <filename>controller.php</filename>
         <filename>index.html</filename>
         <filename>metadata.xml</filename>
         <filename>projectlog.php</filename>
@@ -23,12 +23,12 @@
         <folder>models</folder>
         <folder>views</folder>
     </files>
-    
+
     <media folder="media/pltmp" destination="pltmp">
         <filename>index.html</filename>
         <filename>sample.pdf</filename>
     </media>
-    
+
     <languages>
         <language tag="en-GB">languages/site/en-GB/en-GB.com_projectlog.ini</language>
     </languages>
@@ -38,26 +38,26 @@
 			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
 		</sql>
 	</install>
-    
+
 	<uninstall> <!-- Runs on uninstall -->
 		<sql>
 			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
 		</sql>
 	</uninstall>
-    
+
     <update>
         <schemas>
             <schemapath type="mysql">sql/updates/mysql</schemapath>
         </schemas>
     </update>
-    
+
     <administration>
         <menu img="class:project">com_projectlog</menu>
 		<submenu>
 			<!--
 				Note that all & must be escaped to &amp; for the file to be valid
 				XML and be parsed by the installer
-			-->			
+			-->
 			<menu link="option=com_categories&amp;extension=com_projectlog"
 				view="categories" img="class:project-cat" alt="Projectlog/Categories">com_projectlog_categories</menu>
             <menu link="option=com_projectlog" img="class:project"
@@ -68,7 +68,7 @@
 				alt="Projectlog/Docs">com_projectlog_docs</menu>
 		</submenu>
         <files folder="admin">
-            <filename>access.xml</filename>            
+            <filename>access.xml</filename>
             <filename>config.xml</filename>
             <filename>controller.php</filename>
             <filename>index.html</filename>
@@ -79,22 +79,22 @@
             <folder>models</folder>
             <folder>sql</folder>
             <folder>tables</folder>
-            <folder>views</folder>            
-        </files> 
+            <folder>views</folder>
+        </files>
         <languages>
             <language tag="en-GB">languages/admin/en-GB/en-GB.com_projectlog.ini</language>
             <language tag="en-GB">languages/admin/en-GB/en-GB.com_projectlog.sys.ini</language>
         </languages>
-    </administration> 
-    
+    </administration>
+
     <!-- Modules here -->
-    <modules />   
-    
+    <modules />
+
     <!-- Plugins here -->
     <plugins />
-    
+
     <!-- Update servers here -->
     <updateservers>
         <server type="extension" priority="1" name="ProjectLog Update Server">http://extensions.thethinkery.net/index.php?option=com_ars&amp;view=update&amp;task=stream&amp;format=xml&amp;id=1</server>
-    </updateservers>-->
+    </updateservers>
 </extension>

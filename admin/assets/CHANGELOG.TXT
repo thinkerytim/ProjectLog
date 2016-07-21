@@ -1,3 +1,10 @@
+3.3.3 Project Log 2016-07-21
+========================================
+========================================
+* Updates for J3.5.1+
+* Fix for mail reply to name and address
+* Fix for params layout rendering duplicate tabs in project edit form
+
 3.3.2 Project Log 2014-10-15
 ========================================
 ========================================
@@ -14,7 +21,3 @@
 ========================================
 * First beta release for Joomla 3
 * Many features still under construction
-
-
-
-
