@@ -18,6 +18,9 @@ JHtml::_('formbehavior.chosen', 'select');
 $app        = JFactory::getApplication();
 $assoc      = JLanguageAssociations::isEnabled();
 $plparams   = JComponentHelper::getParams('com_projectlog');
+
+// Fieldsets to not automatically render by /layouts/joomla/edit/params.php
+$this->ignore_fieldsets = array('details', 'item_associations', 'jmetadata', 'accesscontrol');
 ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
@@ -50,7 +53,7 @@ $plparams   = JComponentHelper::getParams('com_projectlog');
 						<?php echo $this->form->renderField('image'); ?>
                     </div>
                     <div class="span6">
-                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_IDENTIFIERS'); ?></h3>       
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_IDENTIFIERS'); ?></h3>
                         <?php echo $this->form->renderField('release_id'); ?>
                         <?php echo $this->form->renderField('job_id'); ?>
                         <?php echo $this->form->renderField('workorder_id'); ?>
@@ -59,32 +62,32 @@ $plparams   = JComponentHelper::getParams('com_projectlog');
                 </div>
                 <hr />
                 <div class="row-fluid form-horizontal-desktop">
-                    <div class="span6">                  
+                    <div class="span6">
                         <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_DATES'); ?></h3>
                         <?php echo $this->form->renderField('deployment_from'); ?>
                         <?php echo $this->form->renderField('deployment_to'); ?>
                         <?php echo $this->form->renderField('contract_from'); ?>
-                        <?php echo $this->form->renderField('contract_to'); ?>                        					
+                        <?php echo $this->form->renderField('contract_to'); ?>
 					</div>
 					<div class="span6">
-                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_LOC'); ?></h3>                        
+                        <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_LOC'); ?></h3>
                         <?php echo $this->form->renderField('general_loc'); ?>
                         <?php echo $this->form->renderField('specific_loc'); ?>
                     </div>
                 </div>
                 <hr />
                 <div class="row-fluid form-horizontal-desktop">
-                    <div class="span6">        
+                    <div class="span6">
                         <h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_CREW'); ?></h3>
 						<?php echo $this->form->renderField('manager'); ?>
                         <?php echo $this->form->renderField('chief'); ?>
                         <?php echo $this->form->renderField('technicians'); ?>
                         <?php echo $this->form->renderField('onsite'); ?>
                     </div>
-                    <div class="span6">                        
-						<h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_CONTACT'); ?></h3>   
+                    <div class="span6">
+						<h3><?php echo JText::_('COM_PROJECTLOG_PROJECT_CONTACT'); ?></h3>
                         <?php echo $this->form->renderField('email_to'); ?>
-                        <?php echo $this->form->renderField('mobile'); ?>						
+                        <?php echo $this->form->renderField('mobile'); ?>
 						<?php echo $this->form->renderField('webpage'); ?>
                     </div>
                 </div>
@@ -107,7 +110,7 @@ $plparams   = JComponentHelper::getParams('com_projectlog');
             </div>
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
-        
+
         <?php echo $this->loadTemplate('logs'); ?>
 
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('JGLOBAL_FIELDSET_PUBLISHING', true)); ?>
@@ -120,20 +123,20 @@ $plparams   = JComponentHelper::getParams('com_projectlog');
 			</div>
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
-   
-		<?php echo $this->loadTemplate('params'); ?>     
+
+		<?php echo $this->loadTemplate('params'); ?>
 
 		<?php if ($assoc) : ?>
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'associations', JText::_('JGLOBAL_FIELDSET_ASSOCIATIONS', true)); ?>
 			<?php echo $this->loadTemplate('associations'); ?>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 		<?php endif; ?>
-        
+
         <?php if ($this->canDo->get('core.admin')) : ?>
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'permissions', JText::_('COM_PROJECTLOG_RULES_LABEL', true)); ?>
 				<?php echo $this->form->getInput('rules'); ?>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-		<?php endif; ?>       
+		<?php endif; ?>
 
 		<?php echo JHtml::_('bootstrap.endTabSet'); ?>
         <?php echo projectlogHTML::buildThinkeryFooter(); ?>
