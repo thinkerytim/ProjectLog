@@ -12,8 +12,7 @@ defined('_JEXEC') or die;
 JHtml::_('bootstrap.tooltip');
 
 $class = ' class="first"';
-if (count($this->items[$this->parent->id]) > 0 && $this->maxLevelcat != 0) :
-?>
+if (count($this->items[$this->parent->id]) > 0 && $this->maxLevelcat != 0) : ?>
 	<?php foreach($this->items[$this->parent->id] as $id => $item) : ?>
 		<?php
 		if ($this->params->get('show_empty_categories_cat') || $item->numitems || count($item->getChildren())) :
@@ -58,4 +57,5 @@ if (count($this->items[$this->parent->id]) > 0 && $this->maxLevelcat != 0) :
 				<?php endif; ?>
 			</div>
 		<?php endif; ?>
-	<?php endforeach; ?><?php endif; ?>
+	<?php endforeach; ?>
+<?php endif; ?>
